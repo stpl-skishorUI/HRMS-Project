@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AngularAdminTemplate": {
+    "HRMS-Project": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/AngularAdminTemplate",
+            "outputPath": "dist/HRMS-Project",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "AngularAdminTemplate:build:production"
+              "browserTarget": "HRMS-Project:build:production"
             },
             "development": {
-              "browserTarget": "AngularAdminTemplate:build:development"
+              "browserTarget": "HRMS-Project:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AngularAdminTemplate:build"
+            "browserTarget": "HRMS-Project:build"
           }
         },
         "test": {
@@ -106,5 +106,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "ac937735-4ebe-4778-8d08-63b900199427"
   }
 }
