@@ -132,7 +132,6 @@
 }
 
 .sidebar .sidebar-content .sidebar-menu .header-menu span {
-  font-weight: bold;
   font-size: 0.75rem;
   padding: 10px 20px 5px 10px;
   display: inline-block;
@@ -286,7 +285,9 @@
 }
 
 .sidebar .sidebar-menu .header-menu span {
-  color: #6c7b88;
+  color: #ddd;
+  font-weight: 400;
+  text-transform: capitalize;
 }
 
 .sidebar.sidebar-bg {
