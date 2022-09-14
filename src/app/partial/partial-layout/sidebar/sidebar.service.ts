@@ -12,27 +12,43 @@ export class SidebarService {
       type: 'header'
     },
     {
-      title: 'Dashboard',
+      title: 'Masters',
       icon: 'fa fa-tachometer-alt',
       active: false,
       type: 'dropdown',
-      badge: {
-        text: 'New ',
-        class: 'badge-warning'
-      },
       submenus: [
         {
-          title: 'Dashboard 1',
-          badge: {
-            text: 'Pro ',
-            class: 'badge-success'
-          }
+          title: 'Organization Registration'
         },
         {
-          title: 'Dashboard 2'
+          title: 'Company Registration'
         },
         {
-          title: 'Dashboard 3'
+          title: 'Department Registration'
+        },
+        {
+          title: 'Designation Registration'
+        },
+        {
+          title: 'Holiday Master'
+        },
+        {
+          title: 'Leave Type Registration'
+        },
+        {
+          title: 'Salary Type Registration'
+        },
+        {
+          title: 'Bank Registration'
+        },
+        {
+          title: 'Bank Branch Registration'
+        },
+        {
+          title: 'Company Bank Account Registration'
+        },
+        {
+          title: 'Document Type Registration'
         }
       ]
     },
