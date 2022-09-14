@@ -18,37 +18,48 @@ export class SidebarService {
       type: 'dropdown',
       submenus: [
         {
-          title: 'Organization Registration'
+          title: 'Organization Registration',
+          url:'organization-registration'
         },
         {
-          title: 'Company Registration'
+          title: 'Company Registration',
+          url:'company-registration'
         },
         {
-          title: 'Department Registration'
+          title: 'Department Registration',
+          url:'department-registration'
         },
         {
-          title: 'Designation Registration'
+          title: 'Designation Registration',
+          url:'designation-registration'
         },
         {
-          title: 'Holiday Master'
+          title: 'Holiday Master',
+          url:'holiday-master'
         },
         {
-          title: 'Leave Type Registration'
+          title: 'Leave Type Registration',
+          url:'leave-type-registration'
         },
         {
-          title: 'Salary Type Registration'
+          title: 'Salary Type Registration',
+          url:'salary-type-registration'
         },
         {
-          title: 'Bank Registration'
+          title: 'Bank Registration',
+          url:'bank-registration'
         },
         {
-          title: 'Bank Branch Registration'
+          title: 'Bank Branch Registration',
+          url:'bank-branch-registration'
         },
         {
-          title: 'Company Bank Account Registration'
+          title: 'Company Bank Account Registration',
+          url:'company-bank-registration'
         },
         {
-          title: 'Document Type Registration'
+          title: 'Document Type Registration',
+          url:'document-type-registration'
         }
       ]
     },
