@@ -6,8 +6,13 @@
     font-size: 0.85rem;
     color: #757575;
 }
+.navbar .btn:active,
+.navbar .btn:focus,
+.navbar .btn.show,
 .navbar .btn:hover{
     color: #000;
+    background-color: transparent;
+    border: 1px solid transparent;
 }
 .navbar .dropdown-menu{
     padding: 10px;
