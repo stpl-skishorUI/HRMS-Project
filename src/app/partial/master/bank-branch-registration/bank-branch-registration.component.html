@@ -80,7 +80,7 @@
                                     <option value="3">Kotak Bank</option>
                                 </select>
                                 <button type="submit" class="btn btn-outline-main" data-bs-toggle="modal"
-                                    data-bs-target="#AddNewOrganizationModal">
+                                    data-bs-target="#AddNewOrganizationModal-1">
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
                             </div>
@@ -89,6 +89,89 @@
                             </div>
                             <div class="">
                                 <input type="text" class="form-control" placeholder="IFSC Code">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-container w-100">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-main" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-main">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for add new Bank Registration -->
+
+<div class="modal fade" id="AddNewOrganizationModal-1" tabindex="-1" aria-labelledby="AddNewOrganizationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title mb-0" id="AddNewOrganizationModalLabel">Add New Bank Registration</p>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-between">
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Seach for Bank Name" type="search">
+                            <button type="submit" class="btn btn-light">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-end">
+                        <button type="submit" class="btn btn-outline-main">
+                            <i class="fa-solid fa-plus me-2"></i>Add New
+                        </button>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table dashboard-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Bank Name</th>
+                                            <th>Branch Name</th>
+                                            <th>IFSC Code</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                                Bank Of Maharashtra
+                                            </td>
+                                            <td>
+                                                Dahiwadi
+                                            </td>
+                                            <td>
+                                                MAHB0001835
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <button type="button" class="btn bg-info bg-opacity-10 text-info">
+                                                        <i class="fa-regular fa-pen-to-square"></i></button>
+                                                    <button type="button"
+                                                        class="btn bg-danger bg-opacity-10 text-danger"><i
+                                                            class="fa-solid fa-trash-can"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
