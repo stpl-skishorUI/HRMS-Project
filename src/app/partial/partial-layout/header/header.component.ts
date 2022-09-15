@@ -22,8 +22,9 @@ export class HeaderComponent implements OnInit {
   hideSidebar() {
     this.sidebarservice.setSidebarState(true);
   }
-
+  title: any;
   ngOnInit(): void {
+    this.title = document.title;
   }
 
 }
