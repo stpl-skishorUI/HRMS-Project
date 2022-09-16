@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { EmployeeRegistrationRoutingModule } from './employee-registration-routing.module';
 import { EmployeeRegistrationComponent } from './employee-registration.component';
-
+import { MaterialModule} from 'src/app/shared/angularMaterialModule/material.module'
 
 @NgModule({
   declarations: [
@@ -11,7 +11,8 @@ import { EmployeeRegistrationComponent } from './employee-registration.component
   ],
   imports: [
     CommonModule,
-    EmployeeRegistrationRoutingModule
+    EmployeeRegistrationRoutingModule,
+    MaterialModule
   ]
 })
 export class EmployeeRegistrationModule { }

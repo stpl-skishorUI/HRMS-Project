@@ -1,1 +1,471 @@
-<p>employee-registration works!</p>
+<div class="card main-card">
+    <div class="card-header">
+        <div class="form-container">
+            <div class="row justify-content-between">
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Company</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Department</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Designation</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Name/Mobile No" type="search">
+                                <button type="submit" class="btn btn-light"><i
+                                        class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 text-end">
+                    <button type="submit" class="btn btn-outline-main" data-bs-toggle="modal"
+                        data-bs-target="#Employeedetailmodal">
+                        <i class="fa-solid fa-plus me-2"></i>Register New
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-2">
+        <table class="table dashboard-table">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Emp Code </th>
+                    <th>Employee Name</th>
+                    <th>Comapany</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>12214</td>
+                    <td>sanket</td>
+                    <td>shauryayechnosoft</td>
+                    <td>7th Floor, Cybernex, 399, Shankar Sheth Rd, Pune, Maharashtra 411037</td>
+                    <td>Management</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn bg-info bg-opacity-10 text-info" data-bs-toggle="modal"
+                                data-bs-target="#Employeedetailmodal"><i
+                                    class="fa-regular fa-pen-to-square"></i></button>
+                            <button class="btn btn bg-opacity-10 text-dark bg-secondary" type="button"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                aria-controls="offcanvasRight">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal for add new organization -->
+<div class="modal fade" id="Employeedetailmodal" tabindex="-1" aria-labelledby="EmployeedetailmodalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title mb-0" id="EmployeedetailmodalLabel">Fill Employee Details</p>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-container">
+
+                    <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+                        {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+                    </button> -->
+                    <mat-stepper [linear]="isLinear" #stepper>
+                        <mat-step [stepControl]="firstFormGroup">
+
+                            <ng-template matStepLabel>Personal Details</ng-template>
+                            <!-- <mat-form-field appearance="fill">
+                                <mat-label>Name</mat-label>
+                                <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
+                                    required>
+                            </mat-form-field> -->
+                            <div class="col-sm-12">
+                                <div class="upload-image">
+                                    <img src="assets/images/user.jpg">
+                                    <button type="button" class="btn"><i class="fa-solid fa-plus"></i></button>
+                                    <input type="file" name="myfile" />
+                                </div>
+                                <div class="">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" placeholder=" Name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" placeholder="Employee Code">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="date" class="form-control" placeholder="Date of Birth">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" placeholder="Contact no 1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" placeholder="Contact no 2">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="email" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" placeholder="Address" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" placeholder="Enter Local Address"
+                                            rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" placeholder="Enter Permanant Address"
+                                            rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Gender <sup class="text-danger">*</sup> </label>
+                                        <div class="d-block">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    Male
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault2" checked>
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    Female
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected>Education</option>
+                                            <option value="1">Under graduate</option>
+                                            <option value="2">graduate</option>
+                                            <option value="3">Post graduate</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" placeholder="Enter Course" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" placeholder="Enter Certification"
+                                            rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" placeholder="Total Years of Experience"
+                                            rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" placeholder="Skillset" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" placeholder="Enter Work Domain" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button mat-button matStepperNext>Next</button>
+                            </div>
+                        </mat-step>
+                        <mat-step [stepControl]="secondFormGroup" label="Work Profile Details">
+                            <!-- <mat-form-field appearance="fill">
+                                <mat-label>Address</mat-label>
+                                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                                    required>
+                            </mat-form-field> -->
+                            <div class="">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Bank Name">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Select Branch Name">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Bank Account Number">
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-stroked-button matStepperPrevious class="me-3">Back</button>
+                                <button mat-raised-button matStepperNext>Next</button>
+                            </div>
+                        </mat-step>
+                        <mat-step [stepControl]="secondFormGroup" label="Bank Details">
+                            <!-- <mat-form-field appearance="fill">
+                                <mat-label>Address</mat-label>
+                                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                                    required>
+                            </mat-form-field> -->
+                            <div class="">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter PAN No.">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Aadhar No.">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter PF No.">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter UAN No.">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter ESIC No.">
+                                </div>
+                                <div class="mb-3">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Select Document Type</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Document No.">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Username">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Password">
+                                </div>
+
+                            </div>
+                            <div>
+                                <button mat-stroked-button matStepperPrevious class="me-3">Back</button>
+                                <button mat-raised-button matStepperNext>Next</button>
+                            </div>
+                        </mat-step>
+                        <mat-step [stepControl]="secondFormGroup" label="Documents Details">
+                            <div class="">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Comapny">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Department">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Designation">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="All User Type">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="date" class="form-control" placeholder="Date of Joining">
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" placeholder="Reference By" rows="3"></textarea>
+                                </div>
+                                <div>
+                                    <button mat-stroked-button matStepperPrevious class="me-3">Back</button>
+                                    <button mat-raised-button matStepperNext>Next</button>
+                                </div>
+                            </div>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>Done</ng-template>
+                            <p>You are now done.</p>
+                            <div>
+                                <button mat-button matStepperPrevious class="me-3">Back</button>
+                                <button mat-button (click)="stepper.reset()">Reset</button>
+                            </div>
+                        </mat-step>
+                    </mat-stepper>
+             </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-container w-100">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-main" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-main">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- OffCanvas Form -->
+
+<div class="offcanvas offcanvas-end w-75" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title text-main" id="offcanvasRightLabel">Employee Information</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="offcanvas-body">
+        <div class="form-container">
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <h4 class="text-main my-3">Personal Details</h4>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="name" class="form-label">Name:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="naemdata" class="form-data">Sanket panchmind:</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="course" class="form-label">Course:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="coursedata" class="form-data">--</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="mpbnumber" class="form-label">Mobile No:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="mobnumberdata" class="form-data">8669264767</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="gender" class="form-label">Gender:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <div for="genderdata" class="form-data">Male</div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="email" class="form-label">Email:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="emaildata" class="form-data">sanket.panchmind1@gmailcom</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4 class="my-3 text-main">Official Information</h4>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="compantname" class="form-label">Company Name:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="compantnamedata" class="form-data">Shaurya Technosoft Pvt Ltd:</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="dept" class="form-label">Department:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="deptnamedata" class="form-data">Management:</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="designation" class="form-label">Designation:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="designaiondata" class="form-data">COO:</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="leaveassign" class="form-label">Leave Assign:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="leaveassigndata" class="form-data">Not Assigned:</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <h4 class="my-3 text-main">Payment Details</h4>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="exampleInputEmail1" class="form-label">Gross Salary:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="exampleInputEmail1" class="form-data">Rs:</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="accountnumber" class="form-label">Account No:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="acntnumberdata" class="form-data">-</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="bankname" class="form-label">Bank Name:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="banknamedata" class="form-data">-</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="branchname" class="form-label">Branch Name:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="branchnamedata" class="form-data">-</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4 class="my-3 text-main">Reporting Person</h4>
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="Empname" class="form-label">Employee Name:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="Empid" class="form-label">Employee Id:</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="empnamedata" class="form-data">ABHAYSINH KHASHERAV JAGTAP</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="empnamedata" class="form-data">12001</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
