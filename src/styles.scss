@@ -76,9 +76,15 @@ body {
   background-color: #fff;
 }
 .form-container .form-label{
-  font-size: 0.7rem;
-  color: #999;
+  font-size: 0.75rem;
+  color: #777;
+  margin-bottom: 0;
 }
+.form-container .form-data{
+  font-size: 0.85rem;
+  margin-bottom: 0;
+}
+.form-container .form-check,
 .form-container .form-control,
 .form-container .form-select,
 .form-container .btn{
