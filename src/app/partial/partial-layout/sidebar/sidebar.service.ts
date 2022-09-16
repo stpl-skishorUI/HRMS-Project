@@ -64,23 +64,26 @@ export class SidebarService {
       ]
     },
     {
-      title: 'E-commerce',
+      title: 'Register',
       icon: 'fa fa-shopping-cart',
       active: false,
       type: 'dropdown',
-      badge: {
-        text: '3',
-        class: 'badge-danger'
-      },
       submenus: [
         {
-          title: 'Products',
+          title: 'Employee Registration',
+          url:'employee-registration'
         },
         {
-          title: 'Orders'
+          title: 'Employee Salary Details',
+          url:'employee-salary-details'
         },
         {
-          title: 'Credit cart'
+          title: 'Assign Reporting Person',
+          url:'assign-reporting-person'
+        },
+        {
+          title: 'Leave Assignment',
+          url:'leave-assignment'
         }
       ]
     },

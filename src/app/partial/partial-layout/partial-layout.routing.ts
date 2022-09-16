@@ -2,6 +2,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 export const PartialLayoutRoutes: Routes = [
   { path: 'dashboard', loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardModule), data: { title: 'Dashboard' } },
+  
+  // Master menu
   { path: 'organization-registration', loadChildren: () => import('../../partial/master/organization-registration/organization-registration.module').then(m => m.OrganizationRegistrationModule), data: { title: 'Organization Registration' } },
   { path: 'company-registration', loadChildren: () => import('../../partial/master/company-registration/company-registration.module').then(m => m.CompanyRegistrationModule), data: { title: 'Company Registration' } },
   { path: 'department-registration', loadChildren: () => import('../../partial/master/department-registration/department-registration.module').then(m => m.DepartmentRegistrationModule), data: { title: 'Department Registration' } },
@@ -14,4 +16,10 @@ export const PartialLayoutRoutes: Routes = [
   { path: 'company-bank-registration', loadChildren: () => import('../../partial/master/company-bank-registration/company-bank-registration.module').then(m => m.CompanyBankRegistrationModule), data: { title: 'Company Bank Account Registration' } },
   { path: 'document-type-registration', loadChildren: () => import('../../partial/master/document-type-registration/document-type-registration.module').then(m => m.DocumentTypeRegistrationModule), data: { title: 'Document Type Registration' } },
   
+
+  // Register Menu
+  { path: 'employee-registration', loadChildren: () => import('../../partial/register/employee-registration/employee-registration.module').then(m => m.EmployeeRegistrationModule), data: { title: 'Employee Registration' } },
+  { path: 'employee-salary-details', loadChildren: () => import('../../partial/register/employee-salary-details/employee-salary-details.module').then(m => m.EmployeeSalaryDetailsModule), data: { title: 'Employee Salary Details' } },
+  { path: 'assign-reporting-person', loadChildren: () => import('../../partial/register/assign-reporting-person/assign-reporting-person.module').then(m => m.AssignReportingPersonModule), data: { title: 'Assign Reporting Person' } },
+  { path: 'leave-assignment', loadChildren: () => import('../../partial/register/leave-assignment/leave-assignment.module').then(m => m.LeaveAssignmentModule) , data: { title: 'Leave Assignment' }},
 ];
