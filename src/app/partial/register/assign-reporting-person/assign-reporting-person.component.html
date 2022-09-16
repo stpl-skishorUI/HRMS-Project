@@ -1,1 +1,175 @@
-<p>assign-reporting-person works!</p>
+<div class="card main-card">
+    <div class="card-header">
+        <div class="form-container">
+            <div class="row justify-content-between">
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Company Name</option>
+                                <option value="1">Shaurya Technosoft Pvt Ltd</option>
+                                <option value="2">Front Page</option>
+                                <option value="3">Jagtap Autolines</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>All Employee</option>
+                                <option value="1">Sanket panchmind</option>
+                                <option value="2">Rahul Mistari</option>
+                                <option value="3">Aditya khutwad</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Seach for Salary Type"
+                                    type="search">
+                                <button type="submit" class="btn btn-light"><i
+                                        class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-2">
+        <div class="row">
+            <div class="col-sm-7">
+                <table class="table dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Employee Name</th>
+                            <th>Reporting Person Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                Navin Boddhul
+                            </td>
+                            <td>Medical</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn bg-info bg-opacity-10 text-info"
+                                        data-bs-toggle="modal" data-bs-target="#AddNewOrganizationModal"><i
+                                            class="fa-regular fa-pen-to-square"></i></button>
+                                    <button type="button" class="btn bg-danger bg-opacity-10 text-danger"><i
+                                            class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-5 border-start">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6 class="modal-title mb-0">Add New Assign Reporting Person</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-container">
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select Company</option>
+                                    <option value="1">Bank Of Maharashtra</option>
+                                    <option value="2">ICICI Bank</option>
+                                    <option value="3">Kotak Bank</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select Department</option>
+                                    <option value="1">Bank Of Maharashtra</option>
+                                    <option value="2">ICICI Bank</option>
+                                    <option value="3">Kotak Bank</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select Designation</option>
+                                    <option value="1">Bank Of Maharashtra</option>
+                                    <option value="2">ICICI Bank</option>
+                                    <option value="3">Kotak Bank</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Select Employee</option>
+                                    <option value="1">Bank Of Maharashtra</option>
+                                    <option value="2">ICICI Bank</option>
+                                    <option value="3">Kotak Bank</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <div class="form-container">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search Reporting Person" type="search">
+                                        <button type="submit" class="btn btn-light">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="modal-title mb-0">Reporting To</h6>
+                                <div class="row my-3">
+                                    <div class="col-sm ">
+                                        <table class="table dashboard-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Approve Right</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                Navin Boddhul
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="flexRadioDefault">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="form-container w-100">
+                                            <div class="d-flex justify-content-between">
+                                                <button type="button" class="btn btn-outline-main"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-main">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-container w-100">
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-main"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-main">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
