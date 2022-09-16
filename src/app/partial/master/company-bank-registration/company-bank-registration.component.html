@@ -1,48 +1,52 @@
 <div class="card main-card">
     <div class="card-header">
         <div class="form-container">
-            <div class="row ">
-                <div class="col-sm-2 px-1">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Seach for Bank Name" type="search">
-                        <button type="submit" class="btn btn-light">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
+            <div class="row justify-content-between">
+                <div class="col-sm-10 px-1">
+                    <div class="row gx-1">
+                        <div class="col-sm">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>All Company</option>
+                                <option value="1">Bank Of Maharashtra</option>
+                                <option value="2">ICICI Bank</option>
+                                <option value="3">Kotak Bank</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>All Bank Name</option>
+                                <option value="1">Bank Of Maharashtra</option>
+                                <option value="2">ICICI Bank</option>
+                                <option value="3">Kotak Bank</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>All Branch Name</option>
+                                <option value="1">Bank Of Maharashtra</option>
+                                <option value="2">ICICI Bank</option>
+                                <option value="3">Kotak Bank</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Account Type</option>
+                                <option value="1">Saving</option>
+                                <option value="2">Current</option>
+        
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Seach for Bank Name" type="search">
+                                <button type="submit" class="btn btn-light">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-2">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>All Company</option>
-                        <option value="1">Bank Of Maharashtra</option>
-                        <option value="2">ICICI Bank</option>
-                        <option value="3">Kotak Bank</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>All Bank Name</option>
-                        <option value="1">Bank Of Maharashtra</option>
-                        <option value="2">ICICI Bank</option>
-                        <option value="3">Kotak Bank</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>All Branch Name</option>
-                        <option value="1">Bank Of Maharashtra</option>
-                        <option value="2">ICICI Bank</option>
-                        <option value="3">Kotak Bank</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Account Type</option>
-                        <option value="1">Saving</option>
-                        <option value="2">Current</option>
-
-                    </select>
-                </div>
-                <div class="col-sm text-end px-1">
+                <div class="col-sm-2 text-end px-1">
                     <button type="submit" class="btn btn-outline-main" data-bs-toggle="modal"
                         data-bs-target="#AddNewOrganizationModal">
                         <i class="fa-solid fa-plus me-2"></i>Add New
