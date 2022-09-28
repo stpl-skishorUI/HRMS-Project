@@ -22,4 +22,11 @@ export const PartialLayoutRoutes: Routes = [
   { path: 'employee-salary-details', loadChildren: () => import('../../partial/register/employee-salary-details/employee-salary-details.module').then(m => m.EmployeeSalaryDetailsModule), data: { title: 'Employee Salary Details' } },
   { path: 'assign-reporting-person', loadChildren: () => import('../../partial/register/assign-reporting-person/assign-reporting-person.module').then(m => m.AssignReportingPersonModule), data: { title: 'Assign Reporting Person' } },
   { path: 'leave-assignment', loadChildren: () => import('../../partial/register/leave-assignment/leave-assignment.module').then(m => m.LeaveAssignmentModule) , data: { title: 'Leave Assignment' }},
+
+  // HR - Admin Menu
+  { path: 'absent-compensate', loadChildren: () => import('../../partial/hr-admin/absent-compensate/absent-compensate.module').then(m => m.AbsentCompensateModule), data: { title: 'Absent/Compensate' } },
+  { path: 'leave-details', loadChildren: () => import('../../partial/hr-admin/leave-details/leave-details.module').then(m => m.LeaveDetailsModule), data: { title: 'Leave Details' } },
+  { path: 'attendance-verification', loadChildren: () => import('../../partial/hr-admin/attendance-verification/attendance-verification.module').then(m => m.AttendanceVerificationModule), data: { title: 'Attendance verification' } },
+  { path: 'offer-letter', loadChildren: () => import('../../partial/hr-admin/offer-letter/offer-letter.module').then(m => m.OfferLetterModule), data: { title: 'Offer Letter' } },
+  { path: 'exit-form', loadChildren: () => import('../../partial/hr-admin/exit-form/exit-form.module').then(m => m.ExitFormModule), data: { title: 'Exit Form' } },
 ];
