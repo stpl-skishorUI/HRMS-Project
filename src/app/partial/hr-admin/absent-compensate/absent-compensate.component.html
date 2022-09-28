@@ -1,1 +1,163 @@
-<p>absent-compensate works!</p>
+<div class="container-fluid">
+    <div class="form-container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Company</option>
+                                    <option value="1">Shaurya Technosoft Pvt Ltd</option>
+                                    <option value="2">Company 2</option>
+                                    <option value="3">Company 3</option>
+                                </select>
+                            </div>
+                            <div class="col-sm">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Employee</option>
+                                    <option value="1">Empoyee 1</option>
+                                    <option value="2">Empoyee 2</option>
+                                    <option value="3">Empoyee 3</option>
+                                </select>
+                            </div>
+                            <div class="col-sm">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Month</option>
+                                    <option value="1">January</option>
+                                    <option value="2">Company 2</option>
+                                    <option value="3">Company 3</option>
+                                </select>
+                            </div>
+                            <div class="col-sm">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Year</option>
+                                    <option value="1">2019</option>
+                                    <option value="2">2020</option>
+                                    <option value="3">2021</option>
+                                    <option value="3">2022</option>
+                                    <option value="3">2023</option>
+                                </select>
+                            </div>
+                            <div class="col-sm">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Leave Type</option>
+                                    <option value="1">Sick Leave</option>
+                                    <option value="2">Privileage Leave</option>
+                                    <option value="3">Compensatory Leave</option>
+                                    <option value="3">LWP</option>
+                                    <option value="3">Optional</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 text-end">
+                        <button type="button" class="btn btn-outline-main" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Add New
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <table class="table dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Employee Name</th>
+                                <th>Leave Type</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Ram Chavan</td>
+                                <td>Sick Leave</td>
+                                <td>21/01/2022</td>
+                                <td>21/02/2022</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title" id="exampleModalLabel">Apply for Leave</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-container">
+                    <div class="row">
+                        <div class="col-sm-12 mb-3 ">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Select Company</option>
+                                <option value="1">Company 1</option>
+                                <option value="2">Company 2</option>
+                                <option value="3">Company 3</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 mb-3 ">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>All Employee</option>
+                                <option value="1">Emp 1</option>
+                                <option value="2">Emp 2</option>
+                                <option value="3">Emp 3</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 mb-3 ">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>All Leave Type</option>
+                                <option value="1">Emp 1</option>
+                                <option value="2">Emp 2</option>
+                                <option value="3">Emp 3</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 mb-3 ">
+                            <div class="input-group mb-lg-0 mb-3">
+                                <input type="date" class="form-control" placeholder="Enter Start Date">
+                             
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-3 ">
+                            <div class="input-group mb-lg-0 mb-3">
+                                <input type="date" class="form-control" placeholder="Enter End Date">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-3 ">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                   <span class="text-danger">*</span> While applying half day please ensure start date & end date are same
+                                </label>
+                              </div>
+                        </div>
+                        <div class="col-sm-12 mb-3 ">
+                            <div class="">
+                                <textarea class="form-control" placeholder="Enter a Remark" id="floatingTextarea"></textarea>
+                              </div>                
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-main" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-main">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
