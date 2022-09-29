@@ -1,84 +1,51 @@
 <div class="card main-card">
-    <div class="card-header">
+    <div class="card-header pb-0">
         <div class="form-container">
-            <div class="row justify-content-between">
+            <div class="row justify-content-between align-items-center">
                 <div class="col-sm-3">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Seach for Bank Name" type="search">
-                        <button type="submit" class="btn btn-light"><i
-                                class="fa-solid fa-magnifying-glass"></i></button>
+                    <div class="">
+                        <mat-form-field appearance="legacy" class="w-100">
+                            <mat-label>Bank Name</mat-label>
+                            <input matInput placeholder="Search Bank Name">
+                        </mat-form-field>
                     </div>
                 </div>
                 <div class="col-sm-3 text-end">
-                    <button type="submit" class="btn btn-outline-main" data-bs-toggle="modal"
-                        data-bs-target="#AddNewOrganizationModal">
+                    <button mat-button class="btn btn-outline-main" (click)="openDialog()">
                         <i class="fa-solid fa-plus me-2"></i>Add New
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card-body p-2">
-        <table class="table dashboard-table">
-            <thead>
-                <tr>
-                    <th>Sr. No.</th>
-                    <th>Bank Name</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>
-                        Bank Of Maharashtra
+    <div class="card-body">
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
+
+                <ng-container matColumnDef="sr_no">
+                    <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sr_no}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Bank_Name">
+                    <th mat-header-cell *matHeaderCellDef>Bank Name</th>
+                    <td mat-cell *matCellDef="let element">
+                        Sick Leave
                     </td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn bg-info bg-opacity-10 text-info" data-bs-toggle="modal"
-                                data-bs-target="#AddNewOrganizationModal"><i
-                                    class="fa-regular fa-pen-to-square"></i></button>
-                            <button type="button" class="btn bg-danger bg-opacity-10 text-danger"><i
-                                    class="fa-solid fa-trash-can"></i></button>
-                        </div>
+                </ng-container>
+                
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button >
+                            <mat-icon>edit</mat-icon>
+                        </button>
                     </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+                </ng-container>
 
-
-<!-- Modal for add new organization -->
-
-<div class="modal fade" id="AddNewOrganizationModal" tabindex="-1" aria-labelledby="AddNewOrganizationModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <p class="modal-title mb-0" id="AddNewOrganizationModalLabel">Add New Bank Registration</p>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="form-container">
-                            <div class="">
-                                <input type="text" class="form-control" placeholder="Bank Name">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="form-container w-100">
-                    <div class="d-flex justify-content-between">
-                        <button type="button" class="btn btn-outline-main" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-main">Save</button>
-                    </div>
-                </div>
-            </div>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
         </div>
     </div>
 </div>
