@@ -1,1 +1,149 @@
-<p>advance-payment works!</p>
+<div class="container-fluid">
+    <div class="form-container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-3 mb-3 mb-lg-0">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Company</option>
+                                    <option value="1">Shaurya Technosoft Pvt Ltd</option>
+                                    <option value="2">Company 2</option>
+                                    <option value="3">Company 3</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3 mb-3 mb-lg-0">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Employee</option>
+                                    <option value="1">Shaurya Technosoft Pvt Ltd</option>
+                                    <option value="2">Company 2</option>
+                                    <option value="3">Company 3</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3 mb-3 mb-lg-0">
+                                <div class="input-group mb-lg-0 mb-3">
+                                    <input type="date" class="form-control" placeholder="From Date">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group mb-lg-0 mb-3">
+                                    <input type="date" class="form-control" placeholder="To Date">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 text-end">
+                        <button type="button" class="btn btn-main" data-bs-toggle="modal"
+                            data-bs-target="#AddNewPaymentModal">
+                            <i class="fa-solid fa-plus me-2"></i>Add New
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Emp Name</th>
+                                <th>Advance Amount</th>
+                                <th>Date</th>
+                                <th>Mode of Payment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Ram Chavan</td>
+                                <td>44000</td>
+                                <td>29-9-2022</td>
+                                <td>NFT/UTR</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn bg-info bg-opacity-10 text-info"
+                                            data-bs-toggle="modal" data-bs-target="#AddNewPaymentModal"><i
+                                                class="fa-regular fa-pen-to-square"></i></button>
+                                        <button type="button" class="btn bg-danger bg-opacity-10 text-danger"><i
+                                                class="fa-solid fa-trash-can"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="AddNewPaymentModal" tabindex="-1" aria-labelledby="AddNewPaymentModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddNewPaymentModalLabel">New Payment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Company">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Employee">
+                            </div>
+                            <div class="mb-3">
+                                <input type="date" class="form-control" placeholder="Advance Date">
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Payment Mode</option>
+                                    <option value="1">Cash</option>
+                                    <option value="2">NFT / UTR</option>
+                                    <option value="3">Cheque</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Bank Name</option>
+                                    <option value="1">Bank of India</option>
+                                    <option value="2">Bank of Baroda</option>
+                                    <option value="3">Kotak</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Branch Name</option>
+                                    <option value="1">SSI Market Yard Branch</option>
+                                    <option value="2">Dahiwadi</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <input type="date" class="form-control" placeholder="Advance Amount">
+                            </div>
+                            <div class="mb-3">
+                                <input type="date" class="form-control" placeholder="Monthly Installment">
+                            </div>
+                            <div class="mb-3">
+                                <div class="">
+                                    <textarea class="form-control" placeholder="Remark" id="floatingTextarea2"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-main" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-main">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
