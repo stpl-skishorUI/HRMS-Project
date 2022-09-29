@@ -4,16 +4,18 @@ import { CommonModule } from '@angular/common';
 import { BankRegistrationRoutingModule } from './bank-registration-routing.module';
 import { BankRegistrationComponent } from './bank-registration.component';
 import { AddBankRegistrationComponent } from './add-bank-registration/add-bank-registration.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 
 @NgModule({
   declarations: [
     BankRegistrationComponent,
-    AddBankRegistrationComponent
+    AddBankRegistrationComponent,
   ],
   imports: [
     CommonModule,
-    BankRegistrationRoutingModule
+    BankRegistrationRoutingModule,
+    MaterialModule
   ]
 })
 export class BankRegistrationModule { }
