@@ -3,15 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { SalaryTypeRegistrationRoutingModule } from './salary-type-registration-routing.module';
 import { SalaryTypeRegistrationComponent } from './salary-type-registration.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
+import { AddSalaryTypeComponent } from './add-salary-type/add-salary-type.component';
+
 
 
 @NgModule({
   declarations: [
-    SalaryTypeRegistrationComponent
+    SalaryTypeRegistrationComponent,
+    AddSalaryTypeComponent
   ],
   imports: [
     CommonModule,
-    SalaryTypeRegistrationRoutingModule
+    SalaryTypeRegistrationRoutingModule,
+    MaterialModule,
+    
   ]
 })
 export class SalaryTypeRegistrationModule { }
