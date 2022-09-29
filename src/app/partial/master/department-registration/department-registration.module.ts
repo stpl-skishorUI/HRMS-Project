@@ -3,15 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { DepartmentRegistrationRoutingModule } from './department-registration-routing.module';
 import { DepartmentRegistrationComponent } from './department-registration.component';
-
+import { AddDepartmentComponent } from './add-department/add-department.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 @NgModule({
   declarations: [
-    DepartmentRegistrationComponent
+    DepartmentRegistrationComponent,
+    AddDepartmentComponent
   ],
   imports: [
     CommonModule,
-    DepartmentRegistrationRoutingModule
+    DepartmentRegistrationRoutingModule,
+    MaterialModule
   ]
 })
 export class DepartmentRegistrationModule { }
