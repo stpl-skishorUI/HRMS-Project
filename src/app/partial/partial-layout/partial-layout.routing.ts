@@ -29,4 +29,17 @@ export const PartialLayoutRoutes: Routes = [
   { path: 'attendance-verification', loadChildren: () => import('../../partial/hr-admin/attendance-verification/attendance-verification.module').then(m => m.AttendanceVerificationModule), data: { title: 'Attendance verification' } },
   { path: 'offer-letter', loadChildren: () => import('../../partial/hr-admin/offer-letter/offer-letter.module').then(m => m.OfferLetterModule), data: { title: 'Offer Letter' } },
   { path: 'exit-form', loadChildren: () => import('../../partial/hr-admin/exit-form/exit-form.module').then(m => m.ExitFormModule), data: { title: 'Exit Form' } },
+
+  // accountant Menu
+  { path: 'advance-payment', loadChildren: () => import('../../partial/accountant/advance-payment/advance-payment.module').then(m => m.AdvancePaymentModule), data: { title: 'Advance Payment' } },
+  { path: 'salary-deduction', loadChildren: () => import('../../partial/accountant/salary-deduction/salary-deduction.module').then(m => m.SalaryDeductionModule), data: { title: 'Salary Deduction' } },
+  { path: 'salary-processing', loadChildren: () => import('../../partial/accountant/salary-processing/salary-processing.module').then(m => m.SalaryProcessingModule), data: { title: 'Salary Processing' } },
+  { path: 'salary-transfer', loadChildren: () => import('../../partial/accountant/salary-transfer/salary-transfer.module').then(m => m.SalaryTransferModule), data: { title: 'Salary Transfer' } },
+  
+  // Report menu
+  { path: 'employee-salary-report', loadChildren: () => import('../../partial/reports/employee-salary-report/employee-salary-report.module').then(m => m.EmployeeSalaryReportModule), data: { title: 'Employee Salary Report' } },
+  { path: 'salary-slip', loadChildren: () => import('../../partial/reports/salary-slip/salary-slip.module').then(m => m.SalarySlipModule), data: { title: 'Salary Slip' } },
+  { path: 'task-details-report', loadChildren: () => import('../../partial/reports/task-details-report/task-details-report.module').then(m => m.TaskDetailsReportModule), data: { title: 'Task Details Report' } },
+  { path: 'leave-report', loadChildren: () => import('../../partial/reports/leave-report/leave-report.module').then(m => m.LeaveReportModule), data: { title: 'Leave Report' } },
+  { path: 'project-cost', loadChildren: () => import('../../partial/reports/project-cost/project-cost.module').then(m => m.ProjectCostModule), data: { title: 'Project Cost' } },
 ];

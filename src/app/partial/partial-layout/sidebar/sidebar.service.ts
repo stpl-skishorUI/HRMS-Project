@@ -88,59 +88,82 @@ export class SidebarService {
       ]
     },
     {
-      title: 'Components',
-      icon: 'far fa-gem',
+      title: 'HR/Admin',
+      icon: 'fa-solid fa-user',
       active: false,
       type: 'dropdown',
       submenus: [
         {
-          title: 'General',
+          title: 'Absent/Compensate',
+          url:'absent-compensate'
         },
         {
-          title: 'Panels'
+          title: 'Leave Details',
+          url:'leave-details'
         },
         {
-          title: 'Tables'
+          title: 'Attendance Verification',
+          url:'attendance-verification'
         },
         {
-          title: 'Icons'
+          title: 'Offer Letter',
+          url:'offer-letter'
         },
         {
-          title: 'Forms'
+          title: 'Exit Form',
+          url:'exit-form'
         }
       ]
     },
     {
-      title: 'Charts',
-      icon: 'fa fa-chart-line',
+      title: 'Accountant',
+      icon: 'fa-solid fa-file-invoice',
       active: false,
       type: 'dropdown',
       submenus: [
         {
-          title: 'Pie chart',
+          title: 'Advance Payment',
+          url:'advance-payment'
         },
         {
-          title: 'Line chart'
+          title: 'Salary Deduction',
+          url:'salary-deduction'
         },
         {
-          title: 'Bar chart'
+          title: 'Salary Processing',
+          url:'salary-processing'
         },
         {
-          title: 'Histogram'
+          title: 'Salary Transfer',
+          url:'salary-transfer'
         }
       ]
     },
     {
-      title: 'Maps',
-      icon: 'fa fa-globe',
+      title: 'Report',
+      icon: 'fa-solid fa-file-lines',
       active: false,
       type: 'dropdown',
       submenus: [
         {
-          title: 'Google maps',
+          title: 'Employee Salary Report',
+          url:'employee-salary-report'
         },
         {
-          title: 'Open street map'
+          title: 'Salary Slip',
+          url:'salary-slip'
+        },
+        {
+          title: 'Task Details Report',
+          url:'task-details-report'
+        },
+        {
+          title: 'Leave Report',
+          url:'leave-report'
+        },
+        {
+          title: 'Project Cost',
+          url:'project-cost'
         }
       ]
     },
