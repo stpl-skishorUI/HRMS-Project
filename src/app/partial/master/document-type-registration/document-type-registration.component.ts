@@ -45,8 +45,11 @@ export class DocumentTypeRegistrationComponent implements OnInit {
     let obj = this.documentTypeForm.value;
     this.service.setHttp('post', 'DocumentType', false, obj, false, 'base');
     this.service.getHttp().subscribe({
-      next: (res: any) =>
-        this.displayData()
+      next: (res: any) =>{
+        this.displayData();
+         this.documentTypeForm.reset();
+      }
+      
     })
   }
 
