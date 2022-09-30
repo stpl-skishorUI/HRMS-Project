@@ -28,10 +28,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
+                <tr *ngFor="let data of dataSource; let i = index;">
+                    <td>{{ i + 1}}</td>
                     <td>
-                        Bank Of Maharashtra
+                        {{data.documentTypeName}}
                     </td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
