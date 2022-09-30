@@ -18,7 +18,7 @@ export class CallApiService {
 
   getBaseurl(url: string) {
     switch (url) {
-      case 'Documype': return 'http://hrmssvr.erpguru.in/api/'; break;
+      case 'baseURL': return 'http://hrmssvr.erpguru.in/api/'; break;
       default: return ''; break;         
     }
   }
