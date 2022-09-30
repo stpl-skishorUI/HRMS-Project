@@ -32,7 +32,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   displayData() {
     this.service.setHttp('get', 'DocumentType/GetAllDocumentType', false, false, false,
-      'base');
+      'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         console.log(res);
@@ -43,7 +43,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   postData() {
     let obj = this.documentTypeForm.value;
-    this.service.setHttp('post', 'DocumentType', false, obj, false, 'base');
+    this.service.setHttp('post', 'DocumentType', false, obj, false, 'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) =>{
         this.displayData();
