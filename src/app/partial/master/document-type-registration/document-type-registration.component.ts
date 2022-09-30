@@ -20,19 +20,19 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   controlForm() {
     this.documentTypeForm = this.fb.group({
-      "createdBy": 0,
-      "modifiedBy": 0,
+      "createdBy": 1,
+      "modifiedBy": 1,
       "createdDate": new Date(),
       // "modifiedDate": "2022-09-30T07:27:19.361Z",
-      "isDeleted": true,
-      "id": 0,
+      // "isDeleted": false,
+      // "id": 0,
       "documentTypeName": ['']
     })
   }
 
   displayData() {
-    this.service.setHttp('get', 'DocumentType/GetAllDocumentType?documentType=Adhar%20Card%20New', false, false, false,
-      'DocumentType');
+    this.service.setHttp('get', 'DocumentType/GetAllDocumentType', false, false, false,
+      'base');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         console.log(res);
@@ -43,7 +43,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   postData() {
     let obj = this.documentTypeForm.value;
-    this.service.setHttp('post', 'DocumentType', false, obj, false, 'DocumentType');
+    this.service.setHttp('post', 'DocumentType', false, obj, false, 'base');
     this.service.getHttp().subscribe({
       next: (res: any) =>
         this.displayData()
