@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 })
 export class CallApiService {
   userObj = new Array();
-
+//check
   private httpObj: any = {
     type: '',
     url: '',
@@ -18,7 +18,7 @@ export class CallApiService {
 
   getBaseurl(url: string) {
     switch (url) {
-      case 'DocumentType': return 'http://hrmssvr.erpguru.in/api/'; break;
+      case 'baseUrlCheck': return 'http://hrmssvr.erpguru.in/api/'; break;
       default: return ''; break;         
     }
   }
