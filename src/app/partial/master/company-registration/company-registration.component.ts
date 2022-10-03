@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddCompanyComponent } from './add-company/add-company.component';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { AddSalaryTypeComponent } from '../salary-type-registration/add-salary-type/add-salary-type.component';
 
 @Component({
   selector: 'app-company-registration',
@@ -17,14 +18,15 @@ export class CompanyRegistrationComponent implements OnInit {
     this.getTableData();
   }
 
-  addCompany() {
+  addCompany(obj ?: any) {
     const dialogRef = this.dialog.open(AddCompanyComponent,{
-      width: '50%'
+      width: '50%',
+       data : obj
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      // this.getTableData();
+      // console.log(`Dialog result: ${result}`);
+      this.getTableData();
     });
   }
 
@@ -37,6 +39,22 @@ getTableData(){
       // console.log(res);
     }
   })
+}
+
+
+
+onDelete(id:number){
+  console.log(id);
+  
+  this.service.setHttp('delete','api/CompanyRegistration',false, id, false, "baseURL");
+  this.service.getHttp().subscribe({
+    next:(res:any)=>{
+      if(res.statusCode == 200){
+        this.getTableData();
+      }
+    }
+  })
+  alert("Deleted");
 }
 
 
