@@ -5,6 +5,8 @@ import { CompanyRegistrationRoutingModule } from './company-registration-routing
 import { CompanyRegistrationComponent } from './company-registration.component';
 import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 import { AddCompanyComponent } from './add-company/add-company.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { AddCompanyComponent } from './add-company/add-company.component';
   imports: [
     CommonModule,
     CompanyRegistrationRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class CompanyRegistrationModule { }

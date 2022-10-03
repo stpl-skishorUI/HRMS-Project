@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { AddDocumentTypeRegistrationComponent } from './add-document-type-registration/add-document-type-registration.component';
 
 @Component({
   selector: 'app-document-type-registration',
@@ -8,49 +10,31 @@ import { CallApiService } from 'src/app/core/services/call-api.service';
   styleUrls: ['./document-type-registration.component.scss']
 })
 export class DocumentTypeRegistrationComponent implements OnInit {
+ 
+  displayedColumns: string[] = ['sr_no', 'Document_Type_Name','action'];
+  dataSource = ELEMENT_DATA;
 
-  documentTypeForm!: FormGroup;
-  dataSource = new Array();
-  constructor(private service: CallApiService, private fb: FormBuilder) { }
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.controlForm();
-    this.displayData();
+  }
+  openDialog() {
+    const dialogRef = this.dialog.open(AddDocumentTypeRegistrationComponent,{
+      width:'40%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
-  controlForm() {
-    this.documentTypeForm = this.fb.group({
-      "createdBy": 1,
-      "modifiedBy": 1,
-      "createdDate": new Date(),
-      // "modifiedDate": "2022-09-30T07:27:19.361Z",
-      // "isDeleted": false,
-      // "id": 0,
-      "documentTypeName": ['']
-    })
-  }
-
-  displayData() {
-    this.service.setHttp('get', 'api/DocumentType/GetAllDocumentType', false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.dataSource = res.responseData;
-      }
-    })
-  }
-
-  postData() {
-    let obj = this.documentTypeForm.value;
-    this.service.setHttp('post', 'api/DocumentType', false, obj, false, 'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) =>{
-        this.displayData();
-         this.documentTypeForm.reset();
-      }
-      
-    })
-  }
-
+}
+const ELEMENT_DATA: PeriodicElement[] = [
+  {sr_no: 1, Document_Type_Name: '',action:'',},
+];
+export interface PeriodicElement {
+  sr_no: number;
+  Document_Type_Name: any;
+  action: any;
+ 
 }

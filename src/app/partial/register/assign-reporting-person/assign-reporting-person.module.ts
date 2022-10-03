@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AssignReportingPersonRoutingModule } from './assign-reporting-person-routing.module';
 import { AssignReportingPersonComponent } from './assign-reporting-person.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AssignReportingPersonComponent } from './assign-reporting-person.compon
   ],
   imports: [
     CommonModule,
-    AssignReportingPersonRoutingModule
+    AssignReportingPersonRoutingModule,
+    MaterialModule,
   ]
 })
 export class AssignReportingPersonModule { }
