@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CallApiService } from 'src/app/core/services/call-api.service';
 
 @Component({
   selector: 'app-add-bank-branch-registration',
@@ -10,10 +12,15 @@ export class AddBankBranchRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['sr_no', 'Bank_Name','action'];
   dataSource = ELEMENT_DATA;
 
-  constructor() {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any ) {
+    this.dataSource = this.data;
+    
+  }
 
   ngOnInit(): void {
+    
   }
+
 
 }
 const ELEMENT_DATA: PeriodicElement[] = [

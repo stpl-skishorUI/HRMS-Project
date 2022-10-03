@@ -21,13 +21,13 @@
         
                 <ng-container matColumnDef="sr_no">
                     <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
-                    <td mat-cell *matCellDef="let element"> {{element.sr_no}} </td>
+                    <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
                 </ng-container>
         
                 <ng-container matColumnDef="Bank_Name">
                     <th mat-header-cell *matHeaderCellDef>Bank Name</th>
                     <td mat-cell *matCellDef="let element">
-                        Sick Leave
+                       {{element.bankName}}
                     </td>
                 </ng-container>
         
