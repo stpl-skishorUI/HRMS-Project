@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CallApiService } from 'src/app/core/services/call-api.service';
 import { AddLeaveTypeComponent } from '../leave-type-registration/add-leave-type/add-leave-type.component';
 import { AddBankBranchRegistrationComponent } from './add-bank-branch-registration/add-bank-branch-registration.component';
 
@@ -13,7 +14,7 @@ export class BankBranchRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['sr_no', 'Bank_Name', 'Branch_Name','IFSC_Code'];
   dataSource = ELEMENT_DATA;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private api : CallApiService) {}
 
   ngOnInit(): void {
   }
@@ -25,6 +26,12 @@ export class BankBranchRegistrationComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  bindTable(){
+    this.api.setHttp('get', 'api/BankBranchRegistration/GetAll', false, false, false, 'baseURL');
+    
+
   }
 }
 const ELEMENT_DATA: PeriodicElement[] = [
