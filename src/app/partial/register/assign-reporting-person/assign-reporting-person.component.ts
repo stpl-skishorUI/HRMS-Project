@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./assign-reporting-person.component.scss']
 })
 export class AssignReportingPersonComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'Reporting_Person_Name', 'Actions','Approve_Right'];
+  displayedColumns: string[] = ['position', 'name', 'Reporting_Person_Name', 'Actions',];
   dataSource = ELEMENT_DATA;
   constructor() { }
 
