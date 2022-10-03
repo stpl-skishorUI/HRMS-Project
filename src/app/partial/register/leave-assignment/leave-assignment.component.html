@@ -5,36 +5,40 @@
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="col-sm">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Company Name</option>
-                                <option value="1">Shaurya Technosoft Pvt Ltd</option>
-                                <option value="2">Front Page</option>
-                                <option value="3">Jagtap Autolines</option>
-                            </select>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Select Company Name</mat-label>
+                                <mat-select>
+                                    <mat-option>Shaurya Technosoft Pvt Ltd</mat-option>
+                                    <mat-option>Front Page</mat-option>
+                                    <mat-option>Jagtap Autolines</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                         <div class="col-sm">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>All Employee</option>
-                                <option value="1">Sanket panchmind</option>
-                                <option value="2">Rahul Mistari</option>
-                                <option value="3">Aditya khutwad</option>
-                            </select>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Select All Employee</mat-label>
+                                <mat-select>
+                                    <mat-option>Shaurya Technosoft Pvt Ltd</mat-option>
+                                    <mat-option>Front Page</mat-option>
+                                    <mat-option>Jagtap Autolines</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                         <div class="col-sm">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Year</option>
-                                <option value="1">2021</option>
-                                <option value="2">2022</option>
-                                <option value="3">2023</option>
-                            </select>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Select Year</mat-label>
+                                <mat-select>
+                                    <mat-option>2022</mat-option>
+                                    <mat-option>2021</mat-option>
+                                    <mat-option>2020</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                         <div class="col-sm">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Seach for Salary Type"
-                                    type="search">
-                                <button type="submit" class="btn btn-light"><i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                            </div>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Seach for Salary Type</mat-label>
+                                <input matInput placeholder="Seach for Salary Type" >
+                              </mat-form-field>
                         </div>
                     </div>
                 </div>
@@ -47,25 +51,27 @@
         <div class="form-container">
             <div class="row">
                 <div class="col-sm-7">
-                    <table class="table dashboard-table">
-                        <thead>
-                            <tr>
-                                <th>Sr. No.</th>
-                                <th>Leave Type</th>
-                                <th>Allowed No of Leave</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    Sick Leave
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control">
-                                </td>
-                            </tr>
-                        </tbody>
+                    <table mat-table [dataSource]="dataSource" class="dashboard-table w-100">
+
+                        <ng-container matColumnDef="position">
+                            <th mat-header-cell *matHeaderCellDef>Sr.No. </th>
+                            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="Leave_Type">
+                            <th mat-header-cell *matHeaderCellDef> Leave Type</th>
+                            <td mat-cell *matCellDef="let element"> Sick Leave </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Allowed_No_of_Leave">
+                            <th mat-header-cell *matHeaderCellDef> Allowed No of Leave </th>
+                            <td mat-cell *matCellDef="let element">
+                                <input type="number" class="form-control">
+                             </td>
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                 </div>
                 <div class="col-sm-5">
@@ -74,25 +80,27 @@
                             <h6 class="modal-title mb-0">Carry Forward (PL)</h6>
                         </div>
                         <div class="card-body">
-                            <table class="table dashboard-table">
-                                <thead>
-                                    <tr>
-                                        <th>Sr. No.</th>
-                                        <th>Leave Type</th>
-                                        <th>Allowed No of Leave</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>
-                                            Sick Leave
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control">
-                                        </td>
-                                    </tr>
-                                </tbody>
+                            <table mat-table [dataSource]="dataSource" class="dashboard-table w-100">
+
+                                <ng-container matColumnDef="position">
+                                    <th mat-header-cell *matHeaderCellDef>Sr.No. </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="Leave_Type">
+                                    <th mat-header-cell *matHeaderCellDef> Leave Type</th>
+                                    <td mat-cell *matCellDef="let element"> Sick Leave </td>
+                                </ng-container>
+        
+                                <ng-container matColumnDef="Allowed_No_of_Leave">
+                                    <th mat-header-cell *matHeaderCellDef> Allowed No of Leave </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <input type="number" class="form-control">
+                                     </td>
+                                </ng-container>
+            
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
                         </div>
                     </div>
@@ -101,6 +109,6 @@
         </div>
     </div>
     <div class="text-end m-2">
-        <button type="submit" class="btn btn-outline-main"> Assign</button>
+        <button mat-raised-button type="submit" class="btn btn-outline-main"> Assign</button>
     </div>
 </div>
