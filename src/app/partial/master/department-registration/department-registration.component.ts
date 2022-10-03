@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+import { CallApiService } from 'src/app/core/services/call-api.service';
 import { AddDepartmentComponent } from './add-department/add-department.component';
 
 @Component({
@@ -9,22 +10,40 @@ import { AddDepartmentComponent } from './add-department/add-department.componen
 })
 export class DepartmentRegistrationComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,private service: CallApiService) {}
 
   ngOnInit(): void {
+    this.displayData();
   }
 
-  adddept() {
+  adddept(data?:any) {
     const dialogRef = this.dialog.open(AddDepartmentComponent,{
-      width: '50%'
+      width: '50%',
+      data: data,
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      this.displayData();
+      // this.dialogRef.close();
     });
   }
-  displayedColumns: string[] = ['srno', 'company_name', 'department_name','action'];
+
+  displayedColumns: string[] = ['srno', 'companyName', 'departmentName','action'];
   dataSource = ELEMENT_DATA;
+
+  displayData() {
+    this.service.setHttp('get', 'api/DepartmentType/GetDepartmentRegistration', false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == '200') {
+          // console.log(res);
+          this.dataSource = res.responseData;
+        }
+      }
+    })
+  }
 }
 export interface PeriodicElement {
   srno: number;

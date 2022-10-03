@@ -1,28 +1,36 @@
 <div class="card main-card">
     <div class="card-header pb-0">
         <div class="form-container">
-            <div class="row align-items-center">
-                <div class="col-sm-3">
-                    <div class="">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label>Bank Name</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let name of bankNames">{{name.name}}</mat-option>
-                                <!-- <mat-option>Bank Of India</mat-option>
+            <form [formGroup]="filterForm">
+                <div class="row align-items-center">
+               
+                    <div class="col-sm-3">
+                        <div class="">
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Bank Name</mat-label>
+                                <mat-select formControlName="id">
+                                    <mat-option *ngFor="let name of bankNames" [value]="name.name">{{name.name}}</mat-option>
+                                    <!-- <mat-option>Bank Of India</mat-option>
                                 <mat-option>State Of India</mat-option> -->
-                            </mat-select>
-                        </mat-form-field>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label>Branch Name</mat-label>
-                            <input matInput placeholder="Branch Name">
-                        </mat-form-field>
+                    <!-- <div class="col-sm-3">
+                        <div class="">
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Branch Name</mat-label>
+                                <input matInput formControlName="branch" placeholder="Branch Name">
+                            </mat-form-field>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-3">
+                        <button mat-raised-button color="primary" (click)="onSearch()"><mat-icon>search</mat-icon>Search</button>
                     </div>
-                </div>
+             
             </div>
+            </form>
+            
         </div>
     </div>
     <div class="card-body">
@@ -39,7 +47,7 @@
                         <ng-container matColumnDef="Bank_Name">
                             <th mat-header-cell *matHeaderCellDef>Bank Name</th>
                             <td mat-cell *matCellDef="let element">
-                               {{element.bankName}}
+                                {{element.bankName}}
                             </td>
                         </ng-container>
 
@@ -51,6 +59,14 @@
                         <ng-container matColumnDef="IFSC_Code">
                             <th mat-header-cell *matHeaderCellDef>IFSC Code</th>
                             <td mat-cell *matCellDef="let element">{{element.ifsC_Code}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="Action">
+                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <td mat-cell *matCellDef="let element"><button mat-icon-button color="accent"
+                                    style="outline: none">
+                                    <mat-icon (click)="onEdit(element)">create</mat-icon>
+                                    <mat-icon (click)="onDelete(element.id)">delete</mat-icon>
+                                </button></td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -64,45 +80,43 @@
                         <h6 class="modal-title mb-0">Add New Bank Branch Registration</h6>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex justify-content-between gap-2">
-                            <mat-form-field appearance="legacy" class="w-100 mb-0">
-                                <mat-label>Bank Name</mat-label>
-                                <mat-select>
-                                    <mat-option *ngFor="let name of bankNames">{{name.name}}</mat-option>
-                                    <!-- <mat-option>Bank Of India</mat-option>
+                        <form [formGroup]="regForm">
+                            <div class="d-flex justify-content-between gap-2">
+                                <mat-form-field appearance="legacy" class="w-100 mb-0">
+                                    <mat-label>Bank Name</mat-label>
+                                    <mat-select formControlName="bankId">
+                                        <mat-option *ngFor="let name of bankNames" [value]="name.id">{{name.name}}
+                                        </mat-option>
+                                        <!-- <mat-option>Bank Of India</mat-option>
                                     <mat-option>State Of India</mat-option> -->
-                                </mat-select>
-                            </mat-form-field>
-                            <button mat-icon-button (click)="openDialog()">
-                                <mat-icon>add</mat-icon>
-                            </button>
-                        </div>
-                        <div class="">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>Branch Name</mat-label>
-                                <input matInput placeholder="Branch Name">
-                            </mat-form-field>
-                        </div>
-                        <div class="">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>IFSC Code</mat-label>
-                                <input matInput placeholder="IFSC Code">
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <div class="d-flex justify-content-between">
-                                <button mat-raised-button class="btn-outline-main">Cancel</button>
-                                <button mat-raised-button class="btn-main">Update</button>
+                                    </mat-select>
+                                </mat-form-field>
+                                <button mat-icon-button (click)="openDialog()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
                             </div>
-                        </div>
+                            <div class="">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label>Branch Name</mat-label>
+                                    <input matInput placeholder="Branch Name" formControlName="branchName">
+                                </mat-form-field>
+                            </div>
+                            <div class="">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label>IFSC Code</mat-label>
+                                    <input matInput placeholder="IFSC Code" formControlName="ifsC_Code">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <button mat-raised-button class="btn-outline-main">Cancel</button>
+                                    <button mat-raised-button class="btn-main" (click)="onSubmit()">{{!editFlag ? 'Submit' :'Update'}}</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
