@@ -5,6 +5,8 @@ import { DepartmentRegistrationRoutingModule } from './department-registration-r
 import { DepartmentRegistrationComponent } from './department-registration.component';
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,10 @@ import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.mo
   imports: [
     CommonModule,
     DepartmentRegistrationRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ]
 })
 export class DepartmentRegistrationModule { }
