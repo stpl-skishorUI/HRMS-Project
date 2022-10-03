@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LeaveAssignmentRoutingModule } from './leave-assignment-routing.module';
 import { LeaveAssignmentComponent } from './leave-assignment.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { LeaveAssignmentComponent } from './leave-assignment.component';
   ],
   imports: [
     CommonModule,
-    LeaveAssignmentRoutingModule
+    LeaveAssignmentRoutingModule,
+    MaterialModule
   ]
 })
 export class LeaveAssignmentModule { }
