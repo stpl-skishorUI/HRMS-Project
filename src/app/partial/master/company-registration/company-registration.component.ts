@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AddCompanyComponent } from './add-company/add-company.component';
+import { CallApiService } from 'src/app/core/services/call-api.service';
 
 @Component({
   selector: 'app-company-registration',
@@ -8,10 +9,12 @@ import { AddCompanyComponent } from './add-company/add-company.component';
   styleUrls: ['./company-registration.component.scss']
 })
 export class CompanyRegistrationComponent implements OnInit {
-
-  constructor(public dialog: MatDialog) {}
+  displayedColumns: string[] = ['srno', 'companyLogo','companyName', 'emailId', 'address','action'];
+  dataSource = ELEMENT_DATA;
+  constructor(public dialog: MatDialog, private service : CallApiService) {}
 
   ngOnInit(): void {
+    this.getTableData();
   }
 
   addCompany() {
@@ -21,11 +24,23 @@ export class CompanyRegistrationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      // this.getTableData();
     });
   }
 
-  displayedColumns: string[] = ['srno', 'company_logo','company_name', 'email', 'address','action'];
-  dataSource = ELEMENT_DATA;
+  
+getTableData(){
+  this.service.setHttp('get','CompanyRegistration/GetAllCompanies', false, false, false, "baseURL");
+  this.service.getHttp().subscribe({
+    next:(res:any)=>{
+      this.dataSource = res.responseData;
+      // console.log(res);
+    }
+  })
+}
+
+
+  
 }
 export interface PeriodicElement {
   srno: number;
