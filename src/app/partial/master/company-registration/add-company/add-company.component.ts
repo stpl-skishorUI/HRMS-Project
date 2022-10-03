@@ -11,58 +11,76 @@ export class AddCompanyComponent implements OnInit {
 
   companyRegistrationForm !: FormGroup;
   dataSource = new Array();
+  imgURL : string = "https://image.shutterstock.com/image-vector/programming-code-coding-hacker-background-260nw-1714491562.jpg";
 
-  constructor(private fb : FormBuilder, private service : CallApiService) { }
+  constructor(private fb: FormBuilder, private service: CallApiService) { }
 
   ngOnInit(): void {
     this.formField();
     // this.getTableData();
   }
 
-  formField(){
+  formField() {
     this.companyRegistrationForm = this.fb.group({
-        "createdBy": 0,
-        "modifiedBy": 0,
-        "createdDate": new Date(),
-        "modifiedDate": new Date(),
-        "isDeleted": false,
-        "id": 57,
-        "organizationId": 0,
-        "companyName": [''],
-        "contactNo": [''],
-        "address": [''],
-        "website": [''],
-        "emailId": [''],
-        "companyLogo": [''],
-        "aboutUs": ['']
+      "createdBy": 0,
+      "modifiedBy": 0,
+      "createdDate": new Date(),
+      "modifiedDate": new Date(),
+      "isDeleted": false,
+      "id": 57,
+      "organizationId": 0,
+      "companyName": [''],
+      "contactNo": [''],
+      "address": [''],
+      "website": [''],
+      "emailId": [''],
+      "companyLogo": [this.imgURL],
+      "aboutUs": ['']
     })
   }
 
-  getTableData(){
-    this.service.setHttp('get','CompanyRegistration/GetAllCompanies', false, false, false, "baseURL");
+  getTableData() {
+    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies', false, false, false, "baseURL");
     this.service.getHttp().subscribe({
-      next:(res:any)=>{
+      next: (res: any) => {
         this.dataSource = res.responseData;
         console.log(res);
       }
     })
   }
 
-  onSubmit(){
+  onSubmit() {
     let formValue = this.companyRegistrationForm.value;
     console.log(formValue);
-    this.service.setHttp('post','CompanyRegistration',false, formValue, false, "baseURL");
+    this.service.setHttp('post', 'api/CompanyRegistration', false, formValue, false, "baseURL");
     this.service.getHttp().subscribe({
-      next:(res:any)=>{
-  this.getTableData();
-       
+      next: (res: any) => {
+        this.getTableData();
+
       }
     })
   }
 
+  // onSubmit(){
+  //   let formData = new FormData();
+  //   formData.append('FolderName', 'example');
+  //   formData.append('DocumentType','jpg,png,jpeg');
+  //   formData.append('UploadDocPath',this.companyRegistrationForm.value.formField);
+
+  //   this.service.setHttp('post','api/CompanyRegistration',false, formData, false, "baseURL");
+  //   this.service.getHttp().subscribe({
+  //     next:(res:any)=>{
+  //       console.log(res);
 
 
-  
-  
+  //       this.postApi();
+  //     }
+  //   })
+  // }
+
+
+
+
+
 
 }

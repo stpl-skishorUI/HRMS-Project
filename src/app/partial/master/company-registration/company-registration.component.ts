@@ -30,7 +30,7 @@ export class CompanyRegistrationComponent implements OnInit {
 
   
 getTableData(){
-  this.service.setHttp('get','CompanyRegistration/GetAllCompanies', false, false, false, "baseURL");
+  this.service.setHttp('get','api/CompanyRegistration/GetAllCompanies', false, false, false, "baseURL");
   this.service.getHttp().subscribe({
     next:(res:any)=>{
       this.dataSource = res.responseData;
