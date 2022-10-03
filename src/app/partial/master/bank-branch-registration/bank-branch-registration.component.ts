@@ -88,7 +88,7 @@ export class BankBranchRegistrationComponent implements OnInit {
   onEdit(data: any) {
     this.editFlag = true;
     this.bankNameDropDown();
-    this.editObj = data;
+    this.editObj = data; 
     this.defaultForm();
     console.log(data);
   }
