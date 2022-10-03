@@ -9,9 +9,22 @@
         </div>
         <div class="col-sm-8">
             <div class="form-container">
+
+                <div class="mb-2">
+                    <mat-form-field appearance="fill">
+                        <mat-select formControlName="organizationId">
+                        <mat-option value="0" >Organization Registration</mat-option>
+                            <mat-option *ngFor="let org of organizationArr" [value]="org.id">
+                                {{org.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+
                 <div class="mb-2">
                     <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Compant Name</mat-label>
+                        <mat-label>Company Name</mat-label>
                         <input matInput placeholder="Company Name" formControlName="companyName">
                     </mat-form-field>
                 </div>
@@ -48,10 +61,11 @@
                 <div class="mb-2">
                     <!-- <mat-form-field appearance="legacy" class="w-100">
                         <mat-label>Choose File</mat-label>
-                        <input matInput placeholder="Enter Email ID">
+                        <input matInput formControlName="companyLogo" (selectionChange)="uploadImg($event)" #img>
                     </mat-form-field> -->
                     <div class="upload-btn-wrapper">
-                        <button mat-raised-button class="btn-main">
+                        <input type="file" id="img" (change)="uploadImg()" #img>
+                        <button mat-raised-button class="btn-main" >
                             <i class="fa-solid fa-upload me-2"></i>
                             Upload File
                         </button>
