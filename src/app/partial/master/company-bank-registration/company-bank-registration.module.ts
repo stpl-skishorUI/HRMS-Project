@@ -5,6 +5,7 @@ import { CompanyBankRegistrationRoutingModule } from './company-bank-registratio
 import { CompanyBankRegistrationComponent } from './company-bank-registration.component';
 import { AddCompanyBankRegistrationComponent } from './add-company-bank-registration/add-company-bank-registration.component';
 import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.mo
   imports: [
     CommonModule,
     CompanyBankRegistrationRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class CompanyBankRegistrationModule { }
