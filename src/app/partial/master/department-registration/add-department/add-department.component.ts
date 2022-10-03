@@ -15,7 +15,7 @@ export class AddDepartmentComponent implements OnInit {
   editFlag: boolean = false;
 
   constructor(private service: CallApiService, private fb: FormBuilder, public dialog: MatDialog, public dialogRef: MatDialogRef<AddDepartmentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.controlForm();

@@ -20,7 +20,7 @@ import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.mo
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
   ]
 })
 export class DocumentTypeRegistrationModule { }
