@@ -2,7 +2,7 @@
     <div class="card  main-card">
         <div class="form-container">
             <div class="card-header">
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col-sm-3 mb-3 mb-lg-0">
                         <mat-form-field appearance="legacy" class="w-100">
                             <mat-label>All Company</mat-label>
@@ -26,74 +26,122 @@
                     <div class="col-sm-3 mb-3 mb-lg-0">
                         <mat-form-field appearance="legacy" class="w-100">
                             <mat-label> Organization</mat-label>
-                            <input matInput placeholder="Seach for Organization">
+                            <input matInput placeholder="Search for Organization">
                         </mat-form-field>
+                    </div>
+                    <div class="col-sm-auto">
+                        <button mat-raised-button>Search</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-body">
             <div class="form-container">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-end align-items-center gap-3">
                     <div class="col-sm-3 mb-3 mb-lg-3">
                         <mat-form-field appearance="legacy" class="w-100">
                             <mat-label> Organization</mat-label>
                             <input matInput placeholder="Seach for Organization">
                         </mat-form-field>
+                       
+                    </div>
+                    <div class="col-sm-1 mb-3 mb-lg-3">
+                        <button mat-raised-button>Search</button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="">
-                        </div>
-                        <table class="table dashboard-table">
-                            <thead>
-                                <tr>
-                                    <th>Sr. No.</th>
-                                    <th>Emp Id</th>
-                                    <th>Emp Name</th>
-                                    <th>Basic Pay</th>
-                                    <th>HRA</th>
-                                    <th>LTA</th>
-                                    <th>Bonus/ExGratia</th>
-                                    <th>Oth.All</th>
-                                    <th>Gross Salary</th>
-                                    <th>PF</th>
-                                    <th>ESIC</th>
-                                    <th>PT</th>
-                                    <th>OT</th>
-                                    <th>Net Salary</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>12214</td>
-                                    <td>Ram Chavan</td>
-                                    <td>44000</td>
-                                    <td>22000</td>
-                                    <td>5000</td>
-                                    <td>1400</td>
-                                    <td>110000</td>
-                                    <td>1800</td>
-                                    <td>0</td>
-                                    <td>200</td>
-                                    <td>0</td>
-                                    <td>108000</td>
-                                    <td>10101010</td>
-                                    <td>
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <!-- <button type="button" class="btn bg-secondary bg-opacity-10" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-user"></i></button> -->
-                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            <table mat-table [dataSource]="dataSource" class="w-100">
+                              
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="position">
+                                  <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                                  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                </ng-container>
+                              
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="name">
+                                  <th mat-header-cell *matHeaderCellDef>Emp Id</th>
+                                  <td mat-cell *matCellDef="let element"> 12214 </td>
+                                </ng-container>
+                              
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="Emp_Name">
+                                  <th mat-header-cell *matHeaderCellDef>Emp Name</th>
+                                  <td mat-cell *matCellDef="let element"> Ram Chavan</td>
+                                </ng-container>
+                              
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="Basic_Pay">
+                                  <th mat-header-cell *matHeaderCellDef>Basic Pay</th>
+                                  <td mat-cell *matCellDef="let element"> 44000</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="HRA">
+                                    <th mat-header-cell *matHeaderCellDef>HRA</th>
+                                    <td mat-cell *matCellDef="let element">22000 </td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="LTA">
+                                    <th mat-header-cell *matHeaderCellDef>LTA</th>
+                                    <td mat-cell *matCellDef="let element"> 5000</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="Bonus_ExGratia">
+                                    <th mat-header-cell *matHeaderCellDef>Bonus ExGratia</th>
+                                    <td mat-cell *matCellDef="let element">1400 </td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="Othall">
+                                    <th mat-header-cell *matHeaderCellDef>Oth.All</th>
+                                    <td mat-cell *matCellDef="let element">110000</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="Gross_Salary">
+                                    <th mat-header-cell *matHeaderCellDef>Gross Salary</th>
+                                    <td mat-cell *matCellDef="let element">1800 </td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="PF">
+                                    <th mat-header-cell *matHeaderCellDef>PF</th>
+                                    <td mat-cell *matCellDef="let element">0</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="ESIC">
+                                    <th mat-header-cell *matHeaderCellDef>ESIC</th>
+                                    <td mat-cell *matCellDef="let element">200</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="PT">
+                                    <th mat-header-cell *matHeaderCellDef>PT</th>
+                                    <td mat-cell *matCellDef="let element">0</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="OT">
+                                    <th mat-header-cell *matHeaderCellDef>OT</th>
+                                    <td mat-cell *matCellDef="let element">108000</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="Net_Salary">
+                                    <th mat-header-cell *matHeaderCellDef>Net Salary</th>
+                                    <td mat-cell *matCellDef="let element">10101010</td>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="Actions">
+                                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop">
                                                 <i class="fa-solid fa-user"></i>
                                             </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                         </td>
+                                  </ng-container>
+                              
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                              </table>      
+                        </div>
                     </div>
                 </div>
             </div>
