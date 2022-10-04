@@ -16,7 +16,9 @@ export class AdvancePaymentComponent implements OnInit {
   }
 
   newpayment() {
-    const dialogRef = this.dialog.open(AddNewPaymentComponent);
+    const dialogRef = this.dialog.open(AddNewPaymentComponent,{
+      width: '30%'
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
