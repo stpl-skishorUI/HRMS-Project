@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3 text-end">
-                    <button mat-button class="btn btn-outline-main" (click)="openDialog('1000ms', '1500ms')">
+                    <button mat-button class="btn btn-outline-main" (click)="openDialog()">
                         <i class="fa-solid fa-plus me-2"></i>Add New
                     </button>
                 </div>
@@ -65,7 +65,7 @@
                         <mat-menu #menu="matMenu" xPosition="before">
                             <button mat-menu-item>
                                 <div class="d-flex justify-content-between align-items-center"
-                                    (click)="openDialog('1000ms', '1500ms')">
+                                    (click)="openDialog()">
                                     <span>Edit</span>
                                     <mat-icon>edit</mat-icon>
                                 </div>
