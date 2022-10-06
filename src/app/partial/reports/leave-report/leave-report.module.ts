@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LeaveReportRoutingModule } from './leave-report-routing.module';
 import { LeaveReportComponent } from './leave-report.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { LeaveReportComponent } from './leave-report.component';
   ],
   imports: [
     CommonModule,
-    LeaveReportRoutingModule
+    LeaveReportRoutingModule,
+    MaterialModule,
   ]
 })
 export class LeaveReportModule { }

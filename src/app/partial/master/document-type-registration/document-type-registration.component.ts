@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddDocumentTypeRegistrationComponent } from './add-document-type-registration/add-document-type-registration.component';
 
 @Component({
@@ -14,12 +15,12 @@ export class DocumentTypeRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['sr_no', 'documentTypeName', 'action'];
   dataSource = ELEMENT_DATA;
 
-  constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder) { }
+  constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snack: MatSnackBar) { }
 
   filterForm!: FormGroup;
-  pageSize!: number;
+  pageSize = 10;
   totalCount!: number;
-  currentPage: number = 1;
+  currentPage: number = 0;
 
   ngOnInit(): void {
     this.displayData();
@@ -38,60 +39,55 @@ export class DocumentTypeRegistrationComponent implements OnInit {
     const dialogRef = this.dialog.open(AddDocumentTypeRegistrationComponent, {
       width: '40%',
       data: data,
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      // console.log(`Dialog result: ${result}`);
       this.displayData();
     });
   }
 
   // ---------------------------------------- Display Data --------------------------------------------
   displayData() {
-    this.service.setHttp('get', 'api/DocumentType/GetAllDocumentType', false, false, false,
+    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?pageno='+ (this.currentPage + 1) +'&pagesize=5&documentType1=', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == '200') {
+        if (res.statusCode == '200' && res.responseData.length) {
           // console.log(res);
           this.dataSource = res.responseData;
+          this.filterForm.reset();
+          this.totalCount = res.responseData1.pageCount;
+        }
+        else{
+          this.dataSource = [];
         }
       }
     })
   }
 
   // ------------------------------------------ Pagination --------------------------------------------
-  // onClickPaginatior(data: any) {
-  //   this.pageSize = data.pageSize;
-  //   this.currentPage = data.pageIndex;
+  onClickPaginatior(data: any) {
+    // this.pageSize = data.pageSize;
+    this.currentPage = data.pageIndex;
 
-  //   this.displayData();
-  //   this.pagination();
-  // }
-
-  // pagination() {
-  //   this.service.setHttp('get', 'api/DocumentType/GetAllDocumentTypeByPagination?pageno=' + this.currentPage + '&pagesize=10', false, false, false,
-  //     'baseURL');
-  //   this.service.getHttp().subscribe({
-  //     next: (res: any) => {
-  //       if (res.statusCode == '200') {
-  //         console.log(res);
-  //         this.dataSource = res.responseData;
-  //         this.totalCount = res.responseData.totalCount;
-  //       }
-  //     }
-  //   })
-  // }
+    this.displayData();
+  }
 
   // -------------------------------------------- Delete Record ----------------------------------------
   deleteRecord(deleteId: any) {
     let deleteIndex = deleteId.id;
 
-    this.service.setHttp('delete', 'api/DocumentType?Id= ' + deleteIndex + ' ', false, false, false,
+    this.service.setHttp('delete', 'HRMS/DocumentType?Id= ' + deleteIndex + ' ', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == '200') {
+          this.snack.open('record deleted successfully!', 'ok', {
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
           this.displayData();
         }
       }
@@ -102,9 +98,9 @@ export class DocumentTypeRegistrationComponent implements OnInit {
   filterData() {
     let docType = this.filterForm.value.documentTypeName;
     console.log(docType);
-    
 
-    this.service.setHttp('get', 'api/DocumentType/GetAllDocumentType?documentType=' + docType, false, false, false,
+
+    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?documentType1=' + docType, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
