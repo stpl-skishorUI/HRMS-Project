@@ -64,7 +64,7 @@ export class HolidayMasterComponent implements OnInit {
       next: (resp: any) => {
         console.log("getAll Holidays:", resp);
         if (resp.statusCode === "200" && resp.responseData !=null) {
-          this.Allholidays = new MatTableDataSource(resp.responseData);
+          this.Allholidays = (resp.responseData);
           this.totalCount = resp.responseData1.pageCount;
         } else {
         if (resp.statusCode != "404") {
