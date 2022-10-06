@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { EmployeeSalaryReportRoutingModule } from './employee-salary-report-routing.module';
 import { EmployeeSalaryReportComponent } from './employee-salary-report.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { EmployeeSalaryReportComponent } from './employee-salary-report.componen
   ],
   imports: [
     CommonModule,
-    EmployeeSalaryReportRoutingModule
+    EmployeeSalaryReportRoutingModule,
+    MaterialModule
   ]
 })
 export class EmployeeSalaryReportModule { }
