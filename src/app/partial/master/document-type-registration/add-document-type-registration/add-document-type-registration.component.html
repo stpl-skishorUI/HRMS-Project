@@ -1,25 +1,25 @@
 <div class="d-flex justify-content-between align-items-center mb-2">
     <h5 class="text-main">Add Document Type Registration </h5>
-    <i class="fa fa-times" aria-hidden="true"></i>
+    <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
 </div>
 <div>
-   <form [formGroup]="docTypeRegistrationForm" (ngSubmit)="postData()">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="mb-2">
-                <mat-form-field appearance="legacy" class="w-100">
-                    <mat-label>Enter Document Type</mat-label>
-                    <input matInput placeholder="Enter Document Type" formControlName="documentTypeName">
-                </mat-form-field>
+    <form [formGroup]="docTypeRegistrationForm" (ngSubmit)="postData()">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="mb-2">
+                    <mat-form-field appearance="legacy" class="w-100">
+                        <mat-label>Enter Document Type</mat-label>
+                        <input matInput placeholder="Enter Document Type" formControlName="documentTypeName">
+                    </mat-form-field>
+                </div>
+
             </div>
-    
         </div>
-    </div>
-    <div class="row">
-        <div class="d-flex justify-content-between">
-            <button mat-raised-button class="btn-outline-main">Cancel</button>
-            <button type="submit" mat-raised-button class="btn-main">Save</button>
+        <div class="row">
+            <div class="d-flex justify-content-between">
+                <button mat-raised-button class="btn-outline-main" mat-dialog-close>Cancel</button>
+                <button type="submit" mat-raised-button class="btn-main">Save</button>
+            </div>
         </div>
-    </div>
-   </form>
+    </form>
 </div>
