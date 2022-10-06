@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HolidayMasterRoutingModule } from './holiday-master-routing.module';
 import { HolidayMasterComponent } from './holiday-master.component';
 import { AddHolidayComponent } from './add-holiday/add-holiday.component';
-import {MaterialModule} from 'src/app/shared/angularMaterialModule/material.module'
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,9 @@ import {MaterialModule} from 'src/app/shared/angularMaterialModule/material.modu
   imports: [
     CommonModule,
     HolidayMasterRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class HolidayMasterModule { }
