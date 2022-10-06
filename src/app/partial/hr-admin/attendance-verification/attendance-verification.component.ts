@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { AddAttendanceVerificationComponent } from './add-attendance-verification/add-attendance-verification.component';
+
 
 @Component({
   selector: 'app-attendance-verification',
@@ -10,11 +13,19 @@ export class AttendanceVerificationComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'Emp_Name', 'Basic_Pay', 'HRA','LTA','Bonus_ExGratia','Othall', 'Gross_Salary','PF','ESIC','PT','OT','Net_Salary','Actions'];
   dataSource = ELEMENT_DATA;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
+  verifyattendance() {
+    const dialogRef = this.dialog.open(AddAttendanceVerificationComponent,{
+      width:'80%'
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: '', Emp_Name: '', Basic_Pay: '', HRA:'', LTA:'', Bonus_ExGratia:'', Othall:'', Gross_Salary:'',PF:'',ESIC:'',PT:'',OT:'',Net_Salary:'',Actions:''},
