@@ -147,10 +147,10 @@ body {
   background: #eee;
   border-radius: 50%;
   padding: 0;
-  height: 28px;
-  width: 28px;
+  height: 50px;
+  width: 28px !important;
   line-height: 28px;
-  font-size: 0.85rem;
+  font-size: 1.15rem;
   cursor: pointer;
 }
 .upload-image .btn:hover{
@@ -163,4 +163,9 @@ body {
   opacity: 0;
   width: 24px;
   height: 24px;
+}
+.mat-dialog-container {
+  overflow: scroll;
+  height: 90vh !important;
+
 }

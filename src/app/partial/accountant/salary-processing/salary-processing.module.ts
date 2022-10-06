@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SalaryProcessingRoutingModule } from './salary-processing-routing.module';
 import { SalaryProcessingComponent } from './salary-processing.component';
-
+import {MaterialModule} from 'src/app/shared/angularMaterialModule/material.module'
 
 @NgModule({
   declarations: [
@@ -11,7 +11,8 @@ import { SalaryProcessingComponent } from './salary-processing.component';
   ],
   imports: [
     CommonModule,
-    SalaryProcessingRoutingModule
+    SalaryProcessingRoutingModule,
+    MaterialModule
   ]
 })
 export class SalaryProcessingModule { }
