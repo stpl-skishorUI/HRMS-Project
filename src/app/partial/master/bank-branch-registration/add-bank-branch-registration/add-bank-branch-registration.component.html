@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center">
     <h5 class="text-main">Bank Name Registration </h5>
-    <i class="fa fa-times" aria-hidden="true"></i>
+    <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
 </div>
 <div class="row">
     <div class="col-sm-12">
@@ -14,7 +14,7 @@
                         </mat-form-field>
                     </div>
                     <div class=" col-sm-4 d-flex justify-content-end gap-2">
-                        <button mat-raised-button class="btn-outline-main" type="reset" (click)="onCancel()">Cancel</button>
+                        <button mat-raised-button class="btn-outline-main" type="reset" mat-dialog-close (click)="onCancel()">Cancel</button>
                         <button mat-raised-button class="btn-main" type="submit">{{!editFlag ? 'Save' : 'Update'}}</button>
                     </div>
                 </form>

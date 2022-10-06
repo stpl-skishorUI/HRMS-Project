@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ExitFormRoutingModule } from './exit-form-routing.module';
 import { ExitFormComponent } from './exit-form.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ExitFormComponent } from './exit-form.component';
   ],
   imports: [
     CommonModule,
-    ExitFormRoutingModule
+    ExitFormRoutingModule,
+    MaterialModule,
   ]
 })
 export class ExitFormModule { }
