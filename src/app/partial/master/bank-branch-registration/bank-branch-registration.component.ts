@@ -131,11 +131,13 @@ export class BankBranchRegistrationComponent implements OnInit {
         this.mat.open(res.statusMessage, 'ok');
         this.bindTable();
         this.regForm.reset();
+        this.editFlag = false;
+        this.defaultForm();
       }, error: (error: any) => {
         console.log("Error is : ", error);
       }
     })
-    this.editFlag = false;
+   
   }
 }
 // const ELEMENT_DATA: PeriodicElement[] = [
