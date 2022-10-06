@@ -164,3 +164,8 @@ body {
   width: 24px;
   height: 24px;
 }
+.mat-dialog-container {
+  overflow: scroll;
+  height: 90vh !important;
+
+}
