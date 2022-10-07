@@ -3,11 +3,22 @@
         <div class="form-container">
             <div class="row justify-content-between align-items-center">
                 <div class="col-sm-9">
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col-sm-3">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Leave Type</mat-label>
                                 <input matInput placeholder="Search Leave Type">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>All Company</mat-label>
+                                <mat-select formControlName="holidaytype" >
+                                    <mat-option value="">Shaurya Technosoft Pvt Ltd</mat-option>
+                                    <mat-option value="">Option 2</mat-option>
+                                    <mat-option value="">Option 3</mat-option>
+                                    <mat-option value="">Option 4</mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                         <div class="col-sm-auto">
