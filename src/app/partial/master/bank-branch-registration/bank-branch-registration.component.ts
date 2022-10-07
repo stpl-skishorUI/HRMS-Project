@@ -21,7 +21,7 @@ export class BankBranchRegistrationComponent implements OnInit {
   totalCount = 0;
   pageSize = 10;
   currentPage = 0;
-  @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
+ 
 
   constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar) { }
   ngOnInit(): void {
@@ -70,7 +70,7 @@ export class BankBranchRegistrationComponent implements OnInit {
       "id": this.editFlag ? this.editObj.id : 0,
       "bankId": this.editFlag ? this.editObj.bankId : [0,Validators.required],
       "branchName": this.editFlag ? this.editObj.branchName : ["",Validators.required],
-      "ifsC_Code": this.editFlag ? this.editObj.ifsC_Code : ["",Validators.required]
+      "ifsC_Code": this.editFlag ? this.editObj.ifsC_Code : ["",[Validators.required,Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]]
     })
   }
 
