@@ -10,6 +10,13 @@
                 <button class="btn" (click)="selectImg()"><i class="fa-solid fa-plus"></i></button>
                 <input type="file" name="myfile" formControlName="companyLogo" (change)="uploadImg($event)" #img />
             </div>
+
+            <div class="upload-image" *ngIf="editFlag">
+                <img [src]="profileImg">
+                <button class="btn" (click)="selectImg()">
+                    <i class="fa-solid fa-plus"></i></button>
+                <input type="file" name="myfile" (change)="uploadImg($event)" />
+            </div>
         </div>
 
         <!-- <div class="col-sm-4 text-center">

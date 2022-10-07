@@ -31,6 +31,8 @@ export class AddCompanyComponent implements OnInit {
   ngOnInit(): void {
     this.formField();
     this.getOrganizationData();
+    // console.log("Data : ",this.data);
+    
     
 
     if (this.data) {
@@ -80,7 +82,7 @@ export class AddCompanyComponent implements OnInit {
     this.editFlag = true;
     let obj = this.data;
 
-    console.log(obj);
+    // console.log(obj);
     
     this.companyRegistrationForm.patchValue({
       // "createdBy": 0,
@@ -89,14 +91,13 @@ export class AddCompanyComponent implements OnInit {
       // modifiedDate: new Date(),
       // isDeleted: false,
       // id: obj.id,
-      organizationId: obj.id,
+      organizationId: obj.orgId,
       companyName: obj.companyName,
       contactNo: obj.contactNo,
       address: obj.address,
       website: obj.website,
       emailId: obj.emailId,
       companyLogo: obj.companyLogo,
-      
       aboutUs: obj.aboutUs
     });
     // this.selectedFile = obj.companyLogo;
@@ -167,7 +168,6 @@ export class AddCompanyComponent implements OnInit {
     }
     else {
       // let editValue = this.companyRegistrationForm.value;
-   
 
       this.service.setHttp('put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
