@@ -140,9 +140,10 @@ export class EmployeeRegistrationComponent implements OnInit {
     if (formControlName.value == this.filterForm.value.companyId) {
       this.filterForm.controls['departmentId'].setValue('');
       this.filterForm.controls['designationId'].setValue('');
+    }else if(formControlName.value == this.filterForm.value.departmentId) {
+      this.filterForm.controls['designationId'].setValue('');
     }
   }
-
 }
 
 
