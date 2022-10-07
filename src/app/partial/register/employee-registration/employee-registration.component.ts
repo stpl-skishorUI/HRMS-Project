@@ -124,18 +124,21 @@ export class EmployeeRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['srno', 'emp_code', 'emp_name', 'company', 'department', 'designation', 'action'];
   dataSource = ELEMENT_DATA;
 
-  addempdetails() {
+  addempdetails(data?:any) {
     const dialogRef = this.dialog.open(AddEmployeeDetailsComponent, {
-      width: '70%'
+      width: '70%',
+      data:data
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      this.displayData();
     });
   }
 
   clearForm(formControlName: any) {
     if (formControlName.value == this.filterForm.value.companyId) {
+      this.filterForm.controls['departmentId'].setValue('');
       this.filterForm.controls['designationId'].setValue('');
     }
   }
