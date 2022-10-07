@@ -156,23 +156,26 @@ export class AddCompanyComponent implements OnInit {
   onSubmit() {
     let formValue = this.companyRegistrationForm.value;
     console.log(formValue);
-
+    
     if (!this.editFlag) {
       formValue.companyLogo = this.imgURL;
       this.service.setHttp('post', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           this.snackbar.open(res.statusMessage, 'Ok');
+          this.dialogRef.close();
         }
       })
     }
     else {
       // let editValue = this.companyRegistrationForm.value;
-
+      // this.imgURL = formValue.companyLogo;
+      formValue.companyLogo = this.imgURL;
       this.service.setHttp('put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           this.snackbar.open(res.statusMessage, 'Ok');
+          this.dialogRef.close();
         }
       })
     }
