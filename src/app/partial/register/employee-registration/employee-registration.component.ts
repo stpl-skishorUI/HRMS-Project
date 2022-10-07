@@ -127,6 +127,7 @@ export class EmployeeRegistrationComponent implements OnInit {
   addempdetails(data?:any) {
     const dialogRef = this.dialog.open(AddEmployeeDetailsComponent, {
       width: '70%',
+      height: '97%',
       data:data
     });
 
