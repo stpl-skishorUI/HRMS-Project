@@ -1,14 +1,15 @@
 <div class="card main-card">
     <div class="card-header">
         <div class="form-container">
-            <form [formGroup]="filtterForm" (ngSubmit)="fillterOnSubmit()">
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-sm-9">
-                        <div class="row gx-2 ">
-                            <div class="col-sm-3">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-sm-9">
+                    <form [formGroup]="filtterForm" (ngSubmit)="fillterOnSubmit()">
+                        <div class="row align-items-center ">
+                            <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label> Company</mat-label>
-                                    <mat-select formControlName="filtterCompany" (selectionChange)="getDepartmentDropdown()">
+                                    <mat-select formControlName="filtterCompany"
+                                        (selectionChange)="getDepartmentDropdown()">
                                         <mat-option *ngFor="let company of companyDropdown" [value]="company.companyId">
                                             {{company.name}}</mat-option>
                                         <!-- <mat-option>Option 2</mat-option>
@@ -16,7 +17,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Department</mat-label>
                                     <mat-select formControlName="filtterDepartment">
@@ -28,35 +29,36 @@
                                 </mat-form-field>
                             </div>
                             <!-- <div class="col-sm-3">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>Designation</mat-label>
-                                <mat-select formControlName="filtterDesignation">
-                                    <mat-option *ngFor="let designation of designationDropdown" [value]="designation.name"> {{designation.name}}</mat-option>
-                                    <mat-option>Option 2</mat-option>
-                                    <mat-option>Option 3</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div> -->
-                            <div class="col-sm-3">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label>Designation</mat-label>
+                                    <mat-select formControlName="filtterDesignation">
+                                        <mat-option *ngFor="let designation of designationDropdown" [value]="designation.name"> {{designation.name}}</mat-option>
+                                        <mat-option>Option 2</mat-option>
+                                        <mat-option>Option 3</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> -->
+                            <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Designation Name</mat-label>
                                     <input matInput placeholder="Designation Name" formControlName="filtterDesignation">
                                 </mat-form-field>
                             </div>
-                  
+                            <div class="col-sm">
+                                <button mat-raised-button type="submit">Search</button>
+                            </div>
                         </div>
-                        <div class="col-sm-auto">
-                            <button mat-raised-button>Search</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 text-end">
-                        <button mat-raised-button class="btn-main" (click)="addDesignation()">
-                            <mat-icon>add</mat-icon>
-                            Add New
-                        </button>
-                    </div>
+                    </form>
                 </div>
-            </form>
+
+
+                <div class="col-sm-3 text-end">
+                    <button mat-raised-button class="btn-main" (click)="addDesignation()">
+                        <mat-icon>add</mat-icon>
+                        Add New
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="card-body p-2">
