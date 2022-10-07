@@ -20,7 +20,6 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.getAllTableData();
     this.filterFormMethod();
-    // this.SearchfilterData();
   }
   //--------------------------------------------------------------Search Bar Filter Form Starts--------------------------------
   filterFormMethod() {
@@ -47,17 +46,14 @@ export class SalaryTypeRegistrationComponent implements OnInit {
 
   //--------------------------------------------------------------Gets Table Data Starts--------------------------------
   getAllTableData() {
-    // SalaryType/GetAllSalaryTypePagination
-    // api/SalaryType/GetList
-    this.service.setHttp('get', 'HRMS/SalaryType/GetList', false, false, false,
+    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        console.log("res", res);
+
         if (res.statusCode == 200 && res.responseData.length > 0) {
           this.snack.open(res.statusMessage, 'Ok', { duration: 4000 });
           this.dataSource = res.responseData;
-          console.log("this.dataSource", this.dataSource);
         }
       }
     })
@@ -67,13 +63,12 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   //--------------------------------------------------------------Gets Filter Data Starts--------------------------------
   SearchfilterData() {
     let salaryTypeSearch = this.filterForm.value.salary_Component;
-    this.service.setHttp('get', 'HRMS/SalaryType/GetList?compname='+salaryTypeSearch, false, false, false,
+    this.service.setHttp('get', 'HRMS/SalaryType/GetList?compname=' + salaryTypeSearch, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == '200') {
           this.dataSource = res.responseData;
-          console.log(' this.dataSourcefilter',  this.dataSource);
           this.filterForm.reset();
         }
       }
