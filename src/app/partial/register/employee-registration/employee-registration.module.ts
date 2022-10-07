@@ -5,6 +5,8 @@ import { EmployeeRegistrationRoutingModule } from './employee-registration-routi
 import { EmployeeRegistrationComponent } from './employee-registration.component';
 import { MaterialModule} from 'src/app/shared/angularMaterialModule/material.module';
 import { AddEmployeeDetailsComponent } from './add-employee-details/add-employee-details.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,9 @@ import { AddEmployeeDetailsComponent } from './add-employee-details/add-employee
   imports: [
     CommonModule,
     EmployeeRegistrationRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
     MaterialModule
   ]
 })
