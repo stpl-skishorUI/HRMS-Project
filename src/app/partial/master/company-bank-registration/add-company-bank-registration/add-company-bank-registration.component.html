@@ -1,56 +1,81 @@
 <div class="d-flex justify-content-between align-items-center mb-2">
     <h5 class="text-main">Company Bank Account Registration </h5>
-    <i class="fa fa-times" aria-hidden="true"></i>
+    <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
 </div>
 <form [formGroup]="companyBankRegistrationForm" (ngSubmit)="onSubmit()">
     <div class="row">
-   
+
         <div class="col-sm-12">
             <div class="mb-2">
                 <mat-form-field appearance="legacy" class="w-100">
-                    <mat-label>Select Company Name</mat-label>
-                    <mat-select formControlName="companyId">
-                        <mat-option *ngFor="let company of campanyNameArray" [value]="company.id">{{company.name}}</mat-option>
+                    <mat-label>Select Organization Name</mat-label>
+                    <mat-select formControlName="organizationId" (selectionChange)="clearForm('organization');getCampanyNameDropdown()">
+                        <mat-option *ngFor="let organization of organizationNameArray" [value]="organization.id">
+                            {{organization.name}}</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="formFiledControl['organizationId'].hasError('required') || 
+                    formFiledControl['organizationId'].hasError('touched')">Organization Is Required</mat-error> 
+
+                </mat-form-field>
+            </div>
+            <div class="mb-2">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>Select Company Name</mat-label>
+                    <mat-select formControlName="companyId" (selectionChange)="clearForm('company')">
+                        <mat-option *ngFor="let company of campanyNameArray" [value]="company.companyId">
+                            {{company.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formFiledControl['companyId'].hasError('required') || 
+                    formFiledControl['companyId'].hasError('touched')">Company Is Required</mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-2">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Select Bank Name</mat-label>
-                    <mat-select formControlName="bankId">
-                        <mat-option *ngFor="let bank of bankNameArray" [value]="bank.id">{{bank.name}}</mat-option>
-                        
+                    <mat-select formControlName="bankId" (selectionChange)="clearForm('bank');getBranchNameDropdown()">
+                        <mat-option *ngFor="let bank of bankNameArray" [value]="bank.bankId">{{bank.bankName}}
+                        </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="formFiledControl['bankId'].hasError('required') || 
+                    formFiledControl['bankId'].hasError('touched')">Bank Is Required</mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-2">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Select Branch Name</mat-label>
-                    <mat-select formControlName="branchId">
-                        <mat-option *ngFor="let branch of branchNameArray" [value]="branch.id">{{branch.name}}</mat-option>
+                    <mat-select formControlName="branchId" (selectionChange)="clearForm('branch')">
+                        <mat-option *ngFor="let branch of branchNameArray" [value]="branch.id">{{branch.name}}
+                        </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="formFiledControl['branchId'].hasError('required') || 
+                    formFiledControl['branchId'].hasError('touched')">Branch Is Required</mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-2">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Account Type</mat-label>
-                    <mat-select formControlName="accountType">
-                        <mat-option *ngFor="let accountType of accountTypeArray" [value]="accountType">{{accountType}}</mat-option>
+                    <mat-select formControlName="accountType" (selectionChange)="clearForm('accountType')">
+                        <mat-option *ngFor="let accountType of accountTypeArray" [value]="accountType">{{accountType}}
+                        </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="formFiledControl['accountType'].hasError('required') || 
+                    formFiledControl['accountType'].hasError('touched')">Account Type Is Required</mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-2">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Account No</mat-label>
                     <input type="tel" matInput placeholder="Account No" formControlName="accountNo">
+                    <mat-error *ngIf="formFiledControl['accountNo'].hasError('required') || 
+                    formFiledControl['accountNo'].hasError('touched')">Account No Is Required</mat-error>
                 </mat-form-field>
-            </div>          
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="d-flex justify-content-between">
-            <button mat-raised-button class="btn-outline-main">Cancel</button>
-            <button type="submit" mat-raised-button class="btn-main" >Save</button>
+            <button mat-raised-button class="btn-outline-main" mat-dialog-close>Cancel</button>
+            <button type="submit" mat-raised-button class="btn-main" [disabled]="companyBankRegistrationForm.invalid">{{editFlag ? 'Update':'Save'}}</button>
         </div>
     </div>
 </form>
