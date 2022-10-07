@@ -123,6 +123,8 @@
                                     <mat-label>IFSC Code</mat-label>
                                     <input matInput placeholder="IFSC Code" formControlName="ifsC_Code">
                                     <mat-error *ngIf="fc['ifsC_Code'].hasError('required')"> Please Enter IFSC Code</mat-error>
+                                    <mat-error *ngIf="fc['ifsC_Code'].hasError('pattern')"> Please Enter Valid IFSC Code</mat-error>
+
                                 </mat-form-field>
                             </div>
                             <div>
