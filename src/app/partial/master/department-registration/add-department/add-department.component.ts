@@ -33,7 +33,7 @@ export class AddDepartmentComponent implements OnInit {
       // "modifiedDate": "2022-10-03T04:58:21.680Z",
       "isDeleted": true,
       // "id": 0,
-      companyId: [editData ? editData.id : 0],
+      companyId: [editData ? editData.id : ''],
       departmentName: [editData ? editData.departmentName : '']
     })
     this.getCompanyData();

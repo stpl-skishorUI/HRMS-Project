@@ -15,6 +15,7 @@ export class DepartmentRegistrationComponent implements OnInit {
   totalRows: any;
   pageNo = 1;
   pageSize = 10;
+  id!: number;
   searchtext!: string;
   companyId!: number;
 
@@ -32,7 +33,7 @@ export class DepartmentRegistrationComponent implements OnInit {
 
   defaultForm() {
     this.filterForm = this.fb.group({
-      companyId: ['', [Validators.required]],
+      companyId: [''],
       searchtext: [''],
     });
   }
