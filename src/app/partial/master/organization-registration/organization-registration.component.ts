@@ -59,6 +59,7 @@ export class OrganizationRegistrationComponent implements OnInit {
     this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10', false, false, false, 'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
+        if(res.statusCode=='200' && res.responseData.length){
        this.dataSource = res.responseData;
        this.dataSource.map((cr: any)=>{
         cr.orgLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.orgLogo.split('Uploads')[1];
@@ -66,7 +67,10 @@ export class OrganizationRegistrationComponent implements OnInit {
         this.totalCount = res.responseData1.pageCount;
        
         console.log(res);
+      }else {
+        this.dataSource =[];
       }
+    }
     })
   }
 
@@ -98,12 +102,14 @@ export class OrganizationRegistrationComponent implements OnInit {
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == '200') {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.snackbar.open(res.statusMessage,'ok');
           // console.log('aaa', res);
           // let filterArray: any[] = [res.responseData];
           this.dataSource = res.responseData;
           this.filterForm.reset();
+        }else {
+          this.dataSource =[];
         }
       }
     })
