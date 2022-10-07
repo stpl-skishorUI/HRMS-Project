@@ -143,13 +143,13 @@ body {
 .upload-image .btn{
   position: absolute;
   bottom: 5px;
-  right: 5px;
+  right: 12px;
   background: #eee;
   border-radius: 50%;
   padding: 0;
   height: 28px;
-  width: 28px;
-  line-height: 28px;
+  width: 28px !important;
+  line-height: 27px;
   font-size: 0.85rem;
   cursor: pointer;
 }
@@ -164,3 +164,8 @@ body {
   width: 24px;
   height: 24px;
 }
+// .mat-dialog-container {
+//   overflow: scroll;
+//   height: 90vh !important;
+
+// }

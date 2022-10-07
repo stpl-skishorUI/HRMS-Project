@@ -17,7 +17,7 @@ export class AdvancePaymentComponent implements OnInit {
 
   newpayment() {
     const dialogRef = this.dialog.open(AddNewPaymentComponent,{
-      width: '30%'
+      width: '40%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
