@@ -81,8 +81,9 @@ export class CompanyRegistrationComponent implements OnInit {
   // ----------------------------------------- Filter Logic -------------------------------------------- // 
   filterRecord() {
     let record = this.companyFilterForm.value.searchText;
+    let orgId = this.companyFilterForm.value.organizationId;
     // console.log(record);
-    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=1&pagesize=1&searchText=' + record, false, false, false, 'baseURL');
+    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=1&pagesize=10&searchText='+record+'&orgId='+orgId , false, false, false, 'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
