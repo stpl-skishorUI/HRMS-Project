@@ -103,9 +103,8 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   onCancel() {
     this.editFlag = false;
-    // this.formGroupDirective.resetForm();
-    
-
+    this.regForm.reset();
+    this.defaultForm();
   }
 
   //----------------------------- Dropdown Starts-------------------------------------//
@@ -135,7 +134,7 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.api.setHttp(this.editFlag ? 'put' : 'post', 'HRMS/BankBranchRegistration', false, obj, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(),  this.editFlag = false,  this.formGroupDirective.resetForm()) :'';
+        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(),  this.editFlag = false,  this.regForm.reset(),this.defaultForm()) :'';
       }, error: (error: any) => {
         console.log("Error is : ", error);
       }
