@@ -8,11 +8,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './add-salary-type.component.html',
   styleUrls: ['./add-salary-type.component.scss']
 })
+
 export class AddSalaryTypeComponent implements OnInit {
   companyDropDownArray = new Array();
   isPercentageArray = [{ id: 0, name: 'Yes' }, { id: 1, name: 'No' }];
   salaryForm!: FormGroup;
   editFlag: boolean = false;
+
 
   constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar) { }
 
