@@ -43,6 +43,7 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
   postData() {
     if (this.editFlag == false) {
       let obj = this.docTypeRegistrationForm.value;
+      obj.documentTypeName = obj.documentTypeName.trim();
       this.service.setHttp('post', 'HRMS/DocumentType', false, obj, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
