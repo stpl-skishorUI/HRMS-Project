@@ -125,8 +125,7 @@ export class AddDesignationComponent implements OnInit {
         'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
-          if (res.statusCode == 200 ) {
-            console.log(" afyer save method :", res);
+          if (res.statusCode == 200 ) {      
             this.snack.open(res.statusMessage, "ok");
             this.dialogRef.close();
           }
