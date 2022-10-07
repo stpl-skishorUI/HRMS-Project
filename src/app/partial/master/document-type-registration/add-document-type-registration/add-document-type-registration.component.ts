@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-document-type-registration',
@@ -12,13 +13,14 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
   docTypeRegistrationForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private service: CallApiService, public dialog: MatDialog, public dialogRef: MatDialogRef<AddDocumentTypeRegistrationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar) { }
 
   editFlag: boolean = false;
 
   ngOnInit(): void {
     this.controlForm();
   }
+
 
   controlForm() {
     let editData = this.data;
@@ -29,7 +31,7 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
       // "modifiedDate": "2022-10-03T09:10:50.692Z",
       "isDeleted": false,
       // "id": 0,
-      documentTypeName: [editData ? editData.documentTypeName : '']
+      documentTypeName: [editData ? editData.documentTypeName : '', Validators.required]
     })
 
     if (editData) {
@@ -37,18 +39,24 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
     }
   }
 
+  // ---------------------------------------- submit and update data -------------------------------------------
   postData() {
-    if (!this.editFlag) {
+    if (this.editFlag == false) {
       let obj = this.docTypeRegistrationForm.value;
-      this.service.setHttp('post', 'api/DocumentType', false, obj, false, 'baseURL');
+      this.service.setHttp('post', 'HRMS/DocumentType', false, obj, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == '200') {
-            this.docTypeRegistrationForm.reset();
+            // this.docTypeRegistrationForm.reset();
+            this.dialogRef.close('yes');
+            this.snack.open(res.statusMessage, 'ok', {
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+            });
           }
         }
       })
-    } else {
+    } else if (this.editFlag == true) {
       let obj1 = this.docTypeRegistrationForm.value;
       console.log(obj1);
 
@@ -57,18 +65,26 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
         "modifiedBy": 1,
         // "createdDate": new Date(),
         "modifiedDate": new Date(),
-        "isDeleted": true,
-        id: obj1.id,
+        "isDeleted": false,
+        id: this.data.id,
         documentTypeName: obj1.documentTypeName,
       }
-      this.service.setHttp('put', 'api/DocumentType', false, updateData, false, 'baseURL');
+      this.service.setHttp('put', 'HRMS/DocumentType', false, updateData, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == '200') {
-            this.docTypeRegistrationForm.reset();
+            this.dialogRef.close('yes');
+            this.snack.open(res.statusMessage, 'ok', {
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+            });
           }
         }
       })
     }
+  }
+
+  get formFiledControl(){
+    return this.docTypeRegistrationForm.controls;
   }
 }

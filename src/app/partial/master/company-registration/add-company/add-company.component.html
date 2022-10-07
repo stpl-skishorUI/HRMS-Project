@@ -1,24 +1,40 @@
-<form [formGroup]="companyRegistrationForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="companyRegistrationForm" (ngSubmit)="onSubmit()" class="w-100">
     <div class="d-flex justify-content-between">
         <h5 class="text-main">Add New Company </h5>
-        <mat-icon [mat-dialog-close]="true">close</mat-icon>
+        <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
     </div>
     <div class="row">
-        <div class="col-sm-4">
-            <div class="upload-image">
-                <img src="assets/images/user.jpg">
-                <button mat-raised-button class="btn"><i class="fa-solid fa-plus"></i></button>
-                <input type="file" name="myfile" />
+        <div class="col-sm-4 text-center">
+            <div class="upload-image" *ngIf="!editFlag">
+
+                <input type="file" name="myfile" formControlName="companyLogo" (change)="uploadImg($event)" #img/>
+                <img src="{{profileImg}}">
+                <button class="btn"(click)="selectImg()"><i class="fa-solid fa-plus"></i></button>
+
+                <mat-error *ngIf="f['companyLogo'].hasError('required') || f['companyLogo'].hasError('touched')">
+                    Image is required
+                </mat-error>
+
+
             </div>
         </div>
+
+        <div class="col-sm-4 text-center">
+            <div class="upload-image" *ngIf="editFlag">
+                <img [src]="imgURL">
+                <button class="btn" (click)="selectImg()">
+                    <i class="fa-solid fa-plus"></i></button>
+                <input type="file" name="myfile" (change)="uploadImg($event)" />
+            </div>
+        </div>
+
         <div class="col-sm-8">
             <div class="form-container">
 
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Select Organization Name</mat-label>
-                        <mat-select formControlName="organizationId">
-                        <mat-option value="0" >Organization Registration</mat-option>
+                    <mat-form-field appearance="fill">
+                        <mat-select formControlName="organizationId" (selectionChange)="clearForm($event)" >
+                            <mat-option value="0" disabled>Organization Registration</mat-option>
                             <mat-option *ngFor="let org of organizationArr" [value]="org.id">
                                 {{org.name}}
                             </mat-option>
@@ -28,63 +44,91 @@
 
 
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Company Name</mat-label>
                         <input matInput placeholder="Company Name" formControlName="companyName">
+                        <mat-error *ngIf="f['companyName'].hasError('required') || f['companyName'].hasError('touched')">
+                            Company Name is Required
+                        </mat-error>
                     </mat-form-field>
                 </div>
+
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Contact Number</mat-label>
-                        <input matInput placeholder="Contact Number" formControlName="contactNo">
+                    <mat-form-field appearance="legacy">
+                        <mat-label>Contact No</mat-label>
+                        <input matInput placeholder="Contact No" formControlName="contactNo">
+                        <mat-error *ngIf="f['contactNo'].hasError('required') || f['contactNo'].hasError('touched')">
+                            Contact No is Required
+                        </mat-error>
                     </mat-form-field>
                 </div>
+
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Address</mat-label>
                         <textarea matInput placeholder="Enter Address" formControlName="address"></textarea>
+                        <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
+                            Address is Required
+                        </mat-error>
                     </mat-form-field>
                 </div>
+
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Website</mat-label>
-                        <input matInput placeholder="Enter URL" formControlName="website">
+                        <input matInput placeholder="www.frontpage.ind.in" formControlName="website">
+                        <mat-error *ngIf="f['website'].hasError('required') || f['website'].hasError('touched')">
+                            Website is Required
+                        </mat-error>
                     </mat-form-field>
                 </div>
+
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Email ID</mat-label>
-                        <input matInput placeholder="Enter email id" formControlName="emailId">
+                    <mat-form-field appearance="legacy">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput placeholder="frontpage@gmail.com" formControlName="emailId">
+                        <mat-error *ngIf="f['emailId'].hasError('required') || f['emailId'].hasError('touched')">
+                            Email Id is Required
+                        </mat-error>
                     </mat-form-field>
                 </div>
+
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>About US</mat-label>
                         <textarea matInput placeholder="Enter About US" formControlName="aboutUs"></textarea>
+                        <mat-error *ngIf="f['aboutUs'].hasError('required') || f['aboutUs'].hasError('touched')">
+                            About US is Required
+                        </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="mb-2">
+
+                <div class="mb-0">
                     <!-- <mat-form-field appearance="legacy" class="w-100">
                         <mat-label>Choose File</mat-label>
-                        <input matInput formControlName="companyLogo" (selectionChange)="uploadImg($event)" #img>
+                        <input matInput formControlName="companyLogo" (click)="uploadImg($event)" #img>
                     </mat-form-field> -->
+
                     <div class="upload-btn-wrapper">
-                        <input type="file" id="img" (change)="uploadImg()" #img>
-                        <button mat-raised-button class="btn-main" >
-                            <i class="fa-solid fa-upload me-2"></i>
+                        <!-- <input type="file" id="img" #img [(ngModel)]="selectedFile" formControlName="companyLogo">
+                        <button type="button" mat-raised-button class="btn-main" (click)="selectImg()">
+                            <i class="fa-solid fa-upload me-2"></i> 
                             Upload File
                         </button>
-                        <input type="file">
+                        <input type="file" (change)="uploadImg($event)"> -->
+
+                       {{companyRegistrationForm.controls['companyLogo'].value}}
                     </div>
                 </div>
-               
+
+
             </div>
         </div>
     </div>
     <div class="row">
         <div class="d-flex justify-content-between">
-            <button mat-raised-button class="btn-outline-main"  [mat-dialog-close]="true">Cancel</button>
-            <button type="submit" mat-raised-button class="btn-main">Save</button>
+            <button mat-raised-button class="btn-outline-main" mat-dialog-close>Cancel</button>
+            <button type="submit" mat-raised-button class="btn-main" mat-dialog-close>{{editFlag ? 'Update' : 'Submit'}}</button>
         </div>
     </div>
 </form>

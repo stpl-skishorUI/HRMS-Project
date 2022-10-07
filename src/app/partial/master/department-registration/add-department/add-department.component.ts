@@ -33,7 +33,7 @@ export class AddDepartmentComponent implements OnInit {
       // "modifiedDate": "2022-10-03T04:58:21.680Z",
       "isDeleted": true,
       // "id": 0,
-      companyId: [editData ? editData.id : ''],
+      companyId: [editData ? editData.id : 0],
       departmentName: [editData ? editData.departmentName : '']
     })
     this.getCompanyData();
@@ -43,7 +43,7 @@ export class AddDepartmentComponent implements OnInit {
     }
   }
 
-  // --------------------------------------- Department Dropdown ------------------------------------------
+  // --------------------------------------------------------------- Department Dropdown ------------------------------------------
   getCompanyData() {
     this.service.setHttp('get', 'api/CommonDropDown/GetCompany', false, false, false,
       'baseURL');
@@ -57,11 +57,11 @@ export class AddDepartmentComponent implements OnInit {
     })
   }
 
-  // --------------------------------------- Post api -----------------------------------------------------
+  // --------------------------------------------------------------- Post api -----------------------------------------------------
   postData() {
     if (!this.editFlag) {
       let obj = this.deptRegistrationForm.value;
-      this.service.setHttp('post', 'api/DepartmentType', false, obj, false, 'baseURL');
+      this.service.setHttp(this.editFlag ?'put':'post', 'HRMS/DepartmentType', false, obj, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == '200'){
@@ -81,17 +81,21 @@ export class AddDepartmentComponent implements OnInit {
         "isDeleted": true,
         // "id": 0,
         companyId: obj1.companyId,
-        departmentName: obj1.departmentName
+        departmentName: obj1.department
       }
-      this.service.setHttp('put', 'api/DepartmentType', false, updateData, false, 'baseURL');
+      this.service.setHttp('put', 'HRMS/DepartmentType', false, updateData, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == '200'){
-            this.deptRegistrationForm.reset(); 
+            this.deptRegistrationForm.reset();
           }
         }
       })
     }
   }
+//---------------cancle-------------------------------
 
+onCancel(){
+  this.editFlag = false;
+}
 }
