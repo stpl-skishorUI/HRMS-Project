@@ -5,6 +5,7 @@ import { EmployeeSalaryDetailsRoutingModule } from './employee-salary-details-ro
 import { EmployeeSalaryDetailsComponent } from './employee-salary-details.component';
 import { AddNewSalaryComponent } from './add-new-salary/add-new-salary.component';
 import {MaterialModule} from 'src/app/shared/angularMaterialModule/material.module'
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {MaterialModule} from 'src/app/shared/angularMaterialModule/material.modu
   imports: [
     CommonModule,
     EmployeeSalaryDetailsRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class EmployeeSalaryDetailsModule { }

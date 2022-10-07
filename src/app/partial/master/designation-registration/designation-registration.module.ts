@@ -5,16 +5,23 @@ import { DesignationRegistrationRoutingModule } from './designation-registration
 import { DesignationRegistrationComponent } from './designation-registration.component';
 import { AddDesignationComponent } from './add-designation/add-designation.component';
 import {MaterialModule} from 'src/app/shared/angularMaterialModule/material.module'
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     DesignationRegistrationComponent,
-    AddDesignationComponent
+    AddDesignationComponent,
   ],
   imports: [
     CommonModule,
     DesignationRegistrationRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule
+
+
   ]
 })
 export class DesignationRegistrationModule { }

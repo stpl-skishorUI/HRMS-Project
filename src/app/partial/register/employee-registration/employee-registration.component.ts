@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {MatDialog} from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { CallApiService } from 'src/app/core/services/call-api.service';
 import { AddEmployeeDetailsComponent } from './add-employee-details/add-employee-details.component';
 
 
@@ -11,28 +12,132 @@ import { AddEmployeeDetailsComponent } from './add-employee-details/add-employee
 })
 export class EmployeeRegistrationComponent implements OnInit {
 
-  constructor(private _formBuilder: FormBuilder, public dialog: MatDialog) {}
+  companyDropdownArray: any = new Array();
+  departmentDropdownArray: any = new Array();
+  designationDropdownArray: any = new Array();
+  filterForm!: FormGroup;
+
+  constructor(private fb: FormBuilder, public dialog: MatDialog, private service: CallApiService) { }
 
   ngOnInit(): void {
+    this.displayData();
+    this.companyDropdown();
+    // this.departmentDropdown();
+    // this.designationDropdown();
+    this.filterMethod();
+    // this.filterData();
   }
 
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
+  filterMethod() {
+    this.filterForm = this.fb.group({
+      companyId: [],
+      departmentId: [],
+      designationId: []
+    });
+  }
+
+  // ---------------------------------------- Company Dropdown ------------------------------------
+  companyDropdown() {
+    this.service.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=0', false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          // console.log(res);
+          this.companyDropdownArray = res.responseData;
+        }
+      }
+    })
+  }
+  // ---------------------------------------- Department Dropdown ----------------------------------
+  departmentDropdown() {
+    let companyId = this.filterForm.value.companyId;
+    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId=' + companyId + '', false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          // console.log(res);
+          this.departmentDropdownArray = res.responseData;
+        }
+      }
+    })
+  }
+  // ---------------------------------------- Designation Dropdown ----------------------------------
+  designationDropdown() {
+    let companyId = this.filterForm.value.companyId;
+    let departmentId = this.filterForm.value.departmentId;
+    this.service.setHttp('get', 'api/CommonDropDown/GetDesignation?CompanyId=' + companyId + '&DepartmentId=' + departmentId + ' ', false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          // console.log(res);
+          this.designationDropdownArray = res.responseData;
+        }
+      }
+    })
+  }
+  // ---------------------------------------- Display Data ----------------------------------------
+  displayData() {
+    this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees', false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          // console.log(res);
+          this.dataSource = res.responseData;
+        }
+        else {
+          this.dataSource = [];
+        }
+      }
+    })
+  }
+
+  // ----------------------------------------- Filter Record -------------------------------------------
+  filterData() {
+    let companyId = this.filterForm.value.companyId;
+    let departmentId = this.filterForm.value.departmentId;
+    let designationId = this.filterForm.value.designationId;
+
+
+    this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees?CompanyId='+ companyId +'&DepartmentId='+ departmentId +'&DesignationId='+ designationId +' ', false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == '200') {
+          // console.log('aaa', res);
+          // let filterArray: any[] = [res.responseData];
+          this.dataSource = res.responseData;
+          this.filterForm.reset();
+        }
+      }
+    })
+  }
+
+  secondFormGroup = this.fb.group({
     secondCtrl: ['', Validators.required],
   });
   isLinear = false;
 
-  displayedColumns: string[] = ['srno', 'emp_code', 'emp_name', 'company','department','designation','action'];
+  displayedColumns: string[] = ['srno', 'emp_code', 'emp_name', 'company', 'department', 'designation', 'action'];
   dataSource = ELEMENT_DATA;
 
   addempdetails() {
-    const dialogRef = this.dialog.open(AddEmployeeDetailsComponent);
+    const dialogRef = this.dialog.open(AddEmployeeDetailsComponent, {
+      width: '70%'
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  clearForm(formControlName: any) {
+    if (formControlName.value == this.filterForm.value.companyId) {
+      this.filterForm.controls['designationId'].setValue('');
+    }
   }
 
 }
@@ -48,5 +153,5 @@ export interface PeriodicElement {
   action: any;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  {srno: 1, emp_code: 12214, emp_name: 'Ram Chavan', company: 'H', department:'Software Development',designation:'Manager',action:''}
+  { srno: 1, emp_code: 12214, emp_name: 'Ram Chavan', company: 'H', department: 'Software Development', designation: 'Manager', action: '' }
 ];

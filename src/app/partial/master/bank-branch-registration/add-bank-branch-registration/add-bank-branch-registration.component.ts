@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
@@ -10,15 +10,13 @@ import { CallApiService } from 'src/app/core/services/call-api.service';
   styleUrls: ['./add-bank-branch-registration.component.scss']
 })
 export class AddBankBranchRegistrationComponent implements OnInit {
-
   displayedColumns: string[] = ['sr_no', 'Bank_Name', 'action'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new Array();
   bankForm!: FormGroup;
   editFlag:boolean = false;
   editObj :any;
   constructor(private fb: FormBuilder, private api: CallApiService, private mat: MatSnackBar) { }
-
-
+  @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
   ngOnInit(): void {
     this.bindTable();
     this.defaultForm();
@@ -32,9 +30,10 @@ export class AddBankBranchRegistrationComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": false,
       "id":this.editFlag ? this.editObj.id :   0,
-      "bankName": this.editFlag ? this.editObj.bankName : ""
+      "bankName": this.editFlag ? this.editObj.bankName : ["",Validators.required]
     })
   }
+  get fc(){return this.bankForm.controls}
   bindTable() {
     this.api.setHttp( 'get', 'api/BankRegistration/GetAll', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
@@ -68,22 +67,9 @@ export class AddBankBranchRegistrationComponent implements OnInit {
     this.api.setHttp( this.editFlag ? 'put' : 'post', 'api/BankRegistration', false, obj, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        console.log(res);
-        this.mat.open(res.statusMessage, 'ok');
-        this.bindTable();
-        // this.bankForm.reset();
-        this.editFlag = false;
+        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(), this.editFlag = false,this.formGroupDirective.resetForm()) :'';
       }
     })
-    this.bankForm.reset();
-    this.defaultForm();
+     this.defaultForm();
   }
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { sr_no: 1, Bank_Name: '', action: '' },
-];
-export interface PeriodicElement {
-  sr_no: number;
-  Bank_Name: any;
-  action: any;
 }

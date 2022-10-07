@@ -1,32 +1,64 @@
+<form [formGroup]="addHolidayForm" >
 <div class="d-flex justify-content-between">
-    <h5 class="text-main">Add New Holiday</h5>
-    <mat-icon>close</mat-icon>
+    <h5 *ngIf="data.isInsert" class="text-main">Add New Holiday</h5>
+    <h5 *ngIf="!data.isInsert" class="text-main">Update Holiday</h5>
+    <mat-icon (click)="dialogRef.close()">close</mat-icon>
 </div>
 <div class="row">
-    <div class="mb-3">
+    <!-- <div class="mb-3">
         <mat-form-field appearance="legacy" class="w-100">
             <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker">
+            <input matInput [matDatepicker]="picker" formControlName="holidayDate">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
+    </div> -->
+    <div class="mb-3">
+        <mat-form-field appearance="legacy" class="w-100">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Start date">
+              <input matEndDate formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          
+            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+          </mat-form-field>
+    </div>
+    <div class="mb-3">
+        <mat-form-field appearance="legacy" class="w-100">
+            <mat-label>All Company</mat-label>
+            <mat-select formControlName="holidaytype" >
+                <mat-option value="">Shaurya Technosoft Pvt Ltd</mat-option>
+                <mat-option value="">Option 2</mat-option>
+                <mat-option value="">Option 3</mat-option>
+                <mat-option value="">Option 4</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <div class="mb-3">
         <mat-form-field appearance="legacy" class="w-100">
             <mat-label>Holiday Name</mat-label>
-            <input matInput placeholder="Holiday Name">
+            <input matInput placeholder="Holiday Name" formControlName="holidayName">
         </mat-form-field>
     </div>
     <div class="mb-3">
-        <mat-radio-group aria-label="Select an option" appearance="legacy" class="w-100">
+        <mat-radio-group aria-label="Select an option" formControlName="holidayType" appearance="legacy" class="w-100">
             <mat-label class="me-3">Optional</mat-label>
-            <mat-radio-button value="1">Yes</mat-radio-button>
-            <mat-radio-button value="2">No</mat-radio-button>
+            <!-- <mat-radio-button value="optional">Yes</mat-radio-button>
+            <mat-radio-button value="compulsory">No</mat-radio-button> -->
+            <mat-radio-button *ngFor="let opt of options" [value]="opt.type">{{opt.name}}</mat-radio-button>
           </mat-radio-group>
     </div>
 </div>
 <div class="d-flex justify-content-between">
-    <button mat-raised-button class="btn-outline-main">Cancel</button>
-    <button mat-raised-button class="btn-main">Update</button>
+    <button mat-raised-button class="btn-outline-main" (click)="dialogRef.close()">Cancel</button>
+    <button *ngIf="data.isInsert" mat-raised-button class="btn-main" (click)="saveHolidayData()">Save</button>
+    <button *ngIf="!data.isInsert" mat-raised-button class="btn-main" (click)="updateHoliday()">Update</button>
+
 </div>
+</form>
