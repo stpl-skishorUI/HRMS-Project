@@ -5,12 +5,12 @@
 </div>
 <div class="row">
     <div class="form-container">
-
+        <form [formGroup]="empRegistraion" (ngSubmit)="submit(empRegistraion.value)">
         <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
             {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
         </button> -->
         <mat-stepper [linear]="isLinear" #stepper>
-            <mat-step [stepControl]="firstFormGroup">
+            <mat-step [stepControl]="empRegistraion">
 
                 <ng-template matStepLabel>Personal Details</ng-template>
                 <!-- <mat-form-field appearance="fill">
@@ -28,19 +28,19 @@
                         <div class="mb-0">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Name</mat-label>
-                                <input matInput placeholder="Name">
+                                <input matInput placeholder="Name" formControlName="name">
                             </mat-form-field>
                         </div>
                         <div class="mb-0">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Employee Code</mat-label>
-                                <input matInput placeholder="Employee Code">
+                                <input matInput placeholder="Employee Code" formControlName="empCode">
                             </mat-form-field>
                         </div>
                         <div class="mb-0">
                             <mat-form-field  appearance="legacy" class="w-100">
                                 <mat-label>Choose a date</mat-label>
-                                <input matInput [matDatepicker]="picker">
+                                <input matInput [matDatepicker]="picker" formControlName="empCode">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                               </mat-form-field>                              
@@ -136,7 +136,7 @@
                     <button mat-raised-button matStepperNext class="btn-main">Next</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="secondFormGroup" label="Work Profile Details">
+            <mat-step [stepControl]="empRegistraion" label="Work Profile Details">
                 <!-- <mat-form-field appearance="fill">
                     <mat-label>Address</mat-label>
                     <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
@@ -167,7 +167,7 @@
                     <button mat-raised-button matStepperNext class="btn-main">Next</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="secondFormGroup" label="Bank Details">
+            <mat-step [stepControl]="empRegistraion" label="Bank Details">
                 <!-- <mat-form-field appearance="fill">
                     <mat-label>Address</mat-label>
                     <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
@@ -239,7 +239,7 @@
                     <button mat-raised-button matStepperNext class="btn-main">Next</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="secondFormGroup" label="Documents Details">
+            <mat-step [stepControl]="empRegistraion" label="Documents Details">
                 <div class="">
                     <div class="mb-0">
                         <mat-form-field appearance="legacy" class="w-100">
@@ -294,5 +294,8 @@
                 </div>
             </mat-step>
         </mat-stepper>
+    </form>
+
     </div>
+
 </div>
