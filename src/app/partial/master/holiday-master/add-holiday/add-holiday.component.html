@@ -1,6 +1,7 @@
 <form [formGroup]="addHolidayForm" >
 <div class="d-flex justify-content-between">
-    <h5 class="text-main">Add New Holiday</h5>
+    <h5 *ngIf="data.isInsert" class="text-main">Add New Holiday</h5>
+    <h5 *ngIf="!data.isInsert" class="text-main">Update Holiday</h5>
     <mat-icon (click)="dialogRef.close()">close</mat-icon>
 </div>
 <div class="row">
@@ -29,7 +30,7 @@
     </div>
 </div>
 <div class="d-flex justify-content-between">
-    <button mat-raised-button class="btn-outline-main">Cancel</button>
+    <button mat-raised-button class="btn-outline-main" (click)="dialogRef.close()">Cancel</button>
     <button *ngIf="data.isInsert" mat-raised-button class="btn-main" (click)="saveHolidayData()">Save</button>
     <button *ngIf="!data.isInsert" mat-raised-button class="btn-main" (click)="updateHoliday()">Update</button>
 

@@ -40,6 +40,7 @@ export class BankBranchRegistrationComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      this.bindTable();
     });
   }
 
@@ -87,7 +88,7 @@ export class BankBranchRegistrationComponent implements OnInit {
   onSearch() {
     let id = this.filterForm.value.id;
     let text = this.filterForm.value.branch;
-    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAll?searchtxt=' + text + '&Id=' + id, false, false, false, 'baseURL');
+    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAll?searchtxt=' + text + '&BankId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
         console.log(res);
@@ -137,7 +138,6 @@ export class BankBranchRegistrationComponent implements OnInit {
         console.log("Error is : ", error);
       }
     })
-   
   }
 }
 // const ELEMENT_DATA: PeriodicElement[] = [

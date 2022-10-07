@@ -70,6 +70,7 @@ export class AddBankBranchRegistrationComponent implements OnInit {
         this.mat.open(res.statusMessage, 'ok');
         this.bankForm.reset();
         this.bindTable();
+        this.defaultForm();
         this.editFlag = false;
       }
     })
