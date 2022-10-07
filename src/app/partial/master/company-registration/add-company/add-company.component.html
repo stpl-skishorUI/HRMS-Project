@@ -1,18 +1,22 @@
-<form [formGroup]="companyRegistrationForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="companyRegistrationForm" (ngSubmit)="onSubmit()" class="w-100">
     <div class="d-flex justify-content-between">
         <h5 class="text-main">Add New Company </h5>
         <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <img src="../../../../../assets/images/user.jpg" alt="" class="img">
+            <div class="upload-image">
+                <img src="assets/images/user.jpg">
+                <button mat-raised-button class="btn"><i class="fa-solid fa-plus"></i></button>
+                <input type="file" name="myfile" />
+            </div>
         </div>
         <div class="col-sm-8">
             <div class="form-container">
 
                 <div class="mb-2">
                     <mat-form-field appearance="fill">
-                        <mat-select formControlName="organizationId" (selectionChange)="clearForm($event)">
+                        <mat-select formControlName="organizationId" (selectionChange)="clearForm($event)" >
                             <mat-option value="0" disabled>Organization Registration</mat-option>
                             <mat-option *ngFor="let org of organizationArr" [value]="org.id">
                                 {{org.name}}
@@ -23,37 +27,37 @@
 
 
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Company Name</mat-label>
                         <input matInput placeholder="Company Name" formControlName="companyName">
                     </mat-form-field>
                 </div>
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Contact Number</mat-label>
                         <input matInput placeholder="Contact Number" formControlName="contactNo">
                     </mat-form-field>
                 </div>
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Address</mat-label>
                         <textarea matInput placeholder="Enter Address" formControlName="address"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Website</mat-label>
                         <input matInput placeholder="Enter URL" formControlName="website">
                     </mat-form-field>
                 </div>
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Email ID</mat-label>
                         <input matInput placeholder="Enter email id" formControlName="emailId">
                     </mat-form-field>
                 </div>
                 <div class="mb-2">
-                    <mat-form-field appearance="legacy" class="w-100">
+                    <mat-form-field appearance="legacy">
                         <mat-label>About US</mat-label>
                         <textarea matInput placeholder="Enter About US" formControlName="aboutUs"></textarea>
                     </mat-form-field>

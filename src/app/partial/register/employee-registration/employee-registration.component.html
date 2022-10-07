@@ -3,8 +3,8 @@
         <div class="form-container">
             <div class="row justify-content-between align-items-center">
                 <div class="col-sm-9">
-                    <div class="row">
-                        <div class="col-sm-3">
+                    <div class="row align-items-center">
+                        <div class="col-sm">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>All Company</mat-label>
                                 <mat-select>
@@ -14,7 +14,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Department</mat-label>
                                 <mat-select>
@@ -24,7 +24,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Designation</mat-label>
                                 <mat-select>
@@ -34,11 +34,14 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Search</mat-label>
-                                <input matInput placeholder="Search">
+                                <input matInput placeholder="Code, Name, Company, Dept, Designation">
                             </mat-form-field>
+                        </div>
+                        <div class="col-sm-auto">
+                            <button mat-raised-button>Search</button>
                         </div>
                     </div>
                 </div>
@@ -48,6 +51,7 @@
                         <mat-icon>add</mat-icon>
                         Add New
                     </button>
+                  
                 </div>
             </div>
         </div>
@@ -110,236 +114,6 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal for add new organization -->
-<div class="modal fade" id="Employeedetailmodal" tabindex="-1" aria-labelledby="EmployeedetailmodalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <p class="modal-title mb-0" id="EmployeedetailmodalLabel">Fill Employee Details</p>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-container">
-
-                    <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-                        {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-                    </button> -->
-                    <mat-stepper [linear]="isLinear" #stepper>
-                        <mat-step [stepControl]="firstFormGroup">
-
-                            <ng-template matStepLabel>Personal Details</ng-template>
-                            <!-- <mat-form-field appearance="fill">
-                                <mat-label>Name</mat-label>
-                                <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
-                                    required>
-                            </mat-form-field> -->
-                            <div class="col-sm-12">
-                                <div class="upload-image">
-                                    <img src="assets/images/user.jpg">
-                                    <button type="button" class="btn"><i class="fa-solid fa-plus"></i></button>
-                                    <input type="file" name="myfile" />
-                                </div>
-                                <div class="">
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control" placeholder=" Name">
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="number" class="form-control" placeholder="Employee Code">
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="date" class="form-control" placeholder="Date of Birth">
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="number" class="form-control" placeholder="Contact no 1">
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="number" class="form-control" placeholder="Contact no 2">
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="email" class="form-control" placeholder="Email">
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" placeholder="Address" rows="3"></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" placeholder="Enter Local Address"
-                                            rows="3"></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" placeholder="Enter Permanant Address"
-                                            rows="3"></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Gender <sup class="text-danger">*</sup> </label>
-                                        <div class="d-block">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Male
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                    id="flexRadioDefault2" checked>
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Female
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Education</option>
-                                            <option value="1">Under graduate</option>
-                                            <option value="2">graduate</option>
-                                            <option value="3">Post graduate</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" placeholder="Enter Course" rows="3"></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" placeholder="Enter Certification"
-                                            rows="3"></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" placeholder="Total Years of Experience"
-                                            rows="3"></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" placeholder="Skillset" rows="3"></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" placeholder="Enter Work Domain"
-                                            rows="3"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                <button mat-button matStepperNext>Next</button>
-                            </div>
-                        </mat-step>
-                        <mat-step [stepControl]="secondFormGroup" label="Work Profile Details">
-                            <!-- <mat-form-field appearance="fill">
-                                <mat-label>Address</mat-label>
-                                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                                    required>
-                            </mat-form-field> -->
-                            <div class="">
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter Bank Name">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Select Branch Name">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Bank Account Number">
-                                </div>
-                            </div>
-                            <div>
-                                <button mat-stroked-button matStepperPrevious class="me-3">Back</button>
-                                <button mat-raised-button matStepperNext>Next</button>
-                            </div>
-                        </mat-step>
-                        <mat-step [stepControl]="secondFormGroup" label="Bank Details">
-                            <!-- <mat-form-field appearance="fill">
-                                <mat-label>Address</mat-label>
-                                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                                    required>
-                            </mat-form-field> -->
-                            <div class="">
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter PAN No.">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter Aadhar No.">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter PF No.">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter UAN No.">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter ESIC No.">
-                                </div>
-                                <div class="mb-3">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>Select Document Type</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter Document No.">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter Username">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter Password">
-                                </div>
-
-                            </div>
-                            <div>
-                                <button mat-stroked-button matStepperPrevious class="me-3">Back</button>
-                                <button mat-raised-button matStepperNext>Next</button>
-                            </div>
-                        </mat-step>
-                        <mat-step [stepControl]="secondFormGroup" label="Documents Details">
-                            <div class="">
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter Comapny">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter Department">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Enter Designation">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="All User Type">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="date" class="form-control" placeholder="Date of Joining">
-                                </div>
-                                <div class="mb-3">
-                                    <textarea class="form-control" placeholder="Reference By" rows="3"></textarea>
-                                </div>
-                                <div>
-                                    <button mat-stroked-button matStepperPrevious class="me-3">Back</button>
-                                    <button mat-raised-button matStepperNext>Next</button>
-                                </div>
-                            </div>
-                        </mat-step>
-                        <mat-step>
-                            <ng-template matStepLabel>Done</ng-template>
-                            <p>You are now done.</p>
-                            <div>
-                                <button mat-button matStepperPrevious class="me-3">Back</button>
-                                <button mat-button (click)="stepper.reset()">Reset</button>
-                            </div>
-                        </mat-step>
-                    </mat-stepper>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="form-container w-100">
-                    <div class="d-flex justify-content-between">
-                        <button type="button" class="btn btn-outline-main" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-main">Save</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

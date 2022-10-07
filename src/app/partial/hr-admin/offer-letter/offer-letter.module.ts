@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { OfferLetterRoutingModule } from './offer-letter-routing.module';
 import { OfferLetterComponent } from './offer-letter.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { OfferLetterComponent } from './offer-letter.component';
   ],
   imports: [
     CommonModule,
-    OfferLetterRoutingModule
+    OfferLetterRoutingModule,
+    MaterialModule
   ]
 })
 export class OfferLetterModule { }

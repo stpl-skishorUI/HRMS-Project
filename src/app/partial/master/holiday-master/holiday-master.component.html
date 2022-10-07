@@ -3,28 +3,39 @@
         <div class="form-container">
             <div class="row align-items-center justify-content-between">
                 <div class="col-sm-9">
+                <form [formGroup]="searchForm">
                     <div class="row gx-2">
                         <div class="col-sm-3">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>All</mat-label>
-                                <mat-select>
-                                    <mat-option>Compulsory</mat-option>
-                                    <mat-option>Optional</mat-option>
+                                <mat-select formControlName="holidaytype" >
+                                    <mat-option value="">All</mat-option>
+                                    <mat-option [value]="type.name" *ngFor="let type of holiTypes">{{type.name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                         <div class="col-sm-3">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Year</mat-label>
-                                <mat-select>
-                                    <mat-option>2022-2023</mat-option>
-                                    <mat-option>2023-2024</mat-option>
+                                <mat-select formControlName="year">
+                                    <mat-option [value]="yr.year" *ngFor="let yr of yearsDropdn">{{yr.year}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                         </div>
+
+                        <div class="col-sm-3">
+                            <button mat-raised-button class="btn-main" (click)="onsearchData()">
+                                <mat-icon>search</mat-icon>
+                                Search
+                            </button>
+                        </div>
                     </div>
-                </div>
+
+            </form>
+        </div>
+
+
                 <div class="col-sm-3 text-end">
                     <button mat-raised-button class="btn-main" (click)="addholiday()">
                         <mat-icon>add</mat-icon>
@@ -36,35 +47,34 @@
     </div>
     <div class="card-body p-2">
         <div class="table-responsive">
-            <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
-
+            <table mat-table [dataSource]="Allholidays" class="w-100 dashboard-table">
                 <ng-container matColumnDef="srno">
                     <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
-                    <td mat-cell *matCellDef="let element"> {{element.srno}} </td>
+                    <td mat-cell *matCellDef="let element; let i= index">{{(pageSize)*(pageIndex)+(i+1)}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="date">
                     <th mat-header-cell *matHeaderCellDef> Date </th>
-                    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.holidayDate | date: 'd/MM/yyyy'}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="holiday_name">
                     <th mat-header-cell *matHeaderCellDef> Holiday Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.holiday_name}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.holidayName}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="holiday">
-                    <th mat-header-cell *matHeaderCellDef> Holiday </th>
-                    <td mat-cell *matCellDef="let element"> {{element.holiday}} </td>
+                    <th mat-header-cell *matHeaderCellDef> Holiday Type</th>
+                    <td mat-cell *matCellDef="let element"> {{element.holidayType}} </td>
                 </ng-container>
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element; let i=index">
                         <button mat-icon-button [matMenuTriggerFor]="menu">
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item (click)="addholiday()">
+                            <button mat-menu-item (click)="updateHoliday(i)">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span>Edit</span>
                                     <mat-icon>edit</mat-icon>
@@ -83,6 +93,22 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+            <div *ngIf="Allholidays == null">
+                <ng-container>
+                    <h2>Data Not Found </h2>
+                </ng-container>
+                
+            </div>
+            <!-- <ng-container *ngIf="Allholidays == null" matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length">
+                  No records found.
+                </mat-footer-cell>
+              </ng-container> -->
+            
+            
+
+            <mat-paginator *ngIf="totalCount>10 && Allholidays" [length]="totalCount" [pageIndex]="pageIndex" (page)="pageChanged($event)" [pageSize]="pageSize" aria-label="Select page"></mat-paginator>
+
         </div>
     </div>
 </div>
