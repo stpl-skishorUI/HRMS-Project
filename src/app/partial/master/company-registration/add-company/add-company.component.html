@@ -6,22 +6,17 @@
     <div class="row">
         <div class="col-sm-4 text-center">
             <div class="upload-image" *ngIf="!editFlag">
-
-                <input type="file" name="myfile" formControlName="companyLogo" (change)="uploadImg($event)" #img/>
+                
                 <img src="{{profileImg}}">
                 <button class="btn"(click)="selectImg()"><i class="fa-solid fa-plus"></i></button>
-
-                <mat-error *ngIf="f['companyLogo'].hasError('required') || f['companyLogo'].hasError('touched')">
-                    Image is required
-                </mat-error>
-
+                <input type="file" name="myfile" formControlName="companyLogo" (change)="uploadImg($event)" #img/>
 
             </div>
         </div>
 
         <div class="col-sm-4 text-center">
             <div class="upload-image" *ngIf="editFlag">
-                <img [src]="imgURL">
+                <img [src]="profileImg">
                 <button class="btn" (click)="selectImg()">
                     <i class="fa-solid fa-plus"></i></button>
                 <input type="file" name="myfile" (change)="uploadImg($event)" />
@@ -95,10 +90,10 @@
 
                 <div class="mb-2">
                     <mat-form-field appearance="legacy">
-                        <mat-label>About US</mat-label>
+                        <mat-label>About Us</mat-label>
                         <textarea matInput placeholder="Enter About US" formControlName="aboutUs"></textarea>
                         <mat-error *ngIf="f['aboutUs'].hasError('required') || f['aboutUs'].hasError('touched')">
-                            About US is Required
+                            About Us is Required
                         </mat-error>
                     </mat-form-field>
                 </div>
