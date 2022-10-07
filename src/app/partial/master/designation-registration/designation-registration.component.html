@@ -1,9 +1,9 @@
 <div class="card main-card">
     <div class="card-header">
         <div class="form-container">
-            <form [formGroup]="filtterForm" (ngSubmit)="fillterOnSubmit()">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-sm-9">
+                        <form [formGroup]="filtterForm" (ngSubmit)="fillterOnSubmit()">
                         <div class="row gx-2 ">
                             <div class="col-sm-3">
                                 <mat-form-field appearance="legacy" class="w-100">
@@ -46,9 +46,12 @@
                   
                         </div>
                         <div class="col-sm-auto">
-                            <button mat-raised-button>Search</button>
+                            <button mat-raised-button type="submit" >Search</button>
                         </div>
+                        </form>
                     </div>
+
+
                     <div class="col-sm-3 text-end">
                         <button mat-raised-button class="btn-main" (click)="addDesignation()">
                             <mat-icon>add</mat-icon>
@@ -56,7 +59,6 @@
                         </button>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
     <div class="card-body p-2">
