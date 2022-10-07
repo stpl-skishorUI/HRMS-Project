@@ -2,7 +2,7 @@
     <div class="card-header pb-0">
         <div class="form-container">
           <form [formGroup]="filterForm">
-            <div class="row justify-content-between">
+            <div class="row justify-content-between align-items-center">
                 <div class="col-sm-9">
                     <div class="row gx-2 align-items-center">
                         <div class="col-sm-3">
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="col-sm-3 text-end">
-                    <button type="button" class="btn-main" (click)="adddept()">
+                    <button mat-raised-button class="btn-main" (click)="adddept()">
                         <mat-icon>add</mat-icon>
                         Add New
                     </button>
@@ -57,11 +57,9 @@
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> Actions </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn bg-info bg-opacity-10 text-info" (click)="adddept(element)">
+                            <button  mat-icon-button (click)="adddept(element)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                        </div>
                     </td>
                 </ng-container>
 

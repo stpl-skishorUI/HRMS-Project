@@ -13,7 +13,9 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['sr_no', 'Company_Name', 'Salary_Component', 'IsPercentage', 'Value', 'action'];
   dataSource = ELEMENT_DATA;
   filterForm!: FormGroup;
-  salary_Component = '';
+  salary_Component:any;
+  currentPage:number=0;
+  totalCount:number=0;
   constructor(public dialog: MatDialog, private service: CallApiService,
     private snack: MatSnackBar, private fb: FormBuilder) { }
 
@@ -74,7 +76,13 @@ export class SalaryTypeRegistrationComponent implements OnInit {
       }
     })
   }
-  //--------------------------------------------------------------Gets Filter Data Ends--------------------------------
+  //--------------------------------------------------------------Gets Filter Data Ends---------------------------------------------
+ //--------------------------------------------------------------Pagenation Starts---------------------------------------------
+  pageChanged(event: any) {
+    this.currentPage = event.pageIndex;
+    // this.getTableData();
+  }
+  //--------------------------------------------------------------Pagenation Ends---------------------------------------------
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -89,3 +97,4 @@ export interface PeriodicElement {
   Value: any;
   action: any;
 }
+// http://hrmssvr.erpguru.in/HRMS/SalaryType/GetAllSalaryTypePagination
