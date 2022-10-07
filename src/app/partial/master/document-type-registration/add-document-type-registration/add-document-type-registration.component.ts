@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,7 +31,7 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
       // "modifiedDate": "2022-10-03T09:10:50.692Z",
       "isDeleted": false,
       // "id": 0,
-      documentTypeName: [editData ? editData.documentTypeName : '']
+      documentTypeName: [editData ? editData.documentTypeName : '', Validators.required]
     })
 
     if (editData) {
@@ -82,5 +82,9 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
         }
       })
     }
+  }
+
+  get formFiledControl(){
+    return this.docTypeRegistrationForm.controls;
   }
 }

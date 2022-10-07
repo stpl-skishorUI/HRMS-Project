@@ -21,7 +21,7 @@ export class DesignationRegistrationComponent implements OnInit {
   filtterDesignationText: string='';
 
   totalCount: any;
-  currentPage: number = 1;
+  currentPage: number = 0;
 
   constructor(public dialog: MatDialog, private service: CallApiService, private formBuilder: FormBuilder,private snack:MatSnackBar) { }
 
@@ -46,7 +46,7 @@ export class DesignationRegistrationComponent implements OnInit {
     this.filtterDepartmentId = obj.filtterDepartment;
     this.filtterDesignationText = obj.filtterDesignation;
 
-    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno='+(this.currentPage)+'&pagesize=10&cId='+this.filtterCompanyId+'&dId='+this.filtterDepartmentId+'&searchText='+this.filtterDesignationText, false, false, false,
+    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno='+(this.currentPage+1)+'&pagesize=10&cId='+this.filtterCompanyId+'&dId='+this.filtterDepartmentId+'&searchText='+this.filtterDesignationText, false, false, false,
     'baseURL');
   this.service.getHttp().subscribe({
     next: (res: any) => {         
@@ -70,7 +70,7 @@ export class DesignationRegistrationComponent implements OnInit {
       data: obj
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getTableData(),
+      this.getTableData();
       console.log(`Dialog result: ${result}`)
     });
   }
@@ -81,7 +81,7 @@ export class DesignationRegistrationComponent implements OnInit {
 
   //-----------------------------------Table Binding------------------------------------------//
   getTableData() {
-    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination', false, false, false,
+    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno='+(this.currentPage+1)+'&pagesize=10', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {   
@@ -90,7 +90,7 @@ export class DesignationRegistrationComponent implements OnInit {
         this.dataSource = res.responseData;
         console.log(this.dataSource);
         // this.snack.open(res.statusMessage,"ok");
-        this.totalCount = res.responseData.responseData2.totalCount;
+        this.totalCount = res.responseData1.pageCount;
       }
     })
   }
@@ -105,17 +105,15 @@ export class DesignationRegistrationComponent implements OnInit {
         if (res.statusCode == 200 && res.responseData.length) {
           this.companyDropdown = res.responseData;
         }
-        this.getDepartmentDropdown();
       }
     })
   }
   getDepartmentDropdown() {
-    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment', false, false, false,
+    let id = this.filtterForm.value.filtterCompany;
+    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId='+id, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        console.log(res);
-        
         if (res.statusCode == 200 && res.responseData.length) {
           this.departmentDropdown = res.responseData;
         }
