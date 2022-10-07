@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
@@ -19,10 +19,12 @@ export class AddCompanyComponent implements OnInit {
   fileURl: string = '';
   imgURL: string = '';
   selectedFile: any;
+  selImg:string='';
 
   @ViewChild('img') img!: ElementRef;
 
-  profileImg : string = "../../../../../assets/images/user.jpg";
+  profileImg : string = "assets/images/user.jpg";
+  // ../../../../../assets/images/user.jpg";
 
   constructor(private fb: FormBuilder, private service: CallApiService, public dialogRef: MatDialogRef<AddSalaryTypeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private snackbar: MatSnackBar) { }
@@ -30,6 +32,7 @@ export class AddCompanyComponent implements OnInit {
   ngOnInit(): void {
     this.formField();
     this.getOrganizationData();
+    this.imgURL = this.data?.companyLogo;
 
     if (this.data) {
       this.onEdit();
@@ -45,14 +48,14 @@ export class AddCompanyComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": true,
       "id": this.data ? this.data.id : 0,
-      "organizationId": ['0'],
-      "companyName": [''],
-      "contactNo": [''],
-      "address": [''],
-      "website": [''],
-      "emailId": [''],
-      "companyLogo": [''],
-      "aboutUs": ['']
+      "organizationId": ['0', Validators.required],
+      "companyName": ['',Validators.required] ,
+      "contactNo": ['',Validators.required],
+      "address": ['', Validators.required],
+      "website": ['',Validators.required],
+      "emailId": ['', Validators.required],
+      "companyLogo": ['', Validators.required],
+      "aboutUs": ['', Validators.required]
     })
   }
   // ---------------------------------------- Form Field ---------------------------------------- //
@@ -118,7 +121,8 @@ export class AddCompanyComponent implements OnInit {
       }
       let readImg = new FileReader();
       readImg.onload = (event: any) => {
-        this.fileURl = event.target.result;
+        this.profileImg = event.target.result;
+        this.selImg = file;
       }
       readImg.readAsDataURL(file);
       this.companyRegistrationForm.value.companyLogo = file;
