@@ -17,20 +17,35 @@ export class CompanyRegistrationComponent implements OnInit {
   totalCount : number = 0;
   currentPage : number = 0;
   pageSize : number = 10;
+  organizationArr = new Array;
   constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getTableData();
     this.filterForm();
+    this.getOrganizationData();
   }
 
   // ---------------------------------------- Filter Form Field ---------------------------------------- //
   filterForm() {
     this.companyFilterForm = this.fb.group({
+      organizationId : [''],
       searchText: ['']
     })
   }
   // ---------------------------------------- Filter Form Field ---------------------------------------- //
+
+    // ---------------------------------- Organization dropdown ---------------------------------- //
+    getOrganizationData() {
+      this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
+      this.service.getHttp().subscribe({
+        next: (res: any) => {
+          this.organizationArr = res.responseData;
+          // console.log(res);
+        }
+      })
+    }
+    // ---------------------------------- Organization dropdown ---------------------------------- //
 
   // ----------------------------------------- Mat Dialog Box ----------------------------------------- //
   addCompany(obj?: any) {
@@ -66,8 +81,9 @@ export class CompanyRegistrationComponent implements OnInit {
   // ----------------------------------------- Filter Logic -------------------------------------------- // 
   filterRecord() {
     let record = this.companyFilterForm.value.searchText;
+    let orgId = this.companyFilterForm.value.organizationId;
     // console.log(record);
-    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=1&pagesize=1&searchText=' + record, false, false, false, 'baseURL');
+    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=1&pagesize=10&searchText='+record+'&orgId='+orgId , false, false, false, 'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -87,18 +103,18 @@ export class CompanyRegistrationComponent implements OnInit {
   }
   // ----------------------------------------- Filter Logic -------------------------------------------- // 
 
-  // onDelete(id:number){
-  //   console.log(id);
+  onDelete(id:number){
+    console.log(id);
 
-  //   this.service.setHttp('delete','api/CompanyRegistration',false, id, false, "baseURL");
-  //   this.service.getHttp().subscribe({
-  //     next:(res:any)=>{
-  //       if(res.statusCode == 200){
-  //         this.getTableData();
-  //       }
-  //     }
-  //   })
-  // } 
+    this.service.setHttp('delete','api/CompanyRegistration?id=' + id,false, false, false, "baseURL");
+    this.service.getHttp().subscribe({
+      next:(res:any)=>{
+        if(res.statusCode == 200){
+          this.getTableData();
+        }
+      }
+    })
+  } 
 
 }
 export interface PeriodicElement {

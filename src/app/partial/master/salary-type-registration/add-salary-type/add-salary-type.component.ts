@@ -19,6 +19,8 @@ export class AddSalaryTypeComponent implements OnInit {
   constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar) { }
 
   ngOnInit(): void {
+    // console.log("hhhjhjh",this.data);
+
     this.getFormData();
     this.getCompanyNameDropdown();
     if (this.data) {
@@ -32,7 +34,7 @@ export class AddSalaryTypeComponent implements OnInit {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.companyDropDownArray = res.responseData;
-          console.log("comname", this.companyDropDownArray);
+          // console.log("comname", this.companyDropDownArray);
         }
       }
     })
@@ -44,27 +46,16 @@ export class AddSalaryTypeComponent implements OnInit {
     this.salaryForm = this.fb.group({
       "createdBy": 0,
       "modifiedBy": 0,
-      "createdDate":new Date(),
+      "createdDate": new Date(),
       "modifiedDate": new Date(),
       "isDeleted": true,
-      "id": 0,
-      companyId:0,
-      "companyName":"",
-      salary_Component:[''],
-      isPercentage:[''],
-      value:0
+      "id": this.data ? this.data.id : 0,
+      companyId: [, Validators.required],
+      "companyName": "",
+      salary_Component: ['', Validators.required],
+      isPercentage: [''],
+      value: [, [Validators.required,Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     })
-    // "createdBy": 0,
-    // "modifiedBy": 0,
-    // "createdDate": "2022-10-07T05:34:59.858Z",
-    // "modifiedDate": "2022-10-07T05:34:59.858Z",
-    // "isDeleted": true,
-    // "id": 0,
-    // "companyId": 15,
-    // "companyName": "atlas",
-    // "salary_Component": "atlas cpc11",
-    // "isPercentage": true,
-    // "value": 0
 
   }
   //--------------------------------------------------------------- Form Submit Ends------------------------------------------------------
@@ -82,7 +73,7 @@ export class AddSalaryTypeComponent implements OnInit {
 
     let postObj = this.salaryForm.value;
     if (this.editFlag == false) {
-      console.log("postObj", postObj);
+      // console.log("postObj", postObj);
       this.service.setHttp('post', 'HRMS/SalaryType', false, postObj, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
@@ -100,35 +91,26 @@ export class AddSalaryTypeComponent implements OnInit {
     }
   }
   //--------------------------------------------------------------- Form Submit Ends------------------------------------------------------
- 
-   //---------------------------------------------------------------Edit Form Starts-----------------------------------------
+
+  //---------------------------------------------------------------Edit Form Starts-----------------------------------------
   OnEdit(obj?: any) {
     this.editFlag = true;
     let editObj = obj;
     this.data = editObj;
-    console.log(" this.data", this.data);
-    console.log("editObj",editObj);
-    editObj.isPercentage == 0 ? editObj.isPercentage = true : false
     this.salaryForm.patchValue({
       "createdBy": 0,
       "modifiedBy": 0,
       "createdDate": new Date(),
       "modifiedDate": new Date(),
       "isDeleted": true,
-      "id": 0,
-      companyId:obj.companyId,
-      companyName:obj.companyName,
+      companyId: +obj.companyId,
+      companyName: obj.companyName,
       salary_Component: obj.salary_Component,
-      isPercentage:+obj.isPercentage,
-      value: obj.value
+      isPercentage: editObj.isPercentage ? 0 : 1,
+      value: +obj.value
     })
     this.getCompanyNameDropdown();
 
   }
   //-------------------------------------------------Edit Forms End----------------------------------------------------------------
 }
-
-
-
-
-

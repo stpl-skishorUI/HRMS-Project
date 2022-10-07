@@ -10,127 +10,163 @@ import { AddCompanyBankRegistrationComponent } from './add-company-bank-registra
   styleUrls: ['./company-bank-registration.component.scss']
 })
 export class CompanyBankRegistrationComponent implements OnInit {
-  filterForm!:FormGroup
-  displayedColumns: string[] = ['sr_no', 'companyName', 'bankName','branchName','accountNo','Action'];
+  filterForm!: FormGroup
+  displayedColumns: string[] = ['sr_no', 'companyName', 'bankName', 'branchName', 'accountNo', 'Action'];
   dataSource = ELEMENT_DATA;
+
+  organizationNameArray = new Array();
   campanyNameArray = new Array();
   bankNameArray = new Array();
   branchNameArray = new Array();
-  accountTypeArray = ['saving','current'];
+  accountTypeArray = ['saving', 'current'];
 
-  sendObj ={
-    CompanyId:0,
-    BankId:0,
-    BranchId:0,
-    AccountType:''
-  }
+  totalCount: number = 0;
+  currentPage: number = 0;
 
-  constructor(public dialog: MatDialog, private api: CallApiService, private fb:FormBuilder) {}
+  sendObj = { organizationId: 0, CompanyId: 0, BankId: 0, BranchId: 0, AccountType: '' }
+
+  constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.filterFormData();
-    this.getCampanyNameDropdown();
+    this.getOrganizationNameDropdown();
     this.getBankNameDropdown();
-    this.getBranchNameDropdown();
-    this.blindTableData()
+    // this.getBranchNameDropdown();
+    this.bindTableData()
   }
-  openDialog(editObj?:any) {
-    const dialogRef = this.dialog.open(AddCompanyBankRegistrationComponent,{
-      width:'40%',
-      data: editObj
+  openDialog(editObj?: any) {
+    const dialogRef = this.dialog.open(AddCompanyBankRegistrationComponent, {
+      width: '40%',
+      data: editObj, disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.blindTableData();
+      this.bindTableData();
       // console.log(`Dialog result: ${result}`);
     });
   }
 
-  filterFormData(){
+  filterFormData() {
     this.filterForm = this.fb.group({
-      companyId :[' '],
-      bankId :[' '],
-      branchId :[' '],
-      accountType :[' '],
-    })    
+      organizationId: [''],
+      companyId: [''],
+      bankId: [''],
+      branchId: [''],
+      accountType: [''],
+    });
   }
 
   // --------------------------------------------Blind Table Data-------------------------------------------
-  
-  blindTableData(){
-    this.api.setHttp('get','api/CompanyBankAccount/GetAllCompanyBankAccountDetails?CompanyId='+this.sendObj.CompanyId+'&BankId='+this.sendObj.BankId+'&BranchId='+this.sendObj.BranchId+'&AccountType='+this.sendObj.AccountType,
-    false,false,false,'baseURL');
+
+  bindTableData() {
+    this.api.setHttp('get', 'api/CompanyBankAccount/GetAllAccountByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&OrganizationId=' + this.sendObj.organizationId + '&CompanyId=' + this.sendObj.CompanyId + '&BankId=' +
+      this.sendObj.BankId + '&BranchId=' + this.sendObj.BranchId + '&AccountType=' + this.sendObj.AccountType,
+      false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
-      next : ((res:any)=>{
-        if(res.statusCode === '200' && res.responseData.length){
+      next: ((res: any) => {
+        if (res.statusCode === '200' && res.responseData.length) {
           this.dataSource = res.responseData;
+          this.totalCount = res.responseData1.pageCount;
         }
-        else{
+        else {
           this.dataSource = []
         }
-      })
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
     })
   }
 
   // --------------------------------------------Blind Table Data-------------------------------------------
 
-   // --------------------------------------------Dropdown Start-------------------------------------------
+  // --------------------------------------------Dropdown Start-------------------------------------------
 
-  getCampanyNameDropdown(){
-    this.api.setHttp('get','api/CommonDropDown/GetCompany',false,false,false,'baseURL');
+  getOrganizationNameDropdown() {
+    this.api.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
-      next : ((res:any)=>{
-        if(res.statusCode === '200' && res.responseData.length){
-          this.campanyNameArray = res.responseData;          
+      next: ((res: any) => {
+        if (res.statusCode === '200' && res.responseData.length) {
+          this.organizationNameArray = res.responseData;
         }
       })
     })
   }
 
-  getBankNameDropdown(){
-    this.api.setHttp('get','api/CommonDropDown/GetBankRegistration',false,false,false,'baseURL');
+
+  getCampanyNameDropdown() {
+    let id = this.filterForm.value.organizationId
+    this.api.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
-      next : ((res:any)=>{
-        if(res.statusCode === '200' && res.responseData.length){
+      next: ((res: any) => {
+        if (res.statusCode === '200' && res.responseData.length) {
+          this.campanyNameArray = res.responseData;
+        }
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
+    })
+  }
+
+  getBankNameDropdown() {
+    this.api.setHttp('get', 'api/CommonDropDown/GetBankRegistration', false, false, false, 'baseURL');
+    this.api.getHttp().subscribe({
+      next: ((res: any) => {
+        if (res.statusCode === '200' && res.responseData.length) {
           this.bankNameArray = res.responseData;
         }
-      })
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
     })
   }
 
-  getBranchNameDropdown(){
-    this.api.setHttp('get','api/CommonDropDown/GetBankBranchRegistration',false,false,false,'baseURL');
+  getBranchNameDropdown() {
+    let id = this.filterForm.value.bankId;
+    this.api.setHttp('get', 'api/CommonDropDown/GetBankBranchRegistration?BankId='+id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
-      next : ((res:any)=>{
-        if(res.statusCode === '200' && res.responseData.length){
+      next: (res: any) => {
+        if (res.statusCode === '200' && res.responseData.length) {
           this.branchNameArray = res.responseData;
         }
-      })
+      },
+      error: (error: any) => {
+        console.log("Error is", error);
+
+      }
     })
   }
 
-// --------------------------------------------Dropdown End-------------------------------------------
+  pageChanged(event: any) {
+    this.currentPage = event.pageIndex;
+    this.bindTableData()
+  }
 
-FilterFormSubmit(){
-  let obj = this.filterForm.value;
-  this.sendObj.CompanyId = obj.companyId ? obj.companyId: 0;
-  this.sendObj. BankId  = obj.bankId ? obj.bankId: 0;
-  this.sendObj.BranchId  = obj.branchId ? obj.branchId: 0;
-  this.sendObj. AccountType  = obj.accountType ? obj.accountType: '';
- this.blindTableData()
-  
-}
+  // --------------------------------------------Dropdown End-------------------------------------------
+
+  FilterFormSubmit() {
+    let obj = this.filterForm.value;
+    this.sendObj.organizationId = obj.organizationId;
+    this.sendObj.CompanyId = obj.companyId;
+    this.sendObj.BankId = obj.bankId;
+    this.sendObj.BranchId = obj.branchId;
+    this.sendObj.AccountType = obj.accountType;
+    this.currentPage = 0
+    this.bindTableData();
+  }
 
 
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  {sr_no: 1, LeaveType_Name: '',Half_Day:'',Branch_Name:'',Account_No:'',},
+  { sr_no: 1, LeaveType_Name: '', Half_Day: '', Branch_Name: '', Account_No: '', },
 ];
 export interface PeriodicElement {
   sr_no: number;
   LeaveType_Name: any;
   Half_Day: any;
-  Branch_Name:any;
-  Account_No:any;
- 
+  Branch_Name: any;
+  Account_No: any;
+
 }

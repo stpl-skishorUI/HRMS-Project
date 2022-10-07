@@ -5,6 +5,7 @@ import { OrganizationRegistrationRoutingModule } from './organization-registrati
 import { OrganizationRegistrationComponent } from './organization-registration.component';
 import { AddOrganizationComponent } from './add-organization/add-organization.component';
 import { MaterialModule} from 'src/app/shared/angularMaterialModule/material.module'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     OrganizationRegistrationComponent,
@@ -13,7 +14,7 @@ import { MaterialModule} from 'src/app/shared/angularMaterialModule/material.mod
   imports: [
     CommonModule,
     OrganizationRegistrationRoutingModule,
-    MaterialModule
+    MaterialModule,ReactiveFormsModule,FormsModule
   ]
 })
 export class OrganizationRegistrationModule { }

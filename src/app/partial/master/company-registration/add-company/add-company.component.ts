@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
@@ -19,6 +19,7 @@ export class AddCompanyComponent implements OnInit {
   fileURl: string = '';
   imgURL: string = '';
   selectedFile: any;
+  selImg:string='';
 
   @ViewChild('img') img!: ElementRef;
 
@@ -30,6 +31,9 @@ export class AddCompanyComponent implements OnInit {
   ngOnInit(): void {
     this.formField();
     this.getOrganizationData();
+    // console.log("Data : ",this.data);
+    
+    
 
     if (this.data) {
       this.onEdit();
@@ -45,14 +49,14 @@ export class AddCompanyComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": true,
       "id": this.data ? this.data.id : 0,
-      "organizationId": ['0'],
-      "companyName": [''],
-      "contactNo": [''],
-      "address": [''],
-      "website": [''],
-      "emailId": [''],
-      "companyLogo": [''],
-      "aboutUs": ['']
+      "organizationId": ['0', Validators.required],
+      "companyName": ['',Validators.required] ,
+      "contactNo": ['',[Validators.required, Validators.pattern("^[6-9]{2}[0-9]{8}")]],
+      "address": ['', Validators.required],
+      "website": ['',Validators.required],
+      "emailId": ['', Validators.required],
+      "companyLogo": ['', Validators.required],
+      "aboutUs": ['', Validators.required]
     })
   }
   // ---------------------------------------- Form Field ---------------------------------------- //
@@ -77,6 +81,9 @@ export class AddCompanyComponent implements OnInit {
   onEdit() {
     this.editFlag = true;
     let obj = this.data;
+
+    // console.log(obj);
+    
     this.companyRegistrationForm.patchValue({
       // "createdBy": 0,
       // "modifiedBy": 0,
@@ -84,7 +91,7 @@ export class AddCompanyComponent implements OnInit {
       // modifiedDate: new Date(),
       // isDeleted: false,
       // id: obj.id,
-      organizationId: obj.id,
+      organizationId: obj.orgId,
       companyName: obj.companyName,
       contactNo: obj.contactNo,
       address: obj.address,
@@ -93,7 +100,8 @@ export class AddCompanyComponent implements OnInit {
       companyLogo: obj.companyLogo,
       aboutUs: obj.aboutUs
     });
-    this.selectedFile = obj.companyLogo;
+    // this.selectedFile = obj.companyLogo;
+    this.profileImg = this.data?.companyLogo;
   }
   // ------------------------------------- Edit Form ------------------------------------- //
 
@@ -118,10 +126,12 @@ export class AddCompanyComponent implements OnInit {
       }
       let readImg = new FileReader();
       readImg.onload = (event: any) => {
-        this.fileURl = event.target.result;
+        this.profileImg = event.target.result;
+        this.selImg = file;
       }
       readImg.readAsDataURL(file);
       this.companyRegistrationForm.value.companyLogo = file;
+     
     }
 
     let formData = new FormData();
@@ -145,7 +155,7 @@ export class AddCompanyComponent implements OnInit {
   // ------------------------------------- Submit and Update ------------------------------------- //
   onSubmit() {
     let formValue = this.companyRegistrationForm.value;
-    // console.log(formValue);
+    console.log(formValue);
 
     if (!this.editFlag) {
       formValue.companyLogo = this.imgURL;
@@ -158,6 +168,7 @@ export class AddCompanyComponent implements OnInit {
     }
     else {
       // let editValue = this.companyRegistrationForm.value;
+
       this.service.setHttp('put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {

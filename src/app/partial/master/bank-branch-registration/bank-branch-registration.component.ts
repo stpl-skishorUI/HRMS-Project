@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
@@ -21,9 +21,9 @@ export class BankBranchRegistrationComponent implements OnInit {
   totalCount = 0;
   pageSize = 10;
   currentPage = 0;
+ 
 
   constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar) { }
-
   ngOnInit(): void {
     this.bindTable();
     this.bankNameDropDown();
@@ -68,11 +68,13 @@ export class BankBranchRegistrationComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": false,
       "id": this.editFlag ? this.editObj.id : 0,
-      "bankId": this.editFlag ? this.editObj.bankId : 0,
-      "branchName": this.editFlag ? this.editObj.branchName : "",
-      "ifsC_Code": this.editFlag ? this.editObj.ifsC_Code : ""
+      "bankId": this.editFlag ? this.editObj.bankId : [0,Validators.required],
+      "branchName": this.editFlag ? this.editObj.branchName : ["",Validators.required],
+      "ifsC_Code": this.editFlag ? this.editObj.ifsC_Code : ["",[Validators.required,Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]]
     })
   }
+
+  get fc(){return this.regForm.controls};
 
   filterData() {
     this.filterForm = this.fb.group({
@@ -102,6 +104,7 @@ export class BankBranchRegistrationComponent implements OnInit {
   onCancel() {
     this.editFlag = false;
     this.regForm.reset();
+    this.defaultForm();
   }
 
   //----------------------------- Dropdown Starts-------------------------------------//
@@ -121,31 +124,24 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.editObj = data;
     this.bankNameDropDown();
     this.defaultForm();
+    this.fc['branchName'].setValidators([Validators.required]);
+    this.fc['ifsC_Code'].setValidators([Validators.required]);
+
   }
 
-  onSubmit() {
+  onSubmit(validationsremove: any) {
+    console.log(validationsremove);    
     let obj = this.regForm.value;
-    console.log(obj);
     this.api.setHttp(this.editFlag ? 'put' : 'post', 'HRMS/BankBranchRegistration', false, obj, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        this.mat.open(res.statusMessage, 'ok');
-        this.bindTable();
-        this.regForm.reset();
-        this.editFlag = false;
-        this.defaultForm();
+        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(),  this.editFlag = false, validationsremove.resetForm(),this.defaultForm()) :'';
+
       }, error: (error: any) => {
         console.log("Error is : ", error);
       }
     })
+   
+    // this.defaultForm()
   }
 }
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   { sr_no: 1, Bank_Name: '', Branch_Name: '', IFSC_Code: '' },
-// ];
-// export interface PeriodicElement {
-//   sr_no: number;
-//   Bank_Name: any;
-//   Branch_Name: any;
-//   IFSC_Code: any;
-// }
