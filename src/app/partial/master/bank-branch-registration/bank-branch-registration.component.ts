@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
@@ -129,12 +129,14 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  onSubmit(validationsremove: any) {
+    console.log(validationsremove);    
     let obj = this.regForm.value;
     this.api.setHttp(this.editFlag ? 'put' : 'post', 'HRMS/BankBranchRegistration', false, obj, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(),  this.editFlag = false,  this.regForm.reset(),this.defaultForm()) :'';
+        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(),  this.editFlag = false, validationsremove.resetForm(),this.defaultForm()) :'';
+
       }, error: (error: any) => {
         console.log("Error is : ", error);
       }
