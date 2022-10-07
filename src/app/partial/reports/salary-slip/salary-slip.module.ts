@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SalarySlipRoutingModule } from './salary-slip-routing.module';
 import { SalarySlipComponent } from './salary-slip.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { SalarySlipComponent } from './salary-slip.component';
   ],
   imports: [
     CommonModule,
-    SalarySlipRoutingModule
+    SalarySlipRoutingModule,
+    MaterialModule
   ]
 })
 export class SalarySlipModule { }

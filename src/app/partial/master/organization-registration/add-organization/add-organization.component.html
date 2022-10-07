@@ -1,44 +1,48 @@
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between mb-3">
     <h5 class="text-main">Add Organization </h5>
     <i class="fa fa-times" aria-hidden="true"></i>
 </div>
 <div class="row g-2">
     <div class="col-sm-4 text-center">
-        <img src="../../../../../assets/images/user.jpg" alt="logo" class="img">
+        <div class="upload-image">
+            <img src="assets/images/user.jpg">
+            <button class="btn"><i class="fa-solid fa-plus"></i></button>
+            <input type="file" name="myfile" />
+        </div>
     </div>
     <div class="col-sm-8">
-        <div class="mb-2">
+        <div class="mb-0">
             <mat-form-field appearance="legacy" class="w-100">
                 <mat-label>Organization Name</mat-label>
                 <input matInput placeholder="Organization Name">
             </mat-form-field>
         </div>
-        <div class="mb-2">
+        <div class="mb-0">
             <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Contact Number</mat-label>
+                <mat-label>Organization Contact Number</mat-label>
                 <input matInput placeholder="Contact Number">
             </mat-form-field>
         </div>
-        <div class="mb-2">
+        <div class="mb-0">
             <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Enter Address</mat-label>
+                <mat-label>Enter Organization Address</mat-label>
                 <textarea matInput placeholder="Enter Address"></textarea>
             </mat-form-field>
         </div>
-        <div class="mb-2">
+        <div class="mb-0">
             <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Website</mat-label>
+                <mat-label>Organization Website</mat-label>
                 <input matInput placeholder="Enter URL">
             </mat-form-field>
         </div>
-        <div class="mb-2">
+        <div class="mb-0">
             <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Email ID</mat-label>
+                <mat-label>Organization Email ID</mat-label>
                 <input matInput placeholder="Enter Email ID">
             </mat-form-field>
         </div>
         
-        <div class="mb-2">
+        <div class="mb-0">
             <mat-form-field appearance="legacy" class="w-100">
                 <mat-label>About US</mat-label>
                 <textarea matInput placeholder="Enter About US"></textarea>

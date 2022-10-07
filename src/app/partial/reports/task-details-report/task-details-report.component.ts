@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./task-details-report.component.scss']
 })
 export class TaskDetailsReportComponent implements OnInit {
+  displayedColumns: string[] = ['position', 'Task', 'Sub_Task', 'Description', 'Date','Hours',];
+  dataSource = ELEMENT_DATA;
 
   constructor() { }
 
@@ -13,3 +15,16 @@ export class TaskDetailsReportComponent implements OnInit {
   }
 
 }
+export interface PeriodicElement {
+  Task: any;
+  position: number;
+  Sub_Task: any;
+  Description: any;
+  Date: any;
+  Hours: any;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {position: 1, Task: '', Sub_Task: '', Description: '', Date:'',Hours:''},
+ 
+];

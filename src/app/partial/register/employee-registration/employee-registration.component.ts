@@ -28,7 +28,9 @@ export class EmployeeRegistrationComponent implements OnInit {
   dataSource = ELEMENT_DATA;
 
   addempdetails() {
-    const dialogRef = this.dialog.open(AddEmployeeDetailsComponent);
+    const dialogRef = this.dialog.open(AddEmployeeDetailsComponent,{
+      width: '70%'
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
