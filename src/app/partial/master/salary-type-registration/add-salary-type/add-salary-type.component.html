@@ -12,6 +12,9 @@
                             <mat-option *ngFor="let drop of companyDropDownArray" value="{{drop.id}}">
                                 {{drop.name}}</mat-option>
                         </mat-select>
+                        <!-- <mat-error *ngIf="salaryForm.controls['companyName'].hasError('required')">
+                            Company Name Is Required.
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="mb-2">
@@ -19,12 +22,18 @@
                         <mat-label>Salary Component</mat-label>
                         <input matInput placeholder="Enter Salary Type" formControlName="salary_Component">
                     </mat-form-field>
+                    <!-- <mat-error *ngIf="salaryForm.controls['salary_Component'].hasError('required')">
+                        Salary Component Is Required.
+                    </mat-error> -->
                 </div>
                 <div class="mb-2">
                     <mat-form-field appearance="legacy" class="w-100">
                         <mat-label>Component Value</mat-label>
                         <input matInput placeholder="Enter Salary Type" formControlName="value">
                     </mat-form-field>
+                    <!-- <mat-error *ngIf="salaryForm.controls['value'].hasError('required')">
+                         Value Is Required.
+                    </mat-error> -->
                 </div>
                 <div class="mb-3">
                     <label>Is Percentage :</label>
@@ -37,7 +46,7 @@
         <div class="row">
             <div class="d-flex justify-content-between">
                 <button mat-raised-button class="btn-outline-main" type="reset">Cancel</button>
-                <button mat-raised-button class="btn-main" type="submit">Submit</button>
+                <button mat-raised-button class="btn-main" type="submit">{{editFlag ?'Update':'Submit'}}</button>
             </div>
         </div>
     </form>
