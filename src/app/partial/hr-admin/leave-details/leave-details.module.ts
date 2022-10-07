@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LeaveDetailsRoutingModule } from './leave-details-routing.module';
 import { LeaveDetailsComponent } from './leave-details.component';
+import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { LeaveDetailsComponent } from './leave-details.component';
   ],
   imports: [
     CommonModule,
-    LeaveDetailsRoutingModule
+    LeaveDetailsRoutingModule,
+    MaterialModule,
   ]
 })
 export class LeaveDetailsModule { }

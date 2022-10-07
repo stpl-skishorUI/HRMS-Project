@@ -15,11 +15,9 @@ export class OrganizationRegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  openDialog(): void {
     this.dialog.open(AddOrganizationComponent, {
-      width: '50%',
-      enterAnimationDuration,
-      exitAnimationDuration,
+      width: '50%'
     });
   }
 

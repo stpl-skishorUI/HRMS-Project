@@ -10,14 +10,12 @@ import { CallApiService } from 'src/app/core/services/call-api.service';
   styleUrls: ['./add-bank-branch-registration.component.scss']
 })
 export class AddBankBranchRegistrationComponent implements OnInit {
-
   displayedColumns: string[] = ['sr_no', 'Bank_Name', 'action'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new Array();
   bankForm!: FormGroup;
   editFlag:boolean = false;
   editObj :any;
   constructor(private fb: FormBuilder, private api: CallApiService, private mat: MatSnackBar) { }
-
 
   ngOnInit(): void {
     this.bindTable();
@@ -70,20 +68,20 @@ export class AddBankBranchRegistrationComponent implements OnInit {
       next: (res: any) => {
         console.log(res);
         this.mat.open(res.statusMessage, 'ok');
+        this.bankForm.reset();
         this.bindTable();
-        // this.bankForm.reset();
+        this.defaultForm();
         this.editFlag = false;
       }
     })
-    this.bankForm.reset();
     this.defaultForm();
   }
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  { sr_no: 1, Bank_Name: '', action: '' },
-];
-export interface PeriodicElement {
-  sr_no: number;
-  Bank_Name: any;
-  action: any;
-}
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   { sr_no: 1, Bank_Name: '', action: '' },
+// ];
+// export interface PeriodicElement {
+//   sr_no: number;
+//   Bank_Name: any;
+//   action: any;
+// }

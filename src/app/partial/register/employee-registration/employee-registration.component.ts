@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-
+import {MatDialog} from '@angular/material/dialog';
+import { AddEmployeeDetailsComponent } from './add-employee-details/add-employee-details.component';
 
 
 @Component({
@@ -10,7 +11,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 })
 export class EmployeeRegistrationComponent implements OnInit {
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder, public dialog: MatDialog) {}
 
   ngOnInit(): void {
   }
@@ -22,4 +23,32 @@ export class EmployeeRegistrationComponent implements OnInit {
     secondCtrl: ['', Validators.required],
   });
   isLinear = false;
+
+  displayedColumns: string[] = ['srno', 'emp_code', 'emp_name', 'company','department','designation','action'];
+  dataSource = ELEMENT_DATA;
+
+  addempdetails() {
+    const dialogRef = this.dialog.open(AddEmployeeDetailsComponent,{
+      width: '70%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 }
+
+
+export interface PeriodicElement {
+  srno: number;
+  emp_code: number;
+  emp_name: string;
+  company: string;
+  department: string;
+  designation: string;
+  action: any;
+}
+const ELEMENT_DATA: PeriodicElement[] = [
+  {srno: 1, emp_code: 12214, emp_name: 'Ram Chavan', company: 'H', department:'Software Development',designation:'Manager',action:''}
+];

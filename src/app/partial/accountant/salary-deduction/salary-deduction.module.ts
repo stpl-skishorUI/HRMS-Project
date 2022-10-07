@@ -3,15 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { SalaryDeductionRoutingModule } from './salary-deduction-routing.module';
 import { SalaryDeductionComponent } from './salary-deduction.component';
-
+import {MaterialModule} from 'src/app/shared/angularMaterialModule/material.module';
+import { AddNewSalaryComponent } from './add-new-salary/add-new-salary.component'
 
 @NgModule({
   declarations: [
-    SalaryDeductionComponent
+    SalaryDeductionComponent,
+    AddNewSalaryComponent
   ],
   imports: [
     CommonModule,
-    SalaryDeductionRoutingModule
+    SalaryDeductionRoutingModule,
+    MaterialModule
   ]
 })
 export class SalaryDeductionModule { }
