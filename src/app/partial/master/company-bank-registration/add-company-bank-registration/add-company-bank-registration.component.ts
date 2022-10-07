@@ -107,7 +107,6 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
   // --------------------------------------Dropdown Methods End----------------------------------------
 
   // on Edit Profile Patch Value to the Form
-
   editProfile() {
     this.editFlag = true;
     // this.getBranchNameDropdown();   
