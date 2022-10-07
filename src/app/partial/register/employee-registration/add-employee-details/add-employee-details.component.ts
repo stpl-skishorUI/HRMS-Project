@@ -9,7 +9,8 @@ import {FormArray, FormBuilder, Validators} from '@angular/forms';
 export class AddEmployeeDetailsComponent implements OnInit {
   empRegistraion: any;
   isLinear: boolean= false;
-
+   genderArr=[{id:1,name:'Male'},{id:2,name:'Female'}];
+  //  EducationArr=['Undergradute','Graduate','Post Graduate'];
   constructor(private _fb: FormBuilder) { }
   ngOnInit(): void {
     this.empRegistraion = this._fb.group({
