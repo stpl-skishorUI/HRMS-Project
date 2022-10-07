@@ -21,7 +21,7 @@
         <div class="row">
             <div class="d-flex justify-content-between">
                 <button mat-raised-button class="btn-outline-main" mat-dialog-close>Cancel</button>
-                <button type="submit" mat-raised-button class="btn-main">Save</button>
+                <button type="submit" [disabled]="docTypeRegistrationForm.invalid" mat-raised-button class="btn-main">Save</button>
             </div>
         </div>
     </form>
