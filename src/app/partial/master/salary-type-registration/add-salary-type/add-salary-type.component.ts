@@ -49,22 +49,22 @@ export class AddSalaryTypeComponent implements OnInit {
       "isDeleted": true,
       "id": 0,
       companyId:0,
-      companyName:[''],
+      "companyName":"",
       salary_Component:[''],
-      isPercentage: [''],
+      isPercentage:[''],
       value:0
     })
     // "createdBy": 0,
-// "modifiedBy": 0,
-// "createdDate": "2022-10-07T05:21:41.758Z",
-// "modifiedDate": "2022-10-07T05:21:41.758Z",
-// "isDeleted": true,
-// "id": 0,
-// "companyId": 0,
-// "companyName": "string",
-// "salary_Component": "string",
-// "isPercentage": true,
-// "value": 0
+    // "modifiedBy": 0,
+    // "createdDate": "2022-10-07T05:34:59.858Z",
+    // "modifiedDate": "2022-10-07T05:34:59.858Z",
+    // "isDeleted": true,
+    // "id": 0,
+    // "companyId": 15,
+    // "companyName": "atlas",
+    // "salary_Component": "atlas cpc11",
+    // "isPercentage": true,
+    // "value": 0
 
   }
   //--------------------------------------------------------------- Form Submit Ends------------------------------------------------------
