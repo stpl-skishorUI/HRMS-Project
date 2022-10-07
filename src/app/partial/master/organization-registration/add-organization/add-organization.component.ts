@@ -50,7 +50,7 @@ export class AddOrganizationComponent implements OnInit {
   //************************Start Submit Logic Here**********************/
   onSubmit() {
     let data = this.OrganizationRegForm.value;
-    this.imageURL = data.orgLogo;
+      data.orgLogo = this.imageURL;
     // data.orgLogo = this.imageURL;
     console.log(data);
     if (!this.editFlag) {
@@ -71,7 +71,7 @@ export class AddOrganizationComponent implements OnInit {
         next: (res: any) => {
           if (res.statusCode == '200') {
             this.snackbar.open(res.statusMessage, 'ok');
-            // this.profileImg = res.orgLogo;
+            this.imageURL = res.orgLogo;
           }
         }
       })

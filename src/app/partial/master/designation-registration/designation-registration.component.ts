@@ -13,28 +13,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class DesignationRegistrationComponent implements OnInit {
 
   filtterForm!: FormGroup;
+  organizationDropdown: any[] = [];
   companyDropdown: any[] = [];
   departmentDropdown: any[] = [];
-  designationDropdown: any[] = [];
-  filtterCompanyId!:number;
-  filtterDepartmentId!:number;
-  filtterDesignationText: string='';
-
+  filtterOrgId!: number;
+  filtterCompanyId!: number;
+  filtterDepartmentId!: number;
+  filtterDesignationText: string = '';
   totalCount: any;
   currentPage: number = 0;
 
-  constructor(public dialog: MatDialog, private service: CallApiService, private formBuilder: FormBuilder,private snack:MatSnackBar) { }
+  constructor(public dialog: MatDialog, private service: CallApiService, private formBuilder: FormBuilder, private snack: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.getTableData();
-    this.getCompanyDropdown();
     this.fillterFormData();
-
+    this.getTableData();
+    this.getOrganization();
   }
 
- //-----------------------------------Filter Data------------------------------------------//
+  //-----------------------------------Filter Data------------------------------------------//
   fillterFormData() {
     this.filtterForm = this.formBuilder.group({
+      filtterOrganization: [''],
       filtterCompany: [''],
       filtterDepartment: [''],
       filtterDesignation: ['']
@@ -42,28 +42,30 @@ export class DesignationRegistrationComponent implements OnInit {
   }
   fillterOnSubmit() {
     let obj = this.filtterForm.value
+    this.filtterOrgId = obj.filtterOrganization;
     this.filtterCompanyId = obj.filtterCompany;
     this.filtterDepartmentId = obj.filtterDepartment;
     this.filtterDesignationText = obj.filtterDesignation;
 
-    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno='+(this.currentPage+1)+'&pagesize=10&cId='+this.filtterCompanyId+'&dId='+this.filtterDepartmentId+'&searchText='+this.filtterDesignationText, false, false, false,
-    'baseURL');
-  this.service.getHttp().subscribe({
-    next: (res: any) => {         
-      this.dataSource = res.responseData;
-      console.log(this.dataSource);
-      // this.snack.open(res.statusMessage,"ok");
-      this.totalCount = res.responseData1.pageCount;
-    }
-  })
-  
-  
+    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&oId=' + this.filtterOrgId + '&cId=' + this.filtterCompanyId + '&dId=' + this.filtterDepartmentId + '&searchText=' + this.filtterDesignationText, false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200 && res.responseData.length) {
+          this.dataSource = res.responseData;
+          this.totalCount = res.responseData1.pageCount;
+        } else {
+          this.dataSource = [];
+        }
+      }
+    })
+
   }
   pageChanged(event: any) {
     this.currentPage = event.pageIndex;
     this.getTableData();
   }
- //-----------------------------------Filter Data------------------------------------------//
+  //-----------------------------------Filter Data------------------------------------------//
   addDesignation(obj?: any) {
     const dialogRef = this.dialog.open(AddDesignationComponent, {
       width: '30%',
@@ -71,34 +73,46 @@ export class DesignationRegistrationComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.getTableData();
-      console.log(`Dialog result: ${result}`)
+      // console.log(`Dialog result: ${result}`)
     });
   }
-
 
   displayedColumns: string[] = ['srno', 'designation_name', 'department_name', 'company', 'action'];
   dataSource = ELEMENT_DATA;
 
   //-----------------------------------Table Binding------------------------------------------//
   getTableData() {
-    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno='+(this.currentPage+1)+'&pagesize=10', false, false, false,
+    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
-      next: (res: any) => {   
-        console.log("res",res);
-              
-        this.dataSource = res.responseData;
-        console.log(this.dataSource);
-        // this.snack.open(res.statusMessage,"ok");
-        this.totalCount = res.responseData1.pageCount;
+      next: (res: any) => {
+        if (res.statusCode == 200 && res.responseData.length) {      
+          this.dataSource = res.responseData;
+          this.totalCount = res.responseData1.pageCount;
+        } else {
+          this.dataSource = [];
+        }
       }
     })
   }
   //-----------------------------------Table Binding------------------------------------------//
 
   //-----------------------------------Drop-Down------------------------------------------//
+
+  getOrganization() {
+    this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200 && res.responseData.length) {
+          this.organizationDropdown = res.responseData;
+        }
+      }
+    })
+  }
   getCompanyDropdown() {
-    this.service.setHttp('get', 'api/CommonDropDown/GetCompany', false, false, false,
+    let oId = this.filtterForm.value.filtterOrganization;
+    this.service.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + oId, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -109,25 +123,13 @@ export class DesignationRegistrationComponent implements OnInit {
     })
   }
   getDepartmentDropdown() {
-    let id = this.filtterForm.value.filtterCompany;
-    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId='+id, false, false, false,
+    let cid = this.filtterForm.value.filtterCompany;
+    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId=' + cid, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.departmentDropdown = res.responseData;
-        }
-        this.getDesignationDropdown();
-      }
-    })
-  }
-  getDesignationDropdown() {
-    this.service.setHttp('get', 'api/CommonDropDown/GetDesignation', false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {        
-        if (res.statusCode == 200 && res.responseData.length) {
-          this.designationDropdown = res.responseData;
         }
       }
     })
