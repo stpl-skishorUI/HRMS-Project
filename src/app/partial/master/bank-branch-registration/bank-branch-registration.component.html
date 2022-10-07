@@ -91,7 +91,7 @@
                         <h6 class="modal-title mb-0">Add New Bank Branch Registration</h6>
                     </div>
                     <div class="card-body">
-                        <form [formGroup]="regForm">
+                        <form [formGroup]="regForm" (ngSubmit)="onSubmit(validationsremove)" #validationsremove="ngForm">
                             <div class="d-flex justify-content-between gap-2">
                                 <mat-form-field appearance="legacy" class="w-100 mb-0">
                                     <mat-label>Bank Name</mat-label>
@@ -123,13 +123,15 @@
                                     <mat-label>IFSC Code</mat-label>
                                     <input matInput placeholder="IFSC Code" formControlName="ifsC_Code">
                                     <mat-error *ngIf="fc['ifsC_Code'].hasError('required')"> Please Enter IFSC Code</mat-error>
+                                    <mat-error *ngIf="fc['ifsC_Code'].hasError('pattern')"> Please Enter Valid IFSC Code</mat-error>
+
                                 </mat-form-field>
                             </div>
                             <div>
                                 <div class="d-flex justify-content-between">
                                     <button mat-raised-button class="btn-outline-main"
                                         (click)="onCancel()">Cancel</button>
-                                    <button mat-raised-button class="btn-main" (click)="onSubmit()" [disabled]="!regForm.valid">{{!editFlag ? 'Submit' :'Update'}}</button>
+                                    <button mat-raised-button class="btn-main" type="submit" [disabled]="!regForm.valid">{{!editFlag ? 'Submit' :'Update'}}</button>
                                 </div>
                             </div>
                         </form>

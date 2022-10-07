@@ -113,12 +113,6 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
     // this.getBranchNameDropdown();   
   }
 
-  // on Reset Button
-  onReset() {
-    this.editFlag = false;
-    this.companyBankRegistrationForm.reset();
-  }
-
   clearForm(id:string) {
     if (id == 'organization') {
       this.companyBankRegistrationForm.controls['bankId'].setValue('');

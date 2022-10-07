@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
@@ -21,7 +21,7 @@ export class BankBranchRegistrationComponent implements OnInit {
   totalCount = 0;
   pageSize = 10;
   currentPage = 0;
-  @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
+ 
 
   constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar) { }
   ngOnInit(): void {
@@ -70,7 +70,7 @@ export class BankBranchRegistrationComponent implements OnInit {
       "id": this.editFlag ? this.editObj.id : 0,
       "bankId": this.editFlag ? this.editObj.bankId : [0,Validators.required],
       "branchName": this.editFlag ? this.editObj.branchName : ["",Validators.required],
-      "ifsC_Code": this.editFlag ? this.editObj.ifsC_Code : ["",Validators.required]
+      "ifsC_Code": this.editFlag ? this.editObj.ifsC_Code : ["",[Validators.required,Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]]
     })
   }
 
@@ -103,9 +103,8 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   onCancel() {
     this.editFlag = false;
-    // this.formGroupDirective.resetForm();
-    
-
+    this.regForm.reset();
+    this.defaultForm();
   }
 
   //----------------------------- Dropdown Starts-------------------------------------//
@@ -130,12 +129,14 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  onSubmit(validationsremove: any) {
+    console.log(validationsremove);    
     let obj = this.regForm.value;
     this.api.setHttp(this.editFlag ? 'put' : 'post', 'HRMS/BankBranchRegistration', false, obj, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(),  this.editFlag = false,  this.formGroupDirective.resetForm()) :'';
+        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(),  this.editFlag = false, validationsremove.resetForm(),this.defaultForm()) :'';
+
       }, error: (error: any) => {
         console.log("Error is : ", error);
       }
