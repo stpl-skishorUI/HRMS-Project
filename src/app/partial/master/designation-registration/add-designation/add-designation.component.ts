@@ -21,13 +21,9 @@ export class AddDesignationComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    console.log("edit data", this.data);
-
     this.formData();
     this.getCompanyDropdown();
-    if (this.data) {
-      this.onEdit(this.data);
-    }
+    this.data ? this.onEdit(this.data):'';
   }
 
   get f() { return this.designationForm.controls }
@@ -35,9 +31,9 @@ export class AddDesignationComponent implements OnInit {
   formData() {
     this.designationForm = this.formBuilder.group({
       "id": this.data ? this.data.id : 0,
-      "companyId": [0,Validators.required],
-      "departmentId":[0,Validators.required],
-      "designationName": ['',Validators.required],
+      "companyId": [0, Validators.required],
+      "departmentId": [0, Validators.required],
+      "designationName": ['', Validators.required],
       "organizationId": 0,
       "year": 0,
       "createdBy": 0,
@@ -53,27 +49,23 @@ export class AddDesignationComponent implements OnInit {
   //-----------------------------------Drop-Down------------------------------------------//
   getCompanyDropdown() {
     // let orgId=this.designationForm.value.organizationId;
-   
-    
     this.service.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=0', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        console.log("company", res);
         if (res.statusCode == 200 && res.responseData.length) {
           this.companyData = res.responseData;
-          this.editFlag ?  this.getDepartmentDropdown() : '';
+          this.editFlag ? this.getDepartmentDropdown() : '';
         }
       }
     })
   }
   getDepartmentDropdown() {
-    let comId=this.designationForm.value.companyId;
+    let comId = this.designationForm.value.companyId;
     this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId='+comId, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        console.log("department", res);
         if (res.statusCode == 200 && res.responseData.length) {
           this.departmentData = res.responseData;
         }
@@ -84,7 +76,6 @@ export class AddDesignationComponent implements OnInit {
 
   //-----------------------------------Patch Value------------------------------------------//
   onEdit(obj: any) {
-    console.log("objId", obj.id);
     this.editFlag = true;
     this.designationForm.patchValue({
       companyId: obj.companyId,
@@ -92,11 +83,9 @@ export class AddDesignationComponent implements OnInit {
       createdDate: new Date(),
       createdDateFormatdate: new Date(),
       departmentId: obj.departmentId,
-      designationName: obj.designationName,
-      // id: this.editFlag ? +obj.id : 0
+      designationName: obj.designationName 
     })
     this.getCompanyDropdown();
-
   }
   //-----------------------------------Patch Value------------------------------------------//
   OnSubmit() {
@@ -124,9 +113,9 @@ export class AddDesignationComponent implements OnInit {
         'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
-          if (res.statusCode == 200 && res.responseData.length) {
+          if (res.statusCode == 200 ) {
             this.snack.open(res.statusMessage, "ok");
-            // this.dialogRef.close();
+            this.dialogRef.close();
           }
         }
       })
@@ -136,13 +125,13 @@ export class AddDesignationComponent implements OnInit {
         'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
-          if (res.statusCode == 200 && res.responseData.length) {
+          if (res.statusCode == 200 ) {
+            console.log(" afyer save method :", res);
             this.snack.open(res.statusMessage, "ok");
-            // this.dialogRef.close();
+            this.dialogRef.close();
           }
         }
       })
-    }
-     this.dialogRef.close();
+    }   
   }
 }
