@@ -72,12 +72,17 @@ export class CompanyRegistrationComponent implements OnInit {
     this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=' + (this.currentPage + 1) + '&pagesize=10&searchText=' + this.record + '&orgId=' + this.orgId, false, false, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        this.dataSource = res.responseData;
-        this.dataSource.map((cr: any) => {
-          cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
-        })
-        this.totalCount = res.responseData1.pageCount;
-        // console.log(res);
+        if (res.statusCode == 200) {
+          this.dataSource = res.responseData;
+          this.dataSource.map((cr: any) => {
+            cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
+          })
+          this.totalCount = res.responseData1.pageCount;
+          // console.log(res);
+        } else {
+          this.dataSource = [];
+        }
+
       }, error: (error: any) => {
         console.log("Error : ", error);
       }
