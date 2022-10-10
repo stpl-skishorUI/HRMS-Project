@@ -70,7 +70,9 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
         this.filterForm.controls['allemployee'].value +
         '&YearId=' +
         this.filterForm.controls['year'].value +
-        '&pageno=' +(this.currentPage+1) +'&pagesize=10',
+        '&pageno=' +
+        (this.currentPage + 1) +
+        '&pagesize=10',
       false,
       false,
       false,
@@ -82,7 +84,6 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
           this.dataSource = res.responseData;
           // this.dataSource = res.responseData1;
           this.totalCount = res.responseData1.pageCount;
-
         }
       },
     });
@@ -161,7 +162,7 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
     });
     this.displayData();
   }
- //------------------------------------------------------------------Change Employee  ---------------------------------------------------------------
+  //------------------------------------------------------------------Change Employee  ---------------------------------------------------------------
   onChangeEmployee() {
     this.displayData();
   }

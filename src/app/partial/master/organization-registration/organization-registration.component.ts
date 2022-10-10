@@ -18,11 +18,12 @@ export class OrganizationRegistrationComponent implements OnInit {
   totalCount = 0;
   pageSize = 10;
   currentPage = 0;
+  orgType:string='';
   //  dataSource:any;
   constructor(public dialog: MatDialog, private service: CallApiService, public fb: FormBuilder,private snackbar:MatSnackBar) { }
 
   ngOnInit(): void {
-    this.bindTable();
+    this.getTableData();
     this.filterMethod();
   }
 
@@ -41,7 +42,7 @@ export class OrganizationRegistrationComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      this.bindTable();
+      this.getTableData();
     });
   }
   // openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
@@ -54,25 +55,25 @@ export class OrganizationRegistrationComponent implements OnInit {
   //   }
   //***********End Dialog Box*******************/
   //***************Start Bind Table Here*******************/
-  bindTable() {
+  // bindTable() {
    
-    this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10', false, false, false, 'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if(res.statusCode=='200' && res.responseData.length){
-       this.dataSource = res.responseData;
-       this.dataSource.map((cr: any)=>{
-        cr.orgLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.orgLogo.split('Uploads')[1];
-       })
-        this.totalCount = res.responseData1.pageCount;
+  //   this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10', false, false, false, 'baseURL');
+  //   this.service.getHttp().subscribe({
+  //     next: (res: any) => {
+  //       if(res.statusCode=='200' && res.responseData.length){
+  //      this.dataSource = res.responseData;
+  //      this.dataSource.map((cr: any)=>{
+  //       cr.orgLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.orgLogo.split('Uploads')[1];
+  //      })
+  //       this.totalCount = res.responseData1.pageCount;
        
-        console.log(res);
-      }else {
-        this.dataSource =[];
-      }
-    }
-    })
-  }
+  //       console.log(res);
+  //     }else {
+  //       this.dataSource =[];
+  //     }
+  //   }
+  //   })
+  // }
 
 
   // getTableData() {
@@ -90,7 +91,32 @@ export class OrganizationRegistrationComponent implements OnInit {
   //   })
   // }
 
+  getTableData() {
+    this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&name='+this.orgType, false, false, false, "baseURL");
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.dataSource = res.responseData;
+          this.dataSource.map((cr: any) => {
+            cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
+          })
+          this.totalCount = res.responseData1.pageCount;
+          // console.log(res);
+        } else {
+          this.dataSource = [];
+        }
 
+      }, error: (error: any) => {
+        console.log("Error : ", error);
+      }
+    })
+  }
+
+  filterRecord() {
+    this.orgType = this.filterForm.value.orgName;
+    // this.orgId = this.companyFilterForm.value.filterOrganizationId;
+    this.getTableData()
+  }
 
 
   //***************End Bind Table Here*******************/
@@ -103,12 +129,11 @@ export class OrganizationRegistrationComponent implements OnInit {
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          // this.snackbar.open(res.statusMessage,'ok');
+          this.snackbar.open(res.statusMessage,'ok');
           // console.log('aaa', res);
           // let filterArray: any[] = [res.responseData];
           this.dataSource = res.responseData;
-          // this.filterForm.reset();
-          // this.bindTable();
+          this.filterForm.reset();
         }else {
           this.dataSource =[];
         }
@@ -129,7 +154,7 @@ export class OrganizationRegistrationComponent implements OnInit {
       next: (res: any) => {
         this.snackbar.open(res.statusMessage,'ok');
         // this.mat.open(res.statusMessage,'ok');
-        this.bindTable();
+        this.getTableData();
       }
     })
   }
@@ -137,7 +162,7 @@ export class OrganizationRegistrationComponent implements OnInit {
   //************Start Handle page for Pagination***************/
   handlePageEvent(event: any) {
     this.currentPage = event.pageIndex;
-    this.bindTable();
+    this.getTableData();
   }
   //************End Handle page for Pagination***************/
 }
