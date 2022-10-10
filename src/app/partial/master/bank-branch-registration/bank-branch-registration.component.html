@@ -118,7 +118,7 @@
                                     <mat-error *ngIf="fc['bankId'].hasError('required')"> Please Select Bank Name</mat-error>
                                 </mat-form-field>
                                 <ng-container *ngIf="!editFlag">
-                                    <button mat-icon-button (click)="openDialog()">
+                                    <button mat-icon-button type="button" (click)="openDialog()">
                                         <mat-icon>add</mat-icon>
                                     </button>
                                 </ng-container>
@@ -128,7 +128,8 @@
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Branch Name</mat-label>
                                     <input matInput placeholder="Branch Name" formControlName="branchName">
-                                    <mat-error *ngIf="fc['branchName'].hasError('required')"> Please Enter Branch Name</mat-error>
+                                    <mat-hint>*spaces are not allowed</mat-hint>
+                                    <mat-error *ngIf="fc['branchName'].hasError('required')"> Please Enter Branch Name</mat-error> 
                                 </mat-form-field>
                             </div>
                             <div class="">
@@ -137,7 +138,6 @@
                                     <input matInput placeholder="IFSC Code" formControlName="ifsC_Code">
                                     <mat-error *ngIf="fc['ifsC_Code'].hasError('required')"> Please Enter IFSC Code</mat-error>
                                     <mat-error *ngIf="fc['ifsC_Code'].hasError('pattern')"> Please Enter Valid IFSC Code</mat-error>
-
                                 </mat-form-field>
                             </div>
                             <div>
