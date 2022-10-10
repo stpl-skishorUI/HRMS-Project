@@ -1,38 +1,42 @@
 <div class="card main-card">
     <div class="card-header pb-0">
         <div class="form-container">
-          <form [formGroup]="filterForm">
-            <div class="row justify-content-between align-items-center">
-                <div class="col-sm-9">
-                    <div class="row gx-2 align-items-center">
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>All Company</mat-label>
-                                <mat-select formControlName="companyId">
-                                  <mat-option *ngFor="let companies of displayCompanyDropdown" value="{{companies.id}}">{{ companies.name }}</mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>Department Name</mat-label>
-                                <input matInput placeholder="Search" formControlName="searchtext">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-auto">
-                            <button mat-raised-button (click)="displayData()">Search</button>
-                        </div>
+            <!-- <form [formGroup]="filterForm"> -->
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-sm-9">
+                        <form [formGroup]="filterForm">
+
+                            <div class="row gx-2 align-items-center">
+                                <div class="col-sm-3">
+                                    <mat-form-field appearance="legacy" class="w-100">
+                                        <mat-label>All Company</mat-label>
+                                        <mat-select formControlName="companyId">
+                                            <mat-option *ngFor="let companies of displayCompanyDropdown"
+                                                value="{{companies.id}}">{{ companies.name }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3">
+                                    <mat-form-field appearance="legacy" class="w-100">
+                                        <mat-label>Department Name</mat-label>
+                                        <input matInput placeholder="Search" formControlName="searchtext">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-auto">
+                                    <button mat-raised-button (click)="displayData()">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-sm-3 text-end">
+                        <button mat-raised-button class="btn-main" (click)="adddept()">
+                            <mat-icon>add</mat-icon>
+                            Add New
+                        </button>
                     </div>
                 </div>
-
-                <div class="col-sm-3 text-end">
-                    <button mat-raised-button class="btn-main" (click)="adddept()">
-                        <mat-icon>add</mat-icon>
-                        Add New
-                    </button>
-                </div>
-            </div>
-          </form>
+            <!-- </form> -->
         </div>
     </div>
     <div class="card-body p-2">
@@ -46,7 +50,7 @@
 
                 <ng-container matColumnDef="companyName">
                     <th mat-header-cell *matHeaderCellDef>Company Name </th>
-                    <td mat-cell *matCellDef="let element" > {{element.companyName}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.companyName}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="departmentName">
@@ -57,9 +61,21 @@
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> Actions </th>
                     <td mat-cell *matCellDef="let element">
-                            <button  mat-icon-button (click)="adddept(element)">
+                        <!-- <button  mat-icon-button (click)="adddept(element)">
                                 <mat-icon>edit</mat-icon>
+                            </button> -->
+
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" xPosition="before">
+                            <button mat-menu-item (click)="adddept(element)">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Edit</span>
+                                    <mat-icon>edit</mat-icon>
+                                </div>
                             </button>
+                        </mat-menu>
                     </td>
                 </ng-container>
 
@@ -67,10 +83,10 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
             <div *ngIf="totalCount>10">
-              <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage"
-                  (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic elements">
-              </mat-paginator>
-          </div>
+                <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage"
+                    (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic elements">
+                </mat-paginator>
+            </div>
         </div>
     </div>
 </div>
