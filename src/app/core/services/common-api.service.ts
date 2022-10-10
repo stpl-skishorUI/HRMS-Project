@@ -21,11 +21,11 @@ export class CommonApiService {
             obj.error(res);
           }
         },
-        error: ((error: any) => {
+        error: (error: any) => {
           console.log("Error is :",error );
-        })
-      })
-    })
+        }
+      });
+    });
   }
 
 }

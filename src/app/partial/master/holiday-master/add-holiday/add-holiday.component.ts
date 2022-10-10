@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class AddHolidayComponent implements OnInit {
   constructor(private apiService: CallApiService,
               public dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private commonService: CommonMethodsService
+              private commonAPIService: CommonApiService
 
     ) { }
 
@@ -112,7 +113,7 @@ export class AddHolidayComponent implements OnInit {
     //     console.log(" Error is :", error.status);
     //   })
     // });
-    this.commonService.getCompanies().subscribe({
+    this.commonAPIService.getCompanies().subscribe({
       next: (resp: any) => {
         console.log("getCompanies data is :", resp)
         this.Companies = resp.responseData;
