@@ -1,4 +1,4 @@
-<div class="card main-card"> 
+<div class="card main-card">
     <div class="card-header">
         <div class="form-container">
             <div class="row justify-content-between align-items-center">
@@ -12,7 +12,7 @@
                                         <mat-option *ngFor="let companies of companyDropdownArray" [value]="companies.companyId">{{ companies.name}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                            </div>
+                              </div>
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Department</mat-label>
@@ -47,7 +47,7 @@
                         <mat-icon>add</mat-icon>
                         Add New
                     </button>
-                  
+
                 </div>
             </div>
         </div>
@@ -110,6 +110,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+
         </div>
     </div>
 </div>

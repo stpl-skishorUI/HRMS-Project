@@ -9,7 +9,7 @@
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>All Company</mat-label>
                                 <mat-select formControlName="companyId">
-                                  <mat-option *ngFor="let companies of displayCompanyDropdown" value="{{companies.id}}">{{ companies.name }}</mat-option>
+                                  <mat-option *ngFor="let companies of displayCompanyDropdown" value="{{companies.companyId}}">{{ companies.name }}</mat-option>
                               </mat-select>
                             </mat-form-field>
                         </div>
@@ -68,7 +68,7 @@
             </table>
             <div *ngIf="totalCount>10">
               <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage"
-                  (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic elements">
+                  (page)="pageChanged($event)"  >
               </mat-paginator>
           </div>
         </div>

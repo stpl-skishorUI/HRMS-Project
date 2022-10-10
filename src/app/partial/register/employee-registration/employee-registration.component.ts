@@ -104,9 +104,9 @@ export class EmployeeRegistrationComponent implements OnInit {
     console.log(companyId);
     console.log(departmentId);
     console.log(designationId);
-    
-    
-    
+
+
+
 
     this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees?CompanyId='+ companyId +'&DepartmentId='+ departmentId +'&DesignationId='+ companyId +' ', false, false, false,
       'baseURL');

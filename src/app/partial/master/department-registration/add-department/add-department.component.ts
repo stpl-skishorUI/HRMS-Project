@@ -26,11 +26,11 @@ export class AddDepartmentComponent implements OnInit {
   }
 
   get f() { return this.deptRegistrationForm.controls }
-
+//-----------------------------------------------------------------------------Form Start-----------------------------------------------------------------------//
   controlForm() {
     this.deptRegistrationForm = this.fb.group({
       "id": this.data ? this.data.id : 0,
-      "companyId": [0,Validators.required],
+      "companyId": ['',Validators.required],
       "departmentName": ['',Validators.required],
       "createdBy": 0,
       "modifiedBy": 0,
@@ -38,21 +38,10 @@ export class AddDepartmentComponent implements OnInit {
       "modifiedDate": "2022-10-10T05:56:55.007Z",
       "isDeleted": true,
 
-      // "createdBy": 0,
-      // "modifiedBy": 0,
-      // "createdDate": new Date(),
-      // "modifiedDate": new Date(),
-      // "isDeleted": true,
-      // "id": 0,
-      // companyId: [editData ? editData.id : ''],
-      // departmentName: [editData ? editData.departmentName : '']
     })
-    this.getCompanyData();
 
-    // if(editData){
-    //   this.editFlag = true;
-    // }
   }
+
 
   // --------------------------------------------------------------- Department Dropdown ------------------------------------------
   getCompanyData() {
@@ -67,9 +56,12 @@ export class AddDepartmentComponent implements OnInit {
       }
     })
   }
+//---------------------------------------------------------------for Validation---------------------------------------------------------------------------//
+public hasError = (controlName: string, errorName: string) => {
+  return this.deptRegistrationForm.controls[controlName].hasError(errorName);
+}
 
-
-  // --------------------------------------------------------------- Post api -----------------------------------------------------
+  // ------------------------------------------------------------------------ Post api -------------------------------------------------------------------------//
   postData() {
     let obj = {
       ...this.deptRegistrationForm.value,
@@ -88,7 +80,7 @@ export class AddDepartmentComponent implements OnInit {
     this.service.setHttp('put', 'HRMS/DepartmentType',false,obj,false,'baseURL'),
     this.service.getHttp().subscribe({
       next: (res:any)=>{
-        if(res.statusCode == 200 && res.responseData.length){
+        if(res.statusCode == 200){
           this.snack.open(res.statusMessage, "ok");
         }
       }
@@ -98,52 +90,22 @@ export class AddDepartmentComponent implements OnInit {
 this.service.setHttp('post','HRMS/DepartmentType',false,obj,false,'baseURL');
 this.service.getHttp().subscribe({
   next: (res:any)=>{
-    if (res.statusCode == 200 && res.responseData.length){
+    if (res.statusCode == 200){
       this.snack.open(res.statusMessage,"ok");
     }
   }
 })
   }
   this.dialogRef.close();
-    // if (!this.editFlag) {
-    //   let obj = this.deptRegistrationForm.value;
-    //   this.service.setHttp(this.editFlag ?'put':'post', 'HRMS/DepartmentType', false, obj, false, 'baseURL');
-    //   this.service.getHttp().subscribe({
-    //     next: (res: any) => {
-    //       if (res.statusCode == '200'){
-    //         this.deptRegistrationForm.reset();
-    //       }
-    //     }
-    //   })
-    // }
-    // else{
-    //   let obj1 = this.deptRegistrationForm.value;
-
-    //   let updateData = {
-    //     "createdBy": 0,
-    //     "modifiedBy": 0,
-    //     // "createdDate": new Date(),
-    //     modifiedDate: new Date(),
-    //     "isDeleted": true,
-    //     // "id": 0,
-    //     companyId: obj1.companyId,
-    //     departmentName: obj1.department
-    //   }
-    //   this.service.setHttp('put', 'HRMS/DepartmentType', false, updateData, false, 'baseURL');
-    //   this.service.getHttp().subscribe({
-    //     next: (res: any) => {
-    //       if (res.statusCode == '200'){
-    //         this.deptRegistrationForm.reset();
-    //       }
-    //     }
-    //   })
-    // }
   }
+//-------------------------------------------------------------------------cancle--------------------------------------------------------------------------
 
+onCancel(){
+  this.editFlag = false;
+}
 
 //---------------------------------------------------------------------------Patch Value----------------------------------------------------------------------------------//
 
- //-----------------------------------Patch Value------------------------------------------//
  onEdit(obj: any) {
   console.log("objId", obj.id);
   this.editFlag = true;
@@ -156,9 +118,4 @@ this.service.getHttp().subscribe({
 
 }
 
-//---------------cancle-------------------------------
-
-onCancel(){
-  this.editFlag = false;
-}
 }
