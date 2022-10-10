@@ -70,7 +70,6 @@ export class AddSalaryTypeComponent implements OnInit {
     else {
       this.salaryForm.controls['isPercentage'].setValue(false);
     }
-
     let postObj = this.salaryForm.value;
     if (this.editFlag == false) {
       // console.log("postObj", postObj);
