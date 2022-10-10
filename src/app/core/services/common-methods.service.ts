@@ -7,26 +7,9 @@ import { CallApiService } from './call-api.service';
 })
 export class CommonMethodsService {
 
-  constructor(private apiService: CallApiService) { }
+  constructor() { }
 
 
 
-  getCompanies(){
-    return new Observable(obj => {
-      this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=1', true, false, false, 'baseURL');
-      this.apiService.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode === "200") {
-            obj.next(res);
-          }
-          else{
-            obj.error(res);
-          }
-        },
-        error: ((error: any) => {
-          console.log("Error is :",error );
-        })
-      })
-    })
-  }
+
 }
