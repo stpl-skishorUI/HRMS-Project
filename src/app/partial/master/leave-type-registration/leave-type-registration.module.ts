@@ -5,6 +5,7 @@ import { LeaveTypeRegistrationRoutingModule } from './leave-type-registration-ro
 import { LeaveTypeRegistrationComponent } from './leave-type-registration.component';
 import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
 import { AddLeaveTypeComponent } from './add-leave-type/add-leave-type.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AddLeaveTypeComponent } from './add-leave-type/add-leave-type.component
   imports: [
     CommonModule,
     LeaveTypeRegistrationRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class LeaveTypeRegistrationModule { }

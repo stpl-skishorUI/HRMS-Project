@@ -5,6 +5,7 @@ import { BankRegistrationRoutingModule } from './bank-registration-routing.modul
 import { BankRegistrationComponent } from './bank-registration.component';
 import { AddBankRegistrationComponent } from './add-bank-registration/add-bank-registration.component';
 import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MaterialModule } from 'src/app/shared/angularMaterialModule/material.mo
   imports: [
     CommonModule,
     BankRegistrationRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class BankRegistrationModule { }
