@@ -4,7 +4,7 @@
         <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
     </div>
     <div class="row">
-        <div class="col-sm-5 text-center mt-0">
+        <div class="col-sm-4 text-center mt-0">
             <div class="upload-image" *ngIf="!editFlag">
                 <img src="{{profileImg}}" class="img">
                 <button class="btn" (click)="selectImg()"><i class="fa-solid fa-plus"></i></button>
@@ -28,7 +28,7 @@
             </div>
         </div> -->
 
-        <div class="col-sm-7">
+        <div class="col-sm-8">
             <div class="form-container">
 
                 <div class="mb-0">
@@ -57,27 +57,14 @@
 
                 <div class="mb-0">
                     <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Contact No</mat-label>
-                        <input matInput placeholder="Contact No" formControlName="contactNo" maxlength="10"
-                            minlength="10">
-                        <mat-error *ngIf="f['contactNo'].hasError('required') || f['contactNo'].hasError('touched')">
-                            Contact No is Required
+                        <mat-label>Email Id</mat-label>
+                        <input matInput placeholder="frontpage@gmail.com" formControlName="emailId">
+                        <mat-error *ngIf="f['emailId'].hasError('required') || f['emailId'].hasError('touched')">
+                            Email Id is Required
                         </mat-error>
-                        <mat-error *ngIf="f['contactNo'].hasError('pattern') || f['contactNo'].hasError('touched') ">
-                            Invalid Contact Number
+                        <mat-error *ngIf="f['emailId'].hasError('pattern') || f['emailId'].hasError('touched')">
+                            Invalid Email Id
                         </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="mb-0">
-                    <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Address</mat-label>
-                        <textarea matInput placeholder="Enter Address" formControlName="address" maxlength="15"
-                            minlength="3"></textarea>
-                        <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
-                            Address is Required
-                        </mat-error>
-
                     </mat-form-field>
                 </div>
 
@@ -97,14 +84,27 @@
 
                 <div class="mb-0">
                     <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Email Id</mat-label>
-                        <input matInput placeholder="frontpage@gmail.com" formControlName="emailId">
-                        <mat-error *ngIf="f['emailId'].hasError('required') || f['emailId'].hasError('touched')">
-                            Email Id is Required
+                        <mat-label>Contact No</mat-label>
+                        <input matInput placeholder="Exp.+911234567892" formControlName="contactNo" maxlength="10"
+                            minlength="10">
+                        <mat-error *ngIf="f['contactNo'].hasError('required') || f['contactNo'].hasError('touched')">
+                            Contact No is Required
                         </mat-error>
-                        <mat-error *ngIf="f['emailId'].hasError('pattern') || f['emailId'].hasError('touched')">
-                            Invalid Email Id
+                        <mat-error *ngIf="f['contactNo'].hasError('pattern') || f['contactNo'].hasError('touched') ">
+                            Invalid Contact Number
                         </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="mb-0">
+                    <mat-form-field appearance="legacy" class="w-100">
+                        <mat-label>Address</mat-label>
+                        <textarea matInput placeholder="Enter Address" formControlName="address" maxlength="15"
+                            minlength="3"></textarea>
+                        <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
+                            Address is Required
+                        </mat-error>
+
                     </mat-form-field>
                 </div>
 
@@ -144,7 +144,7 @@
             <button mat-raised-button class="btn-outline-main" mat-dialog-close>
                 Cancel
             </button>
-            <button type="submit" mat-raised-button class="btn-main" [disabled]="companyRegistrationForm.invalid">
+            <button type="submit" mat-raised-button class="btn-main">
                 {{editFlag ? 'Update':'Submit'}}
             </button>
         </div>
