@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="card-body p-2">
-        <div class="table-responsive">
+        <div class="table-responsive" *ngIf="dataSource.length; else condition">
             <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
 
                 <ng-container matColumnDef="srno">
@@ -110,7 +110,16 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+
+            <ng-container *ngIf="totalCount > 0">
+                <mat-paginator [length]="totalCount" [pageSize]="10" [pageIndex]="currentPage" (page)="onClickPaginatior($event)"
+                showFirstLastButtons aria-label="Select page">
+            </mat-paginator>
+            </ng-container>
         </div>
+        <ng-template #condition>
+            <h4 class="text-danger text-center">No Data Found !</h4>
+        </ng-template>
     </div>
 </div>
 
