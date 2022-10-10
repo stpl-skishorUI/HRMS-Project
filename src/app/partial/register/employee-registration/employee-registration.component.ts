@@ -67,7 +67,7 @@ export class EmployeeRegistrationComponent implements OnInit {
   designationDropdown() {
     let companyId = this.filterForm.value.companyId;
     let departmentId = this.filterForm.value.departmentId;
-    this.service.setHttp('get', 'api/CommonDropDown/GetDesignation?CompanyId=' + companyId + '&DepartmentId=' + departmentId + ' ', false, false, false,
+    this.service.setHttp('get', 'api/CommonDropDown/GetDesignation?CompanyId='+ companyId +'&DepartmentId='+ departmentId +'', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -101,8 +101,14 @@ export class EmployeeRegistrationComponent implements OnInit {
     let departmentId = this.filterForm.value.departmentId;
     let designationId = this.filterForm.value.designationId;
 
+    console.log(companyId);
+    console.log(departmentId);
+    console.log(designationId);
+    
+    
+    
 
-    this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees?CompanyId='+ companyId +'&DepartmentId='+ departmentId +'&DesignationId='+ designationId +' ', false, false, false,
+    this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees?CompanyId='+ companyId +'&DepartmentId='+ departmentId +'&DesignationId='+ companyId +' ', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {

@@ -54,7 +54,7 @@ export class AddSalaryTypeComponent implements OnInit {
       "companyName": "",
       salary_Component: ['', Validators.required],
       isPercentage: [''],
-      value: [, [Validators.required,Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
+      value: [, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     })
 
   }

@@ -17,6 +17,9 @@ export class CompanyRegistrationComponent implements OnInit {
   totalCount : number = 0;
   currentPage : number = 0;
   pageSize : number = 10;
+  record  : string = '';
+  orgId: number = 0;
+
   organizationArr = new Array;
   constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar) { }
 
@@ -29,8 +32,8 @@ export class CompanyRegistrationComponent implements OnInit {
   // ---------------------------------------- Filter Form Field ---------------------------------------- //
   filterForm() {
     this.companyFilterForm = this.fb.group({
-      organizationId : [''],
-      searchText: ['']
+      filterOrganizationId : [''],
+      filterSearchText: ['']
     })
   }
   // ---------------------------------------- Filter Form Field ---------------------------------------- //
@@ -40,7 +43,7 @@ export class CompanyRegistrationComponent implements OnInit {
       this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
       this.service.getHttp().subscribe({
         next: (res: any) => {
-          this.organizationArr = res.responseData;
+          res.statusCode == 200 && res.responseData.length?(this.organizationArr = res.responseData) :  this.organizationArr = [];
           // console.log(res);
         }
       })
@@ -64,7 +67,7 @@ export class CompanyRegistrationComponent implements OnInit {
 
   // ----------------------------------------- Bind Table -------------------------------------------- // 
   getTableData() {
-    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno='+(this.currentPage + 1)+'&pagesize=10', false, false, false, "baseURL");
+    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=1&pagesize=10&searchText='+ this.record+'&orgId='+this.orgId, false, false, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
         this.dataSource = res.responseData;
@@ -80,21 +83,22 @@ export class CompanyRegistrationComponent implements OnInit {
 
   // ----------------------------------------- Filter Logic -------------------------------------------- // 
   filterRecord() {
-    let record = this.companyFilterForm.value.searchText;
-    let orgId = this.companyFilterForm.value.organizationId;
-    // console.log(record);
-    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=1&pagesize=10&searchText='+record+'&orgId='+orgId , false, false, false, 'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.dataSource = res.responseData;
-          this.dataSource.map((cr: any)=>{
-           cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
-          })
-          this.companyFilterForm.reset();
-        }
-      }
-    })
+     this.record = this.companyFilterForm.value.filterSearchText;
+     this.orgId = this.companyFilterForm.value.filterOrganizationId;
+    // console.log( this.record);
+    // this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=1&pagesize=10&searchText='+ this.record+'&orgId='+this.orgId , false, false, false, 'baseURL');
+    // this.service.getHttp().subscribe({
+    //   next: (res: any) => {
+    //     if (res.statusCode == 200) {
+    //       this.dataSource = res.responseData;
+    //       this.dataSource.map((cr: any)=>{
+    //        cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
+    //       })
+    //       this.companyFilterForm.reset();
+    //     }
+    //   }
+    // })
+    this.getTableData()
   }
 
   onPageChanged(event:any){
