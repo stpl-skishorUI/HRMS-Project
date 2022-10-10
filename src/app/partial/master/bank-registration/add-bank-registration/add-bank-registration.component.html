@@ -1,20 +1,31 @@
 <div class="d-flex justify-content-between align-items-center">
-    <h5 class="text-main">Bank Name Registration </h5>
-    <i class="fa fa-times" aria-hidden="true"></i>
+    <h5 class="text-main">{{this.iseditbtn==false? 'Add':'Update'}} Bank Name Registration </h5>
+    <i class="fa fa-times" aria-hidden="true" (click)="closeModal('No')"></i>
 </div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="mb-2">
-            <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Bank Name</mat-label>
-                <input matInput placeholder="Bank Name">
-            </mat-form-field>
+
+<div>
+    <form [formGroup]="addBankRegiForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="mb-2">
+                    <mat-form-field appearance="legacy" class="w-100">
+                        <mat-label>Bank Name</mat-label>
+                        <input matInput placeholder="Bank Name" formControlName="bankName">
+                    </mat-form-field>
+                    <mat-hint class="error"
+                        *ngIf="submitted && (addBankRegiForm.get('bankName')?.errors?.['required'])">
+                        Please Enter Bank Name</mat-hint>
+                    <mat-hint class="error" *ngIf="submitted && (addBankRegiForm.get('bankName')?.errors?.['pattern'])">
+                        Please Enter Valid Bank Name</mat-hint>
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="d-flex justify-content-between">
-        <button mat-raised-button class="btn-outline-main">Cancel</button>
-        <button mat-raised-button class="btn-main">Save</button>
-    </div>
+        <div class="row">
+            <div class="d-flex justify-content-between">
+                <button mat-raised-button class="btn-outline-main" type="button" (click)="clearForm()">Cancel</button>
+                <button mat-raised-button class="btn-main">{{this.iseditbtn==false? 'Save':'Update'}}</button>
+            </div>
+        </div>
+    </form>
 </div>

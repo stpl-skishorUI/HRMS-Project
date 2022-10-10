@@ -16,6 +16,13 @@ export class EmployeeRegistrationComponent implements OnInit {
   departmentDropdownArray: any = new Array();
   designationDropdownArray: any = new Array();
   filterForm!: FormGroup;
+  pageSize = 10;
+  totalCount!: number;
+  currentPage: number = 0;
+  companyId: number = 0;
+  departmentId: number = 0;
+  designationId: number = 0;
+  name: string = '';
 
   constructor(private fb: FormBuilder, public dialog: MatDialog, private service: CallApiService) { }
 
@@ -30,9 +37,10 @@ export class EmployeeRegistrationComponent implements OnInit {
 
   filterMethod() {
     this.filterForm = this.fb.group({
-      companyId: [],
-      departmentId: [],
-      designationId: []
+      companyId: [''],
+      departmentId: [''],
+      designationId: [''],
+      name:['']
     });
   }
 
@@ -67,7 +75,7 @@ export class EmployeeRegistrationComponent implements OnInit {
   designationDropdown() {
     let companyId = this.filterForm.value.companyId;
     let departmentId = this.filterForm.value.departmentId;
-    this.service.setHttp('get', 'api/CommonDropDown/GetDesignation?CompanyId='+ companyId +'&DepartmentId='+ departmentId +'', false, false, false,
+    this.service.setHttp('get', 'api/CommonDropDown/GetDesignation?CompanyId=' + companyId + '&DepartmentId=' + departmentId + '', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -78,15 +86,17 @@ export class EmployeeRegistrationComponent implements OnInit {
       }
     })
   }
-  // ---------------------------------------- Display Data ----------------------------------------
+
+  // ---------------------------------------- Display Data / Pagination / FilterData -----------------
   displayData() {
-    this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees', false, false, false,
+    this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees?CompanyId=' + this.companyId + '&DepartmentId=' + this.departmentId + '&DesignationId=' + this.designationId + '&pageno=' + (this.currentPage + 1) + '&pagesize=10&TextSearch=' + this.name, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           // console.log(res);
           this.dataSource = res.responseData;
+          this.totalCount = res.responseData1.pageCount;
         }
         else {
           this.dataSource = [];
@@ -97,29 +107,19 @@ export class EmployeeRegistrationComponent implements OnInit {
 
   // ----------------------------------------- Filter Record -------------------------------------------
   filterData() {
-    let companyId = this.filterForm.value.companyId;
-    let departmentId = this.filterForm.value.departmentId;
-    let designationId = this.filterForm.value.designationId;
+    let obj = this.filterForm.value;
+    this.companyId = obj.companyId ? obj.companyId : 0;
+    this.departmentId = obj.departmentId ? obj.departmentId : 0;
+    this.designationId = obj.designationId ? obj.designationId : 0;
+    this.name = obj.name ? obj.name : '';
+    this.displayData();
+  }
 
-    console.log(companyId);
-    console.log(departmentId);
-    console.log(designationId);
-
-
-
-
-    this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees?CompanyId='+ companyId +'&DepartmentId='+ departmentId +'&DesignationId='+ companyId +' ', false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == '200') {
-          // console.log('aaa', res);
-          // let filterArray: any[] = [res.responseData];
-          this.dataSource = res.responseData;
-          this.filterForm.reset();
-        }
-      }
-    })
+  // ------------------------------------------ Pagination --------------------------------------------
+  onClickPaginatior(data: any) {
+    // this.pageSize = data.pageSize;
+    this.currentPage = data.pageIndex;
+    this.displayData();
   }
 
   secondFormGroup = this.fb.group({
@@ -130,11 +130,11 @@ export class EmployeeRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['srno', 'emp_code', 'emp_name', 'company', 'department', 'designation', 'action'];
   dataSource = ELEMENT_DATA;
 
-  addempdetails(data?:any) {
+  addempdetails(data?: any) {
     const dialogRef = this.dialog.open(AddEmployeeDetailsComponent, {
       width: '70%',
       height: '97%',
-      data:data
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -147,7 +147,7 @@ export class EmployeeRegistrationComponent implements OnInit {
     if (formControlName.value == this.filterForm.value.companyId) {
       this.filterForm.controls['departmentId'].setValue('');
       this.filterForm.controls['designationId'].setValue('');
-    }else if(formControlName.value == this.filterForm.value.departmentId) {
+    } else if (formControlName.value == this.filterForm.value.departmentId) {
       this.filterForm.controls['designationId'].setValue('');
     }
   }

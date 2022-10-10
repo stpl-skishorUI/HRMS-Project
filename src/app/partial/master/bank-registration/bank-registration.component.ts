@@ -1,38 +1,96 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddBankRegistrationComponent } from './add-bank-registration/add-bank-registration.component';
-
+import { CallApiService } from 'src/app/core/services/call-api.service';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-bank-registration',
   templateUrl: './bank-registration.component.html',
   styleUrls: ['./bank-registration.component.scss']
 })
 export class BankRegistrationComponent implements OnInit {
-  displayedColumns: string[] = ['sr_no', 'Bank_Name','action'];
-  dataSource = ELEMENT_DATA;
+  bankRegiResponse: any;
+  searchBankRegiForm!: FormGroup;
+  editId: any;
+  pageNo: number = 1;
+  pageSize = 10;
+  length: any;
+  displayedColumns: string[] = ['sr_no', 'Bank_Name', 'action'];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+    private callAPIService: CallApiService,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.searchBankRegiForm = this.fb.group({
+      searchbankName: ['']
+    })
+    this.BankRegistrationData()
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(AddBankRegistrationComponent,{
-      width:'30%'
+  bankRegi(status: any, data?: any) {
+    const bankData = {
+      data: data,
+      status: status
+    }
+    const dialogRef = this.dialog.open(AddBankRegistrationComponent, {
+      width: '30%',
+      data: bankData,
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      result == 'u' ? this.BankRegistrationData() : result == 'i';
+      // console.log(`Dialog result: ${result}`);
     });
   }
 
+
+  BankRegistrationData() {
+    let formData = this.searchBankRegiForm.value;
+    let obj = {
+      "pageno": this.pageNo,
+      "BankName": formData.searchbankName
+    }
+    this.callAPIService.setHttp('GET', 'api/BankRegistration/GetAllBankRegiByPagination?pageno=' + obj.pageno + '&pagesize=10&BankName=' + obj.BankName, false, false, false, 'baseURL');
+    this.callAPIService.getHttp().subscribe((res: any) => {
+      // console.log(res);
+      if (res.statusCode == 200) {
+        this.bankRegiResponse = res.responseData;
+        this.length = res.responseData1.pageCount;
+        // console.log(this.bankRegiResponse);
+      } else {
+        this.bankRegiResponse = [];
+        alert(res.statusMessage);
+      }
+    })
+  }
+
+
+  paginationEvent(event: any) {
+    // console.log(event);
+    this.pageNo = event.pageIndex + 1;
+    this.BankRegistrationData();
+  }
+
+
+
+
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {sr_no: 1, Bank_Name: '',action:''},
-];
-export interface PeriodicElement {
-  sr_no: number;
-  Bank_Name: any;
-  action: any;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

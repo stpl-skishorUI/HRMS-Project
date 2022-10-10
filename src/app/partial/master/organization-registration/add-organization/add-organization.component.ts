@@ -47,7 +47,7 @@ export class AddOrganizationComponent implements OnInit {
     });
     this.imageURL = this.editFlag? this.data1.orgLogo : "/assets/images/user.jpg";
   }
-//********************for Validation*************************/
+//********************for Validation Handle*************************/
   public hasError = (controlName: string, errorName: string) => {
     return this.OrganizationRegForm.controls[controlName].hasError(errorName);
   }

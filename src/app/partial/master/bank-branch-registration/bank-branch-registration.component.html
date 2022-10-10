@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <button mat-raised-button color="primary" (click)="onSearch()">
+                        <button mat-raised-button (click)="onSearch()">
                             <mat-icon>search</mat-icon>Search
                         </button>
                     </div>
@@ -64,10 +64,23 @@
                             </ng-container>
                             <ng-container matColumnDef="Action">
                                 <th mat-header-cell *matHeaderCellDef> Action </th>
-                                <td mat-cell *matCellDef="let element"><button mat-icon-button color="accent"
-                                        style="outline: none">
+                                <td mat-cell *matCellDef="let element">
+                                    <!-- <button mat-icon-button>
                                         <mat-icon (click)="onEdit(element)">create</mat-icon>
-                                    </button></td>
+                                    </button> -->
+
+                                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu" xPosition="before">
+                                        <button mat-menu-item (click)="onEdit(element)">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span>Edit</span>
+                                                <mat-icon>edit</mat-icon>
+                                            </div>
+                                        </button>
+                                    </mat-menu>
+                                </td>
                             </ng-container>
                            
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -105,7 +118,7 @@
                                     <mat-error *ngIf="fc['bankId'].hasError('required')"> Please Select Bank Name</mat-error>
                                 </mat-form-field>
                                 <ng-container *ngIf="!editFlag">
-                                    <button mat-icon-button (click)="openDialog()">
+                                    <button mat-icon-button type="button" (click)="openDialog()">
                                         <mat-icon>add</mat-icon>
                                     </button>
                                 </ng-container>
@@ -115,7 +128,7 @@
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Branch Name</mat-label>
                                     <input matInput placeholder="Branch Name" formControlName="branchName">
-                                    <mat-error *ngIf="fc['branchName'].hasError('required')"> Please Enter Branch Name</mat-error>
+                                    <mat-error *ngIf="fc['branchName'].hasError('required')"> Please Enter Branch Name</mat-error> 
                                 </mat-form-field>
                             </div>
                             <div class="">
@@ -124,7 +137,6 @@
                                     <input matInput placeholder="IFSC Code" formControlName="ifsC_Code">
                                     <mat-error *ngIf="fc['ifsC_Code'].hasError('required')"> Please Enter IFSC Code</mat-error>
                                     <mat-error *ngIf="fc['ifsC_Code'].hasError('pattern')"> Please Enter Valid IFSC Code</mat-error>
-
                                 </mat-form-field>
                             </div>
                             <div>
