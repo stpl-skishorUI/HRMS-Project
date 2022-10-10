@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 
 @Component({
   selector: 'app-add-holiday',
@@ -20,6 +21,7 @@ export class AddHolidayComponent implements OnInit {
   constructor(private apiService: CallApiService,
               public dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: any,
+              private commonService: CommonMethodsService
 
     ) { }
 
@@ -94,22 +96,32 @@ export class AddHolidayComponent implements OnInit {
   }
 
   getCompanyDrop(){
-    this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=1', true, false, false, 'baseURL');
-    this.subscription = this.apiService.getHttp().subscribe({
+    // this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=1', true, false, false, 'baseURL');
+    // this.subscription = this.apiService.getHttp().subscribe({
+    //   next: (resp: any) => {
+    //     console.log("getAll getCompanyDrop:", resp);
+    //     if (resp.statusCode === "200" && resp.responseData !=null) {
+    //       this.Companies = (resp.responseData);
+    //     } else {
+    //     if (resp.statusCode != "404") {
+    //       console.log("error is :", resp.statusCode);
+    //       }
+    //     }
+    //   },
+    //   error: ((error: any) => { 
+    //     console.log(" Error is :", error.status);
+    //   })
+    // });
+    this.commonService.getCompanies().subscribe({
       next: (resp: any) => {
-        console.log("getAll getCompanyDrop:", resp);
-        if (resp.statusCode === "200" && resp.responseData !=null) {
-          this.Companies = (resp.responseData);
-        } else {
-        if (resp.statusCode != "404") {
-          console.log("error is :", resp.statusCode);
-          }
-        }
-      },
-      error: ((error: any) => { 
-        console.log(" Error is :", error.status);
-      })
-    });
+        console.log("getCompanies data is :", resp)
+        this.Companies = resp.responseData;
+       },
+       error: (error: any)=>{
+        console.log(" Error is :", error);
+       }
+    })
+    
   }
 
   range = new FormGroup({
