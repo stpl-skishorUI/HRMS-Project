@@ -44,8 +44,8 @@ export class AddHolidayComponent implements OnInit {
       holidayName: new FormControl(""),
       holidayType: new FormControl("null"),
       holidayDate: new FormControl(new Date()),
-      companyId: new FormControl(),
-    })
+      comapanyId: new FormControl(),
+    });
   }
 
   saveHolidayData(){

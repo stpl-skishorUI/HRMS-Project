@@ -40,14 +40,14 @@ export class AddOrganizationComponent implements OnInit {
       orgName: this.editFlag ? this.data1.orgName : ["",Validators.required],
       contactNo: this.editFlag ? this.data1.contactNo : ["",[Validators.required,Validators.pattern("^[6-9]{1}[0-9]{9}$")]],
       address: this.editFlag ? this.data1.address : ["",Validators.required],
-      website: this.editFlag ? this.data1.website : ["",Validators.required],
+      website: this.editFlag ? this.data1.website : ["",[Validators.required,Validators.pattern("((http|https)://)(www.)?”+ “[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]”+ “{2,6}\\b(-zA-Z0-9@:%._\\+~#?&//=]*)")]],
       emailId: this.editFlag ? this.data1.emailId : ["",[Validators.required,Validators.pattern("[a-z0-9]+@[a-z]+\.[a-z]{2,3}")]],
       orgLogo: this.editFlag ? this.data1.orgLogo :  ["",Validators.required],
       aboutUs: this.editFlag ? this.data1.aboutUs : ["",Validators.required],
     });
     this.imageURL = this.editFlag? this.data1.orgLogo : "/assets/images/user.jpg";
   }
-//********************for Validation*************************/
+//********************for Validation Handle*************************/
   public hasError = (controlName: string, errorName: string) => {
     return this.OrganizationRegForm.controls[controlName].hasError(errorName);
   }
