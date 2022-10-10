@@ -107,7 +107,8 @@ export class OrganizationRegistrationComponent implements OnInit {
           // console.log('aaa', res);
           // let filterArray: any[] = [res.responseData];
           this.dataSource = res.responseData;
-          this.filterForm.reset();
+          // this.filterForm.reset();
+          // this.bindTable();
         }else {
           this.dataSource =[];
         }
