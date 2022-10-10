@@ -1,46 +1,47 @@
 <div class="card main-card">
     <div class="card-header pb-0">
 
-        
-            <form [formGroup]="companyFilterForm" (ngSubmit)="filterRecord()">
-                <div class="form-container">
-                    <div class="row align-items-center">
-                        <div class="col-sm-9">
-                            <div class="row align-items-center">
-                                <div class="col-sm-3">
+
+        <form [formGroup]="companyFilterForm" (ngSubmit)="filterRecord()">
+            <div class="form-container">
+                <div class="row align-items-center">
+                    <div class="col-sm-9">
+                        <div class="row align-items-center">
+                            <div class="col-sm-3">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label>Organization</mat-label>
+                                    <mat-select formControlName="filterOrganizationId">
+                                        <mat-option *ngFor="let org of organizationArr" [value]="org.id">
+                                            {{org.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="">
                                     <mat-form-field appearance="legacy" class="w-100">
-                                        <mat-label>Organization</mat-label>
-                                        <mat-select formControlName="filterOrganizationId">
-                                            <mat-option *ngFor="let org of organizationArr" [value]="org.id">
-                                                {{org.name}}
-                                            </mat-option>
-                                        </mat-select>
+                                        <mat-label>Search By </mat-label>
+                                        <input matInput placeholder="Name, Email, Address"
+                                            formControlName="filterSearchText">
                                     </mat-form-field>
                                 </div>
-                                <div class="col-sm-3">
-                                    <div class="">
-                                        <mat-form-field appearance="legacy" class="w-100">
-                                            <mat-label>Search By </mat-label>
-                                            <input matInput placeholder="Name, Email, Address" formControlName="filterSearchText">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="col-sm-auto">
-                                    <button mat-raised-button>Search</button>
-                                </div>
+                            </div>
+                            <div class="col-sm-auto">
+                                <button mat-raised-button>Search</button>
                             </div>
                         </div>
-    
-                        <div class="col-sm-3 text-end">
-                            <button mat-raised-button class="btn-main" (click)="addCompany()">
-                                <mat-icon>add</mat-icon>
-                                Add New
-                            </button>
-                        </div>
+                    </div>
+
+                    <div class="col-sm-3 text-end">
+                        <button mat-raised-button class="btn-main" (click)="dialogBox()">
+                            <mat-icon>add</mat-icon>
+                            Add New
+                        </button>
                     </div>
                 </div>
-            </form>
-        
+            </div>
+        </form>
+
 
     </div>
     <div class="card-body p-2">
@@ -93,7 +94,7 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item (click)="addCompany(element)">
+                            <button mat-menu-item (click)="dialogBox(element)">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span>Edit</span>
                                     <mat-icon>edit</mat-icon>
@@ -120,7 +121,7 @@
         <ng-template #elseblock>
             <h4>No Data Found</h4>
         </ng-template>
-        
-        
+
+
     </div>
 </div>

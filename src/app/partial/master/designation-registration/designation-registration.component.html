@@ -9,7 +9,7 @@
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label> Organization</mat-label>
                                     <mat-select formControlName="filtterOrganization"
-                                        (selectionChange)=" getCompanyDropdown()">
+                                        (selectionChange)=" getCompanyDropdown();clearForm('filtterOrganization')">
                                         <mat-option *ngFor="let organization of organizationDropdown"
                                             [value]="organization.id">
                                             {{organization.name}}</mat-option>
@@ -22,7 +22,7 @@
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label> Company</mat-label>
                                     <mat-select formControlName="filtterCompany"
-                                        (selectionChange)="getDepartmentDropdown()">
+                                        (selectionChange)="getDepartmentDropdown();clearForm('filtterCompany')">
                                         <mat-option *ngFor="let company of companyDropdown" [value]="company.companyId">
                                             {{company.name}}</mat-option>
                                         <!-- <mat-option>Option 2</mat-option>
@@ -33,7 +33,8 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Department</mat-label>
-                                    <mat-select formControlName="filtterDepartment">
+                                    <mat-select formControlName="filtterDepartment" 
+                                    (selectionChange)="clearForm('filtterDepartment')">
                                         <mat-option *ngFor="let department of departmentDropdown"
                                             [value]="department.departmentId">{{department.name}}</mat-option>
                                         <!-- <mat-option>Option 2</mat-option>
@@ -63,8 +64,6 @@
                         </div>
                     </form>
                 </div>
-
-
                 <div class="col-sm-3 text-end">
                     <button mat-raised-button class="btn-main" (click)="addDesignation()">
                         <mat-icon>add</mat-icon>
@@ -126,7 +125,7 @@
                 </div>
             </div>
             <ng-template #block>
-                <h3>No Data Found</h3>
+                <h3>No Data Found...</h3>
             </ng-template>
         </div>
     </div>

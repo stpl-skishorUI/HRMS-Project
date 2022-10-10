@@ -103,11 +103,12 @@ export class OrganizationRegistrationComponent implements OnInit {
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          this.snackbar.open(res.statusMessage,'ok');
+          // this.snackbar.open(res.statusMessage,'ok');
           // console.log('aaa', res);
           // let filterArray: any[] = [res.responseData];
           this.dataSource = res.responseData;
-          this.filterForm.reset();
+          // this.filterForm.reset();
+          // this.bindTable();
         }else {
           this.dataSource =[];
         }
