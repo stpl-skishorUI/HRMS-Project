@@ -15,14 +15,15 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   filterForm!: FormGroup;
   salary_Component: any;
   totalPages: number = 0;
-  pageNo:number = 0;
-  companyDropDownArray=new Array();
+  pageNo: number = 0;
+  companyDropDownArray = new Array();
   constructor(public dialog: MatDialog, private service: CallApiService,
     private snack: MatSnackBar, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.getAllTableData();
     this.filterFormMethod();
+    this.getCompanyDropdown();
   }
   //--------------------------------------------------------------Search Bar Filter Form Starts-------------------------
   filterFormMethod() {
@@ -58,7 +59,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
       }
     })
   }
-  
+
   //----------------------------------------------------DropDown Ends-----------------------------------------------------
 
 
@@ -80,7 +81,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   //--------------------------------------------------------------Gets Filter Data Starts-----------------------------
   SearchfilterData() {
     let salaryTypeSearch = this.filterForm.value.salary_Component;
-    let companyTypeSearch=this
+    let companyTypeSearch = this
     this.service.setHttp('get', 'HRMS/SalaryType/GetList?compname=' + salaryTypeSearch, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
@@ -92,26 +93,26 @@ export class SalaryTypeRegistrationComponent implements OnInit {
       }
     })
   }
-    
+
   //--------------------------------------------------------------Gets Filter Data Ends---------------------------------------------
 
   //--------------------------------------------------------------Pagenation Starts-------------------------------------------------
-getPagenationData(){
-  this.service.setHttp('get', 'hrmssvr.erpguru.in/HRMS/SalaryType/GetAllSalaryTypePagination'+(this.totalPages+1), false, false, false,
-  'baseURL');
-  this.service.getHttp().subscribe({
-    next: (res: any) => {
-      if (res.statusCode == 200 && res.responseData.length > 0) {
-        this.dataSource = res.responseData1;
-        this.totalPages=res.responseData1.pageCount;
+  getPagenationData() {
+    this.service.setHttp('get', 'hrmssvr.erpguru.in/HRMS/SalaryType/GetAllSalaryTypePagination' + (this.totalPages + 1), false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200 && res.responseData.length > 0) {
+          this.dataSource = res.responseData1;
+          this.totalPages = res.responseData1.pageCount;
+        }
       }
-    }
-  })
-}  
+    })
+  }
 
   pageChanged(event: any) {
     this.pageNo = event.pageIndex;
-   this.getAllTableData();
+    this.getAllTableData();
   }
   //--------------------------------------------------------------Pagenation Ends---------------------------------------------
 }
