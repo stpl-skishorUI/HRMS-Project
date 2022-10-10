@@ -14,8 +14,8 @@
                     <div class="col-sm-3">
                         <mat-form-field appearance="legacy" class="w-100">
                             <mat-label>Comapany</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let comp of companyDropDownArray" value="comp.companyId">
+                            <mat-select  formControlName="companyName">
+                                <mat-option *ngFor="let comp of companyDropDownArray" [value]="comp.companyId">
                                     {{comp.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -79,7 +79,7 @@
         </div>
         <div>
             <div>
-                <mat-paginator [pageSize]="10" [length]="totalPages" [pageIndex]="pageNo" (page)="pageChanged($event)"
+                <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage" (page)="pageChanged($event)"
                     showFirstLastButtons aria-label="Select page of periodic elements">
                 </mat-paginator>
             </div>
