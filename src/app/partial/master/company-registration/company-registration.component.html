@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-auto">
-                                <button mat-raised-button>Search</button>
+                                <button type="submit" mat-raised-button [disabled]="companyFilterForm.invalid">Search</button>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
 
     </div>
     <div class="card-body p-2">
-        <div *ngIf="dataSource.length; elseblock">
+        <div *ngIf="dataSource.length; else elseblock">
             <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
 
                 <ng-container matColumnDef="srno">
@@ -119,7 +119,7 @@
             </div>
         </div>
         <ng-template #elseblock>
-            <h4>No Data Found</h4>
+            <h4 style="text-align:center;">No Data Found...</h4>
         </ng-template>
 
 
