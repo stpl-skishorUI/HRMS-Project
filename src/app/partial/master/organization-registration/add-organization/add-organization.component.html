@@ -70,7 +70,7 @@
     <div class="row align-items-center mb-0">
         <div class="d-flex justify-content-between">
             <button mat-raised-button class="btn-outline-main" mat-dialog-close type="reset">Cancel</button>
-            <button mat-raised-button class="btn-main" type="submit" mat-dialog-close>{{!editFlag ? 'Save'
+            <button mat-raised-button class="btn-main" type="submit"[disabled]="OrganizationRegForm.invalid" mat-dialog-close>{{!editFlag ? 'Save'
                 :'Update'}}</button>
         </div>
     </div>
