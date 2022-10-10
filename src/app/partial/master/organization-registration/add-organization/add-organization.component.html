@@ -1,117 +1,77 @@
-<form [formGroup]="OrganizationRegForm" (ngSubmit)="onSubmit()">
-<div class="d-flex justify-content-between mb-3">
-    <h5 class="text-main">Add Organization </h5>
-    <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
-</div>
-
-
-<div class="row g-2">
-
-
-    <!-- <div class="col-sm-4 text-center">
-        <div class="upload-image">
-            <img src="assets/images/user.jpg">
-            <button class="btn"><i class="fa-solid fa-plus"></i></button>
-            <input type="file" name="myfile" />
-        </div>
-    </div> -->
-    <div class="col-sm-4 text-center">
-        <div class="upload-image" *ngIf="!editFlag">
-            <img [src]="imageURL" style="height:200px;width:150px">
-            <button class="btn" (click)="selectImg()">
-                <i class="fa-solid fa-plus"></i></button>
-            <input type="file" name="myfile" (change)="uploadImg($event)" />
-        </div>
+<form [formGroup]="OrganizationRegForm" (ngSubmit)="onSubmit()" class="mb-0">
+    <div class="d-flex justify-content-between mb-2">
+        <h5 class="text-main">Add Organization </h5>
+        <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
     </div>
 
-    <div class="col-sm-4 text-center">
-        <div class="upload-image" *ngIf="editFlag">
-            <img [src]="imageURL">
-            <button class="btn" (click)="selectImg()">
-                <i class="fa-solid fa-plus"></i></button>
-            <input type="file" name="myfile" (change)="uploadImg($event)" />
-        </div>
-    </div>
-
-
-    <div class="col-sm-8">
-
-        <div class="mb-0">
-            <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Organization Name</mat-label>
-                <input matInput placeholder="Organization Name" formControlName="orgName">
-                <mat-error *ngIf="hasError('orgName', 'required')">Organization Name is required</mat-error>
-            </mat-form-field>
+    <div class="row">
+        <div class="col-sm-4 text-center">
+            <div class="upload-image" *ngIf="!editFlag">
+                <img [src]="imageURL" style="height:200px;width:150px">
+                <button class="btn" (click)="selectImg()">
+                    <i class="fa-solid fa-plus"></i></button>
+                <input type="file" name="myfile" (change)="uploadImg($event)" />
+            </div>
+            <div class="upload-image" *ngIf="editFlag">
+                <img [src]="imageURL">
+                <button class="btn" (click)="selectImg()">
+                    <i class="fa-solid fa-plus"></i></button>
+                <input type="file" name="myfile" (change)="uploadImg($event)" />
+            </div>
         </div>
 
-        <div class="mb-0">
-            <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Organization Contact Number</mat-label>
-                <input matInput placeholder="Contact Number" formControlName="contactNo">
-                <mat-error *ngIf="hasError('contactNo', 'required')">Contact  Number is required</mat-error>
-                <mat-error *ngIf="hasError('contactNo', 'pattern')">Mobile number is not 10 digit</mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="mb-0">
-            <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Organization Address</mat-label>
-                <textarea matInput placeholder="Enter Address" formControlName="address"></textarea>
-                <mat-error *ngIf="hasError('address', 'required')">Address  Name is required</mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="mb-0">
-            <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Organization Website</mat-label>
-                <input matInput placeholder="Enter URL" formControlName="website">
-                <mat-error *ngIf="hasError('website', 'required')">Website is required</mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="mb-0">
-            <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>Organization Email ID</mat-label>
-                <input matInput placeholder="Enter Email ID" formControlName="emailId">
-                <mat-error *ngIf="hasError('emailId', 'required')">EmailId is required</mat-error>
-                <mat-error *ngIf="hasError('emailId', 'pattern')">Please Enter Valid Email Address</mat-error>
-            </mat-form-field>
-        </div>
-        
-        <div class="mb-0">
-            <mat-form-field appearance="legacy" class="w-100">
-                <mat-label>About US</mat-label>
-                <textarea matInput placeholder="Enter About US" formControlName="aboutUs"></textarea>
-                <mat-error *ngIf="hasError('aboutUs', 'required')">AboutUs is required</mat-error>
-            </mat-form-field>
-        </div>
-        <!-- <div class="mb-2">
-             --> 
-           <!-- <div class="upload-btn-wrapper">
-                <button mat-raised-button class="btn-main">
-                    <i class="fa-solid fa-upload me-2"></i>
-                    Upload File
-                </button>
-                <input type="file">
+        <div class="col-sm-8">
+            <div class="mb-0">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>Organization Name</mat-label>
+                    <input matInput placeholder="Organization Name" formControlName="orgName">
+                    <mat-error *ngIf="hasError('orgName', 'required')">Organization Name is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mb-0">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>Organization Contact Number</mat-label>
+                    <input matInput placeholder="Contact Number" formControlName="contactNo">
+                    <mat-error *ngIf="hasError('contactNo', 'required')">Contact Number is required</mat-error>
+                    <mat-error *ngIf="hasError('contactNo', 'pattern')">Mobile number is not 10 digit</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mb-0">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>Organization Address</mat-label>
+                    <textarea matInput placeholder="Enter Address" formControlName="address"></textarea>
+                    <mat-error *ngIf="hasError('address', 'required')">Address Name is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mb-0">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>Organization Website</mat-label>
+                    <input matInput placeholder="Enter URL" formControlName="website">
+                    <mat-error *ngIf="hasError('website', 'required')">Website is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mb-0">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>Organization Email ID</mat-label>
+                    <input matInput placeholder="Enter Email ID" formControlName="emailId">
+                    <mat-error *ngIf="hasError('emailId', 'required')">EmailId is required</mat-error>
+                    <mat-error *ngIf="hasError('emailId', 'pattern')">Please Enter Valid Email Address</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mb-2">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>About US</mat-label>
+                    <textarea matInput placeholder="Enter About US" formControlName="aboutUs"></textarea>
+                    <mat-error *ngIf="hasError('aboutUs', 'required')">AboutUs is required</mat-error>
+                </mat-form-field>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="d-flex justify-content-between">
-        <button mat-raised-button class="btn-outline-main">Cancel</button>
-        <button mat-raised-button class="btn-main">Save</button>
+    <div class="row align-items-center mb-0">
+        <div class="d-flex justify-content-between">
+            <button mat-raised-button class="btn-outline-main" mat-dialog-close type="reset">Cancel</button>
+            <button mat-raised-button class="btn-main" type="submit" mat-dialog-close>{{!editFlag ? 'Save'
+                :'Update'}}</button>
+        </div>
     </div>
-</div> -->
-
-</div>
-
-
-<div class="row">
-    <div class="d-flex justify-content-between">
-        <button mat-raised-button class="btn-outline-main" mat-dialog-close type="reset">Cancel</button>
-        <button mat-raised-button class="btn-main" type="submit" [disabled]="OrganizationRegForm.invalid" mat-dialog-close>{{!editFlag ? 'Save' :'Update'}}</button>
-    </div>
-</div>
-</div>
 </form>
