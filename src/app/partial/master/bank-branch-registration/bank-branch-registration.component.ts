@@ -87,6 +87,7 @@ export class BankBranchRegistrationComponent implements OnInit {
   onChanges(event: any) {
     event.value ? (this.regForm.controls['branchName'].setValue(''), this.regForm.controls['ifsC_Code'].setValue('')) : '';
   }
+  
 
   onSearch() {
     let id = this.filterForm.value.id;
@@ -130,7 +131,13 @@ export class BankBranchRegistrationComponent implements OnInit {
   }
 
   onSubmit(clear:any) { 
-    let obj = this.regForm.value;
+  let branchName = this.fc['branchName'].value;
+    if (!branchName.replace(/\s/g, '').length) { //string length is 0
+      console.log('string only contains whitespace (ie. spaces, tabs or line breaks)');
+      return;
+    }
+    else{
+      let obj = this.regForm.value;
       this.api.setHttp(this.editFlag ? 'put' : 'post', 'HRMS/BankBranchRegistration', false, obj, false, 'baseURL');
       this.api.getHttp().subscribe({
         next: (res: any) => {
@@ -139,5 +146,8 @@ export class BankBranchRegistrationComponent implements OnInit {
           console.log("Error is : ", error);
         }
       })
+      
+    }
+    
   }
 }
