@@ -25,15 +25,21 @@
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Organization Name</mat-label>
                     <input matInput placeholder="Organization Name" formControlName="orgName">
-                    <mat-error *ngIf="hasError('orgName', 'required')">Organization Name is required</mat-error>
+                    <mat-error *ngIf="f['orgName'].hasError('required') || f['orgName'].hasError('touched')">
+                        Organization name is Required
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-0">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Organization Contact Number</mat-label>
                     <input matInput placeholder="Contact Number" formControlName="contactNo" maxlength="10">
-                    <mat-error *ngIf="hasError('contactNo', 'required')">Contact Number is required</mat-error>
-                    <mat-error *ngIf="hasError('contactNo', 'pattern')">Please Enter Valid  Contact Number</mat-error>
+                    <mat-error *ngIf="f['contactNo'].hasError('required') || f['contactNo'].hasError('touched')">
+                        contactNo is Required
+                    </mat-error>
+                    <mat-error *ngIf="f['contactNo'].hasError('pattern') || f['contactNo'].hasError('touched')">
+                        Please enter valid contactNo
+                    </mat-error>
                     <!-- <mat-error *ngIf="hasError('contactNo', 'maxlength')">Please Enter  10 Digit Number</mat-error> -->
                 </mat-form-field>
             </div>
@@ -41,29 +47,39 @@
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Organization Address</mat-label>
                     <textarea matInput placeholder="Enter Address" formControlName="address"></textarea>
-                    <mat-error *ngIf="hasError('address', 'required')">Address Name is required</mat-error>
+                    <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
+                        Address is Required
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-0">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Organization Website</mat-label>
                     <input matInput placeholder="Enter URL" formControlName="website">
-                    <mat-error *ngIf="hasError('website', 'required')">Website is required</mat-error>
+                    <mat-error *ngIf="f['website'].hasError('required') || f['website'].hasError('touched')">
+                        website is Required
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-0">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Organization Email ID</mat-label>
                     <input matInput placeholder="Enter Email ID" formControlName="emailId">
-                    <mat-error *ngIf="hasError('emailId', 'required')">EmailId is required</mat-error>
-                    <mat-error *ngIf="hasError('emailId', 'pattern')">Please Enter Valid Email Address</mat-error>
+                    <mat-error *ngIf="f['emailId'].hasError('required') || f['emailId'].hasError('touched')">
+                        Email Address is Required
+                    </mat-error>
+                    <mat-error *ngIf="f['emailId'].hasError('pattern') || f['emailId'].hasError('touched')">
+                        Please enter valid email address
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-2">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>About US</mat-label>
                     <textarea matInput placeholder="Enter About US" formControlName="aboutUs"></textarea>
-                    <mat-error *ngIf="hasError('aboutUs', 'required')">AboutUs is required</mat-error>
+                    <mat-error *ngIf="f['aboutUs'].hasError('required') || f['aboutUs'].hasError('touched')">
+                        About US is Required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -71,8 +87,8 @@
     <div class="row align-items-center mb-0">
         <div class="d-flex justify-content-between">
             <button mat-raised-button class="btn-outline-main" mat-dialog-close type="reset">Cancel</button>
-            <button mat-raised-button class="btn-main" type="submit"[disabled]="OrganizationRegForm.invalid" mat-dialog-close>{{!editFlag ? 'Save'
-                :'Update'}}</button>
+            <button mat-raised-button class="btn-main" type="submit" [disabled]="OrganizationRegForm.invalid"
+                mat-dialog-close>{{editFlag ? 'Update':'Save'}}</button>
         </div>
     </div>
 </form>
