@@ -79,8 +79,8 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   filterData() {
     this.filterForm = this.fb.group({
-      "id": 0,
-      "branch": ""
+      "id": [0],
+      "branch": [""]
     })
   }
 //------For clear the fields when we change the Bank Name-----//
@@ -96,7 +96,7 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.api.getHttp().subscribe({
       next: (res: any) => {
         console.log(res);
-        res.statusCode ==200 && res.responseData.length ? this.dataSource = res.responseData :this.dataSource =[] ;
+        res.statusCode ==200 && res.responseData.length ? (this.dataSource = res.responseData,  this.totalCount = res.responseData1.pageCount) :this.dataSource =[] ;
       }, error: (error: any) => {
         console.log("Error is : ", error);
       }

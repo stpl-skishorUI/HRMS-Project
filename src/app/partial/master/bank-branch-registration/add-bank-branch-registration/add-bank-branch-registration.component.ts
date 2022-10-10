@@ -56,6 +56,7 @@ export class AddBankBranchRegistrationComponent implements OnInit {
     this.editObj = data;
     this.editFlag = true;
     this.defaultForm();
+    this.fc['bankName'].setValidators([Validators.required]);
   }
 
   onCancel(){
