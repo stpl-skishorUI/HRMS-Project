@@ -93,14 +93,17 @@ export class CompanyBankRegistrationComponent implements OnInit {
     })
   }
 
-
   getCampanyNameDropdown() {
-    let id = this.filterForm.value.organizationId
+    let id = this.filterForm.value.organizationId;
+    console.log(id);
+    
     this.api.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
         if (res.statusCode === '200' && res.responseData.length) {
           this.campanyNameArray = res.responseData;
+          console.log(this.campanyNameArray);
+          
         }
       }),
       error: (error: any) => {
@@ -145,6 +148,26 @@ export class CompanyBankRegistrationComponent implements OnInit {
   }
 
   // --------------------------------------------Dropdown End-------------------------------------------
+
+
+  clearForm(id:string) {
+    if (id == 'organization') {
+      this.filterForm.controls['bankId'].setValue('');
+      this.filterForm.controls['branchId'].setValue('');
+      this.filterForm.controls['accountType'].setValue('');
+    }else if (id == 'company') {
+      this.filterForm.controls['bankId'].setValue('');
+      this.filterForm.controls['branchId'].setValue('');
+      this.filterForm.controls['accountType'].setValue('');
+    }else if (id == 'bank') {
+      this.filterForm.controls['accountType'].setValue('');
+    }else if (id == 'branch') {
+      this.filterForm.controls['accountType'].setValue('');
+    }
+  }
+
+
+
 
   FilterFormSubmit() {
     let obj = this.filterForm.value;

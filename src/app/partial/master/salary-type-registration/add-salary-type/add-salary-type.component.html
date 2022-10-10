@@ -11,10 +11,10 @@
                     <mat-select formControlName="companyId">
                         <mat-option *ngFor="let drop of companyDropDownArray" [value]="drop.companyId">
                             {{drop.name}}</mat-option>
-                        <mat-error *ngIf="salaryForm.controls['companyId'].hasError('required')">
-                            Company Name Is Required.
-                        </mat-error>
                     </mat-select>
+                    <mat-error *ngIf="salaryForm.controls['companyId'].hasError('required')">
+                        Company Name Is Required.
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-2">
@@ -44,13 +44,18 @@
                     <mat-radio-button *ngFor="let perc of isPercentageArray" [value]="perc.id" class="mx-2">
                         {{perc.name}}</mat-radio-button>
                 </mat-radio-group>
+                <ng-container *ngIf="salaryForm.value.isPercentage">
+                    <mat-error *ngIf="salaryForm.controls['isPercentage'].hasError('required')">
+                        Please Select Field.
+                    </mat-error>
+                </ng-container>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="d-flex justify-content-between">
             <button mat-raised-button class="btn-outline-main" type="reset">Cancel</button>
-            <button mat-raised-button class="btn-main" type="submit" mat-dialog-close>{{editFlag
+            <button mat-raised-button class="btn-main" type="submit">{{editFlag
                 ?'Update':'Submit'}}</button>
         </div>
     </div>
