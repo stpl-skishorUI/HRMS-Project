@@ -17,7 +17,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snack: MatSnackBar) { }
 
-  filterForm!: FormGroup;
+  filterForm!: FormGroup; 
   pageSize = 10;
   totalCount!: number;
   currentPage: number = 0;
@@ -109,6 +109,9 @@ export class DocumentTypeRegistrationComponent implements OnInit {
           // let filterArray: any[] = [res.responseData];
           this.dataSource = res.responseData;
           this.filterForm.reset();
+        }
+        else{
+          this.dataSource = [];
         }
       }
     })

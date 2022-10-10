@@ -126,7 +126,7 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.bankNameDropDown();
     this.defaultForm();
     this.fc['branchName'].setValidators([Validators.required]);
-    this.fc['ifsC_Code'].setValidators([Validators.required]);
+    this.fc['ifsC_Code'].setValidators([Validators.required,Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]);
 
   }
 
