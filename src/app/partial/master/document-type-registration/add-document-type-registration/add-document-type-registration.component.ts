@@ -31,7 +31,7 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
       // "modifiedDate": "2022-10-03T09:10:50.692Z",
       "isDeleted": false,
       // "id": 0,
-      documentTypeName: [editData ? editData.documentTypeName : '', Validators.required]
+      documentTypeName: [editData ? editData.documentTypeName : '', [Validators.required, Validators.pattern('')]]
     })
 
     if (editData) {

@@ -8,7 +8,7 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Select Organization Name</mat-label>
-                                    <mat-select formControlName="organizationId" (selectionChange)="getCampanyNameDropdown()">
+                                    <mat-select formControlName="organizationId" (selectionChange)="getCampanyNameDropdown();clearForm('organization')">
                                         <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let organization of organizationNameArray" [value]="organization.id">
                                             {{organization.name}}</mat-option>
@@ -18,7 +18,7 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Select Company Name</mat-label>
-                                    <mat-select formControlName="companyId">
+                                    <mat-select formControlName="companyId"  (selectionChange)="clearForm('company')">
                                         <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let company of campanyNameArray" [value]="company.companyId">
                                             {{company.name}}</mat-option>
@@ -28,7 +28,7 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Select Bank Name</mat-label>                                  
-                                    <mat-select formControlName="bankId" (selectionChange)="getBranchNameDropdown()">
+                                    <mat-select formControlName="bankId" (selectionChange)="getBranchNameDropdown();clearForm('bank')">
                                         <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let bank of bankNameArray" [value]="bank.bankId">{{bank.bankName}}
                                         </mat-option>
@@ -39,7 +39,7 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Select Branch Name</mat-label>
-                                    <mat-select formControlName="branchId">
+                                    <mat-select formControlName="branchId" (selectionChange)="clearForm('branch')">
                                         <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let branch of branchNameArray" [value]="branch.id">
                                             {{branch.name}}</mat-option>
@@ -57,7 +57,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm">
-                                <button mat-raised-button color="primary" type="submit" class="mb-3">
+                                <button mat-raised-button type="submit" class="mb-3">
                                     <mat-icon>search</mat-icon>Search
                                 </button>
                             </div>
@@ -104,10 +104,21 @@
 
                     <ng-container matColumnDef="Action">
                         <th mat-header-cell *matHeaderCellDef> Action </th>
-                        <td mat-cell *matCellDef="let element; let i = index"><button mat-icon-button color="accent"
-                                style="outline: none">
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <!-- <button mat-icon-button>
                                 <mat-icon (click)="openDialog(element)">create</mat-icon>
+                            </button> -->
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <mat-icon>more_vert</mat-icon>
                             </button>
+                            <mat-menu #menu="matMenu" xPosition="before">
+                                <button mat-menu-item (click)="openDialog(element)">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>Edit</span>
+                                        <mat-icon>edit</mat-icon>
+                                    </div>
+                                </button>
+                            </mat-menu>
                         </td>
                     </ng-container>
 

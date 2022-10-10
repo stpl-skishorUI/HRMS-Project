@@ -59,7 +59,6 @@ export class DesignationRegistrationComponent implements OnInit {
         }
       }
     })
-
   }
   pageChanged(event: any) {
     this.currentPage = event.pageIndex;
@@ -86,12 +85,14 @@ export class DesignationRegistrationComponent implements OnInit {
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200 && res.responseData.length) {      
+        if (res.statusCode == 200 && res.responseData.length) {
           this.dataSource = res.responseData;
           this.totalCount = res.responseData1.pageCount;
         } else {
           this.dataSource = [];
         }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
       }
     })
   }
@@ -107,6 +108,8 @@ export class DesignationRegistrationComponent implements OnInit {
         if (res.statusCode == 200 && res.responseData.length) {
           this.organizationDropdown = res.responseData;
         }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
       }
     })
   }
@@ -119,6 +122,8 @@ export class DesignationRegistrationComponent implements OnInit {
         if (res.statusCode == 200 && res.responseData.length) {
           this.companyDropdown = res.responseData;
         }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
       }
     })
   }
@@ -131,12 +136,28 @@ export class DesignationRegistrationComponent implements OnInit {
         if (res.statusCode == 200 && res.responseData.length) {
           this.departmentDropdown = res.responseData;
         }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
       }
     })
   }
   //-----------------------------------Drop-Down------------------------------------------//
 
+  //-----------------------------------Clear-Form------------------------------------------//
+  clearForm(formControlName: any) {
+    if (formControlName == 'filtterOrganization') {
+      this.filtterForm.controls['filtterCompany'].setValue('');
+      this.filtterForm.controls['filtterDepartment'].setValue('');
+      this.filtterForm.controls['filtterDesignation'].setValue('');
+    } else if (formControlName == 'filtterCompany') {
+      this.filtterForm.controls['filtterDepartment'].setValue('');
+      this.filtterForm.controls['filtterDesignation'].setValue('');
+    } else if (formControlName == 'filtterDepartment') {
+      this.filtterForm.controls['filtterDesignation'].setValue('');
+    }
+  }
 }
+//-----------------------------------Clear-Form------------------------------------------//
 export interface PeriodicElement {
   srno: number;
   designation_name: string;

@@ -14,7 +14,7 @@
                     <div class="col-sm-3">
                         <mat-form-field appearance="legacy" class="w-100">
                             <mat-label>Comapany</mat-label>
-                            <mat-select  formControlName="companyName">
+                            <mat-select formControlName="companyName">
                                 <mat-option *ngFor="let comp of companyDropDownArray" [value]="comp.companyId">
                                     {{comp.name}}</mat-option>
                             </mat-select>
@@ -35,6 +35,7 @@
         </div>
     </div>
     <div class="card-body">
+    <ng-container *ngIf="dataSource.length;else block">
         <div class="table-responsive">
             <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
                 <ng-container matColumnDef="sr_no">
@@ -67,9 +68,20 @@
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> Actions </th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-icon-button>
+                        <!-- <button mat-icon-button>
                             <mat-icon (click)="openDialog(element)">edit</mat-icon>
+                        </button> -->
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
                         </button>
+                        <mat-menu #menu="matMenu" xPosition="before">
+                            <button mat-menu-item (click)="openDialog(element)">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Edit</span>
+                                    <mat-icon>edit</mat-icon>
+                                </div>
+                            </button>
+                        </mat-menu>
                     </td>
                 </ng-container>
 
@@ -78,12 +90,14 @@
             </table>
         </div>
         <div>
-            <div>
-                <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage" (page)="pageChanged($event)"
-                    showFirstLastButtons aria-label="Select page of periodic elements">
-                </mat-paginator>
-            </div>
+            <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage" (page)="pageChanged($event)"
+                showFirstLastButtons aria-label="Select page of periodic elements">
+            </mat-paginator>
         </div>
+    </ng-container>
+    <ng-template #block>
+        <h3>No Data Found</h3>
+    </ng-template>>
     </div>
 </div>
 
