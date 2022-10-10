@@ -9,6 +9,7 @@
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>All Company</mat-label>
                                     <mat-select formControlName="companyId" (selectionChange)="clearForm($event);departmentDropdown()">
+                                        <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let companies of companyDropdownArray" [value]="companies.companyId">{{ companies.name}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -17,6 +18,7 @@
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Department</mat-label>
                                     <mat-select formControlName="departmentId" (selectionChange)="designationDropdown()">
+                                        <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let departments of departmentDropdownArray" [value]="departments.departmentId">{{ departments.name }}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -25,6 +27,7 @@
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Designation</mat-label>
                                     <mat-select formControlName="designationId">
+                                        <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let designations of designationDropdownArray" [value]="designations.id">{{ designations.name }}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
