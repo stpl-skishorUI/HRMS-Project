@@ -11,32 +11,32 @@
                     <mat-select formControlName="companyId">
                         <mat-option *ngFor="let drop of companyDropDownArray" [value]="drop.companyId">
                             {{drop.name}}</mat-option>
+                        <mat-error *ngIf="salaryForm.controls['companyId'].hasError('required')">
+                            Company Name Is Required.
+                        </mat-error>
                     </mat-select>
-                    <mat-error *ngIf="salaryForm.controls['companyId'].hasError('required')">
-                        Company Name Is Required.
-                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-2">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Salary Component</mat-label>
                     <input matInput placeholder="Enter Salary Type" formControlName="salary_Component">
+                    <mat-error *ngIf="salaryForm.controls['salary_Component'].hasError('required')">
+                        Salary Component Is Required.
+                    </mat-error>
                 </mat-form-field>
-                <mat-error *ngIf="salaryForm.controls['salary_Component'].hasError('required')">
-                    Salary Component Is Required.
-                </mat-error>
             </div>
             <div class="mb-2">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Component Value</mat-label>
                     <input matInput placeholder="Enter Salary Type" formControlName="value">
+                    <mat-error *ngIf="salaryForm.controls['value'].hasError('required')">
+                        Value Is Required.
+                    </mat-error>
+                    <mat-error *ngIf="salaryForm.controls['value'].hasError('pattern')">
+                        Enter Only Numbers.
+                    </mat-error>
                 </mat-form-field>
-                <mat-error *ngIf="salaryForm.controls['value'].hasError('required')">
-                    Value Is Required.
-                </mat-error>
-                <mat-error *ngIf="salaryForm.controls['value'].hasError('pattern')">
-                    Enter Only Numbers.
-                </mat-error>
             </div>
             <div class="mb-3">
                 <label>Is Percentage :</label>
