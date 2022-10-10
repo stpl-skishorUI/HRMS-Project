@@ -24,6 +24,8 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    console.log(this.data);
+    
     this.formData();
     this.getOrganizationNameDropdown()
     // this.getCampanyNameDropdown();
@@ -65,9 +67,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
       })
     })
   }
-
-
-
+  
   getCampanyNameDropdown() {
     let id = this.companyBankRegistrationForm.value.organizationId
     this.api.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + id, false, false, false, 'baseURL');
