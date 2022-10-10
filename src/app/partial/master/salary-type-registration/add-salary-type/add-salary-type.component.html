@@ -21,36 +21,52 @@
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Salary Component</mat-label>
                     <input matInput placeholder="Enter Salary Type" formControlName="salary_Component">
+                    <mat-error *ngIf="salaryForm.controls['salary_Component'].hasError('required')">
+                        Salary Component Is Required.
+                    </mat-error>
                 </mat-form-field>
-                <mat-error *ngIf="salaryForm.controls['salary_Component'].hasError('required')">
-                    Salary Component Is Required.
-                </mat-error>
             </div>
-            <div class="mb-2">
-                <mat-form-field appearance="legacy" class="w-100">
-                    <mat-label>Component Value</mat-label>
-                    <input matInput placeholder="Enter Salary Type" formControlName="value">
-                </mat-form-field>
-                <mat-error *ngIf="salaryForm.controls['value'].hasError('required')">
-                    Value Is Required.
-                </mat-error>
-                <mat-error *ngIf="salaryForm.controls['value'].hasError('pattern')">
-                    Enter Only Numbers.
-                </mat-error>
+            <div class="form-container">
+                    <div class="row align-items-center">
+
+                    <div class="col-sm-5">
+                        <div class="mb-3">
+                            <div class="form-label">Is Percentage :</div>
+                            <mat-radio-group formControlName="isPercentage">
+                                <mat-radio-button *ngFor="let perc of isPercentageArray" [value]="perc.id" class="form-data">
+                                    {{perc.name}}</mat-radio-button>
+                            </mat-radio-group>
+                            <ng-container *ngIf="salaryForm.value.isPercentage">
+                                <mat-error *ngIf="salaryForm.controls['isPercentage'].hasError('required')">
+                                    Please Select Field.
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="mb-2">
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Component Value</mat-label>
+                                <input matInput placeholder="Enter Salary Type" formControlName="value">
+                                <mat-error *ngIf="salaryForm.controls['value'].hasError('required')">
+                                    Value Is Required.
+                                </mat-error>
+                                <mat-error *ngIf="salaryForm.controls['value'].hasError('pattern')">
+                                    Enter Only Numbers.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label>Is Percentage :</label>
-                <mat-radio-group formControlName="isPercentage">
-                    <mat-radio-button *ngFor="let perc of isPercentageArray" [value]="perc.id" class="mx-2">
-                        {{perc.name}}</mat-radio-button>
-                </mat-radio-group>
-            </div>
+
+
         </div>
     </div>
     <div class="row">
         <div class="d-flex justify-content-between">
             <button mat-raised-button class="btn-outline-main" type="reset">Cancel</button>
-            <button mat-raised-button class="btn-main" type="submit" mat-dialog-close>{{editFlag
+            <button mat-raised-button class="btn-main" type="submit">{{editFlag
                 ?'Update':'Submit'}}</button>
         </div>
     </div>

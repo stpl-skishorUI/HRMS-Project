@@ -17,10 +17,11 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snack: MatSnackBar) { }
 
-  filterForm!: FormGroup;
+  filterForm!: FormGroup; 
   pageSize = 10;
   totalCount!: number;
   currentPage: number = 0;
+  docType:string = '';
 
   ngOnInit(): void {
     this.displayData();
@@ -50,7 +51,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   // ---------------------------------------- Display Data --------------------------------------------
   displayData() {
-    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?pageno='+ (this.currentPage + 1) +'&pagesize=5&documentType1=', false, false, false,
+    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?pageno='+ (this.currentPage + 1) +'&pagesize=5&documentType1=' + this.docType, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -96,23 +97,10 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   // ----------------------------------------- Filter Record -------------------------------------------
   filterData() {
-    let docType = this.filterForm.value.documentTypeName;
-    console.log(docType);
-
-
-    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?documentType1=' + docType, false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == '200') {
-          console.log('aaa', res);
-          // let filterArray: any[] = [res.responseData];
-          this.dataSource = res.responseData;
-          this.filterForm.reset();
-        }
-      }
-    })
+    this.docType = this.filterForm.value.documentTypeName;
+    this.displayData();
   }
+  
 }
 const ELEMENT_DATA: PeriodicElement[] = [
   { sr_no: 1, Document_Type_Name: '', action: '', },
