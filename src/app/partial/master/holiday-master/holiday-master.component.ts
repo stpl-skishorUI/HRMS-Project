@@ -13,6 +13,7 @@ import { AddHolidayComponent } from './add-holiday/add-holiday.component';
   styleUrls: ['./holiday-master.component.scss']
 })
 export class HolidayMasterComponent implements OnInit {
+  Companies: any;
   Allholidays: any = null// for holiday 
   yearsDropdn: any // for years dropdown
   holiTypes: any // for holiday types
@@ -31,10 +32,10 @@ export class HolidayMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultSearchForm();
+    this.getCompanyDrop();
     this.getYear();
     this.getHolidayType();
     this.getAllHoliday();
-
   }
 
   defaultSearchForm(){
@@ -42,7 +43,8 @@ export class HolidayMasterComponent implements OnInit {
       // pageno: new FormControl(1),
       pagesize: new FormControl(10),
       holidaytype: new FormControl(' '),
-      year: new FormControl(2022)
+      year: new FormControl(2022),
+      comapanyId: new FormControl(1),
     });
   }
 
@@ -56,10 +58,30 @@ export class HolidayMasterComponent implements OnInit {
     this.getAllHoliday();
   }
 
+  getCompanyDrop(){
+    this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=1', true, false, false, 'baseURL');
+    this.subscription = this.apiService.getHttp().subscribe({
+      next: (resp: any) => {
+        console.log("getAll getCompanyDrop:", resp);
+        if (resp.statusCode === "200" && resp.responseData !=null) {
+          this.Companies = (resp.responseData);
+        } else {
+        if (resp.statusCode != "404") {
+          console.log("error is :", resp.statusCode);
+          }
+        }
+      },
+      error: ((error: any) => { 
+        console.log(" Error is :", error.status);
+      })
+    });
+  }
+
 
   getAllHoliday(){
     let formData = this.searchForm.value;
-    this.apiService.setHttp('get', 'api/HolidayMaster/GetAllHolidayByPagination?pageno='+(this.pageIndex+1)+'&pagesize=10&holidaytype='+formData.holidaytype+'&year='+formData.year, true, false, false, 'baseURL');
+    this.apiService.setHttp('get', 'api/HolidayMaster/GetAllHolidayByPagination?pageno='+(this.pageIndex+1)+'&pagesize=10&holidaytype='+formData.holidaytype+'&year='+formData.year+'&comapanyId='+formData.comapanyId, true, false, false, 'baseURL');
+    // GetAllHolidayByPagination?pageno=1&pagesize=10&holidaytype=Compulsory&year=2022&comapanyId=1
     this.subscription = this.apiService.getHttp().subscribe({
       next: (resp: any) => {
         console.log("getAll Holidays:", resp);

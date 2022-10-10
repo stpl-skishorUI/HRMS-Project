@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
@@ -37,15 +37,19 @@ export class AddOrganizationComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": false,
       id: this.editFlag ? this.data1.id : 0,
-      orgName: this.editFlag ? this.data1.orgName : "",
-      contactNo: this.editFlag ? this.data1.contactNo : "",
-      address: this.editFlag ? this.data1.address : "",
-      website: this.editFlag ? this.data1.website : "",
-      emailId: this.editFlag ? this.data1.emailId : "",
-      orgLogo: this.editFlag ? this.data1.orgLogo : "",
-      aboutUs: this.editFlag ? this.data1.aboutUs : ""
+      orgName: this.editFlag ? this.data1.orgName : ["",Validators.required],
+      contactNo: this.editFlag ? this.data1.contactNo : ["",[Validators.required,Validators.pattern("^[6-9]{1}[0-9]{9}$")]],
+      address: this.editFlag ? this.data1.address : ["",Validators.required],
+      website: this.editFlag ? this.data1.website : ["",Validators.required],
+      emailId: this.editFlag ? this.data1.emailId : ["",[Validators.required,Validators.pattern("[a-z0-9]+@[a-z]+\.[a-z]{2,3}")]],
+      orgLogo: this.editFlag ? this.data1.orgLogo :  ["",Validators.required],
+      aboutUs: this.editFlag ? this.data1.aboutUs : ["",Validators.required],
     });
     this.imageURL = this.editFlag? this.data1.orgLogo : "/assets/images/user.jpg";
+  }
+//********************for Validation*************************/
+  public hasError = (controlName: string, errorName: string) => {
+    return this.OrganizationRegForm.controls[controlName].hasError(errorName);
   }
   //************************Start Submit Logic Here**********************/
   onSubmit() {
