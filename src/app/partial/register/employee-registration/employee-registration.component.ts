@@ -22,6 +22,7 @@ export class EmployeeRegistrationComponent implements OnInit {
   companyId: number = 0;
   departmentId: number = 0;
   designationId: number = 0;
+  name: string = '';
 
   constructor(private fb: FormBuilder, public dialog: MatDialog, private service: CallApiService) { }
 
@@ -38,7 +39,8 @@ export class EmployeeRegistrationComponent implements OnInit {
     this.filterForm = this.fb.group({
       companyId: [''],
       departmentId: [''],
-      designationId: ['']
+      designationId: [''],
+      name:['']
     });
   }
 
@@ -87,7 +89,7 @@ export class EmployeeRegistrationComponent implements OnInit {
 
   // ---------------------------------------- Display Data / Pagination / FilterData -----------------
   displayData() {
-    this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees?CompanyId=' + this.companyId + '&DepartmentId=' + this.departmentId + '&DesignationId=' + this.designationId + '&pageno=' + (this.currentPage + 1) + '&pagesize=10&TextSearch=', false, false, false,
+    this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees?CompanyId=' + this.companyId + '&DepartmentId=' + this.departmentId + '&DesignationId=' + this.designationId + '&pageno=' + (this.currentPage + 1) + '&pagesize=10&TextSearch=' + this.name, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -109,6 +111,7 @@ export class EmployeeRegistrationComponent implements OnInit {
     this.companyId = obj.companyId ? obj.companyId : 0;
     this.departmentId = obj.departmentId ? obj.departmentId : 0;
     this.designationId = obj.designationId ? obj.designationId : 0;
+    this.name = obj.name ? obj.name : '';
     this.displayData();
   }
 

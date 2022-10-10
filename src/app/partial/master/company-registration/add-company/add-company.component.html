@@ -72,7 +72,7 @@
                 <div class="mb-0">
                     <mat-form-field appearance="legacy" class="w-100">
                         <mat-label>Address</mat-label>
-                        <textarea matInput placeholder="Enter Address" formControlName="address" maxlength="15"
+                        <textarea matInput placeholder="Enter Address" formControlName="address" maxlength="30"
                             minlength="3"></textarea>
                         <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
                             Address is Required
@@ -111,7 +111,7 @@
                 <div class="mb-0">
                     <mat-form-field appearance="legacy" class="w-100">
                         <mat-label>About Us</mat-label>
-                        <textarea matInput placeholder="Enter About US" formControlName="aboutUs" maxlength="15"
+                        <textarea matInput placeholder="Enter About US" formControlName="aboutUs" maxlength="30"
                             minlength="3"></textarea>
                         <mat-error *ngIf="f['aboutUs'].hasError('required') || f['aboutUs'].hasError('touched')">
                             About Us is Required
@@ -133,7 +133,7 @@
                         </button>
                         <input type="file" (change)="uploadImg($event)"> -->
 
-                        {{companyRegistrationForm.controls['companyLogo'].value}}
+                        <!-- {{companyRegistrationForm.controls['companyLogo'].value}} -->
                     </div>
                 </div>
             </div>

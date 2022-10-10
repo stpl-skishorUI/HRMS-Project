@@ -15,8 +15,8 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   company = new Array();
   employee = new Array();
   year = new Array();
-  totalRows: any;
-  pageNo = 1;
+  totalCount: any;
+  currentPage: number = 0;
   pageSize = 10;
   companyId: number = 0;
   EmpCode = new Array();
@@ -71,9 +71,8 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
         '&YearId=' +
         this.filterForm.controls['year'].value +
         '&pageno=' +
-        this.pageNo +
-        '&pagesize=' +
-        this.pageSize,
+        (this.currentPage + 1) +
+        '&pagesize=10',
       false,
       false,
       false,
@@ -84,6 +83,7 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
         if (res.statusCode == '200') {
           this.dataSource = res.responseData;
           // this.dataSource = res.responseData1;
+          this.totalCount = res.responseData1.pageCount;
         }
       },
     });
@@ -149,8 +149,8 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   }
 
   //-----------------------------------------------------Pagination----------------------------------------------------------------
-  pageChanged(pg: any) {
-    this.pageNo = pg.pageIndex + 1;
+  pageChanged(event: any) {
+    this.currentPage = event.pageIndex;
     this.displayData();
   }
 
@@ -162,7 +162,7 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
     });
     this.displayData();
   }
- //------------------------------------------------------------------Change Employee  ---------------------------------------------------------------
+  //------------------------------------------------------------------Change Employee  ---------------------------------------------------------------
   onChangeEmployee() {
     this.displayData();
   }
