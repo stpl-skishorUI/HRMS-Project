@@ -39,8 +39,8 @@
                         </div>
                         <div class="mb-0">
                             <mat-form-field  appearance="legacy" class="w-100">
-                                <mat-label>Choose a date</mat-label>
-                                <input matInput [matDatepicker]="picker" formControlName="empCode">
+                                <mat-label>Date Of Birth</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="dob">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                               </mat-form-field>                              
@@ -64,12 +64,12 @@
                                 <input matInput placeholder="Enter Email id" formControlName="emailId">
                             </mat-form-field>
                         </div>
-                        <div class="mb-0">
+                        <!-- <div class="mb-0">
                             <mat-form-field  appearance="legacy" class="w-100">
                                 <mat-label>Address</mat-label>
                                 <textarea matInput placeholder="Enter Address" formControlName=""></textarea>
                               </mat-form-field>
-                        </div>
+                        </div> -->
                         <div class="mb-0">
                             <mat-form-field  appearance="legacy" class="w-100">
                                 <mat-label>Address</mat-label>
@@ -83,7 +83,7 @@
                               </mat-form-field>
                         </div>
                         <div class="mb-0">
-                            <mat-radio-group aria-label="Select an option">
+                            <mat-radio-group aria-label="Select an option" formControlName="gender">
                                 <mat-label>Gender</mat-label>
                                 <mat-radio-button value="1">Option 1</mat-radio-button>
                                 <mat-radio-button value="2">Option 2</mat-radio-button>
@@ -93,7 +93,7 @@
                         <div class="mb-0">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Education</mat-label>
-                                <mat-select>
+                                <mat-select formControlName="education">
                                     <mat-option>Undergradute</mat-option>
                                     <mat-option>Graduate</mat-option>
                                     <mat-option>Post Graduate</mat-option>
@@ -215,6 +215,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
+
                     <div class="mb-0">
                         <mat-form-field appearance="legacy" class="w-100">
                             <mat-label> Document Number</mat-label>

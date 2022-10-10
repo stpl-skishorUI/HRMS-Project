@@ -14,11 +14,11 @@ export class AddEmployeeDetailsComponent implements OnInit {
   constructor(private _fb: FormBuilder) { }
   ngOnInit(): void {
     this.empRegistraion = this._fb.group({
-      "modifiedBy": ['0', Validators.required],
+      "modifiedBy": ['0'],
       "modifiedDate": ["2022-10-07T09:27:47.095Z"],
       "empId": [0],
       "name": [""],
-      "empCode": [0],
+      "empCode": [],
       "dob": ["2022-10-07T09:27:47.095Z"],
       "mobileNo1": [""],
       "mobileNo2": [""],
@@ -53,7 +53,6 @@ export class AddEmployeeDetailsComponent implements OnInit {
       "createdDate": ["2022-10-07T09:27:47.095Z"],
       "isDeleted": [true],
       "empDocuments": this._fb.array([
-    
       ])
       
       });
@@ -85,8 +84,5 @@ export class AddEmployeeDetailsComponent implements OnInit {
   submit(value: any) {
     console.log(" all submitted form values :",value);
   }
-
-
-  
 
 }
