@@ -8,8 +8,8 @@
                         <div class="col-sm-3">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>All Company</mat-label>
-                                <mat-select formControlName="companyId">
-                                    <mat-option *ngFor="let com of company" value="{{com.id}}">{{com.name}}</mat-option>
+                                <mat-select formControlName="companyId" (selectionChange)="onChangeCompany()">
+                                    <mat-option *ngFor="let com of company" value="{{com.companyId}}">{{com.name}}</mat-option>
 
                                 </mat-select>
                             </mat-form-field>
@@ -17,8 +17,8 @@
                         <div class="col-sm-3">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>All Employee</mat-label>
-                                <mat-select formControlName="allemployee">
-                                    <mat-option *ngFor="let emp of employee" value="{{emp.id}}">{{emp.name}}</mat-option>
+                                <mat-select formControlName="allemployee" (selectionChange)="onChangeEmployee()">
+                                    <mat-option *ngFor="let emp of employee" value="{{emp.empCode}}">{{emp.name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -31,9 +31,9 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-sm-auto">
+                        <!-- <div class="col-sm-auto">
                             <button mat-raised-button>Search</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 

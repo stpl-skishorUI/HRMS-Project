@@ -2,22 +2,22 @@
     <h5 class="text-main">Add New Salary</h5>
     <i class="fa fa-times" aria-hidden="true" mat-dialog-close=""></i>
 </div>
-<form [formGroup]="emloyeeSalaryForm" (ngSubmit)="SubmitForm">
+<form [formGroup]="emloyeeSalaryForm" (ngSubmit)="SubmitForm()">
 <div class="row">
     <div class="col-sm-12">
         <div class="form-container">
             <div class="mb-3">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Select Compnay</mat-label>
-                    <mat-select formControlName="allcompany">
-                        <mat-option *ngFor="let com of company" value="{{com.id}}">{{com.name}}</mat-option>
+                    <mat-select formControlName="companyId">
+                        <mat-option *ngFor="let com of company" value="{{com.id}">{{com.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="mb-3">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>All Employee</mat-label>
-                    <mat-select formArrayName="allemployee">
+                    <mat-select formControlName="allemployee">
                         <mat-option *ngFor="let emp of employee" value="{{emp.id}}">{{emp.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -37,7 +37,7 @@
 <div class="row">
     <div class="d-flex justify-content-between">
         <button mat-button class="btn-outline-main" type="reset" (click)="onCancel()">Cancel</button>
-        <button type="button" class="btn btn-main">{{!editFlag? 'Save':'Update' }}</button>
+        <button type="button" class="btn btn-main">{{!editFlag ? 'Save':'Update' }}</button>
     </div>
 </div>
 </form>

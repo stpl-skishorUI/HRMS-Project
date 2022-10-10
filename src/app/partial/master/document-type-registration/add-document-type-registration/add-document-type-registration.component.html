@@ -13,6 +13,9 @@
                         <mat-error *ngIf="formFiledControl['documentTypeName'].hasError('required') || formFiledControl['documentTypeName'].hasError('touched')">
                             *Document Type is Required
                         </mat-error>
+                        <mat-error *ngIf="formFiledControl['documentTypeName'].hasError('pattern') || formFiledControl['documentTypeName'].hasError('touched')">
+                            *No spaces allowed
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
