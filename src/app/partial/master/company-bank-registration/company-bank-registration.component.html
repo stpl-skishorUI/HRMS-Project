@@ -8,7 +8,7 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Select Organization Name</mat-label>
-                                    <mat-select formControlName="organizationId" (selectionChange)="getCampanyNameDropdown()">
+                                    <mat-select formControlName="organizationId" (selectionChange)="getCampanyNameDropdown();clearForm('organization')">
                                         <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let organization of organizationNameArray" [value]="organization.id">
                                             {{organization.name}}</mat-option>
@@ -18,7 +18,7 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Select Company Name</mat-label>
-                                    <mat-select formControlName="companyId">
+                                    <mat-select formControlName="companyId"  (selectionChange)="clearForm('company')">
                                         <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let company of campanyNameArray" [value]="company.companyId">
                                             {{company.name}}</mat-option>
@@ -28,7 +28,7 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Select Bank Name</mat-label>                                  
-                                    <mat-select formControlName="bankId" (selectionChange)="getBranchNameDropdown()">
+                                    <mat-select formControlName="bankId" (selectionChange)="getBranchNameDropdown();clearForm('bank')">
                                         <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let bank of bankNameArray" [value]="bank.bankId">{{bank.bankName}}
                                         </mat-option>
@@ -39,7 +39,7 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Select Branch Name</mat-label>
-                                    <mat-select formControlName="branchId">
+                                    <mat-select formControlName="branchId" (selectionChange)="clearForm('branch')">
                                         <mat-option value="0">All</mat-option>
                                         <mat-option *ngFor="let branch of branchNameArray" [value]="branch.id">
                                             {{branch.name}}</mat-option>

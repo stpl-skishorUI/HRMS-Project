@@ -44,7 +44,7 @@ export class HolidayMasterComponent implements OnInit {
       pagesize: new FormControl(10),
       holidaytype: new FormControl(' '),
       year: new FormControl(2022),
-      comapanyId: new FormControl(),
+      comapanyId: new FormControl(1),
     });
   }
 
