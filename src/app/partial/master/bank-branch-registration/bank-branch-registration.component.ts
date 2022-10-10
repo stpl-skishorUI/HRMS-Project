@@ -41,7 +41,8 @@ export class BankBranchRegistrationComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      this.bindTable();
+    this.bankNameDropDown();
+      // this.bindTable();
     });
   }
 

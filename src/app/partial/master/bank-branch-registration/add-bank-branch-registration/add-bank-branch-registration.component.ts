@@ -68,9 +68,8 @@ export class AddBankBranchRegistrationComponent implements OnInit {
     this.api.setHttp( this.editFlag ? 'put' : 'post', 'api/BankRegistration', false, obj, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(), this.editFlag = false,this.formGroupDirective.resetForm()) :'';
+        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(), this.editFlag = false,this.formGroupDirective.resetForm(), this.defaultForm()) :'';
       }
     })
-     this.defaultForm();
   }
 }
