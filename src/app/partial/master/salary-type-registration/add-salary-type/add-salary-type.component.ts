@@ -53,8 +53,8 @@ export class AddSalaryTypeComponent implements OnInit {
       companyId: [, Validators.required],
       "companyName": "",
       salary_Component: ['', Validators.required],
-      isPercentage: [''],
-      value: [, [Validators.required,Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
+      isPercentage: ['',Validators.required],
+      value: [, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     })
 
   }
@@ -63,31 +63,33 @@ export class AddSalaryTypeComponent implements OnInit {
 
   //--------------------------------------------------------------- Form Submit starts------------------------------------------------------
   onSubmit() {
-    let radioValues = this.salaryForm.value.isPercentage;
-    if (radioValues == 0) {
-      this.salaryForm.controls['isPercentage'].setValue(true);
-    }
-    else {
-      this.salaryForm.controls['isPercentage'].setValue(false);
-    }
-
-    let postObj = this.salaryForm.value;
-    if (this.editFlag == false) {
-      // console.log("postObj", postObj);
-      this.service.setHttp('post', 'HRMS/SalaryType', false, postObj, false, 'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          this.snack.open(res.statusMessage, "Ok", { duration: 3000 });
-        }
-      })
-    } else {
-      this.editFlag = true;
-      this.service.setHttp('put', 'HRMS/SalaryType', false, postObj, false, 'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          this.snack.open(res.statusMessage, 'Ok', { duration: 3000 });
-        }
-      })
+    if (this.salaryForm.valid) {
+      let radioValues = this.salaryForm.value.isPercentage;
+      if (radioValues == 0) {
+        this.salaryForm.controls['isPercentage'].setValue(true);
+      }
+      else {
+        this.salaryForm.controls['isPercentage'].setValue(false);
+      }
+      let postObj = this.salaryForm.value;
+      if (this.editFlag == false) {
+        // console.log("postObj", postObj);
+        this.service.setHttp('post', 'HRMS/SalaryType', false, postObj, false, 'baseURL');
+        this.service.getHttp().subscribe({
+          next: (res: any) => {
+            this.dialogRef.close();
+            this.snack.open(res.statusMessage, "Ok", { duration: 3000 });
+          }
+        })
+      } else {
+        this.editFlag = true;
+        this.service.setHttp('put', 'HRMS/SalaryType', false, postObj, false, 'baseURL');
+        this.service.getHttp().subscribe({
+          next: (res: any) => {
+            this.snack.open(res.statusMessage, 'Ok', { duration: 3000 });
+          }
+        })
+      }
     }
   }
   //--------------------------------------------------------------- Form Submit Ends------------------------------------------------------

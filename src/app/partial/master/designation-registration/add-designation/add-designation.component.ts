@@ -21,13 +21,9 @@ export class AddDesignationComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    console.log("edit data", this.data);
-
     this.formData();
     this.getCompanyDropdown();
-    if (this.data) {
-      this.onEdit(this.data);
-    }
+    this.data ? this.onEdit(this.data) : '';
   }
 
   get f() { return this.designationForm.controls }
@@ -35,9 +31,9 @@ export class AddDesignationComponent implements OnInit {
   formData() {
     this.designationForm = this.formBuilder.group({
       "id": this.data ? this.data.id : 0,
-      "companyId": [0,Validators.required],
-      "departmentId":[0,Validators.required],
-      "designationName": ['',Validators.required],
+      "companyId": ['', Validators.required],
+      "departmentId": ['', Validators.required],
+      "designationName": ['', [Validators.required,Validators.minLength(3)]],
       "organizationId": 0,
       "year": 0,
       "createdBy": 0,
@@ -45,7 +41,7 @@ export class AddDesignationComponent implements OnInit {
       "createdDate": new Date,
       "modifiedDate": new Date,
       "isDeleted": true,
-      "createdDateFormatdate": [''],
+      "createdDateFormatdate": ['',Validators.required],
       "modifiedDateFormatdate": new Date
     })
   }
@@ -53,30 +49,30 @@ export class AddDesignationComponent implements OnInit {
   //-----------------------------------Drop-Down------------------------------------------//
   getCompanyDropdown() {
     // let orgId=this.designationForm.value.organizationId;
-   
-    
     this.service.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=0', false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        console.log("company", res);
         if (res.statusCode == 200 && res.responseData.length) {
           this.companyData = res.responseData;
-          this.editFlag ?  this.getDepartmentDropdown() : '';
+          this.editFlag ? this.getDepartmentDropdown() : '';
         }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
       }
     })
   }
   getDepartmentDropdown() {
-    let comId=this.designationForm.value.companyId;
-    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId='+comId, false, false, false,
+    let comId = this.designationForm.value.companyId;
+    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId=' + comId, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        console.log("department", res);
         if (res.statusCode == 200 && res.responseData.length) {
           this.departmentData = res.responseData;
         }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
       }
     })
   }
@@ -84,7 +80,6 @@ export class AddDesignationComponent implements OnInit {
 
   //-----------------------------------Patch Value------------------------------------------//
   onEdit(obj: any) {
-    console.log("objId", obj.id);
     this.editFlag = true;
     this.designationForm.patchValue({
       companyId: obj.companyId,
@@ -92,57 +87,79 @@ export class AddDesignationComponent implements OnInit {
       createdDate: new Date(),
       createdDateFormatdate: new Date(),
       departmentId: obj.departmentId,
-      designationName: obj.designationName,
-      // id: this.editFlag ? +obj.id : 0
+      designationName: obj.designationName
     })
     this.getCompanyDropdown();
-
   }
   //-----------------------------------Patch Value------------------------------------------//
+  //-----------------------------------Submit------------------------------------------//
   OnSubmit() {
-    let obj = {
-      ...this.designationForm.value,
-      "leaveTypes": [
-        {
-          "createdBy": 0,
-          "modifiedBy": 0,
-          "createdDate": new Date,
-          "modifiedDate": new Date,
-          "isDeleted": true,
-          "id": 0,
-          "companyId": 0,
-          "departmentId": 0,
-          "designationId": 0,
-          "leaveName": "string",
-          "leaveQty": 0,
-          "isHalfDay": true
-        }
-      ]
-    }
-    if (this.editFlag) {
-      this.service.setHttp('put', 'HRMS/Designation', false, obj, false,
-        'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == 200 && res.responseData.length) {
-            this.snack.open(res.statusMessage, "ok");
-            // this.dialogRef.close();
+    if(this.designationForm.valid){
+      let obj = {
+        ...this.designationForm.value,
+        "leaveTypes": [
+          {
+            "createdBy": 0,
+            "modifiedBy": 0,
+            "createdDate": new Date,
+            "modifiedDate": new Date,
+            "isDeleted": true,
+            "id": 0,
+            "companyId": 0,
+            "departmentId": 0,
+            "designationId": 0,
+            "leaveName": "string",
+            "leaveQty": 0,
+            "isHalfDay": true
           }
-        }
-      })
-    }
-    else {
-      this.service.setHttp('post', 'HRMS/Designation', false, obj, false,
-        'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == 200 && res.responseData.length) {
-            this.snack.open(res.statusMessage, "ok");
-            // this.dialogRef.close();
+        ]
+      }
+      if (this.editFlag) {
+        this.service.setHttp('put', 'HRMS/Designation', false, obj, false,
+          'baseURL');
+        this.service.getHttp().subscribe({
+          next: (res: any) => {
+            if (res.statusCode == 200) {
+              this.dialogRef.close();
+              this.snack.open(res.statusMessage, "ok");
+              
+            }
+          }, error: (error: any) => {
+            console.log("Error : ", error);
           }
-        }
-      })
+        })
+      }
+      else {
+        this.service.setHttp('post', 'HRMS/Designation', false, obj, false,
+          'baseURL');
+        this.service.getHttp().subscribe({
+          next: (res: any) => {
+            if (res.statusCode == 200) {
+              this.dialogRef.close();
+              this.snack.open(res.statusMessage, "ok");
+             
+            }
+          }, error: (error: any) => {
+            console.log("Error : ", error);
+          }
+        })
+      }
     }
-     this.dialogRef.close();
+   
   }
+  //-----------------------------------Submit------------------------------------------//
+  //-----------------------------------Clear-Form------------------------------------------//
+  clearForm(formControlName: any) {
+    if (formControlName == 'companyId') {
+      this.designationForm.controls['departmentId'].setValue('');
+      this.designationForm.controls['designationName'].setValue('');
+      this.designationForm.controls['createdDateFormatdate'].setValue('');
+    } else if (formControlName == 'departmentId') {
+      this.designationForm.controls['designationName'].setValue('');
+      this.designationForm.controls['createdDateFormatdate'].setValue('');
+    } else if (formControlName == 'designationName') {
+      this.designationForm.controls['createdDateFormatdate'].setValue('');
+    }
+  }
+  //-----------------------------------Clear-Form------------------------------------------//
 }

@@ -13,23 +13,26 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['sr_no', 'Company_Name', 'Salary_Component', 'IsPercentage', 'Value', 'action'];
   dataSource = ELEMENT_DATA;
   filterForm!: FormGroup;
-  salary_Component:any;
-  currentPage:number=0;
-  totalCount:number=0;
+  salary_Component: any;
+  totalCount: any;
+  currentPage: number = 0;
+  companyDropDownArray = new Array();
   constructor(public dialog: MatDialog, private service: CallApiService,
     private snack: MatSnackBar, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.getAllTableData();
     this.filterFormMethod();
+    this.getCompanyDropdown();
   }
-  //--------------------------------------------------------------Search Bar Filter Form Starts--------------------------------
+  //--------------------------------------------------------------Search Bar Filter Form Starts-------------------------
   filterFormMethod() {
     this.filterForm = this.fb.group({
       salary_Component: [''],
+      companyName:[''],
     })
   }
-  //--------------------------------------------------------------Search Bar Filter Form Ends--------------------------------
+  //--------------------------------------------------------------Search Bar Filter Form Ends---------------------------
 
   //--------------------------------------------------------------Dialogue Module Starts--------------------------------
   openDialog(ele?: any) {
@@ -43,29 +46,45 @@ export class SalaryTypeRegistrationComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-  //--------------------------------------------------------------Dialogue Module Form Ends--------------------------------
+  //--------------------------------------------------------------Dialogue Module Form Ends-----------------------------
+
+  //----------------------------------------------------DropDown Starts-----------------------------------------------------
+  getCompanyDropdown() {
+    this.service.setHttp('get', 'api/CommonDropDown/GetCompany', false, false, false,
+      'baseURL');
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == '200') {
+          this.companyDropDownArray = res.responseData;
+        }
+      }
+    })
+  }
+
+  //----------------------------------------------------DropDown Ends-----------------------------------------------------
 
 
   //--------------------------------------------------------------Gets Table Data Starts--------------------------------
   getAllTableData() {
-    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination', false, false, false,
+    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?'+(this.currentPage+1), false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-
         if (res.statusCode == 200 && res.responseData.length > 0) {
           this.snack.open(res.statusMessage, 'Ok', { duration: 4000 });
           this.dataSource = res.responseData;
+          this.totalCount = res.responseData1.pageCount;
         }
       }
     })
   }
   //--------------------------------------------------------------Gets Table Data Ends--------------------------------
 
-  //--------------------------------------------------------------Gets Filter Data Starts--------------------------------
+  //--------------------------------------------------------------Gets Filter Data Starts-----------------------------
   SearchfilterData() {
     let salaryTypeSearch = this.filterForm.value.salary_Component;
-    this.service.setHttp('get', 'HRMS/SalaryType/GetList?compname=' + salaryTypeSearch, false, false, false,
+    let companyTypeSearch =this.filterForm.value.companyName;
+    this.service.setHttp('get', 'HRMS/SalaryType/GetList?Salary_Component='+salaryTypeSearch+'&Id='+companyTypeSearch, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -76,11 +95,13 @@ export class SalaryTypeRegistrationComponent implements OnInit {
       }
     })
   }
+
   //--------------------------------------------------------------Gets Filter Data Ends---------------------------------------------
- //--------------------------------------------------------------Pagenation Starts---------------------------------------------
+
+  //--------------------------------------------------------------Pagenation Starts-------------------------------------------------
   pageChanged(event: any) {
     this.currentPage = event.pageIndex;
-    // this.getTableData();
+    this.getAllTableData();
   }
   //--------------------------------------------------------------Pagenation Ends---------------------------------------------
 }
@@ -97,4 +118,3 @@ export interface PeriodicElement {
   Value: any;
   action: any;
 }
-// http://hrmssvr.erpguru.in/HRMS/SalaryType/GetAllSalaryTypePagination

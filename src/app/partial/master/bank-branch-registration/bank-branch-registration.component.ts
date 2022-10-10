@@ -22,6 +22,7 @@ export class BankBranchRegistrationComponent implements OnInit {
   pageSize = 10;
   currentPage = 0;
  
+  @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
 
   constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar) { }
   ngOnInit(): void {
@@ -101,9 +102,9 @@ export class BankBranchRegistrationComponent implements OnInit {
     })
   }
 
-  onCancel() {
+  onCancel(clear: any) {
     this.editFlag = false;
-    this.regForm.reset();
+    clear.resetForm()
     this.defaultForm();
   }
 
@@ -125,23 +126,20 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.bankNameDropDown();
     this.defaultForm();
     this.fc['branchName'].setValidators([Validators.required]);
-    this.fc['ifsC_Code'].setValidators([Validators.required]);
+    this.fc['ifsC_Code'].setValidators([Validators.required,Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]);
 
   }
 
-  onSubmit(validationsremove: any) {
-    console.log(validationsremove);    
+  onSubmit(clear:any) { 
     let obj = this.regForm.value;
     this.api.setHttp(this.editFlag ? 'put' : 'post', 'HRMS/BankBranchRegistration', false, obj, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(),  this.editFlag = false, validationsremove.resetForm(),this.defaultForm()) :'';
-
+        res.statusCode == 200 ? ( this.mat.open(res.statusMessage, 'ok') , this.bindTable(),  this.editFlag = false,clear.resetForm()) :'';
       }, error: (error: any) => {
         console.log("Error is : ", error);
       }
     })
-   
-    // this.defaultForm()
+    this.defaultForm();
   }
 }

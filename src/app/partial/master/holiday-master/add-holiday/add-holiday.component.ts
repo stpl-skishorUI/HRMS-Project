@@ -11,6 +11,7 @@ import { CallApiService } from 'src/app/core/services/call-api.service';
 })
 export class AddHolidayComponent implements OnInit {
   addHolidayForm!: FormGroup;
+  Companies: any;
   subscription!: Subscription;
   // isInsert: boolean = true;
   options = [{id: "1", name: "Yes", type: "Optional"}, {id: "2", name: "No", type: "Compulsory"}]
@@ -24,6 +25,7 @@ export class AddHolidayComponent implements OnInit {
 
   ngOnInit(): void {
     this.defaultHolidayForm();
+    this.getCompanyDrop();
     console.log("insInsert Form :", this.data.isInsert, this.data.selectedHoliday);
     this.data.selectedHoliday ? this.patchHoildayData(): '';
   }
@@ -41,7 +43,8 @@ export class AddHolidayComponent implements OnInit {
       id: new FormControl(0),
       holidayName: new FormControl(""),
       holidayType: new FormControl("null"),
-      holidayDate: new FormControl(new Date())
+      holidayDate: new FormControl(new Date()),
+      companyId: new FormControl(),
     })
   }
 
@@ -88,6 +91,25 @@ export class AddHolidayComponent implements OnInit {
         console.log(" Error is :", error);
       }
     })
+  }
+
+  getCompanyDrop(){
+    this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=1', true, false, false, 'baseURL');
+    this.subscription = this.apiService.getHttp().subscribe({
+      next: (resp: any) => {
+        console.log("getAll getCompanyDrop:", resp);
+        if (resp.statusCode === "200" && resp.responseData !=null) {
+          this.Companies = (resp.responseData);
+        } else {
+        if (resp.statusCode != "404") {
+          console.log("error is :", resp.statusCode);
+          }
+        }
+      },
+      error: ((error: any) => { 
+        console.log(" Error is :", error.status);
+      })
+    });
   }
 
   range = new FormGroup({
