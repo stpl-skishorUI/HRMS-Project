@@ -10,7 +10,7 @@
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Select Compnay</mat-label>
                     <mat-select formControlName="companyId">
-                        <mat-option *ngFor="let com of company" value="{{com.companyId}">{{com.name}}</mat-option>
+                        <mat-option *ngFor="let com of company" value="{{com.id}">{{com.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -18,7 +18,7 @@
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>All Employee</mat-label>
                     <mat-select formControlName="allemployee">
-                        <mat-option *ngFor="let emp of employee" value="{{emp.empCode}}">{{emp.name}}</mat-option>
+                        <mat-option *ngFor="let emp of employee" value="{{emp.id}}">{{emp.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

@@ -12,10 +12,9 @@ import { AddDepartmentComponent } from './add-department/add-department.componen
 export class DepartmentRegistrationComponent implements OnInit {
   filterForm!: FormGroup;
   displayCompanyDropdown = new Array();
-  totalRows: any;
-  pageNo = 1;
+  totalCount: any;
+  currentPage: number = 0;
   pageSize = 10;
-  id!: number;
   searchtext!: string;
   companyId!: number;
 
@@ -65,13 +64,14 @@ export class DepartmentRegistrationComponent implements OnInit {
     let formData = this.filterForm.value;
     this.service.setHttp(
       'get',
-      'HRMS/DepartmentType/GetAllDepartmentByPagination?pageno=' +this.pageNo +'&pagesize=' +this.pageSize +'&id=' +formData.companyId +'&searchText=' +formData.searchtext,false,
+      'HRMS/DepartmentType/GetAllDepartmentByPagination?pageno=' +(this.currentPage+1) +'&pagesize=10' +'&id=' +formData.companyId +'&searchText=' +formData.searchtext,false,
       false,false,'baseURL' );
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == '200') {
           // console.log(res);
           this.dataSource = res.responseData;
+          this.totalCount = res.responseData1.pageCount;
         }
       },
     });
@@ -92,8 +92,8 @@ export class DepartmentRegistrationComponent implements OnInit {
   }
 
   //--------------------------------------------------------------Paginator-----------------------------------------------------------------
-  pageChanged(pg: any) {
-    this.pageNo = pg.pageIndex + 1;
+  pageChanged(event: any) {
+    this.currentPage = event.pageIndex;
     this.displayData();
   }
 }

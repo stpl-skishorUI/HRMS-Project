@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DepartmentRegistrationComponent } from '../department-registration.component';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
@@ -14,33 +14,44 @@ export class AddDepartmentComponent implements OnInit {
   displayCompanyDropdown = new Array();
   editFlag: boolean = false;
 
-  constructor(private service: CallApiService, private fb: FormBuilder, public dialog: MatDialog, public dialogRef: MatDialogRef<AddDepartmentComponent>,
+  constructor(private service: CallApiService, private fb: FormBuilder, public dialog: MatDialog,  private snack: MatSnackBar, public dialogRef: MatDialogRef<AddDepartmentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.controlForm();
     this.getCompanyData();
+    if(this.data){
+      this.onEdit(this.data);
+    }
   }
 
+  get f() { return this.deptRegistrationForm.controls }
+
   controlForm() {
-
-    let editData = this.data;
-
     this.deptRegistrationForm = this.fb.group({
+      "id": this.data ? this.data.id : 0,
+      "companyId": [0,Validators.required],
+      "departmentName": ['',Validators.required],
       "createdBy": 0,
       "modifiedBy": 0,
-      createdDate: new Date(),
-      // "modifiedDate": "2022-10-03T04:58:21.680Z",
+      "createdDate": "2022-10-10T05:56:55.007Z",
+      "modifiedDate": "2022-10-10T05:56:55.007Z",
       "isDeleted": true,
+
+      // "createdBy": 0,
+      // "modifiedBy": 0,
+      // "createdDate": new Date(),
+      // "modifiedDate": new Date(),
+      // "isDeleted": true,
       // "id": 0,
-      companyId: [editData ? editData.id : ''],
-      departmentName: [editData ? editData.departmentName : '']
+      // companyId: [editData ? editData.id : ''],
+      // departmentName: [editData ? editData.departmentName : '']
     })
     this.getCompanyData();
 
-    if(editData){
-      this.editFlag = true;
-    }
+    // if(editData){
+    //   this.editFlag = true;
+    // }
   }
 
   // --------------------------------------------------------------- Department Dropdown ------------------------------------------
@@ -57,42 +68,94 @@ export class AddDepartmentComponent implements OnInit {
     })
   }
 
+
   // --------------------------------------------------------------- Post api -----------------------------------------------------
   postData() {
-    if (!this.editFlag) {
-      let obj = this.deptRegistrationForm.value;
-      this.service.setHttp(this.editFlag ?'put':'post', 'HRMS/DepartmentType', false, obj, false, 'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == '200'){
-            this.deptRegistrationForm.reset();
-          }
-        }
-      })
-    }
-    else{
-      let obj1 = this.deptRegistrationForm.value;
-
-      let updateData = {
+    let obj = {
+      ...this.deptRegistrationForm.value,
+      "Department":[{
         "createdBy": 0,
         "modifiedBy": 0,
-        // "createdDate": new Date(),
-        modifiedDate: new Date(),
+        "createdDate": new Date(),
+        "modifiedDate": new Date(),
         "isDeleted": true,
-        // "id": 0,
-        companyId: obj1.companyId,
-        departmentName: obj1.department
-      }
-      this.service.setHttp('put', 'HRMS/DepartmentType', false, updateData, false, 'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == '200'){
-            this.deptRegistrationForm.reset();
-          }
+        "id": 0,
+        "companyId": 0,
+        "departmentName": "string"
+      }]
+    }
+    if (this.editFlag){
+    this.service.setHttp('put', 'HRMS/DepartmentType',false,obj,false,'baseURL'),
+    this.service.getHttp().subscribe({
+      next: (res:any)=>{
+        if(res.statusCode == 200 && res.responseData.length){
+          this.snack.open(res.statusMessage, "ok");
         }
-      })
+      }
+    })
+  }
+  else{
+this.service.setHttp('post','HRMS/DepartmentType',false,obj,false,'baseURL');
+this.service.getHttp().subscribe({
+  next: (res:any)=>{
+    if (res.statusCode == 200 && res.responseData.length){
+      this.snack.open(res.statusMessage,"ok");
     }
   }
+})
+  }
+  this.dialogRef.close();
+    // if (!this.editFlag) {
+    //   let obj = this.deptRegistrationForm.value;
+    //   this.service.setHttp(this.editFlag ?'put':'post', 'HRMS/DepartmentType', false, obj, false, 'baseURL');
+    //   this.service.getHttp().subscribe({
+    //     next: (res: any) => {
+    //       if (res.statusCode == '200'){
+    //         this.deptRegistrationForm.reset();
+    //       }
+    //     }
+    //   })
+    // }
+    // else{
+    //   let obj1 = this.deptRegistrationForm.value;
+
+    //   let updateData = {
+    //     "createdBy": 0,
+    //     "modifiedBy": 0,
+    //     // "createdDate": new Date(),
+    //     modifiedDate: new Date(),
+    //     "isDeleted": true,
+    //     // "id": 0,
+    //     companyId: obj1.companyId,
+    //     departmentName: obj1.department
+    //   }
+    //   this.service.setHttp('put', 'HRMS/DepartmentType', false, updateData, false, 'baseURL');
+    //   this.service.getHttp().subscribe({
+    //     next: (res: any) => {
+    //       if (res.statusCode == '200'){
+    //         this.deptRegistrationForm.reset();
+    //       }
+    //     }
+    //   })
+    // }
+  }
+
+
+//---------------------------------------------------------------------------Patch Value----------------------------------------------------------------------------------//
+
+ //-----------------------------------Patch Value------------------------------------------//
+ onEdit(obj: any) {
+  console.log("objId", obj.id);
+  this.editFlag = true;
+  this.deptRegistrationForm.patchValue({
+    companyId: obj.companyId,
+    createdBy: obj.createdBy,
+    createdDate: new Date(),
+    departmentName: obj.departmentName,
+  })
+
+}
+
 //---------------cancle-------------------------------
 
 onCancel(){

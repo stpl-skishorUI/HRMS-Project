@@ -34,7 +34,7 @@ export class AddNewSalaryComponent implements OnInit {
   }
 
   defaultForm() {
-    let  editData = this.data;
+
     this.emloyeeSalaryForm = this.fb.group({
 
         "empCode": 0,
@@ -46,11 +46,10 @@ export class AddNewSalaryComponent implements OnInit {
         "createdDate": new Date(),
         "isDeleted": true,
 
-      companyId: [editData ? editData.companyId : ''],
-      allemployee: [editData ? editData.allemployee : ''],
-      datepicker: [editData ? editData.datepicker : ''],
-    });
-  }
+
+
+  })
+}
 
   //------------------------------------------------------------------------AllCompany--------------------------------------------------------------------------------
   getAllCompany() {
@@ -99,8 +98,8 @@ export class AddNewSalaryComponent implements OnInit {
     if(this.editFlag){
       let obj = this.emloyeeSalaryForm.value;
       this.service.setHttp(
-        this.editFlag ? 'put' : 'post',
-        'HRMS/EmployeeSalaryDetails/AddEmpSalaryDetails?EmpCode=',
+         'post',
+        'HRMS/EmployeeSalaryDetails/AddEmpSalaryDetails',
         false,
         obj,
         false,
