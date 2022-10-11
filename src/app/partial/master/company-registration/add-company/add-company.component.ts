@@ -69,32 +69,33 @@ export class AddCompanyComponent implements OnInit {
   }
 
   // ---------------------------------- Organization dropdown ---------------------------------- //
-  getOrganizationData() {
-    this.commonApi.getOrganization().subscribe({
-      next: (response: any) => {
-        debugger;
-        if(response.statusCode == 200){
-          this.organizationArr = response.responseData;
-        }else{
-          this.error.handelError(response.statusCode);
-        }
-      }
-    }),(error: any) => {
-      console.log(error)
+  // getOrganizationData() {
+  //   this.commonApi.getOrganization().subscribe({
+  //     next: (response: any) => {
+  //       debugger;
+  //       if(response.statusCode == 200){
+  //         this.organizationArr = response.responseData;
+  //       }else{
+  //         this.error.handelError(response.statusCode);
+  //       }
+  //     }
+  //   }),(error: any) => {
+  //     console.log(error)
+  //       this.error.handelError(error.statusCode);
+  //     }
+  // }
+  getOrganizationData() { // remove
+    this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        res.statusCode == 200 && res.responseData.length ? (this.organizationArr = res.responseData) : this.organizationArr = [];
+        // console.log(res);
+      }, error: (error: any) => {
+        console.log("Error : ", error);
         this.error.handelError(error.statusCode);
       }
+    })
   }
-  // getOrganizationData() { // remove
-  //   this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
-  //   this.service.getHttp().subscribe({
-  //     next: (res: any) => {
-  //       res.statusCode == 200 && res.responseData.length ? (this.organizationArr = res.responseData) : this.organizationArr = [];
-  //       // console.log(res);
-  //     }, error: (error: any) => {
-  //       console.log("Error : ", error);
-  //     }
-  //   })
-  // }
   // ---------------------------------- Organization dropdown ---------------------------------- //
 
   // ------------------------------------- Edit Form ------------------------------------- //
@@ -157,6 +158,7 @@ export class AddCompanyComponent implements OnInit {
         }
       }, error: (error: any) => {
         console.log("Error : ", error);
+        this.error.handelError(error.statusCode);
       }
     })
   }
@@ -177,6 +179,7 @@ export class AddCompanyComponent implements OnInit {
           this.dialogRef.close();
         }, error: (error: any) => {
           console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }
@@ -193,13 +196,13 @@ export class AddCompanyComponent implements OnInit {
           this.dialogRef.close();
         }, error: (error: any) => {
           console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }
   }
 
-  clearForm(event: any) {
-    //if (event.value == this.companyRegistrationForm.value.organizationId) {
+  clearForm() {
       this.companyRegistrationForm.controls['companyName'].setValue('');
       this.companyRegistrationForm.controls['contactNo'].setValue('');
       this.companyRegistrationForm.controls['address'].setValue('');
@@ -207,7 +210,6 @@ export class AddCompanyComponent implements OnInit {
       this.companyRegistrationForm.controls['emailId'].setValue('');
       this.companyRegistrationForm.controls['companyLogo'].setValue('');
       this.companyRegistrationForm.controls['aboutUs'].setValue('');
-    //}
   }
   // ------------------------------------- Submit and Update ------------------------------------- //
 }
