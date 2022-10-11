@@ -64,7 +64,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
       false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.dataSource = res.responseData;
           this.totalCount = res.responseData1.pageCount;
         }
@@ -86,10 +86,13 @@ export class CompanyBankRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.organizationNameArray = res.responseData;
         }
-      })
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
     })
   }
 
@@ -100,10 +103,8 @@ export class CompanyBankRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.campanyNameArray = res.responseData;
-          console.log(this.campanyNameArray);
-
         }
       }),
       error: (error: any) => {
@@ -116,7 +117,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'api/CommonDropDown/GetBankRegistration', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.bankNameArray = res.responseData;
         }
       }),
@@ -131,13 +132,12 @@ export class CompanyBankRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'api/CommonDropDown/GetBankBranchRegistration?BankId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.branchNameArray = res.responseData;
         }
       },
       error: (error: any) => {
         console.log("Error is", error);
-
       }
     })
   }

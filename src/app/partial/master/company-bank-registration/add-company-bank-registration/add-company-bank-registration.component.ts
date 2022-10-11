@@ -24,11 +24,8 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    console.log(this.data);
-    
     this.formData();
     this.getOrganizationNameDropdown()
-    // this.getCampanyNameDropdown();
     this.getBankNameDropdown();
     this.data ? this.editProfile() : '';
   }
@@ -39,7 +36,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
       "companyId":[this.data ? this.data.companyId :'',Validators.required],
       "bankId": [this.data ? this.data.bankId :'',Validators.required],
       "branchId": [this.data ? this.data.branchId :'',Validators.required],
-      "accountNo": [this.data ? this.data.accountNo :'',Validators.required],
+      "accountNo": [this.data ? this.data.accountNo :'',[Validators.required,Validators.pattern("^[0-9]*$")]],
       "accountType": [this.data ? this.data.accountType :'',Validators.required],
       "id": this.data ? this.data.id : 0,
       "createdBy": 0,
@@ -60,23 +57,29 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.organizationNameArray = res.responseData;
           this.data ? this.getCampanyNameDropdown() :''
         }
-      })
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
     })
   }
   
   getCampanyNameDropdown() {
-    let id = this.companyBankRegistrationForm.value.organizationId
+    let id = this.companyBankRegistrationForm.value.organizationId;
     this.api.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.campanyNameArray = res.responseData;
         }
-      })
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
     })
   }
 
@@ -84,11 +87,14 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'api/CommonDropDown/GetBankRegistration', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.bankNameArray = res.responseData;
            this.data ? this.getBranchNameDropdown() :'';
         }
-      })
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
     })
   }
 
@@ -98,72 +104,61 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'api/CommonDropDown/GetBankBranchRegistration?BankId='+id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.branchNameArray = res.responseData;
         }
-      })
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
     })
   }
   // --------------------------------------Dropdown Methods End----------------------------------------
 
   // on Edit Profile Patch Value to the Form
   editProfile() {
-    this.editFlag = true;
-    // this.getBranchNameDropdown();   
+    this.editFlag = true; 
   }
 
   clearForm(id:string) {
     if (id == 'organization') {
-      this.companyBankRegistrationForm.controls['bankId'].setValue('');
-      this.companyBankRegistrationForm.controls['branchId'].setValue('');
-      this.companyBankRegistrationForm.controls['accountType'].setValue('');
-      this.companyBankRegistrationForm.controls['accountNo'].setValue('');
+      this.companyBankRegistrationForm.controls['bankId'].reset();
+      this.companyBankRegistrationForm.controls['branchId'].reset();
+      this.companyBankRegistrationForm.controls['accountType'].reset();
+      this.companyBankRegistrationForm.controls['accountNo'].reset();
     }else if (id == 'company') {
-      this.companyBankRegistrationForm.controls['bankId'].setValue('');
-      this.companyBankRegistrationForm.controls['branchId'].setValue('');
-      this.companyBankRegistrationForm.controls['accountType'].setValue('');
-      this.companyBankRegistrationForm.controls['accountNo'].setValue('');
+      this.companyBankRegistrationForm.controls['bankId'].reset();
+      this.companyBankRegistrationForm.controls['branchId'].reset();
+      this.companyBankRegistrationForm.controls['accountType'].reset();
+      this.companyBankRegistrationForm.controls['accountNo'].reset();
     }else if (id == 'bank') {
-      this.companyBankRegistrationForm.controls['accountNo'].setValue('');
-      this.companyBankRegistrationForm.controls['accountType'].setValue('');
+      this.companyBankRegistrationForm.controls['accountNo'].reset();
+      this.companyBankRegistrationForm.controls['accountType'].reset();
     }else if (id == 'branch') {
-      this.companyBankRegistrationForm.controls['accountNo'].setValue('');
-      this.companyBankRegistrationForm.controls['accountType'].setValue('');
+      this.companyBankRegistrationForm.controls['accountNo'].reset();
+      this.companyBankRegistrationForm.controls['accountType'].reset();
     }else if (id == 'accountType') {
-      this.companyBankRegistrationForm.controls['accountNo'].setValue('');
+      this.companyBankRegistrationForm.controls['accountNo'].reset();
     }
   }
 
   // On Submit
   onSubmit() {
     let obj = this.companyBankRegistrationForm.value;
-    if(!this.editFlag){
-      this.api.setHttp('post', 'api/CompanyBankAccount/AddCompanyBankAccountDetails', false, obj, false, 'baseURL');
+      this.api.setHttp( this.editFlag ? 'put':'post',this.editFlag ?'api/CompanyBankAccount/UpdateCompanyBankAccountDetails':'api/CompanyBankAccount/AddCompanyBankAccountDetails', false, obj, false, 'baseURL');
       this.api.getHttp().subscribe({
         next: ((res: any) => {
-          if(res.statusCode === '200'){
+          if(res.statusCode == '200'){
              this.dialogRef.close();          
             this.snackBar.open(res.statusMessage ,'ok',{
               horizontalPosition: 'right',
               verticalPosition: 'top'
             });
           }
-        })
+        }),
+        error: (error: any) => {
+          console.log("Error is", error);
+        }
       })
-    }else{
-      this.api.setHttp('put', 'api/CompanyBankAccount/UpdateCompanyBankAccountDetails', false, obj, false, 'baseURL');
-      this.api.getHttp().subscribe({
-        next: ((res: any) => {
-          if(res.statusCode === '200'){
-             this.dialogRef.close();          
-            this.snackBar.open(res.statusMessage ,'ok',{
-              horizontalPosition: 'right',
-              verticalPosition: 'top'
-            });
-          }
-        })
-      })
-    }
-    
   }
 }

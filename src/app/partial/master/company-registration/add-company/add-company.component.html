@@ -33,7 +33,7 @@
 
                 <div class="mb-0">
                     <mat-form-field appearance="legacy" class="w-100">
-                        <mat-select formControlName="organizationId" (selectionChange)="clearForm($event)">
+                        <mat-select formControlName="organizationId" (selectionChange)="clearForm()">
                             <mat-option value="0" disabled>Organization Registration</mat-option>
                             <mat-option *ngFor="let org of organizationArr" [value]="org.id">
                                 {{org.name}}

@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 })
 export class AddBankRegistrationComponent implements OnInit {
   addBankRegiForm!: FormGroup;
+  companyTypeResp: any;
   submitted = false;
   iseditbtn = false;
   editId: any;
@@ -21,11 +22,30 @@ export class AddBankRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.addBankRegiForm = this.fb.group({
-      bankName: ['', [Validators.required, Validators.pattern('^[A-Za-z]+[A-Za-z ()-]*$')]]
+      bankName: ['', [Validators.required, Validators.pattern('^[A-Za-z]+[A-Za-z ()-]*$')]],
+      companyId: ['', [Validators.required]]
     })
-    this.editData()
+    this.bindCompanytype();
+    this.editData();
+
   }
   get f() { return this.addBankRegiForm.controls };
+
+  bindCompanytype() {
+    this.callAPIService.setHttp('GET', 'api/CommonDropDown/GetCompany', false, false, false, 'baseURL');
+    this.callAPIService.getHttp().subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        if (resp.statusCode == 200) {
+          this.companyTypeResp = resp.responseData;
+          console.log(this.companyTypeResp);
+        } else {
+          // this.toastr.error(resp.statusMessage);
+        }
+      },
+      // error: ((error: any) => { this.error.handelError(error.statusCode) })
+    })
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -42,41 +62,41 @@ export class AddBankRegistrationComponent implements OnInit {
         "bankName": formData.bankName
       }
       //if (this.iseditbtn == false) {
-        // console.log('save data');
-        this.callAPIService.setHttp(this.iseditbtn == false?'post':'put', 'api/BankRegistration' , false, obj, false, 'baseURL');
-        this.callAPIService.getHttp().subscribe((res: any) => {
-          // console.log(res);
-          if (res.statusCode == 200) {
-            alert(res.statusMessage);
-            this.dialogRef.close();
-            this.submitted = false;
-            this.iseditbtn == false;
+      // console.log('save data');
+      this.callAPIService.setHttp(this.iseditbtn == false ? 'post' : 'put', 'api/BankRegistration', false, obj, false, 'baseURL');
+      this.callAPIService.getHttp().subscribe((res: any) => {
+        // console.log(res);
+        if (res.statusCode == 200) {
+          alert(res.statusMessage);
+          this.dialogRef.close();
+          this.submitted = false;
+          this.iseditbtn == false;
 
-            this.addBankRegiForm.reset();
-          } else {
-            alert(res.statusMessage);
-          
-            // this.submitted = false;
-            // this.iseditbtn == false
-          }
+          this.addBankRegiForm.reset();
+        } else {
+          alert(res.statusMessage);
 
-        })
-
-       //}// else {
-       // console.log('update data');
-        // this.callAPIService.setHttp('put', 'BankRegistration' + obj, false, false, false, 'BankRegistrationWeb');
-        // this.callAPIService.getHttp().subscribe((res: any) => {
-        //   console.log(res);
-        //   if (res.statusCode == 200) {
-        //     alert(res.statusMessage);
-
-        //   } else {
-        //     alert(res.statusMessage);
-
-        //   }
           // this.submitted = false;
           // this.iseditbtn == false
-        // })
+        }
+
+      })
+
+      //}// else {
+      // console.log('update data');
+      // this.callAPIService.setHttp('put', 'BankRegistration' + obj, false, false, false, 'BankRegistrationWeb');
+      // this.callAPIService.getHttp().subscribe((res: any) => {
+      //   console.log(res);
+      //   if (res.statusCode == 200) {
+      //     alert(res.statusMessage);
+
+      //   } else {
+      //     alert(res.statusMessage);
+
+      //   }
+      // this.submitted = false;
+      // this.iseditbtn == false
+      // })
 
       //}
     }

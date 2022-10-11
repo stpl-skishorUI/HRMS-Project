@@ -11,6 +11,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 export class BankRegistrationComponent implements OnInit {
   bankRegiResponse: any;
   searchBankRegiForm!: FormGroup;
+  companyTypeResp:any;
   editId: any;
   pageNo: number = 1;
   pageSize = 10;
@@ -25,7 +26,8 @@ export class BankRegistrationComponent implements OnInit {
     this.searchBankRegiForm = this.fb.group({
       searchbankName: ['']
     })
-    this.BankRegistrationData()
+    this.BankRegistrationData();
+    this.bindCompanytype();
   }
 
   bankRegi(status: any, data?: any) {
@@ -40,16 +42,32 @@ export class BankRegistrationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       result == 'u' ? this.BankRegistrationData() : result == 'i';
+      this.BankRegistrationData();
       // console.log(`Dialog result: ${result}`);
     });
   }
 
+  bindCompanytype() {
+    this.callAPIService.setHttp('GET', 'api/CommonDropDown/GetCompany', false, false, false, 'baseURL');
+    this.callAPIService.getHttp().subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        if (resp.statusCode == 200) {
+          this.companyTypeResp = resp.responseData;
+          console.log(this.companyTypeResp);
+        } else {
+          // this.toastr.error(resp.statusMessage);
+        }
+      },
+      // error: ((error: any) => { this.error.handelError(error.statusCode) })
+    })
+  }
 
   BankRegistrationData() {
     let formData = this.searchBankRegiForm.value;
     let obj = {
       "pageno": this.pageNo,
-      "BankName": formData.searchbankName
+      "BankName": formData.searchbankName,
     }
     this.callAPIService.setHttp('GET', 'api/BankRegistration/GetAllBankRegiByPagination?pageno=' + obj.pageno + '&pagesize=10&BankName=' + obj.BankName, false, false, false, 'baseURL');
     this.callAPIService.getHttp().subscribe((res: any) => {
