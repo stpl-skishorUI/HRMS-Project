@@ -4,6 +4,8 @@ import { AddCompanyComponent } from './add-company/add-company.component';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
 
 @Component({
   selector: 'app-company-registration',
@@ -13,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CompanyRegistrationComponent implements OnInit {
   companyFilterForm !: FormGroup;
   displayedColumns: string[] = ['srno', 'companyLogo', 'companyName', 'emailId', 'address', 'action'];
-  dataSource = new Array;
+  dataSource = new Array();
   totalCount: number = 0;
   currentPage: number = 0;
   pageSize: number = 10;
@@ -21,7 +23,8 @@ export class CompanyRegistrationComponent implements OnInit {
   orgId: number = 0;
 
   organizationArr = new Array;
-  constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar) { }
+  constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
+    private handleError : HandelErrorService, private commonApi : CommonApiService) { }
 
   ngOnInit(): void {
     this.getTableData();
@@ -40,15 +43,18 @@ export class CompanyRegistrationComponent implements OnInit {
 
   // ---------------------------------- Organization dropdown ---------------------------------- //
   getOrganizationData() {
-    this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        res.statusCode == 200 && res.responseData.length ? (this.organizationArr = res.responseData) : this.organizationArr = [];
-        // console.log(res);
-      }, error: (error: any) => {
-        console.log("Error : ", error);
+    this.commonApi.getOrganization().subscribe({
+      next: (response: any) => {
+        if(response.statusCode == 200){
+          this.organizationArr = response.responseData;
+        }else{
+          this.handleError.handelError(response.statusCode);
+        }
       }
-    })
+    }),(error: any) => {
+      console.log(error)
+        this.handleError.handelError(error.statusCode);
+      }
   }
   // ---------------------------------- Organization dropdown ---------------------------------- //
 
@@ -57,11 +63,12 @@ export class CompanyRegistrationComponent implements OnInit {
     const dialogRef = this.dialog.open(AddCompanyComponent, {
       width: '50%',
       height: '90%',
-      data: obj
+      data: obj,
+      disableClose : true
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      result == 'Yes' ? this.getTableData() : '';
+      result == 'yes' ? this.getTableData() : '';
       // console.log(`Dialog result: ${result}`);
     
     });
@@ -82,9 +89,10 @@ export class CompanyRegistrationComponent implements OnInit {
           // console.log(res);
         } else {
           this.dataSource = [];
+          this.handleError.handelError(res.statusCode);
         }
-
       }, error: (error: any) => {
+        this.handleError.handelError(error.status);
         console.log("Error : ", error);
       }
     })
@@ -114,6 +122,7 @@ export class CompanyRegistrationComponent implements OnInit {
           this.getTableData();
         }
       }, error: (error: any) => {
+        this.handleError.handelError(error.status);
         console.log("Error : ", error);
       }
     })
