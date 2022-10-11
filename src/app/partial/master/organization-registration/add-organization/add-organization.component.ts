@@ -23,7 +23,7 @@ export class AddOrganizationComponent implements OnInit {
 
   ngOnInit(): void {
     // this.imageURL ? this.data?.orgLogo : "/assets/images/user.jpg";
-    console.log("Image Loaded", this.data);
+    // console.log("Image Loaded", this.data);
     this.formData();
   }
 
@@ -80,11 +80,11 @@ export class AddOrganizationComponent implements OnInit {
     formData.append('FolderName', 'D');
     formData.append('DocumentType', 'png,jpg');//set default extension if you required
     formData.append('UploadDocPath', this.OrganizationRegForm.value.orgLogo);
-    console.log(this.formData);
+    // console.log(this.formData);
     this.service.setHttp('post', 'HRMS/DocumentMaster/UploadFile', false, formData, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        console.log("*********************", res);
+        // console.log("*********************", res);
         this.imageURL = res.responseData;
         if (res.statusCode == 200) {
           // this.imageURL = res.responseData;
@@ -99,7 +99,7 @@ export class AddOrganizationComponent implements OnInit {
     let data = this.OrganizationRegForm.value;
       data.orgLogo = this.imageURL;
     // data.orgLogo = this.imageURL;
-    console.log(data);
+    // console.log(data);
     if (!this.editFlag) {
       this.service.setHttp('post', 'HRMS/Orgnization/SaveOrg', false, data, false, 'baseURL');
       this.service.getHttp().subscribe({
