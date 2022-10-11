@@ -1,10 +1,12 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 
 @Component({
   selector: 'app-add-holiday',
@@ -15,6 +17,7 @@ export class AddHolidayComponent implements OnInit {
   addHolidayForm!: FormGroup;
   Companies: any;
   subscription!: Subscription;
+  isSubmitted: boolean = false;
   // isInsert: boolean = true;
   options = [{id: "1", name: "Yes", type: "Optional"}, {id: "2", name: "No", type: "Compulsory"}]
 
@@ -23,7 +26,8 @@ export class AddHolidayComponent implements OnInit {
               public dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private commonAPIService: CommonApiService,
-              private fb: FormBuilder
+              private fb: FormBuilder,
+              private errorService: HandelErrorService
 
     ) { }
 
@@ -38,30 +42,17 @@ export class AddHolidayComponent implements OnInit {
 
 
   defaultHolidayForm(){
-    // this.addHolidayForm = new FormGroup({
-    //   createdBy: new FormControl(0),
-    //   modifiedBy:new FormControl(0),
-    //   createdDate: new FormControl(new Date()),
-    //   modifiedDate: new FormControl(new Date()),
-    //   isDeleted: new FormControl(true),
-    //   id: new FormControl(0),
-    //   holidayName: new FormControl(""),
-    //   holidayType: new FormControl("null"),
-    //   holidayDate: new FormControl(new Date()),
-    //   comapanyId: new FormControl(),
-    // });
-
     this.addHolidayForm = this.fb.group({
-      createdBy: [(!this.data.isInsert) ? 1: 0],
+        createdBy: [(!this.data.isInsert) ? 1: 0],
         modifiedBy: [(!this.data.isInsert) ? 1: 0],
         createdDate: [new Date()],
-        modifiedDate: [ (!this.data.isInsert) ? this.data.selectedHoliday.modifiedDate: new Date()],
+        modifiedDate: [(!this.data.isInsert) ? new Date(): new Date()],
         isDeleted: [true],
         id:[(!this.data.isInsert) ? this.data.selectedHoliday.id:0],
-        holidayName: [(!this.data.isInsert) ? this.data.selectedHoliday.holidayName: ""],
-        holidayType: [(!this.data.isInsert) ? this.data.selectedHoliday.holidayType: null],
-        holidayDate: [(!this.data.isInsert) ? this.data.selectedHoliday.holidayDate: new Date()],
-        comapanyId: [],
+        holidayName: [(!this.data.isInsert) ? this.data.selectedHoliday.holidayName: "", Validators.required],
+        holidayType: [(!this.data.isInsert) ? this.data.selectedHoliday.holidayType: null, Validators.required],
+        holidayDate: [(!this.data.isInsert) ? this.data.selectedHoliday.holidayDate: "", Validators.required],
+        companyId: [(!this.data.isInsert) ? this.data.selectedHoliday.companyId: "", Validators.required],
     })
   }
 
@@ -81,6 +72,7 @@ export class AddHolidayComponent implements OnInit {
 
 
   saveHolidayData(){
+    this.isSubmitted = true;
     console.log(" All formData:", this.addHolidayForm.value );
     let formdata = this.addHolidayForm.value;
     let holiday = formdata.holidayName;
@@ -114,6 +106,7 @@ export class AddHolidayComponent implements OnInit {
         },
         error: (error: any)=> {
           console.log(" Error is :", error);
+          this.errorService.handelError(error.status);
         }
       })
     }
@@ -135,22 +128,6 @@ export class AddHolidayComponent implements OnInit {
   // }
 
   getCompanyDrop(){
-    // this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=1', true, false, false, 'baseURL');
-    // this.subscription = this.apiService.getHttp().subscribe({
-    //   next: (resp: any) => {
-    //     console.log("getAll getCompanyDrop:", resp);
-    //     if (resp.statusCode === "200" && resp.responseData !=null) {
-    //       this.Companies = (resp.responseData);
-    //     } else {
-    //     if (resp.statusCode != "404") {
-    //       console.log("error is :", resp.statusCode);
-    //       }
-    //     }
-    //   },
-    //   error: ((error: any) => { 
-    //     console.log(" Error is :", error.status);
-    //   })
-    // });
     this.commonAPIService.getCompanies(0).subscribe({
       next: (resp: any) => {
         console.log("getCompanies data is :", resp)
@@ -161,6 +138,23 @@ export class AddHolidayComponent implements OnInit {
        }
     })
     
+  }
+
+  get f(){
+    return this.addHolidayForm.controls;
+  }
+
+  onlyAlphabets(event: any) {
+    if(!this.noSpacesAtStart(event)) {
+        return false
+    }
+    const maskSeperator = new RegExp('^([a-zA-Z])', 'g');
+    return maskSeperator.test(event.key);
+  }
+
+  noSpacesAtStart(event: any) {
+    const maskSeperator = new RegExp('^(?![\s-])[\w\s-]*$', 'm');
+    return !maskSeperator.test(event.key);
   }
 
   range = new FormGroup({
