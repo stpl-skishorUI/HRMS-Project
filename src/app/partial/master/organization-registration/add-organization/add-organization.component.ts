@@ -28,7 +28,7 @@ export class AddOrganizationComponent implements OnInit {
   }
 
   formData() {
-    console.log(" form valuee selectedd:",this.data1 );
+    // console.log(" form valuee selectedd:",this.data1 );
     this.data ? this.editFlag = true : ''
     this.OrganizationRegForm = this.fb.group({
       "createdBy": 0,
