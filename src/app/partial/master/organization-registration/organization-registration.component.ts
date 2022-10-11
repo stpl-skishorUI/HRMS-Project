@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class OrganizationRegistrationComponent implements OnInit {
   filterForm!: FormGroup;
   displayedColumns: string[] = ['srno', 'organization_logo', 'organization_name', 'email', 'address', 'action'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new Array();
   editFlag: boolean = false;
   totalCount = 0;
   pageSize = 10;
@@ -120,17 +120,17 @@ export class OrganizationRegistrationComponent implements OnInit {
   }
   //************End Handle page for Pagination***************/
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  { srno: 1, organization_logo: '', organization_name: 'shaurya', email: 'H', address: 'Pune-11', action: '' },
-];
-export interface PeriodicElement {
-  srno: number;
-  organization_logo: string;
-  organization_name: string;
-  email: string;
-  address: string;
-  action: any;
-}
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   { srno: 1, organization_logo: '', organization_name: 'shaurya', email: 'H', address: 'Pune-11', action: '' },
+// ];
+// export interface PeriodicElement {
+//   srno: number;
+//   organization_logo: string;
+//   organization_name: string;
+//   email: string;
+//   address: string;
+//   action: any;
+// }
 
 
 
