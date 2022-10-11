@@ -41,8 +41,9 @@ export class OrganizationRegistrationComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      this.getTableData();
+     result == 'Yes' ? this.getTableData() : '';
+      // console.log(`Dialog result: ${result}`);
+      // this.getTableData();
     });
   }
  //***********End Dialog Box*******************/
