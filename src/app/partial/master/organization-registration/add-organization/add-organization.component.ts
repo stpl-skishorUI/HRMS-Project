@@ -14,21 +14,15 @@ export class AddOrganizationComponent implements OnInit {
   editFlag: boolean = false;
   data1: any;
   fileURl: any;
-  // imageURL:string="../../../../../assets/images/user.jpg";
   imageURL: any;
-  // @ViewChild('img') img!: ElementRef;
   img: any;
   constructor(private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
-
   ngOnInit(): void {
-    // this.imageURL ? this.data?.orgLogo : "/assets/images/user.jpg";
-    // console.log("Image Loaded", this.data);
     this.formData();
   }
-
+  //***************************Form Field************************************ */
   formData() {
-    // console.log(" form valuee selectedd:",this.data1 );
     this.data ? this.editFlag = true : ''
     this.OrganizationRegForm = this.fb.group({
       "createdBy": 0,
@@ -38,32 +32,31 @@ export class AddOrganizationComponent implements OnInit {
       "isDeleted": false,
       id: this.editFlag ? this.data1.id : 0,
       orgName: [this.editFlag ? this.data1.orgName : '', Validators.required],
-      contactNo:[ this.editFlag ? this.data1.contactNo : '',[Validators.required,Validators.pattern("^[6-9]{1}[0-9]{9}$")]],
-      address:[this.editFlag ? this.data1.address : '',Validators.required],
-      website: [this.editFlag ? this.data1.website : '',Validators.required],
-      emailId: [this.editFlag ? this.data1.emailId : '',[Validators.required,Validators.email]],
-      orgLogo:[ this.editFlag ? this.data1.orgLogo : ''],
-      aboutUs:[ this.editFlag ? this.data1.aboutUs : '',Validators.required],
+      contactNo: [this.editFlag ? this.data1.contactNo : '', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}$")]],
+      address: [this.editFlag ? this.data1.address : '', Validators.required],
+      website: [this.editFlag ? this.data1.website : '', Validators.required],
+      emailId: [this.editFlag ? this.data1.emailId : '', [Validators.required, Validators.email]],
+      orgLogo: [this.editFlag ? this.data1.orgLogo : ''],
+      aboutUs: [this.editFlag ? this.data1.aboutUs : '', Validators.required],
     });
-    this.imageURL = this.editFlag? this.data1.orgLogo : "/assets/images/user.jpg";
+    this.imageURL = this.editFlag ? this.data1.orgLogo : "/assets/images/user.jpg";
   }
-//********************for Validation Handle*************************/
- get f(){
-  return this.OrganizationRegForm.controls;
- }
-//***************************Start Upload Img*******************************/
+  //***************************Form Field************************************ */
+  //********************for Validation Handle*************************/
+  get f() {
+    return this.OrganizationRegForm.controls;
+  }
+  //***************************Start Upload Img*******************************/
   selectImg() {
     this.img.nativeElement.click();
   }
 
   uploadImg(event: any) {
     let finalValue = event.target.value;
-    // console.log(" file selected:", finalValue);
     let extension = event.target.value.split('.')[1];
     extension = extension.toLowerCase();
     if (extension == 'jpg' || extension == 'png') {
       const file = event.target.files[0];
-      // console.log(event);
       if (file.size > 1000000) {
         this.snackbar.open('Upload another Image', 'Ok');
         this.img.nativeElement.value = '';
@@ -78,13 +71,11 @@ export class AddOrganizationComponent implements OnInit {
     }
     let formData = new FormData();
     formData.append('FolderName', 'D');
-    formData.append('DocumentType', 'png,jpg');//set default extension if you required
+    formData.append('DocumentType', 'png,jpg,jpeg');//set default extension if you required
     formData.append('UploadDocPath', this.OrganizationRegForm.value.orgLogo);
-    // console.log(this.formData);
     this.service.setHttp('post', 'HRMS/DocumentMaster/UploadFile', false, formData, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        // console.log("*********************", res);
         this.imageURL = res.responseData;
         if (res.statusCode == 200) {
           // this.imageURL = res.responseData;
@@ -97,16 +88,13 @@ export class AddOrganizationComponent implements OnInit {
   //************************Start Submit Logic Here**********************/
   onSubmit() {
     let data = this.OrganizationRegForm.value;
-      data.orgLogo = this.imageURL;
-    // data.orgLogo = this.imageURL;
-    // console.log(data);
+    data.orgLogo = this.imageURL;
     if (!this.editFlag) {
       this.service.setHttp('post', 'HRMS/Orgnization/SaveOrg', false, data, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == '200') {
             this.snackbar.open(res.statusMessage, 'ok');
-            // this.bindTable();
           }
         }
       })
