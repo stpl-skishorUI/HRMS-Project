@@ -4,23 +4,24 @@
         <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
     </div>
 
-    <div class="row">
-        <div class="col-sm-4 text-center">
+    <div class="row mb-3">
+        <div class="col-sm text-center">
             <div class="upload-image" *ngIf="!editFlag">
-                <img [src]="imageURL" style="height:200px;width:150px">
+                <img [src]="imageURL" class="img">
                 <button class="btn" (click)="selectImg()">
                     <i class="fa-solid fa-plus"></i></button>
-                <input type="file" name="myfile" (change)="uploadImg($event)" />
+                <input type="file" name="myfile" formControlName="companyLogo" (change)="uploadImg($event)" #img />
             </div>
             <div class="upload-image" *ngIf="editFlag">
-                <img [src]="imageURL">
+                <img [src]="imageURL" class="img">
                 <button class="btn" (click)="selectImg()">
                     <i class="fa-solid fa-plus"></i></button>
                 <input type="file" name="myfile" (change)="uploadImg($event)" />
             </div>
         </div>
-
-        <div class="col-sm-8">
+    </div>
+    <div class="row align-items-center">
+        <div class="col-sm-6">
             <div class="mb-0">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Organization Name</mat-label>
@@ -30,6 +31,20 @@
                     </mat-error>
                 </mat-form-field>
             </div>
+            <div class="mb-0">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>Email ID</mat-label>
+                    <input matInput placeholder="email@gmail.com" formControlName="emailId">
+                    <mat-error *ngIf="f['emailId'].hasError('required') || f['emailId'].hasError('touched')">
+                        Email Address is Required
+                    </mat-error>
+                    <mat-error *ngIf="f['emailId'].hasError('pattern') || f['emailId'].hasError('touched')">
+                        Please enter valid email address
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-6">
             <div class="mb-0">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Organization Contact Number</mat-label>
@@ -45,45 +60,34 @@
             </div>
             <div class="mb-0">
                 <mat-form-field appearance="legacy" class="w-100">
-                    <mat-label>Organization Address</mat-label>
-                    <textarea matInput placeholder="Enter Address" formControlName="address"></textarea>
-                    <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
-                        Address is Required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="mb-0">
-                <mat-form-field appearance="legacy" class="w-100">
-                    <mat-label>Organization Website</mat-label>
+                    <mat-label>Enter Website</mat-label>
                     <input matInput placeholder="Enter URL" formControlName="website">
                     <mat-error *ngIf="f['website'].hasError('required') || f['website'].hasError('touched')">
                         website is Required
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="mb-0">
-                <mat-form-field appearance="legacy" class="w-100">
-                    <mat-label>Organization Email ID</mat-label>
-                    <input matInput placeholder="Enter Email ID" formControlName="emailId">
-                    <mat-error *ngIf="f['emailId'].hasError('required') || f['emailId'].hasError('touched')">
-                        Email Address is Required
-                    </mat-error>
-                    <mat-error *ngIf="f['emailId'].hasError('pattern') || f['emailId'].hasError('touched')">
-                        Please enter valid email address
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="mb-2">
-                <mat-form-field appearance="legacy" class="w-100">
-                    <mat-label>About US</mat-label>
-                    <textarea matInput placeholder="Enter About US" formControlName="aboutUs"></textarea>
-                    <mat-error *ngIf="f['aboutUs'].hasError('required') || f['aboutUs'].hasError('touched')">
-                        About US is Required
-                    </mat-error>
-                </mat-form-field>
-            </div>
+        </div>
+        <div class="mb-0">
+            <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>Organization Address</mat-label>
+                <textarea matInput placeholder="Enter Address" formControlName="address"></textarea>
+                <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
+                    Address is Required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="mb-2">
+            <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>About US</mat-label>
+                <textarea matInput placeholder="Enter About US" formControlName="aboutUs"></textarea>
+                <mat-error *ngIf="f['aboutUs'].hasError('required') || f['aboutUs'].hasError('touched')">
+                    About US is Required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
+
     <div class="row align-items-center mb-0">
         <div class="d-flex justify-content-between">
             <button mat-raised-button class="btn-outline-main" mat-dialog-close type="reset">Cancel</button>
