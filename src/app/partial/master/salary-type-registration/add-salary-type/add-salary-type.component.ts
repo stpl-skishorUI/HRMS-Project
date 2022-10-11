@@ -19,8 +19,6 @@ export class AddSalaryTypeComponent implements OnInit {
   constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar) { }
 
   ngOnInit(): void {
-    // console.log("hhhjhjh",this.data);
-
     this.getFormData();
     this.getCompanyNameDropdown();
     if (this.data) {
@@ -51,13 +49,26 @@ export class AddSalaryTypeComponent implements OnInit {
       "isDeleted": true,
       "id": this.data ? this.data.id : 0,
       companyId: [, Validators.required],
-      "companyName": "",
       salary_Component: ['', Validators.required],
-      isPercentage: ['',Validators.required],
-      value: [, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
+      isPercentage: ['', Validators.required],
+      value: [, [Validators.required, Validators.pattern("^[0-9]*$")]]
     })
 
   }
+
+  //-----------------------------------------//Accept  Only Numbers 0-9 in Valu Field---------------------------------------------
+  keyPressNumbers(event: any) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
+  //-----------------------------------------//Accept  Only Numbers 0-9 in Valu Field---------------------------------------------
+
+
   //--------------------------------------------------------------- Form Submit Ends------------------------------------------------------
 
 
@@ -74,19 +85,28 @@ export class AddSalaryTypeComponent implements OnInit {
       let postObj = this.salaryForm.value;
       if (this.editFlag == false) {
         // console.log("postObj", postObj);
-        this.service.setHttp('post', 'HRMS/SalaryType', false, postObj, false, 'baseURL');
+        this.service.setHttp('post', 'HRMS/SalaryType/SaveSalaryType', false, postObj, false, 'baseURL');
         this.service.getHttp().subscribe({
           next: (res: any) => {
-            this.dialogRef.close();
-            this.snack.open(res.statusMessage, "Ok", { duration: 3000 });
+            if (res.statusCode == 200) {
+              this.dialogRef.close();
+              this.snack.open(res.statusMessage, "Ok", { duration: 3000 });
+            }
+          }, error: (error: any) => {
+            console.log("Error : ", error);
           }
         })
       } else {
         this.editFlag = true;
-        this.service.setHttp('put', 'HRMS/SalaryType', false, postObj, false, 'baseURL');
+        this.service.setHttp('put', 'HRMS/SalaryType/EditSalaryType', false, postObj, false, 'baseURL');
         this.service.getHttp().subscribe({
           next: (res: any) => {
-            this.snack.open(res.statusMessage, 'Ok', { duration: 3000 });
+            if (res.statusCode == 200) {
+              this.dialogRef.close();
+              this.snack.open(res.statusMessage, 'Ok', { duration: 3000 });
+            }
+          }, error: (error: any) => {
+            console.log("Error : ", error);
           }
         })
       }
@@ -106,13 +126,12 @@ export class AddSalaryTypeComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": true,
       companyId: +obj.companyId,
-      companyName: obj.companyName,
+      // companyName:obj.companyName,
       salary_Component: obj.salary_Component,
       isPercentage: editObj.isPercentage ? 0 : 1,
       value: +obj.value
     })
     this.getCompanyNameDropdown();
-
   }
   //-------------------------------------------------Edit Forms End----------------------------------------------------------------
 }

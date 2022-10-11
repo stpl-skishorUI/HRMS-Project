@@ -53,6 +53,18 @@ export class AddHolidayComponent implements OnInit {
 
   saveHolidayData(){
     console.log(" All formData:", this.addHolidayForm.value );
+    let holiday = this.addHolidayForm.controls['holidayName'].value;
+    // if (!holiday.replace(/\s/g, '').length) { //string length is 0
+    //   console.log('string only contains whitespace (ie. spaces, tabs or line breaks)');
+    //   return;
+    // }
+    // else{
+    //   console.log("String" , holiday.trim());
+    //   //submit fuction call here /
+      
+    // }
+
+
     let formdata = this.addHolidayForm.value;
     this.apiService.setHttp('post', 'api/HolidayMaster/AddHoliday', true, formdata ,false, 'baseURL');
     this.subscription =  this.apiService.getHttp().subscribe({

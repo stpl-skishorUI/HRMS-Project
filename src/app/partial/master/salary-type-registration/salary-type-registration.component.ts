@@ -17,6 +17,8 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   totalCount: any;
   currentPage: number = 0;
   companyDropDownArray = new Array();
+  salaryTypeSearch = ''
+  companyTypeSearch = 0;
   constructor(public dialog: MatDialog, private service: CallApiService,
     private snack: MatSnackBar, private fb: FormBuilder) { }
 
@@ -29,7 +31,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   filterFormMethod() {
     this.filterForm = this.fb.group({
       salary_Component: [''],
-      companyName:[''],
+      companyName: [''],
     })
   }
   //--------------------------------------------------------------Search Bar Filter Form Ends---------------------------
@@ -66,35 +68,39 @@ export class SalaryTypeRegistrationComponent implements OnInit {
 
   //--------------------------------------------------------------Gets Table Data Starts--------------------------------
   getAllTableData() {
-    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?'+(this.currentPage+1), false, false, false,
+    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno=' + (this.currentPage + 1), false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200 && res.responseData.length > 0) {
-          this.snack.open(res.statusMessage, 'Ok', { duration: 4000 });
+          // this.snack.open(res.statusMessage, 'Ok', { duration: 4000 });
           this.dataSource = res.responseData;
           this.totalCount = res.responseData1.pageCount;
         }
       }
+
     })
   }
   //--------------------------------------------------------------Gets Table Data Ends--------------------------------
 
   //--------------------------------------------------------------Gets Filter Data Starts-----------------------------
   SearchfilterData() {
-    let salaryTypeSearch = this.filterForm.value.salary_Component;
-    let companyTypeSearch =this.filterForm.value.companyName;
-    this.service.setHttp('get', 'HRMS/SalaryType/GetList?Salary_Component='+salaryTypeSearch+'&Id='+companyTypeSearch, false, false, false,
+    this.salaryTypeSearch = this.filterForm.value.salary_Component;
+    this.companyTypeSearch = this.filterForm.value.companyName;
+    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno=1&pagesize=10&Salary_Component=' + this.salaryTypeSearch + '&CompanyId=' + this.companyTypeSearch, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode == '200') {
+        if (res.statusCode == 200) {
           this.dataSource = res.responseData;
           this.filterForm.reset();
+        } else {
+          this.dataSource = [];
         }
       }
     })
   }
+  // HRMS/SalaryType/GetAllSalaryTypePagination?pageno=1&pagesize=10&Salary_Component=gross&CompanyId=5
 
   //--------------------------------------------------------------Gets Filter Data Ends---------------------------------------------
 

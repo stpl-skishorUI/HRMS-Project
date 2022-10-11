@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class OrganizationRegistrationComponent implements OnInit {
   filterForm!: FormGroup;
   displayedColumns: string[] = ['srno', 'organization_logo', 'organization_name', 'email', 'address', 'action'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new Array();
   editFlag: boolean = false;
   totalCount = 0;
   pageSize = 10;
@@ -41,56 +41,13 @@ export class OrganizationRegistrationComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      this.getTableData();
+     result == 'Yes' ? this.getTableData() : '';
+      // console.log(`Dialog result: ${result}`);
+      // this.getTableData();
     });
   }
-  // openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-  //     this.dialog.open(AddOrganizationComponent, {
-  //       width: '50%',
-  //       enterAnimationDuration,
-  //       exitAnimationDuration,
-  //     });
-
-  //   }
-  //***********End Dialog Box*******************/
-  //***************Start Bind Table Here*******************/
-  // bindTable() {
-   
-  //   this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10', false, false, false, 'baseURL');
-  //   this.service.getHttp().subscribe({
-  //     next: (res: any) => {
-  //       if(res.statusCode=='200' && res.responseData.length){
-  //      this.dataSource = res.responseData;
-  //      this.dataSource.map((cr: any)=>{
-  //       cr.orgLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.orgLogo.split('Uploads')[1];
-  //      })
-  //       this.totalCount = res.responseData1.pageCount;
-       
-  //       console.log(res);
-  //     }else {
-  //       this.dataSource =[];
-  //     }
-  //   }
-  //   })
-  // }
-
-
-  // getTableData() {
-  //   this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno='+(this.currentPage + 1)+'&pagesize=10', false, false, false, "baseURL");
-  //   this.service.getHttp().subscribe({
-  //     next: (res: any) => {
-  //       this.dataSource = res.responseData;
-  //       this.dataSource.map((cr: any)=>{
-  //         cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
-  //        })
-  //       this.totalCount = res.responseData1.pageCount;
-  //       this.snackbar.open(res.statusMessage, 'Ok');
-  //       console.log(res);
-  //     }
-  //   })
-  // }
-
+ //***********End Dialog Box*******************/
+//***************Start Bind Table Here*******************/
   getTableData() {
     this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&name='+this.orgType, false, false, false, "baseURL");
     this.service.getHttp().subscribe({
@@ -111,35 +68,32 @@ export class OrganizationRegistrationComponent implements OnInit {
       }
     })
   }
-
+//***************End Bind Table Here*******************/
+//****************FOR FILTER SEARCH DATA SUBMIT LOGIC**************************/
   filterRecord() {
     this.orgType = this.filterForm.value.orgName;
-    // this.orgId = this.companyFilterForm.value.filterOrganizationId;
     this.getTableData()
   }
-
-
-  //***************End Bind Table Here*******************/
-  //******************Filter Data Submit Logic Start************************/
-  filterData() {
-    let orgType = this.filterForm.value.orgName;
-    console.log(orgType);
-    this.service.setHttp('get','HRMS/Orgnization/GetAllOrgByPagination?name=' + orgType, false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == '200' && res.responseData.length) {
-          this.snackbar.open(res.statusMessage,'ok');
-          // console.log('aaa', res);
-          // let filterArray: any[] = [res.responseData];
-          this.dataSource = res.responseData;
-          this.filterForm.reset();
-        }else {
-          this.dataSource =[];
-        }
-      }
-    })
-  }
+//******************Filter Data Submit Logic Start************************/
+  // filterData() {
+  //   let orgType = this.filterForm.value.orgName;
+  //   console.log(orgType);
+  //   this.service.setHttp('get','HRMS/Orgnization/GetAllOrgByPagination?name=' + orgType, false, false, false,
+  //     'baseURL');
+  //   this.service.getHttp().subscribe({
+  //     next: (res: any) => {
+  //       if (res.statusCode == '200' && res.responseData.length) {
+  //         this.snackbar.open(res.statusMessage,'ok');
+  //         // console.log('aaa', res);
+  //         // let filterArray: any[] = [res.responseData];
+  //         this.dataSource = res.responseData;
+  //         this.filterForm.reset();
+  //       }else {
+  //         this.dataSource =[];
+  //       }
+  //     }
+  //   })
+  // }
   //**********************Filter Data Submit Logic End**********************
   //***************Start Delete Logic********************/
   onDelete(id: number) {
@@ -166,17 +120,17 @@ export class OrganizationRegistrationComponent implements OnInit {
   }
   //************End Handle page for Pagination***************/
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  { srno: 1, organization_logo: '', organization_name: 'shaurya', email: 'H', address: 'Pune-11', action: '' },
-];
-export interface PeriodicElement {
-  srno: number;
-  organization_logo: string;
-  organization_name: string;
-  email: string;
-  address: string;
-  action: any;
-}
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   { srno: 1, organization_logo: '', organization_name: 'shaurya', email: 'H', address: 'Pune-11', action: '' },
+// ];
+// export interface PeriodicElement {
+//   srno: number;
+//   organization_logo: string;
+//   organization_name: string;
+//   email: string;
+//   address: string;
+//   action: any;
+// }
 
 
 
