@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 
 @Component({
   selector: 'app-add-company-bank-registration',
@@ -22,7 +23,8 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
 
   constructor(private api: CallApiService, private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddCompanyBankRegistrationComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
-    private snackBar: MatSnackBar, private commonApi: CommonApiService) { }
+    private snackBar: MatSnackBar, private commonApi: CommonApiService,
+    public validationPattern:ValidationPatternService) { }
 
   ngOnInit(): void {
     this.formData();
