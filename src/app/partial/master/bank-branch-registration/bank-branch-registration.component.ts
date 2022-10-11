@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 import { AddBankBranchRegistrationComponent } from './add-bank-branch-registration/add-bank-branch-registration.component';
 @Component({
   selector: 'app-bank-branch-registration',
@@ -18,11 +19,14 @@ export class BankBranchRegistrationComponent implements OnInit {
   filterForm!: FormGroup
   editObj: any;
   editFlag: boolean = false;
-  totalCount = 0;
+  totalCount:number = 0;
   pageSize = 10;
   currentPage = 0;
 
-  constructor(private commonApi: CommonApiService, public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar) { }
+  constructor(private commonApi: CommonApiService, public dialog: MatDialog, 
+    private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar,
+    public validationPattern:ValidationPatternService) { }
+  
   ngOnInit(): void {
     this.defaultForm();
     this.bindTable();
@@ -67,7 +71,7 @@ export class BankBranchRegistrationComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": false,
       "id": this.editFlag ? this.editObj.id : 0,
-      "bankId": this.editFlag ? this.editObj.bankId : [0, Validators.required],
+      "bankId":  [this.editFlag ? this.editObj.bankId : 0, Validators.required],
       "branchName": this.editFlag ? this.editObj.branchName : ["", Validators.required],
       "ifsC_Code": this.editFlag ? this.editObj.ifsC_Code : ["", [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]]
     })
@@ -88,9 +92,8 @@ export class BankBranchRegistrationComponent implements OnInit {
 
 
   onSearch() {
-    let id = this.filterForm.value.id;
-    let text = this.filterForm.value.branch;
-    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?searchtxt=' + text + '&BankId=' + id, false, false, false, 'baseURL');
+    let formValue = this.filterForm.value;
+    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?searchtxt=' + formValue?.branch + '&BankId=' + formValue?.id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
         console.log(res);
@@ -123,8 +126,8 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.editObj = data;
     this.bankNameDropDown();
     this.defaultForm();
-    this.fc['branchName'].setValidators([Validators.required]);
-    this.fc['ifsC_Code'].setValidators([Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]);
+    // this.fc['branchName'].setValidators([Validators.required]); // check
+    // this.fc['ifsC_Code'].setValidators([Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]); // check
   }
 
   onSubmit(clear: any) {
