@@ -125,7 +125,7 @@ export class AddHolidayComponent implements OnInit {
     //     console.log(" Error is :", error.status);
     //   })
     // });
-    this.commonAPIService.getCompanies().subscribe({
+    this.commonAPIService.getCompanies(0).subscribe({
       next: (resp: any) => {
         console.log("getCompanies data is :", resp)
         this.Companies = resp.responseData;
