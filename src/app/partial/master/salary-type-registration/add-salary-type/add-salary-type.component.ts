@@ -67,11 +67,7 @@ export class AddSalaryTypeComponent implements OnInit {
     }
   }
   //-----------------------------------------//Accept  Only Numbers 0-9 in Valu Field---------------------------------------------
-
-
-  //--------------------------------------------------------------- Form Submit Ends------------------------------------------------------
-
-
+  
   //--------------------------------------------------------------- Form Submit starts------------------------------------------------------
   onSubmit() {
     if (this.salaryForm.valid) {
@@ -114,7 +110,7 @@ export class AddSalaryTypeComponent implements OnInit {
   }
   //--------------------------------------------------------------- Form Submit Ends------------------------------------------------------
 
-  //---------------------------------------------------------------Edit Form Starts-----------------------------------------
+  //---------------------------------------------------------------Edit Form Starts--------------------------------------------------
   OnEdit(obj?: any) {
     this.editFlag = true;
     let editObj = obj;
@@ -126,10 +122,9 @@ export class AddSalaryTypeComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": true,
       companyId: +obj.companyId,
-      // companyName:obj.companyName,
       salary_Component: obj.salary_Component,
       isPercentage: editObj.isPercentage ? 0 : 1,
-      value: +obj.value
+      value:+obj.value
     })
     this.getCompanyNameDropdown();
   }

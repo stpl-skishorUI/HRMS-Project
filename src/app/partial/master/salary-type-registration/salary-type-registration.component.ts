@@ -40,7 +40,8 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   openDialog(ele?: any) {
     const dialogRef = this.dialog.open(AddSalaryTypeComponent, {
       width: '30%',
-      data: ele
+      data: ele,
+      disableClose:true
     });
 
     dialogRef.afterClosed().subscribe(result => {
