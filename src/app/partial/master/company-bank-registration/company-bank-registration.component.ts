@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { AddCompanyBankRegistrationComponent } from './add-company-bank-registration/add-company-bank-registration.component';
 
 @Component({
@@ -25,7 +27,8 @@ export class CompanyBankRegistrationComponent implements OnInit {
 
   sendObj = { organizationId: 0, CompanyId: 0, BankId: 0, BranchId: 0, AccountType: '' }
 
-  constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder) { }
+  constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder
+    , private handalErrorService: HandelErrorService, private commomApi: CommonApiService) { }
 
   ngOnInit(): void {
     this.filterFormData();
@@ -69,10 +72,12 @@ export class CompanyBankRegistrationComponent implements OnInit {
           this.totalCount = res.responseData1.pageCount;
         }
         else {
-          this.dataSource = []
+          this.dataSource = [];
+          this.handalErrorService.handelError(res.statusCode);
         }
       }),
       error: (error: any) => {
+        this.handalErrorService.handelError(error.status);
         console.log("Error is", error);
       }
     })
@@ -83,8 +88,18 @@ export class CompanyBankRegistrationComponent implements OnInit {
   // --------------------------------------------Dropdown Start-------------------------------------------
 
   getOrganizationNameDropdown() {
-    this.api.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
+    // this.api.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
+    // this.api.getHttp().subscribe({
+    //   next: ((res: any) => {
+    //     if (res.statusCode == '200' && res.responseData.length) {
+    //       this.organizationNameArray = res.responseData;
+    //     }
+    //   }),
+    //   error: (error: any) => {
+    //     console.log("Error is", error);
+    //   }
+    // })
+    this.commomApi.getOrganization().subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.organizationNameArray = res.responseData;
@@ -94,6 +109,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
         console.log("Error is", error);
       }
     })
+
   }
 
   getCampanyNameDropdown() {
