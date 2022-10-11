@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { AddSalaryTypeComponent } from '../../salary-type-registration/add-salary-type/add-salary-type.component';
 
 @Component({
@@ -19,14 +21,17 @@ export class AddCompanyComponent implements OnInit {
   fileURl: string = '';
   imgURL: string = '';
   selectedFile: any;
-  selImg: string = '';
+  img:any;
+  editObj : any;
 
-  @ViewChild('img') img!: ElementRef;
+  // @ViewChild('img') img!: ElementRef;
 
   profileImg: string = "../../../../../assets/images/user.jpg";
 
-  constructor(private fb: FormBuilder, private service: CallApiService, public dialogRef: MatDialogRef<AddSalaryTypeComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private snackbar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private service: CallApiService, 
+    public dialogRef: MatDialogRef<AddSalaryTypeComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private snackbar: MatSnackBar,
+    private commonApi:CommonApiService, private error:HandelErrorService) { }
 
   ngOnInit(): void {
     this.formField();
@@ -47,15 +52,17 @@ export class AddCompanyComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": true,
       "id": this.data ? this.data.id : 0,
-      "organizationId": ['0', Validators.required],
-      "companyName": ['', Validators.required],
-      "contactNo": ['', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}"), Validators.maxLength(10), Validators.minLength(10)]],
-      "address": ['', Validators.required],
-      "website": ['', Validators.required],
+      "organizationId": this.data ? this.data.orgId : ['', Validators.required],
+      "companyName": this.data ? this.data.companyName : ['', Validators.required],
+      "contactNo": this.data ? this.data.contactNo : ['', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}"), Validators.maxLength(10), Validators.minLength(10)]],
+      "address": this.data ? this.data.address : ['', Validators.required],
+      "website": this.data ? this.data.website :  ['', Validators.required],
       // "website": ['', [Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
-      "emailId": ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      "emailId": this.data ? this.data.emailId : ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       "companyLogo": ['', Validators.required],
-      "aboutUs": ['', Validators.required]
+      "aboutUs": this.data ? this.data.aboutUs :  ['', Validators.required]
+
+
     })
   }
   // ---------------------------------------- Form Field ---------------------------------------- //
@@ -66,50 +73,54 @@ export class AddCompanyComponent implements OnInit {
 
   // ---------------------------------- Organization dropdown ---------------------------------- //
   getOrganizationData() {
-    this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        res.statusCode == 200 && res.responseData.length ? (this.organizationArr = res.responseData) : this.organizationArr = [];
-        // console.log(res);
-      }, error: (error: any) => {
-        console.log("Error : ", error);
+    this.commonApi.getOrganization().subscribe({
+      next: (response: any) => {
+        if(response.statusCode == 200){
+          this.organizationArr = response.responseData;
+        }else{
+          this.error.handelError(response.statusCode);
+        }
       }
-    })
+    }),(error: any) => {
+      console.log(error)
+        this.error.handelError(error.statusCode);
+      }
   }
+  // getOrganizationData() { // remove
+  //   // this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
+  //   // this.service.getHttp().subscribe({
+  //     this.commonApi.getOrganization().subscribe({
+  //     next: (res: any) => {
+  //       res.statusCode == 200 && res.responseData.length ? (this.organizationArr = res.responseData) : this.organizationArr = [];
+  //       // console.log(res);
+  //     }, error: (error: any) => {
+  //       console.log("Error : ", error);
+  //       this.error.handelError(error.statusCode);
+  //     }
+  //   })
+  // }
   // ---------------------------------- Organization dropdown ---------------------------------- //
 
   // ------------------------------------- Edit Form ------------------------------------- //
   onEdit() {
     this.editFlag = true;
-    let obj = this.data;
-    // console.log(obj);
-    this.companyRegistrationForm.patchValue({
-      organizationId: obj.orgId,
-      companyName: obj.companyName,
-      contactNo: obj.contactNo,
-      address: obj.address,
-      website: obj.website,
-      emailId: obj.emailId,
-      companyLogo: obj.companyLogo,
-      aboutUs: obj.aboutUs
-    });
-    this.profileImg = this.data?.companyLogo;
+    this.editObj = this.data;
+    this.formField();
+    console.log(this.data);
+   
+    this.profileImg = this.data? this.data.companyLogo:'';
   }
   // ------------------------------------- Edit Form ------------------------------------- //
 
   // ------------------------------------- Image upload ------------------------------------- //
-  selectImg() {
-    this.img.nativeElement.click();
-  }
+ 
 
-  uploadImg(event: any) {
-    let finalValue = event.target.value;
-    // console.log(" file selected:", finalValue);
+  uploadImg(event: any) {  // common
+    // let finalValue = event.target.value;
     let extension = event.target.value.split('.')[1];
     extension = extension.toLowerCase();
     if (extension == 'jpg' || extension == 'png') {
       const file = event.target.files[0];
-      // console.log(event);
       if (file.size > 1000000) {
         this.snackbar.open('Upload another Image', 'Ok');
         this.img.nativeElement.value = '';
@@ -118,7 +129,7 @@ export class AddCompanyComponent implements OnInit {
       let readImg = new FileReader();
       readImg.onload = (event: any) => {
         this.profileImg = event.target.result;
-        this.selImg = file;
+        // this.selImg = file;
       }
       readImg.readAsDataURL(file);
       this.companyRegistrationForm.value.companyLogo = file;
@@ -138,6 +149,7 @@ export class AddCompanyComponent implements OnInit {
         }
       }, error: (error: any) => {
         console.log("Error : ", error);
+        this.error.handelError(error.statusCode);
       }
     })
   }
@@ -146,18 +158,21 @@ export class AddCompanyComponent implements OnInit {
   // ------------------------------------- Submit and Update ------------------------------------- //
   onSubmit() {
     let formValue = this.companyRegistrationForm.value;
+    console.log(formValue);
+    
     // console.log(formValue);
     formValue.companyName = formValue.companyName.trim();
-    if (!this.editFlag) {
+    if (!this.editFlag) {  // remove
       formValue.companyLogo = this.imgURL;
-      this.service.setHttp('post', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
+      this.service.setHttp(!this.editFlag ? 'post' : 'put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           this.snackbar.open(res.statusMessage, 'Ok');
           console.log(" all data saved success,", res);
-          this.dialogRef.close();
+          this.dialogRef.close('yes');
         }, error: (error: any) => {
           console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }
@@ -171,16 +186,16 @@ export class AddCompanyComponent implements OnInit {
       this.service.getHttp().subscribe({
         next: (res: any) => {
           this.snackbar.open(res.statusMessage, 'Ok');
-          this.dialogRef.close();
+          this.dialogRef.close('yes');
         }, error: (error: any) => {
           console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }
   }
 
-  clearForm(event: any) {
-    if (event.value == this.companyRegistrationForm.value.organizationId) {
+  clearForm() {
       this.companyRegistrationForm.controls['companyName'].setValue('');
       this.companyRegistrationForm.controls['contactNo'].setValue('');
       this.companyRegistrationForm.controls['address'].setValue('');
@@ -188,7 +203,6 @@ export class AddCompanyComponent implements OnInit {
       this.companyRegistrationForm.controls['emailId'].setValue('');
       this.companyRegistrationForm.controls['companyLogo'].setValue('');
       this.companyRegistrationForm.controls['aboutUs'].setValue('');
-    }
   }
   // ------------------------------------- Submit and Update ------------------------------------- //
 }

@@ -35,7 +35,7 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Search</mat-label>
-                                    <input matInput placeholder="Name" formControlName="name">
+                                    <input matInput placeholder="Search" formControlName="name">
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-auto">
@@ -116,8 +116,8 @@
 
             <ng-container *ngIf="totalCount > 0">
                 <mat-paginator [length]="totalCount" [pageSize]="10" [pageIndex]="currentPage" (page)="onClickPaginatior($event)"
-                showFirstLastButtons aria-label="Select page">
-            </mat-paginator>
+                    showFirstLastButtons aria-label="Select page">
+                </mat-paginator>
             </ng-container>
         </div>
         <ng-template #condition>

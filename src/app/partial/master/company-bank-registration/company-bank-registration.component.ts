@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { AddCompanyBankRegistrationComponent } from './add-company-bank-registration/add-company-bank-registration.component';
 
 @Component({
@@ -25,13 +27,13 @@ export class CompanyBankRegistrationComponent implements OnInit {
 
   sendObj = { organizationId: 0, CompanyId: 0, BankId: 0, BranchId: 0, AccountType: '' }
 
-  constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder) { }
+  constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder
+    , private handalErrorService: HandelErrorService, private commomApi: CommonApiService) { }
 
   ngOnInit(): void {
     this.filterFormData();
     this.getOrganizationNameDropdown();
     this.getBankNameDropdown();
-    // this.getBranchNameDropdown();
     this.bindTableData()
   }
   openDialog(editObj?: any) {
@@ -39,10 +41,8 @@ export class CompanyBankRegistrationComponent implements OnInit {
       width: '40%',
       data: editObj, disableClose: true
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      this.bindTableData();
-      // console.log(`Dialog result: ${result}`);
+      result == 'yes' ? this.bindTableData() : '';
     });
   }
 
@@ -64,15 +64,17 @@ export class CompanyBankRegistrationComponent implements OnInit {
       false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.dataSource = res.responseData;
           this.totalCount = res.responseData1.pageCount;
         }
         else {
-          this.dataSource = []
+          this.dataSource = [];
+          this.handalErrorService.handelError(res.statusCode);
         }
       }),
       error: (error: any) => {
+        this.handalErrorService.handelError(error.status);
         console.log("Error is", error);
       }
     })
@@ -83,27 +85,25 @@ export class CompanyBankRegistrationComponent implements OnInit {
   // --------------------------------------------Dropdown Start-------------------------------------------
 
   getOrganizationNameDropdown() {
-    this.api.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
+    this.commomApi.getOrganization().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.organizationNameArray = res.responseData;
         }
-      })
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
     })
   }
 
   getCampanyNameDropdown() {
     let id = this.filterForm.value.organizationId;
-    console.log(id);
-
     this.api.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.campanyNameArray = res.responseData;
-          console.log(this.campanyNameArray);
-
         }
       }),
       error: (error: any) => {
@@ -116,7 +116,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'api/CommonDropDown/GetBankRegistration', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.bankNameArray = res.responseData;
         }
       }),
@@ -131,13 +131,12 @@ export class CompanyBankRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'api/CommonDropDown/GetBankBranchRegistration?BankId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        if (res.statusCode === '200' && res.responseData.length) {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.branchNameArray = res.responseData;
         }
       },
       error: (error: any) => {
         console.log("Error is", error);
-
       }
     })
   }
@@ -148,7 +147,6 @@ export class CompanyBankRegistrationComponent implements OnInit {
   }
 
   // --------------------------------------------Dropdown End-------------------------------------------
-
 
   clearForm(id: string) {
     if (id == 'organization') {
@@ -166,9 +164,6 @@ export class CompanyBankRegistrationComponent implements OnInit {
     }
   }
 
-
-
-
   FilterFormSubmit() {
     let obj = this.filterForm.value;
     this.sendObj.organizationId = obj.organizationId;
@@ -179,9 +174,8 @@ export class CompanyBankRegistrationComponent implements OnInit {
     this.currentPage = 0
     this.bindTableData();
   }
-
-
 }
+
 const ELEMENT_DATA: PeriodicElement[] = [
   { sr_no: 1, LeaveType_Name: '', Half_Day: '', Branch_Name: '', Account_No: '', },
 ];
@@ -191,5 +185,4 @@ export interface PeriodicElement {
   Half_Day: any;
   Branch_Name: any;
   Account_No: any;
-
 }
