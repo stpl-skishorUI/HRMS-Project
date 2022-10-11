@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
 import { AddEmployeeDetailsComponent } from './add-employee-details/add-employee-details.component';
 
 
@@ -24,7 +25,8 @@ export class EmployeeRegistrationComponent implements OnInit {
   designationId: number = 0;
   name: string = '';
 
-  constructor(private fb: FormBuilder, public dialog: MatDialog, private service: CallApiService) { }
+  constructor(private fb: FormBuilder, public dialog: MatDialog, private service: CallApiService,
+    private commonApi: CommonApiService) { }
 
   ngOnInit(): void {
     this.displayData();
@@ -40,34 +42,36 @@ export class EmployeeRegistrationComponent implements OnInit {
       companyId: [''],
       departmentId: [''],
       designationId: [''],
-      name:['']
+      name: ['']
     });
   }
 
   // ---------------------------------------- Company Dropdown ------------------------------------
   companyDropdown() {
-    this.service.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=0', false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
+    this.commonApi.getCompanies(0).subscribe({
+      next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           // console.log(res);
           this.companyDropdownArray = res.responseData;
         }
+      }),
+      error: (error: any) => {
+        //       console.log("Error is", error);
       }
     })
   }
   // ---------------------------------------- Department Dropdown ----------------------------------
   departmentDropdown() {
     let companyId = this.filterForm.value.companyId;
-    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId=' + companyId + '', false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
+    this.commonApi.getDeptByCompanyId(companyId).subscribe({
+      next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           // console.log(res);
           this.departmentDropdownArray = res.responseData;
         }
+      }),
+      error: (error: any) => {
+        //       console.log("Error is", error);
       }
     })
   }
@@ -75,18 +79,18 @@ export class EmployeeRegistrationComponent implements OnInit {
   designationDropdown() {
     let companyId = this.filterForm.value.companyId;
     let departmentId = this.filterForm.value.departmentId;
-    this.service.setHttp('get', 'api/CommonDropDown/GetDesignation?CompanyId=' + companyId + '&DepartmentId=' + departmentId + '', false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
+    this.commonApi.getDesigByDeptId(companyId, departmentId).subscribe({
+      next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           // console.log(res);
           this.designationDropdownArray = res.responseData;
         }
+      }),
+      error: (error: any) => {
+        //       console.log("Error is", error);
       }
     })
   }
-
   // ---------------------------------------- Display Data / Pagination / FilterData -----------------
   displayData() {
     this.service.setHttp('get', 'HRMS/EmployeeRegister/GetEmployees?CompanyId=' + this.companyId + '&DepartmentId=' + this.departmentId + '&DesignationId=' + this.designationId + '&pageno=' + (this.currentPage + 1) + '&pagesize=10&TextSearch=' + this.name, false, false, false,

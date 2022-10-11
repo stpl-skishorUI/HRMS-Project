@@ -44,7 +44,7 @@
         </div>
         <div class="row">
             <div class="d-flex justify-content-between">
-                <button mat-raised-button class="btn-outline-main">Cancel</button>
+                <button mat-raised-button class="btn-outline-main" type="button" (click)="clearForm()">Cancel</button>
                 <button type="submit" mat-raised-button class="btn-main">{{this.iseditbtn==false? 'Save':'Update'}}</button>
             </div>
         </div>
