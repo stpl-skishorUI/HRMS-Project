@@ -15,7 +15,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-auto"  >
-                                <button type="submit" mat-raised-button [disabled]="filterForm.invalid">Search</button>
+                                <button type="submit" mat-raised-button [disabled]="!filterForm.value.orgName">Search</button>
                             </div>
                         </div>
                     </div>
