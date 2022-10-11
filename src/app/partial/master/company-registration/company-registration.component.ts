@@ -27,8 +27,8 @@ export class CompanyRegistrationComponent implements OnInit {
     private handleError : HandelErrorService, private commonApi : CommonApiService) { }
 
   ngOnInit(): void {
-    this.getTableData();
     this.filterForm();
+    this.getTableData();
     this.getOrganizationData();
   }
 
@@ -112,8 +112,6 @@ export class CompanyRegistrationComponent implements OnInit {
   // ----------------------------------------- Filter Logic -------------------------------------------- // 
 
   onDelete(id: number) {
-    console.log(id);
-
     this.service.setHttp('delete', 'api/CompanyRegistration?id=' + id, false, false, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
