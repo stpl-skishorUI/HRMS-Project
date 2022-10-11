@@ -45,6 +45,7 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   addnewsalary() {
     const dialogRef = this.dialog.open(AddNewSalaryComponent, {
       width: '50%',
+      hasBackdrop:false
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -64,8 +65,7 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   displayData() {
     this.service.setHttp(
       'get',
-      'HRMS/EmployeeSalaryDetails/GetEmpSalary?companyId=' +
-        this.filterForm.controls['companyId'].value +
+      'HRMS/EmployeeSalaryDetails/GetEmpSalary?companyId=' +this.filterForm.controls['companyId'].value +
         '&EmpCode=' +
         this.filterForm.controls['allemployee'].value +
         '&YearId=' +

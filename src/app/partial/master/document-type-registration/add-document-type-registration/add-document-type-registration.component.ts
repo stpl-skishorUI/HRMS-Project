@@ -63,6 +63,7 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
               this.snack.open(res.statusMessage, 'ok', {
                 horizontalPosition: 'right',
                 verticalPosition: 'top',
+                duration: 2000,
               });
             }
           }
@@ -88,6 +89,7 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
               this.snack.open(res.statusMessage, 'ok', {
                 horizontalPosition: 'right',
                 verticalPosition: 'top',
+                duration: 2000
               });
             }
           }
