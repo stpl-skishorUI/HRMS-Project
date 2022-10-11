@@ -12,7 +12,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-3" style="margin-top: 4px;">
-                                <button type="submit" class="" mat-raised-button>
+                                <button type="submit" [disabled]="!filterForm.value.documentTypeName" class="" mat-raised-button>
                                     <mat-icon>search</mat-icon> Search
                                 </button>
                             </div>

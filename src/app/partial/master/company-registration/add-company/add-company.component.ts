@@ -15,15 +15,16 @@ import { AddSalaryTypeComponent } from '../../salary-type-registration/add-salar
 export class AddCompanyComponent implements OnInit {
 
   companyRegistrationForm !: FormGroup;
-  dataSource = new Array();
   organizationArr = new Array();
   editFlag: boolean = false;
-  fileURl: string = '';
   imgURL: string = '';
-  selectedFile: any;
-  selImg: string = '';
+  img:any;
+  // fileURl: string = '';
+  // dataSource = new Array();
+  // selectedFile: any;
+  // editObj : any;
 
-  @ViewChild('img') img!: ElementRef;
+  // @ViewChild('img') img!: ElementRef;
 
   profileImg: string = "../../../../../assets/images/user.jpg";
 
@@ -35,11 +36,9 @@ export class AddCompanyComponent implements OnInit {
   ngOnInit(): void {
     this.formField();
     this.getOrganizationData();
-    // console.log("Data : ",this.data);
 
     if (this.data) {
       this.onEdit();
-      this.getOrganizationData();
     }
   }
   // ---------------------------------------- Form Field ---------------------------------------- //
@@ -51,123 +50,44 @@ export class AddCompanyComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": true,
       "id": this.data ? this.data.id : 0,
-      "organizationId": ['0', Validators.required],
-      "companyName": ['', Validators.required],
-      "contactNo": ['', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}"), Validators.maxLength(10), Validators.minLength(10)]],
-      "address": ['', Validators.required],
-      "website": ['', Validators.required],
-      // "website": ['', [Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
-      "emailId": ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      "companyLogo": ['', Validators.required],
-      "aboutUs": ['', Validators.required]
+      "organizationId": [this.data ? this.data.orgId : '', Validators.required],
+      "companyName": [this.data ? this.data.companyName : '', Validators.required],
+      "contactNo": [this.data ? this.data.contactNo : '', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}"), Validators.maxLength(10), Validators.minLength(10)]],
+      "address": [this.data ? this.data.address : '', Validators.required],
+      "website": [this.data ? this.data.website :  '', [Validators.required, Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
+      "emailId": [this.data ? this.data.emailId : '', [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@([a-z0-9.-]+[.])+[a-z]{2,5}$")]],
+      "companyLogo": [this.data ? this.data.companyLogo:'', Validators.required],
+      "aboutUs": [this.data ? this.data.aboutUs :  '', Validators.required]
     })
   }
   // ---------------------------------------- Form Field ---------------------------------------- //
 
+  // -------------------------------------- Form Controls -------------------------------------- //
   get f() {
     return this.companyRegistrationForm.controls;
   }
+  // -------------------------------------- Form Controls -------------------------------------- //
 
   // ---------------------------------- Organization dropdown ---------------------------------- //
-  // getOrganizationData() {
-  //   this.commonApi.getOrganization().subscribe({
-  //     next: (response: any) => {
-  //       debugger;
-  //       if(response.statusCode == 200){
-  //         this.organizationArr = response.responseData;
-  //       }else{
-  //         this.error.handelError(response.statusCode);
-  //       }
-  //     }
-  //   }),(error: any) => {
-  //     console.log(error)
-  //       this.error.handelError(error.statusCode);
-  //     }
-  // }
-  getOrganizationData() { // remove
-    this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        res.statusCode == 200 && res.responseData.length ? (this.organizationArr = res.responseData) : this.organizationArr = [];
-        // console.log(res);
-      }, error: (error: any) => {
-        console.log("Error : ", error);
-        this.error.handelError(error.statusCode);
-      }
-    })
-  }
-  // ---------------------------------- Organization dropdown ---------------------------------- //
-
-  // ------------------------------------- Edit Form ------------------------------------- //
-  onEdit() {
-    this.editFlag = true;
-    let obj = this.data;
-    // console.log(obj);
-    this.companyRegistrationForm.patchValue({ // remove
-      organizationId: obj.orgId,
-      companyName: obj.companyName,
-      contactNo: obj.contactNo,
-      address: obj.address,
-      website: obj.website,
-      emailId: obj.emailId,
-      companyLogo: obj.companyLogo,
-      aboutUs: obj.aboutUs
-    });
-    this.profileImg = this.data?.companyLogo;
-  }
-  // ------------------------------------- Edit Form ------------------------------------- //
-
-  // ------------------------------------- Image upload ------------------------------------- //
-  selectImg() {  // remove
-    this.img.nativeElement.click();
-  }
-
-  uploadImg(event: any) {  // common
-    let finalValue = event.target.value;
-    // console.log(" file selected:", finalValue);
-    let extension = event.target.value.split('.')[1];
-    extension = extension.toLowerCase();
-    if (extension == 'jpg' || extension == 'png') {
-      const file = event.target.files[0];
-      // console.log(event);
-      if (file.size > 1000000) {
-        this.snackbar.open('Upload another Image', 'Ok');
-        this.img.nativeElement.value = '';
-        return
-      }
-      let readImg = new FileReader();
-      readImg.onload = (event: any) => {
-        this.profileImg = event.target.result;
-        this.selImg = file;
-      }
-      readImg.readAsDataURL(file);
-      this.companyRegistrationForm.value.companyLogo = file;
-    }
-    let formData = new FormData();
-    formData.append('FolderName', 'D');
-    formData.append('DocumentType', 'jpg, jpeg');
-    formData.append('UploadDocPath', this.companyRegistrationForm.value.companyLogo);
-    // console.log(formData);
-
-    this.service.setHttp('post', 'HRMS/DocumentMaster/UploadFile', false, formData, false, "baseURL");
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.imgURL = res.responseData;
-          this.snackbar.open(res.statusMessage, 'Ok');
+  getOrganizationData() {
+    this.commonApi.getOrganization().subscribe({
+      next: (response: any) => {
+        if(response.statusCode == 200){
+          this.organizationArr = response.responseData;
+        }else{
+          this.error.handelError(response.statusCode);
         }
-      }, error: (error: any) => {
-        console.log("Error : ", error);
+      }
+    }),(error: any) => {
+      console.log(error)
         this.error.handelError(error.statusCode);
       }
-    })
   }
-  // ------------------------------------- Image upload ------------------------------------- //
+  // ---------------------------------- Organization dropdown ---------------------------------- //
 
   // ------------------------------------- Submit and Update ------------------------------------- //
   onSubmit() {
     let formValue = this.companyRegistrationForm.value;
-    // console.log(formValue);
     formValue.companyName = formValue.companyName.trim();
     if (!this.editFlag) {  // remove
       formValue.companyLogo = this.imgURL;
@@ -175,8 +95,8 @@ export class AddCompanyComponent implements OnInit {
       this.service.getHttp().subscribe({
         next: (res: any) => {
           this.snackbar.open(res.statusMessage, 'Ok');
-          console.log(" all data saved success,", res);
-          this.dialogRef.close();
+          // console.log(" all data saved success,", res);
+          this.dialogRef.close('yes');
         }, error: (error: any) => {
           console.log("Error : ", error);
           this.error.handelError(error.statusCode);
@@ -193,7 +113,7 @@ export class AddCompanyComponent implements OnInit {
       this.service.getHttp().subscribe({
         next: (res: any) => {
           this.snackbar.open(res.statusMessage, 'Ok');
-          this.dialogRef.close();
+          this.dialogRef.close('yes');
         }, error: (error: any) => {
           console.log("Error : ", error);
           this.error.handelError(error.statusCode);
@@ -201,7 +121,58 @@ export class AddCompanyComponent implements OnInit {
       })
     }
   }
+  // ------------------------------------- Submit and Update ------------------------------------- //
 
+  // ------------------------------------- Image upload ------------------------------------- //
+  uploadImg(event: any) {  // common
+    let extension = event.target.value.split('.')[1];
+    extension = extension.toLowerCase();
+    if (extension == 'jpg' || extension == 'png') {
+      const file = event.target.files[0];
+      if (file.size > 1000000) {
+        this.snackbar.open('Upload another Image', 'Ok');
+        this.img.nativeElement.value = '';
+        return
+      }
+      let readImg = new FileReader();
+      readImg.onload = (event: any) => {
+        this.profileImg = event.target.result;
+        // this.selImg = file;
+      }
+      readImg.readAsDataURL(file);
+      this.companyRegistrationForm.value.companyLogo = file;
+    }
+    let formData = new FormData();
+    formData.append('FolderName', 'D');
+    formData.append('DocumentType', 'jpg, jpeg');
+    formData.append('UploadDocPath', this.companyRegistrationForm.value.companyLogo);
+
+    this.service.setHttp('post', 'HRMS/DocumentMaster/UploadFile', false, formData, false, "baseURL");
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.imgURL = res.responseData;
+          this.snackbar.open(res.statusMessage, 'Ok');
+        }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
+        this.error.handelError(error.statusCode);
+      }
+    })
+  }
+  // ------------------------------------- Image upload ------------------------------------- //
+
+  // ------------------------------------- Edit Form ------------------------------------- //
+  onEdit() {
+    this.editFlag = true;
+    // this.editObj = this.data;
+    this.formField();
+   
+    this.profileImg = this.data? this.data.companyLogo:'';
+  }
+  // ------------------------------------- Edit Form ------------------------------------- //
+
+  // ------------------------------- Clear form feild if Organization changed ------------------------------- //
   clearForm() {
       this.companyRegistrationForm.controls['companyName'].setValue('');
       this.companyRegistrationForm.controls['contactNo'].setValue('');
@@ -211,5 +182,5 @@ export class AddCompanyComponent implements OnInit {
       this.companyRegistrationForm.controls['companyLogo'].setValue('');
       this.companyRegistrationForm.controls['aboutUs'].setValue('');
   }
-  // ------------------------------------- Submit and Update ------------------------------------- //
+  // ------------------------------- Clear form feild if Organization changed ------------------------------- //
 }

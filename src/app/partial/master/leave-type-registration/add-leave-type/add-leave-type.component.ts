@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators, FormBuilder ,FormGroupDirective} from '@angular/forms';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-add-leave-type',
   templateUrl: './add-leave-type.component.html',
@@ -14,8 +15,13 @@ export class AddLeaveTypeComponent implements OnInit {
   editId: any;
 
   companyTypeResp: any;
+  @ViewChild(FormGroupDirective)
+
+
+  formGroupDirective!: FormGroupDirective;
   constructor(private fb: FormBuilder,
     private callAPIService: CallApiService,
+    private snackBar:MatSnackBar,
     public dialogRef: MatDialogRef<AddLeaveTypeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -33,11 +39,8 @@ export class AddLeaveTypeComponent implements OnInit {
     this.callAPIService.setHttp('GET', 'api/CommonDropDown/GetCompany', false, false, false, 'baseURL');
     this.callAPIService.getHttp().subscribe({
       next: (resp: any) => {
-        console.log(resp);
         if (resp.statusCode == 200) {
           this.companyTypeResp = resp.responseData;
-          console.log(this.companyTypeResp);
-
         } else {
           // this.toastr.error(resp.statusMessage);
         }
@@ -50,7 +53,6 @@ export class AddLeaveTypeComponent implements OnInit {
     this.submitted = true;
     let formData = this.addleaveTypeForm.value;
     if (this.addleaveTypeForm.valid) {
-      console.log(this.addleaveTypeForm.value);
       const obj = {
         "createdBy": 0,
         "modifiedBy": 0,
@@ -67,15 +69,13 @@ export class AddLeaveTypeComponent implements OnInit {
       this.callAPIService.getHttp().subscribe({
         next: (resp: any) => {
           // this.spinner.hide();
-          console.log(resp);
           if (resp.statusCode == 200) {
-            alert(resp.statusMessage);
             this.dialogRef.close();
+            this.snackBar.open(resp.statusMessage,'ok', { 
+              duration: 2000
+          }); 
             // this.toastr.success(resp.statusMessage);
             // this.formGroupDirective.resetForm();
-            // this.submitted = false;
-            // this.iseditbtn = false;
-            // this.bindTableData();
 
           } else {
             // this.toastr.error(resp.statusMessage);
@@ -85,23 +85,25 @@ export class AddLeaveTypeComponent implements OnInit {
       })
 
     } else {
-      console.log('error');
+      // console.log('error');
 
     }
-
   }
 
   editData() {
     this.iseditbtn = this.data.status == 'Update' ? true : false;
-    this.editId = this.data.data.id;
     this.addleaveTypeForm.patchValue({
-      leaveType: this.data.data.leaveName,
-      compnytype: this.data.data.companyId,
-      halfDayRadio: this.data.data.isHalfDay
+      leaveType: this.data.data?.leaveName,
+      compnytype: this.data.data?.companyId,
+      halfDayRadio: this.data.data?.isHalfDay
     })
-    // this.iseditbtn = true;
-    console.log(this.data);
+    this.editId = this.data.data?.id;
+  }
 
+  clearForm() {
+    this.submitted = false;
+    this.formGroupDirective.resetForm();
+    this.data = '';
   }
 
   closeModal(flag?: any) {

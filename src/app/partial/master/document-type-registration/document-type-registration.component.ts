@@ -88,6 +88,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
           this.snack.open('record deleted successfully!', 'ok', {
             horizontalPosition: 'right',
             verticalPosition: 'top',
+            duration: 2000
           });
           this.displayData();
         }
