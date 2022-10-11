@@ -13,11 +13,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CompanyRegistrationComponent implements OnInit {
   companyFilterForm !: FormGroup;
   displayedColumns: string[] = ['srno', 'companyLogo', 'companyName', 'emailId', 'address', 'action'];
-  dataSource = ELEMENT_DATA;
-  totalCount : number = 0;
-  currentPage : number = 0;
-  pageSize : number = 10;
-  record  : string = '';
+  dataSource = new Array;
+  totalCount: number = 0;
+  currentPage: number = 0;
+  pageSize: number = 10;
+  record: string = '';
   orgId: number = 0;
 
   organizationArr = new Array;
@@ -32,50 +32,60 @@ export class CompanyRegistrationComponent implements OnInit {
   // ---------------------------------------- Filter Form Field ---------------------------------------- //
   filterForm() {
     this.companyFilterForm = this.fb.group({
-      filterOrganizationId : [''],
+      filterOrganizationId: [''],
       filterSearchText: ['']
     })
   }
   // ---------------------------------------- Filter Form Field ---------------------------------------- //
 
-    // ---------------------------------- Organization dropdown ---------------------------------- //
-    getOrganizationData() {
-      this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          res.statusCode == 200 && res.responseData.length?(this.organizationArr = res.responseData) :  this.organizationArr = [];
-          // console.log(res);
-        }
-      })
-    }
-    // ---------------------------------- Organization dropdown ---------------------------------- //
+  // ---------------------------------- Organization dropdown ---------------------------------- //
+  getOrganizationData() {
+    this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
+    this.service.getHttp().subscribe({
+      next: (res: any) => {
+        res.statusCode == 200 && res.responseData.length ? (this.organizationArr = res.responseData) : this.organizationArr = [];
+        // console.log(res);
+      }, error: (error: any) => {
+        console.log("Error : ", error);
+      }
+    })
+  }
+  // ---------------------------------- Organization dropdown ---------------------------------- //
 
   // ----------------------------------------- Mat Dialog Box ----------------------------------------- //
-  addCompany(obj?: any) {
+  dialogBox(obj?: any) {
     const dialogRef = this.dialog.open(AddCompanyComponent, {
       width: '50%',
-      height :'90%',
+      height: '90%',
       data: obj
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      result == 'Yes' ? this.getTableData() : '';
       // console.log(`Dialog result: ${result}`);
-      this.getTableData();
+    
     });
   }
   // ---------------------------------------- Mat Dialog Box ---------------------------------------- //
 
   // ----------------------------------------- Bind Table -------------------------------------------- // 
   getTableData() {
-    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=1&pagesize=10&searchText='+ this.record+'&orgId='+this.orgId, false, false, false, "baseURL");
+    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=' + (this.currentPage + 1) + '&pagesize=10&searchText=' + this.record + '&orgId=' + this.orgId, false, false, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        this.dataSource = res.responseData;
-        this.dataSource.map((cr: any)=>{
-          cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
-         })
-        this.totalCount = res.responseData1.pageCount;
-        // console.log(res);
+        if (res.statusCode == 200) {
+          this.dataSource = res.responseData;
+          this.dataSource.map((cr: any) => {
+            cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
+          })
+          this.totalCount = res.responseData1.pageCount;
+          // console.log(res);
+        } else {
+          this.dataSource = [];
+        }
+
+      }, error: (error: any) => {
+        console.log("Error : ", error);
       }
     })
   }
@@ -83,52 +93,31 @@ export class CompanyRegistrationComponent implements OnInit {
 
   // ----------------------------------------- Filter Logic -------------------------------------------- // 
   filterRecord() {
-     this.record = this.companyFilterForm.value.filterSearchText;
-     this.orgId = this.companyFilterForm.value.filterOrganizationId;
-    // console.log( this.record);
-    // this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=1&pagesize=10&searchText='+ this.record+'&orgId='+this.orgId , false, false, false, 'baseURL');
-    // this.service.getHttp().subscribe({
-    //   next: (res: any) => {
-    //     if (res.statusCode == 200) {
-    //       this.dataSource = res.responseData;
-    //       this.dataSource.map((cr: any)=>{
-    //        cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
-    //       })
-    //       this.companyFilterForm.reset();
-    //     }
-    //   }
-    // })
+    this.record = this.companyFilterForm.value.filterSearchText;
+    this.orgId = this.companyFilterForm.value.filterOrganizationId;
     this.getTableData()
   }
 
-  onPageChanged(event:any){
+  onPageChanged(event: any) {
     this.currentPage = event.pageIndex;
     this.getTableData();
   }
   // ----------------------------------------- Filter Logic -------------------------------------------- // 
 
-  onDelete(id:number){
+  onDelete(id: number) {
     console.log(id);
 
-    this.service.setHttp('delete','api/CompanyRegistration?id=' + id,false, false, false, "baseURL");
+    this.service.setHttp('delete', 'api/CompanyRegistration?id=' + id, false, false, false, "baseURL");
     this.service.getHttp().subscribe({
-      next:(res:any)=>{
-        if(res.statusCode == 200){
+      next: (res: any) => {
+        if (res.statusCode == 200) {
           this.getTableData();
         }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
       }
     })
-  } 
+  }
 
 }
-export interface PeriodicElement {
-  srno: number;
-  company_logo: string;
-  company_name: string;
-  email: string;
-  address: string;
-  action: any;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { srno: 1, company_logo: 'Hydrogen', company_name: 'shaurya', email: 'abs@gmail.com', address: 'Pune', action: '' }
-];
+

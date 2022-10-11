@@ -17,6 +17,7 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
 
   editFlag: boolean = false;
 
+
   ngOnInit(): void {
     this.controlForm();
   }
@@ -31,7 +32,7 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
       // "modifiedDate": "2022-10-03T09:10:50.692Z",
       "isDeleted": false,
       // "id": 0,
-      documentTypeName: [editData ? editData.documentTypeName : '', Validators.required]
+      documentTypeName: [editData ? editData.documentTypeName : '', [Validators.required, Validators.pattern('')]]
     })
 
     if (editData) {
@@ -41,51 +42,61 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
 
   // ---------------------------------------- submit and update data -------------------------------------------
   postData() {
-    if (this.editFlag == false) {
-      let obj = this.docTypeRegistrationForm.value;
-      obj.documentTypeName = obj.documentTypeName.trim();
-      this.service.setHttp('post', 'HRMS/DocumentType', false, obj, false, 'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == '200') {
-            // this.docTypeRegistrationForm.reset();
-            this.dialogRef.close('yes');
-            this.snack.open(res.statusMessage, 'ok', {
-              horizontalPosition: 'right',
-              verticalPosition: 'top',
-            });
-          }
-        }
-      })
-    } else if (this.editFlag == true) {
-      let obj1 = this.docTypeRegistrationForm.value;
-      console.log(obj1);
+    let docType = this.docTypeRegistrationForm.value.documentTypeName;
 
-      let updateData = {
-        "createdBy": 1,
-        "modifiedBy": 1,
-        // "createdDate": new Date(),
-        "modifiedDate": new Date(),
-        "isDeleted": false,
-        id: this.data.id,
-        documentTypeName: obj1.documentTypeName,
-      }
-      this.service.setHttp('put', 'HRMS/DocumentType', false, updateData, false, 'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == '200') {
-            this.dialogRef.close('yes');
-            this.snack.open(res.statusMessage, 'ok', {
-              horizontalPosition: 'right',
-              verticalPosition: 'top',
-            });
+    if (!docType.replace(/\s/g, '').length) { //string length is 0
+      // console.log('string only contains whitespace (ie. spaces, tabs or line breaks)');
+      return;
+    }
+    else {
+      console.log("String", docType.trim());
+      //submit fuction call here /
+      if (this.editFlag == false) {
+        let obj = this.docTypeRegistrationForm.value;
+        obj.documentTypeName = obj.documentTypeName.trim();
+        this.service.setHttp('post', 'HRMS/DocumentType', false, obj, false, 'baseURL');
+        this.service.getHttp().subscribe({
+          next: (res: any) => {
+            if (res.statusCode == '200') {
+              // this.docTypeRegistrationForm.reset();
+              this.dialogRef.close('yes');
+              this.snack.open(res.statusMessage, 'ok', {
+                horizontalPosition: 'right',
+                verticalPosition: 'top',
+              });
+            }
           }
+        })
+      } else if (this.editFlag == true) {
+        let obj1 = this.docTypeRegistrationForm.value;
+        console.log(obj1);
+
+        let updateData = {
+          "createdBy": 1,
+          "modifiedBy": 1,
+          // "createdDate": new Date(),
+          "modifiedDate": new Date(),
+          "isDeleted": false,
+          id: this.data.id,
+          documentTypeName: obj1.documentTypeName,
         }
-      })
+        this.service.setHttp('put', 'HRMS/DocumentType', false, updateData, false, 'baseURL');
+        this.service.getHttp().subscribe({
+          next: (res: any) => {
+            if (res.statusCode == '200') {
+              this.dialogRef.close('yes');
+              this.snack.open(res.statusMessage, 'ok', {
+                horizontalPosition: 'right',
+                verticalPosition: 'top',
+              });
+            }
+          }
+        })
+      }
     }
   }
 
-  get formFiledControl(){
+  get formFiledControl() {
     return this.docTypeRegistrationForm.controls;
   }
 }

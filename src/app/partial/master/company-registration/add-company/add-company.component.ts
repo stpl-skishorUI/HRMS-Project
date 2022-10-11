@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { AddSalaryTypeComponent } from '../../salary-type-registration/add-salary-type/add-salary-type.component';
 
 @Component({
@@ -19,21 +21,21 @@ export class AddCompanyComponent implements OnInit {
   fileURl: string = '';
   imgURL: string = '';
   selectedFile: any;
-  selImg:string='';
+  selImg: string = '';
 
   @ViewChild('img') img!: ElementRef;
 
-  profileImg : string = "../../../../../assets/images/user.jpg";
+  profileImg: string = "../../../../../assets/images/user.jpg";
 
-  constructor(private fb: FormBuilder, private service: CallApiService, public dialogRef: MatDialogRef<AddSalaryTypeComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private snackbar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private service: CallApiService, 
+    public dialogRef: MatDialogRef<AddSalaryTypeComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private snackbar: MatSnackBar,
+    private commonApi:CommonApiService, private error:HandelErrorService) { }
 
   ngOnInit(): void {
     this.formField();
     this.getOrganizationData();
     // console.log("Data : ",this.data);
-    
-    
 
     if (this.data) {
       this.onEdit();
@@ -50,11 +52,12 @@ export class AddCompanyComponent implements OnInit {
       "isDeleted": true,
       "id": this.data ? this.data.id : 0,
       "organizationId": ['0', Validators.required],
-      "companyName": ['',Validators.required] ,
-      "contactNo": ['',[Validators.required, Validators.pattern("^[6-9]{2}[0-9]{8}")]],
+      "companyName": ['', Validators.required],
+      "contactNo": ['', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}"), Validators.maxLength(10), Validators.minLength(10)]],
       "address": ['', Validators.required],
-      "website": ['',Validators.required],
-      "emailId": ['', Validators.required],
+      "website": ['', Validators.required],
+      // "website": ['', [Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
+      "emailId": ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       "companyLogo": ['', Validators.required],
       "aboutUs": ['', Validators.required]
     })
@@ -67,30 +70,39 @@ export class AddCompanyComponent implements OnInit {
 
   // ---------------------------------- Organization dropdown ---------------------------------- //
   getOrganizationData() {
-    this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        this.organizationArr = res.responseData;
-        // console.log(res);
+    this.commonApi.getOrganization().subscribe({
+      next: (response: any) => {
+        debugger;
+        if(response.statusCode == 200){
+          this.organizationArr = response.responseData;
+        }else{
+          this.error.handelError(response.statusCode);
+        }
       }
-    })
+    }),(error: any) => {
+      console.log(error)
+        this.error.handelError(error.statusCode);
+      }
   }
+  // getOrganizationData() { // remove
+  //   this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
+  //   this.service.getHttp().subscribe({
+  //     next: (res: any) => {
+  //       res.statusCode == 200 && res.responseData.length ? (this.organizationArr = res.responseData) : this.organizationArr = [];
+  //       // console.log(res);
+  //     }, error: (error: any) => {
+  //       console.log("Error : ", error);
+  //     }
+  //   })
+  // }
   // ---------------------------------- Organization dropdown ---------------------------------- //
 
   // ------------------------------------- Edit Form ------------------------------------- //
   onEdit() {
     this.editFlag = true;
     let obj = this.data;
-
     // console.log(obj);
-    
-    this.companyRegistrationForm.patchValue({
-      // "createdBy": 0,
-      // "modifiedBy": 0,
-      // createdDate: new Date(),
-      // modifiedDate: new Date(),
-      // isDeleted: false,
-      // id: obj.id,
+    this.companyRegistrationForm.patchValue({ // remove
       organizationId: obj.orgId,
       companyName: obj.companyName,
       contactNo: obj.contactNo,
@@ -100,20 +112,18 @@ export class AddCompanyComponent implements OnInit {
       companyLogo: obj.companyLogo,
       aboutUs: obj.aboutUs
     });
-    // this.selectedFile = obj.companyLogo;
     this.profileImg = this.data?.companyLogo;
   }
   // ------------------------------------- Edit Form ------------------------------------- //
 
   // ------------------------------------- Image upload ------------------------------------- //
-  selectImg() {
+  selectImg() {  // remove
     this.img.nativeElement.click();
   }
 
-  uploadImg(event: any) {
+  uploadImg(event: any) {  // common
     let finalValue = event.target.value;
     // console.log(" file selected:", finalValue);
-
     let extension = event.target.value.split('.')[1];
     extension = extension.toLowerCase();
     if (extension == 'jpg' || extension == 'png') {
@@ -131,9 +141,7 @@ export class AddCompanyComponent implements OnInit {
       }
       readImg.readAsDataURL(file);
       this.companyRegistrationForm.value.companyLogo = file;
-     
     }
-
     let formData = new FormData();
     formData.append('FolderName', 'D');
     formData.append('DocumentType', 'jpg, jpeg');
@@ -147,6 +155,8 @@ export class AddCompanyComponent implements OnInit {
           this.imgURL = res.responseData;
           this.snackbar.open(res.statusMessage, 'Ok');
         }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
       }
     })
   }
@@ -155,36 +165,41 @@ export class AddCompanyComponent implements OnInit {
   // ------------------------------------- Submit and Update ------------------------------------- //
   onSubmit() {
     let formValue = this.companyRegistrationForm.value;
-    console.log(formValue);
-    
-    if (!this.editFlag) {
+    // console.log(formValue);
+    formValue.companyName = formValue.companyName.trim();
+    if (!this.editFlag) {  // remove
       formValue.companyLogo = this.imgURL;
-      this.service.setHttp('post', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
+      this.service.setHttp(!this.editFlag ? 'post' : 'put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           this.snackbar.open(res.statusMessage, 'Ok');
+          console.log(" all data saved success,", res);
           this.dialogRef.close();
+        }, error: (error: any) => {
+          console.log("Error : ", error);
         }
       })
     }
     else {
-      // let editValue = this.companyRegistrationForm.value;
-      // this.imgURL = formValue.companyLogo;
-      formValue.companyLogo = this.imgURL;
+      if (formValue.companyLogo == this.data.companyLogo) {
+        formValue.companyLogo = this.data.companyLogo;
+      } else {
+        formValue.companyLogo = this.imgURL;
+      }
       this.service.setHttp('put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           this.snackbar.open(res.statusMessage, 'Ok');
           this.dialogRef.close();
+        }, error: (error: any) => {
+          console.log("Error : ", error);
         }
       })
     }
   }
 
- 
-
   clearForm(event: any) {
-    if (event.value == this.companyRegistrationForm.value.organizationId) {
+    //if (event.value == this.companyRegistrationForm.value.organizationId) {
       this.companyRegistrationForm.controls['companyName'].setValue('');
       this.companyRegistrationForm.controls['contactNo'].setValue('');
       this.companyRegistrationForm.controls['address'].setValue('');
@@ -192,10 +207,7 @@ export class AddCompanyComponent implements OnInit {
       this.companyRegistrationForm.controls['emailId'].setValue('');
       this.companyRegistrationForm.controls['companyLogo'].setValue('');
       this.companyRegistrationForm.controls['aboutUs'].setValue('');
-    }
-
+    //}
   }
-
-
   // ------------------------------------- Submit and Update ------------------------------------- //
 }

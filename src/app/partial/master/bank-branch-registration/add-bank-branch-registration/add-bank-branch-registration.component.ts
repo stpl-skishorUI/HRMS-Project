@@ -35,7 +35,7 @@ export class AddBankBranchRegistrationComponent implements OnInit {
   }
   get fc(){return this.bankForm.controls}
   bindTable() {
-    this.api.setHttp( 'get', 'api/BankRegistration/GetAll', false, false, false, 'baseURL');
+    this.api.setHttp( 'get', 'api/BankRegistration/GetAllBankRegiByPagination?pageno=1&pagesize=10', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
         res.statusCode == 200 ? this.dataSource = res.responseData : this.dataSource = [];
@@ -56,6 +56,7 @@ export class AddBankBranchRegistrationComponent implements OnInit {
     this.editObj = data;
     this.editFlag = true;
     this.defaultForm();
+    this.fc['bankName'].setValidators([Validators.required]);
   }
 
   onCancel(){
@@ -67,9 +68,8 @@ export class AddBankBranchRegistrationComponent implements OnInit {
     this.api.setHttp( this.editFlag ? 'put' : 'post', 'api/BankRegistration', false, obj, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(), this.editFlag = false,this.formGroupDirective.resetForm()) :'';
+        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(), this.editFlag = false,this.formGroupDirective.resetForm(), this.defaultForm()) :'';
       }
     })
-     this.defaultForm();
   }
 }

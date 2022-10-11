@@ -1,7 +1,7 @@
 <div class="card main-card">
 
     <div class="card-header">
-        <form [formGroup]="filterForm" (ngSubmit)="filterData()">
+        <form [formGroup]="filterForm" (ngSubmit)="filterRecord()">
             <div class="form-container">
                 <div class="row  align-items-center">
                     <div class="col-sm-9">
@@ -14,13 +14,13 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="col-sm-auto">
-                                <button mat-raised-button>Search</button>
+                            <div class="col-sm-auto"  >
+                                <button type="submit" mat-raised-button [disabled]="filterForm.invalid">Search</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-3 text-end">
-                        <button mat-button class="btn btn-outline-main" (click)="addOrganization()">
+                        <button type="button" mat-button class="btn btn-outline-main" (click)="addOrganization()">
                             <i class="fa-solid fa-plus me-2"></i>Add New
                         </button>
                     </div>
