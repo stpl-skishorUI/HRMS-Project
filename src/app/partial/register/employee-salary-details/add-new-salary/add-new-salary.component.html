@@ -6,27 +6,41 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="form-container">
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Select Compnay</mat-label>
                     <mat-select formControlName="companyId">
                         <mat-option *ngFor="let com of company" value="{{com.id}">{{com.name}}</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="f['companyId'].hasError('required') || f['companyId'].hasError('touched')">Company
+                      Name is Required</mat-error>
                 </mat-form-field>
-            </div>
+            </div> -->
             <div class="mb-3">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>All Employee</mat-label>
-                    <mat-select formControlName="allemployee">
+                    <mat-select formControlName="empCode">
                         <mat-option *ngFor="let emp of employee" value="{{emp.id}}">{{emp.name}}</mat-option>
                     </mat-select>
-                </mat-form-field>
+                    <mat-error *ngIf="f['empCode'].hasError('required') || f['empCode'].hasError('touched')">Employee
+                      Name is Required</mat-error>
+                    </mat-form-field>
             </div>
+            <div class="mb-0">
+              <mat-form-field appearance="legacy" class="w-100">
+                  <mat-label>Add Salary</mat-label>
+                  <input matInput placeholder="GrossSalary" formControlName="grossSalary">
+                  <mat-error *ngIf="f['grossSalary'].hasError('required') || f['grossSalary'].hasError('touched')">GrossSalary
+                    is Required</mat-error>
+              </mat-form-field>
+          </div>
             <div class="mb-3">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Choose a date</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="datepicker">
+                    <input matInput [matDatepicker]="picker" formControlName="effectiveDate">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-error *ngIf="f['effectiveDate'].hasError('required') || f['effectiveDate'].hasError('touched')">Date
+                       is Required</mat-error>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
             </div>
@@ -37,7 +51,7 @@
 <div class="row">
     <div class="d-flex justify-content-between">
         <button mat-button class="btn-outline-main" type="reset" (click)="onCancel()">Cancel</button>
-        <button type="button" class="btn btn-main">{{!editFlag ? 'Save':'Update' }}</button>
-    </div>
+        <button mat-raised-button class="btn-main" type="submit" mat-dialog-close>{{editFlag?'update':'Save'}}</button>
+      </div>
 </div>
 </form>
