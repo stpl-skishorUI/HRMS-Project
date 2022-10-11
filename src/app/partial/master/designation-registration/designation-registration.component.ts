@@ -4,6 +4,8 @@ import { AddDesignationComponent } from './add-designation/add-designation.compo
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
 
 @Component({
   selector: 'app-designation-registration',
@@ -23,7 +25,7 @@ export class DesignationRegistrationComponent implements OnInit {
   totalCount: any;
   currentPage: number = 0;
 
-  constructor(public dialog: MatDialog, private service: CallApiService, private formBuilder: FormBuilder, private snack: MatSnackBar) { }
+  constructor(public dialog: MatDialog, private service: CallApiService, private formBuilder: FormBuilder, private snack: MatSnackBar, private commomApi:CommonApiService,private handalErrorService:HandelErrorService) { }
 
   ngOnInit(): void {
     this.fillterFormData();
@@ -47,16 +49,20 @@ export class DesignationRegistrationComponent implements OnInit {
     this.filtterDepartmentId = obj.filtterDepartment;
     this.filtterDesignationText = obj.filtterDesignation;
 
-    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&oId=' + this.filtterOrgId + '&cId=' + this.filtterCompanyId + '&dId=' + this.filtterDepartmentId + '&searchText=' + this.filtterDesignationText, false, false, false,
+    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno='+ (this.currentPage + 1) + '&pagesize=10&oId=' + this.filtterOrgId + '&cId=' + this.filtterCompanyId + '&dId=' + this.filtterDepartmentId + '&searchText=' + this.filtterDesignationText, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200 && res.responseData.length) {
           this.dataSource = res.responseData;
-          this.totalCount = res.responseData1.pageCount;
+          this.totalCount = res.responseData1.pageCount;          
         } else {
           this.dataSource = [];
+          this.handalErrorService.handelError(res.statusCode);
         }
+      }, error: (error: any) => {
+        this.handalErrorService.handelError(error.status);
+        console.log("Error : ", error);
       }
     })
   }
@@ -68,10 +74,12 @@ export class DesignationRegistrationComponent implements OnInit {
   addDesignation(obj?: any) {
     const dialogRef = this.dialog.open(AddDesignationComponent, {
       width: '30%',
-      data: obj
+      data: obj,
+      disableClose:true
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getTableData();
+      result == 'Yes' ? this.getTableData() : '';
+      
       // console.log(`Dialog result: ${result}`)
     });
   }
@@ -90,54 +98,55 @@ export class DesignationRegistrationComponent implements OnInit {
           this.totalCount = res.responseData1.pageCount;
         } else {
           this.dataSource = [];
+          this.handalErrorService.handelError(res.statusCode);
         }
       }, error: (error: any) => {
+        this.handalErrorService.handelError(error.status);
         console.log("Error : ", error);
       }
-    })
+    })  
   }
   //-----------------------------------Table Binding------------------------------------------//
 
   //-----------------------------------Drop-Down------------------------------------------//
 
-  getOrganization() {
-    this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200 && res.responseData.length) {
+  getOrganization() {   
+
+    this.commomApi.getOrganization().subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.organizationDropdown = res.responseData;
+         
         }
-      }, error: (error: any) => {
-        console.log("Error : ", error);
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
       }
-    })
+    }) 
   }
   getCompanyDropdown() {
-    let oId = this.filtterForm.value.filtterOrganization;
-    this.service.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + oId, false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200 && res.responseData.length) {
-          this.companyDropdown = res.responseData;
+    let orgId=this.filtterForm.value.filtterOrganization;
+    this.commomApi.getCompanies(orgId).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
+          this.companyDropdown = res.responseData;         
         }
-      }, error: (error: any) => {
-        console.log("Error : ", error);
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
       }
     })
   }
   getDepartmentDropdown() {
-    let cid = this.filtterForm.value.filtterCompany;
-    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId=' + cid, false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200 && res.responseData.length) {
+    let cid = this.filtterForm.value.filtterCompany;  
+    this.commomApi.getDeptByCompanyId(cid).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.departmentDropdown = res.responseData;
         }
-      }, error: (error: any) => {
-        console.log("Error : ", error);
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
       }
     })
   }
