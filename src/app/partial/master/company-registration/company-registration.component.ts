@@ -61,8 +61,7 @@ export class CompanyRegistrationComponent implements OnInit {
   // ----------------------------------------- Mat Dialog Box ----------------------------------------- //
   dialogBox(obj?: any) {
     const dialogRef = this.dialog.open(AddCompanyComponent, {
-      width: '50%',
-      height: '90%',
+      width: '40%',
       data: obj,
       disableClose : true
     });

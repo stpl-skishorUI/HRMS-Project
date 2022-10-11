@@ -23,8 +23,9 @@ export class OrganizationRegistrationComponent implements OnInit {
   constructor(public dialog: MatDialog, private service: CallApiService, public fb: FormBuilder,private snackbar:MatSnackBar) { }
 
   ngOnInit(): void {
-    this.getTableData();
     this.filterMethod();
+    this.getTableData();
+
   }
 
   filterMethod() {
@@ -55,7 +56,7 @@ export class OrganizationRegistrationComponent implements OnInit {
         if (res.statusCode == 200) {
           this.dataSource = res.responseData;
           this.dataSource.map((cr: any) => {
-            cr.companyLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.companyLogo.split('Uploads')[1];
+            cr.orgLogo = "http://hrmssvr.erpguru.in/Uploads" + cr.orgLogo.split('Uploads')[1];
           })
           this.totalCount = res.responseData1.pageCount;
           // console.log(res);

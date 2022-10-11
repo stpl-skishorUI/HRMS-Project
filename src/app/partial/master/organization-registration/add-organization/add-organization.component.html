@@ -10,7 +10,7 @@
                 <img [src]="imageURL" class="img">
                 <button class="btn" (click)="selectImg()">
                     <i class="fa-solid fa-plus"></i></button>
-                <input type="file" name="myfile" formControlName="companyLogo" (change)="uploadImg($event)" #img />
+                <input type="file" name="myfile" formControlName="orgLogo" (change)="uploadImg($event)" #img />
             </div>
             <div class="upload-image" *ngIf="editFlag">
                 <img [src]="imageURL" class="img">
@@ -55,7 +55,6 @@
                     <mat-error *ngIf="f['contactNo'].hasError('pattern') || f['contactNo'].hasError('touched')">
                         Please enter valid contactNo
                     </mat-error>
-                    <!-- <mat-error *ngIf="hasError('contactNo', 'maxlength')">Please Enter  10 Digit Number</mat-error> -->
                 </mat-form-field>
             </div>
             <div class="mb-0">
