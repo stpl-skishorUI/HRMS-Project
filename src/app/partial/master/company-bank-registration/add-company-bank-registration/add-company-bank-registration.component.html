@@ -80,6 +80,8 @@
                             <input type="tel" matInput placeholder="Exp.123456789123" formControlName="accountNo">
                             <mat-error *ngIf="formFiledControl['accountNo'].hasError('required') || 
                             formFiledControl['accountNo'].hasError('touched')">Account No Is Required</mat-error>
+                            <mat-error *ngIf="formFiledControl['accountNo'].hasError('pattern')|| 
+                            formFiledControl['accountNo'].hasError('touched')">Account No Must be Digit</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -89,7 +91,7 @@
     <div class="row">
         <div class="d-flex justify-content-between">
             <button mat-raised-button class="btn-outline-main" mat-dialog-close>Cancel</button>
-            <button type="submit" mat-raised-button class="btn-main">{{editFlag ? 'Update':'Save'}}</button>
+            <button type="submit" mat-raised-button class="btn-main" [disabled]="companyBankRegistrationForm.invalid">{{editFlag ? 'Update':'Save'}}</button>
         </div>
     </div>
 </form>
