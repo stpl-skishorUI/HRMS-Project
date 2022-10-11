@@ -34,14 +34,15 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddBankBranchRegistrationComponent, {
-      width: '50%',
-      height: '70%',
+      width: '70%',
+      height: '90%',
       data: this.dataSource,
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      this.bindTable();
+    this.bankNameDropDown();
+      // this.bindTable();
     });
   }
 
@@ -79,14 +80,15 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   filterData() {
     this.filterForm = this.fb.group({
-      "id": 0,
-      "branch": ""
+      "id": [0],
+      "branch": [""]
     })
   }
 //------For clear the fields when we change the Bank Name-----//
   onChanges(event: any) {
     event.value ? (this.regForm.controls['branchName'].setValue(''), this.regForm.controls['ifsC_Code'].setValue('')) : '';
   }
+  
 
   onSearch() {
     let id = this.filterForm.value.id;
@@ -95,7 +97,7 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.api.getHttp().subscribe({
       next: (res: any) => {
         console.log(res);
-        res.statusCode ==200 && res.responseData.length ? this.dataSource = res.responseData :this.dataSource =[] ;
+        res.statusCode ==200 && res.responseData.length ? (this.dataSource = res.responseData,  this.totalCount = res.responseData1.pageCount) :this.dataSource =[] ;
       }, error: (error: any) => {
         console.log("Error is : ", error);
       }
@@ -127,19 +129,26 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.defaultForm();
     this.fc['branchName'].setValidators([Validators.required]);
     this.fc['ifsC_Code'].setValidators([Validators.required,Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]);
-
   }
 
   onSubmit(clear:any) { 
-    let obj = this.regForm.value;
-    this.api.setHttp(this.editFlag ? 'put' : 'post', 'HRMS/BankBranchRegistration', false, obj, false, 'baseURL');
-    this.api.getHttp().subscribe({
-      next: (res: any) => {
-        res.statusCode == 200 ? ( this.mat.open(res.statusMessage, 'ok') , this.bindTable(),  this.editFlag = false,clear.resetForm()) :'';
-      }, error: (error: any) => {
-        console.log("Error is : ", error);
-      }
-    })
-    this.defaultForm();
+  let branchName = this.fc['branchName'].value;
+    if (!branchName.replace(/\s/g, '').length) { //string length is 0
+      console.log('string only contains whitespace (ie. spaces, tabs or line breaks)');
+      return;
+    }
+    else{
+      let obj = this.regForm.value;
+      this.api.setHttp(this.editFlag ? 'put' : 'post', 'HRMS/BankBranchRegistration', false, obj, false, 'baseURL');
+      this.api.getHttp().subscribe({
+        next: (res: any) => {
+          res.statusCode == 200 ? ( this.mat.open(res.statusMessage, 'ok') , this.bindTable(),  this.editFlag = false,clear.resetForm(), this.defaultForm()) :'';
+        }, error: (error: any) => {
+          console.log("Error is : ", error);
+        }
+      })
+      
+    }
+    
   }
 }

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { AddSalaryTypeComponent } from '../../salary-type-registration/add-salary-type/add-salary-type.component';
 
 @Component({
@@ -25,8 +27,10 @@ export class AddCompanyComponent implements OnInit {
 
   profileImg: string = "../../../../../assets/images/user.jpg";
 
-  constructor(private fb: FormBuilder, private service: CallApiService, public dialogRef: MatDialogRef<AddSalaryTypeComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private snackbar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private service: CallApiService, 
+    public dialogRef: MatDialogRef<AddSalaryTypeComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private snackbar: MatSnackBar,
+    private commonApi:CommonApiService, private error:HandelErrorService) { }
 
   ngOnInit(): void {
     this.formField();
@@ -65,7 +69,22 @@ export class AddCompanyComponent implements OnInit {
   }
 
   // ---------------------------------- Organization dropdown ---------------------------------- //
-  getOrganizationData() {
+  // getOrganizationData() {
+  //   this.commonApi.getOrganization().subscribe({
+  //     next: (response: any) => {
+  //       debugger;
+  //       if(response.statusCode == 200){
+  //         this.organizationArr = response.responseData;
+  //       }else{
+  //         this.error.handelError(response.statusCode);
+  //       }
+  //     }
+  //   }),(error: any) => {
+  //     console.log(error)
+  //       this.error.handelError(error.statusCode);
+  //     }
+  // }
+  getOrganizationData() { // remove
     this.service.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -73,6 +92,7 @@ export class AddCompanyComponent implements OnInit {
         // console.log(res);
       }, error: (error: any) => {
         console.log("Error : ", error);
+        this.error.handelError(error.statusCode);
       }
     })
   }
@@ -83,7 +103,7 @@ export class AddCompanyComponent implements OnInit {
     this.editFlag = true;
     let obj = this.data;
     // console.log(obj);
-    this.companyRegistrationForm.patchValue({
+    this.companyRegistrationForm.patchValue({ // remove
       organizationId: obj.orgId,
       companyName: obj.companyName,
       contactNo: obj.contactNo,
@@ -98,11 +118,11 @@ export class AddCompanyComponent implements OnInit {
   // ------------------------------------- Edit Form ------------------------------------- //
 
   // ------------------------------------- Image upload ------------------------------------- //
-  selectImg() {
+  selectImg() {  // remove
     this.img.nativeElement.click();
   }
 
-  uploadImg(event: any) {
+  uploadImg(event: any) {  // common
     let finalValue = event.target.value;
     // console.log(" file selected:", finalValue);
     let extension = event.target.value.split('.')[1];
@@ -138,6 +158,7 @@ export class AddCompanyComponent implements OnInit {
         }
       }, error: (error: any) => {
         console.log("Error : ", error);
+        this.error.handelError(error.statusCode);
       }
     })
   }
@@ -148,9 +169,9 @@ export class AddCompanyComponent implements OnInit {
     let formValue = this.companyRegistrationForm.value;
     // console.log(formValue);
     formValue.companyName = formValue.companyName.trim();
-    if (!this.editFlag) {
+    if (!this.editFlag) {  // remove
       formValue.companyLogo = this.imgURL;
-      this.service.setHttp('post', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
+      this.service.setHttp(!this.editFlag ? 'post' : 'put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           this.snackbar.open(res.statusMessage, 'Ok');
@@ -158,6 +179,7 @@ export class AddCompanyComponent implements OnInit {
           this.dialogRef.close();
         }, error: (error: any) => {
           console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }
@@ -174,13 +196,13 @@ export class AddCompanyComponent implements OnInit {
           this.dialogRef.close();
         }, error: (error: any) => {
           console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }
   }
 
-  clearForm(event: any) {
-    if (event.value == this.companyRegistrationForm.value.organizationId) {
+  clearForm() {
       this.companyRegistrationForm.controls['companyName'].setValue('');
       this.companyRegistrationForm.controls['contactNo'].setValue('');
       this.companyRegistrationForm.controls['address'].setValue('');
@@ -188,7 +210,6 @@ export class AddCompanyComponent implements OnInit {
       this.companyRegistrationForm.controls['emailId'].setValue('');
       this.companyRegistrationForm.controls['companyLogo'].setValue('');
       this.companyRegistrationForm.controls['aboutUs'].setValue('');
-    }
   }
   // ------------------------------------- Submit and Update ------------------------------------- //
 }
