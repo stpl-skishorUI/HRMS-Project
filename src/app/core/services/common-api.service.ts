@@ -35,7 +35,7 @@ export class CommonApiService {
 
   getOrganization() {
     return new Observable((obj) => {
-      this.apiService.setHttp('Post', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
+      this.apiService.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
       this.apiService.getHttp().subscribe({
         next: (res: any) => { if (res.statusCode == "200") { obj.next(res); } else { obj.error(res); } },
         error: (e: any) => { obj.error(e) }
