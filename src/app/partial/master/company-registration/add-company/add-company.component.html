@@ -3,36 +3,29 @@
         <h5 class="text-main">Add New Company </h5>
         <i class="fa fa-times" aria-hidden="true" mat-dialog-close></i>
     </div>
-    <div class="row">
-        <div class="col-sm-5 text-center mt-0">
+    <div class="row mt-2 ">
+        <div class="col-sm text-center mt-0">
             <div class="upload-image" *ngIf="!editFlag">
-                <img src="{{profileImg}}">
-                <button class="btn" (click)="selectImg()"><i class="fa-solid fa-plus"></i></button>
+                <img src="{{profileImg}}" class="img">
+                <button class="btn" ><i class="fa-solid fa-plus"></i></button>
                 <input type="file" name="myfile" formControlName="companyLogo" (change)="uploadImg($event)" #img />
             </div>
 
             <div class="upload-image" *ngIf="editFlag">
-                <img [src]="profileImg">
-                <button class="btn" (click)="selectImg()">
+                <img [src]="profileImg" class="img">
+                <button class="btn" >
                     <i class="fa-solid fa-plus"></i></button>
                 <input type="file" name="myfile" (change)="uploadImg($event)" />
             </div>
         </div>
+    </div>
 
-        <!-- <div class="col-sm-4 text-center">
-            <div class="upload-image" *ngIf="editFlag">
-                <img [src]="profileImg">
-                <button class="btn" (click)="selectImg()">
-                    <i class="fa-solid fa-plus"></i></button>
-                <input type="file" name="myfile" (change)="uploadImg($event)" />
-            </div>
-        </div> -->
-
-        <div class="col-sm-7">
+    <div class="row mb-2">
+        <div class="col-sm-6">
             <div class="form-container">
-
                 <div class="mb-0">
                     <mat-form-field appearance="legacy" class="w-100">
+                        <mat-label>Select Company</mat-label>
                         <mat-select formControlName="organizationId" (selectionChange)="clearForm()">
                             <mat-option value="0" disabled>Organization Registration</mat-option>
                             <mat-option *ngFor="let org of organizationArr" [value]="org.id">
@@ -43,18 +36,27 @@
                             Organization Registration Is Required.
                         </mat-error>
                     </mat-form-field>
-                   
                 </div>
-
+                <div class="mb-0">
+                    <mat-form-field appearance="legacy" class="w-100">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput placeholder="frontpage@gmail.com" formControlName="emailId">
+                        <mat-error *ngIf="f['emailId'].hasError('required') || f['emailId'].hasError('touched')">
+                            Email Id is Required
+                        </mat-error>
+                        <mat-error *ngIf="f['emailId'].hasError('pattern') || f['emailId'].hasError('touched')">
+                            Invalid Email Id
+                        </mat-error>
+                    </mat-form-field>
+                </div>
 
                 <div class="mb-0">
                     <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Company Name</mat-label>
-                        <input matInput placeholder="Company Name" formControlName="companyName" maxlength="30"
-                            minlength="3">
-                        <mat-error
-                            *ngIf="f['companyName'].hasError('required') || f['companyName'].hasError('touched')">
-                            Company Name is Required
+                        <mat-label>Address</mat-label>
+                        <textarea matInput placeholder="Enter Address" formControlName="address" maxlength="30"
+                            minlength="3"></textarea>
+                        <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
+                            Address is Required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -72,74 +74,43 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
+            </div>
+        </div>
 
-                <div class="mb-0">
-                    <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Address</mat-label>
-                        <textarea matInput placeholder="Enter Address" formControlName="address" maxlength="30"
-                            minlength="3"></textarea>
-                        <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
-                            Address is Required
-                        </mat-error>
+        <div class="col-sm-6">
+            <div class="mb-0">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>Company Name</mat-label>
+                    <input matInput placeholder="Company Name" formControlName="companyName" maxlength="30"
+                        minlength="3">
+                    <mat-error
+                        *ngIf="f['companyName'].hasError('required') || f['companyName'].hasError('touched')">
+                        Company Name is Required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mb-0">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>Website</mat-label>
+                    <input matInput placeholder="www.frontpage.ind.in" formControlName="website">
+                    <mat-error *ngIf="f['website'].hasError('required') || f['website'].hasError('touched')">
+                        Website is Required
+                    </mat-error>
+                    <mat-error *ngIf="f['website'].hasError('pattern') || f['website'].hasError('touched') ">
+                        Invalid Website
+                    </mat-error>
 
-                    </mat-form-field>
-                </div>
-
-                <div class="mb-0">
-                    <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Website</mat-label>
-                        <input matInput placeholder="www.frontpage.ind.in" formControlName="website">
-                        <mat-error *ngIf="f['website'].hasError('required') || f['website'].hasError('touched')">
-                            Website is Required
-                        </mat-error>
-                        <mat-error *ngIf="f['website'].hasError('pattern') || f['website'].hasError('touched') ">
-                            Invalid Website
-                        </mat-error>
-
-                    </mat-form-field>
-                </div>
-
-                <div class="mb-0">
-                    <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Email Id</mat-label>
-                        <input matInput placeholder="frontpage@gmail.com" formControlName="emailId">
-                        <mat-error *ngIf="f['emailId'].hasError('required') || f['emailId'].hasError('touched')">
-                            Email Id is Required
-                        </mat-error>
-                        <mat-error *ngIf="f['emailId'].hasError('pattern') || f['emailId'].hasError('touched')">
-                            Invalid Email Id
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="mb-0">
-                    <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>About Us</mat-label>
-                        <textarea matInput placeholder="Enter About US" formControlName="aboutUs" maxlength="30"
-                            minlength="3"></textarea>
-                        <mat-error *ngIf="f['aboutUs'].hasError('required') || f['aboutUs'].hasError('touched')">
-                            About Us is Required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="mb-0">
-                    <!-- <mat-form-field appearance="legacy" class="w-100">
-                        <mat-label>Choose File</mat-label>
-                        <input matInput formControlName="companyLogo" (click)="uploadImg($event)" #img>
-                    </mat-form-field> -->
-
-                    <div class="upload-btn-wrapper">
-                        <!-- <input type="file" id="img" #img [(ngModel)]="selectedFile" formControlName="companyLogo">
-                        <button type="button" mat-raised-button class="btn-main" (click)="selectImg()">
-                            <i class="fa-solid fa-upload me-2"></i> 
-                            Upload File
-                        </button>
-                        <input type="file" (change)="uploadImg($event)"> -->
-
-                        <!-- {{companyRegistrationForm.controls['companyLogo'].value}} -->
-                    </div>
-                </div>
+                </mat-form-field>
+            </div>
+            <div class="">
+                <mat-form-field appearance="legacy" class="w-100">
+                    <mat-label>About Us</mat-label>
+                    <textarea matInput placeholder="Enter About US" formControlName="aboutUs" maxlength="30"
+                        minlength="3"></textarea>
+                    <mat-error *ngIf="f['aboutUs'].hasError('required') || f['aboutUs'].hasError('touched')">
+                        About Us is Required
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
     </div>
