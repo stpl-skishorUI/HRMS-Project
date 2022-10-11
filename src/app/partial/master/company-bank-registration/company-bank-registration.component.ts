@@ -28,7 +28,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
   sendObj = { organizationId: 0, CompanyId: 0, BankId: 0, BranchId: 0, AccountType: '' }
 
   constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder
-    , private handalErrorService: HandelErrorService, private commomApi: CommonApiService) { }
+    , private handalErrorService: HandelErrorService, private commonApi: CommonApiService) { }
 
   ngOnInit(): void {
     this.filterFormData();
@@ -85,7 +85,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
   // --------------------------------------------Dropdown Start-------------------------------------------
 
   getOrganizationNameDropdown() {
-    this.commomApi.getOrganization().subscribe({
+    this.commonApi.getOrganization().subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.organizationNameArray = res.responseData;
@@ -99,8 +99,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
 
   getCampanyNameDropdown() {
     let id = this.filterForm.value.organizationId;
-    this.api.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + id, false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
+    this.commonApi.getCompanies(id).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.campanyNameArray = res.responseData;
@@ -113,8 +112,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
   }
 
   getBankNameDropdown() {
-    this.api.setHttp('get', 'api/CommonDropDown/GetBankRegistration', false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
+    this.commonApi.getBanks().subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.bankNameArray = res.responseData;
@@ -128,13 +126,12 @@ export class CompanyBankRegistrationComponent implements OnInit {
 
   getBranchNameDropdown() {
     let id = this.filterForm.value.bankId;
-    this.api.setHttp('get', 'api/CommonDropDown/GetBankBranchRegistration?BankId=' + id, false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
-      next: (res: any) => {
+    this.commonApi.getBranchesByBankId(id).subscribe({
+      next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.branchNameArray = res.responseData;
         }
-      },
+      }),
       error: (error: any) => {
         console.log("Error is", error);
       }
@@ -150,17 +147,17 @@ export class CompanyBankRegistrationComponent implements OnInit {
 
   clearForm(id: string) {
     if (id == 'organization') {
-      this.filterForm.controls['bankId'].setValue('');
-      this.filterForm.controls['branchId'].setValue('');
-      this.filterForm.controls['accountType'].setValue('');
+      this.filterForm.controls['bankId'].reset();
+      this.filterForm.controls['branchId'].reset();
+      this.filterForm.controls['accountType'].reset();
     } else if (id == 'company') {
-      this.filterForm.controls['bankId'].setValue('');
-      this.filterForm.controls['branchId'].setValue('');
-      this.filterForm.controls['accountType'].setValue('');
+      this.filterForm.controls['bankId'].reset();
+      this.filterForm.controls['branchId'].reset();
+      this.filterForm.controls['accountType'].reset();
     } else if (id == 'bank') {
-      this.filterForm.controls['accountType'].setValue('');
+      this.filterForm.controls['accountType'].reset();
     } else if (id == 'branch') {
-      this.filterForm.controls['accountType'].setValue('');
+      this.filterForm.controls['accountType'].reset();
     }
   }
 
