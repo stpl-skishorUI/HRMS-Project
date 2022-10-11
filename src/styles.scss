@@ -130,20 +130,20 @@ body {
 }
 .upload-image{
   position: relative;
-  overflow: hidden;
+  // overflow: hidden;
   display: inline-block;
 }
 .upload-image img{
   width: 100%;
   height: 140px;
-  border-radius: 50%;
+  // border-radius: 50%;
   object-fit: contain;
   object-position: middle;
 }
 .upload-image .btn{
   position: absolute;
-  bottom: 5px;
-  right: 12px;
+  top: -9px;
+  right: -9px;
   background: #eee;
   border-radius: 50%;
   padding: 0;
@@ -151,6 +151,7 @@ body {
   width: 28px !important;
   line-height: 27px;
   font-size: 0.85rem;
+  z-index: 999;
   cursor: pointer;
 }
 .upload-image .btn:hover{
@@ -158,11 +159,13 @@ body {
 }
 .upload-image input[type=file] {
   position: absolute;
-  right: 7px;
-  bottom: 6px;
+  top:-9px;
+  right: -9px;
+  // bottom: 6px;
   opacity: 0;
   width: 24px;
   height: 24px;
+  z-index: 999;
 }
 // .mat-dialog-container {
 //   overflow: scroll;
