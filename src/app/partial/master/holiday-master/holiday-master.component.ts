@@ -59,7 +59,7 @@ export class HolidayMasterComponent implements OnInit {
   }
 
   getCompanyDrop(){
-    this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=1', true, false, false, 'baseURL');
+    this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=0', true, false, false, 'baseURL');
     this.subscription = this.apiService.getHttp().subscribe({
       next: (resp: any) => {
         console.log("getAll getCompanyDrop:", resp);

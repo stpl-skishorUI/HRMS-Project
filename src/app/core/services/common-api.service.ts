@@ -14,7 +14,7 @@ export class CommonApiService {
       this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=1', true, false, false, 'baseURL');
       this.apiService.getHttp().subscribe({
         next: (res: any) => {
-          if (res.statusCode === "200") {
+          if (res.statusCode == "200") {
             obj.next(res);
           }
           else{
