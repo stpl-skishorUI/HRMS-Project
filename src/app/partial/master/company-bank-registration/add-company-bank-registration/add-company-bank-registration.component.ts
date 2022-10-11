@@ -149,7 +149,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
       this.api.getHttp().subscribe({
         next: ((res: any) => {
           if(res.statusCode == '200'){
-             this.dialogRef.close();          
+             this.dialogRef.close('yes');          
             this.snackBar.open(res.statusMessage ,'ok',{
               horizontalPosition: 'right',
               verticalPosition: 'top'

@@ -34,7 +34,6 @@ export class CompanyBankRegistrationComponent implements OnInit {
     this.filterFormData();
     this.getOrganizationNameDropdown();
     this.getBankNameDropdown();
-    // this.getBranchNameDropdown();
     this.bindTableData()
   }
   openDialog(editObj?: any) {
@@ -42,10 +41,8 @@ export class CompanyBankRegistrationComponent implements OnInit {
       width: '40%',
       data: editObj, disableClose: true
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      this.bindTableData();
-      // console.log(`Dialog result: ${result}`);
+      result == 'yes' ? this.bindTableData() : '';
     });
   }
 
@@ -88,17 +85,6 @@ export class CompanyBankRegistrationComponent implements OnInit {
   // --------------------------------------------Dropdown Start-------------------------------------------
 
   getOrganizationNameDropdown() {
-    // this.api.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
-    // this.api.getHttp().subscribe({
-    //   next: ((res: any) => {
-    //     if (res.statusCode == '200' && res.responseData.length) {
-    //       this.organizationNameArray = res.responseData;
-    //     }
-    //   }),
-    //   error: (error: any) => {
-    //     console.log("Error is", error);
-    //   }
-    // })
     this.commomApi.getOrganization().subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
@@ -109,13 +95,10 @@ export class CompanyBankRegistrationComponent implements OnInit {
         console.log("Error is", error);
       }
     })
-
   }
 
   getCampanyNameDropdown() {
     let id = this.filterForm.value.organizationId;
-    console.log(id);
-
     this.api.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
@@ -165,7 +148,6 @@ export class CompanyBankRegistrationComponent implements OnInit {
 
   // --------------------------------------------Dropdown End-------------------------------------------
 
-
   clearForm(id: string) {
     if (id == 'organization') {
       this.filterForm.controls['bankId'].setValue('');
@@ -182,9 +164,6 @@ export class CompanyBankRegistrationComponent implements OnInit {
     }
   }
 
-
-
-
   FilterFormSubmit() {
     let obj = this.filterForm.value;
     this.sendObj.organizationId = obj.organizationId;
@@ -195,9 +174,8 @@ export class CompanyBankRegistrationComponent implements OnInit {
     this.currentPage = 0
     this.bindTableData();
   }
-
-
 }
+
 const ELEMENT_DATA: PeriodicElement[] = [
   { sr_no: 1, LeaveType_Name: '', Half_Day: '', Branch_Name: '', Account_No: '', },
 ];
@@ -207,5 +185,4 @@ export interface PeriodicElement {
   Half_Day: any;
   Branch_Name: any;
   Account_No: any;
-
 }
