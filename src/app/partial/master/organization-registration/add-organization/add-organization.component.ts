@@ -14,21 +14,15 @@ export class AddOrganizationComponent implements OnInit {
   editFlag: boolean = false;
   data1: any;
   fileURl: any;
-  // imageURL:string="../../../../../assets/images/user.jpg";
   imageURL: any;
-  // @ViewChild('img') img!: ElementRef;
   img: any;
   constructor(private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
-
-  ngOnInit(): void {
-    // this.imageURL ? this.data?.orgLogo : "/assets/images/user.jpg";
-    // console.log("Image Loaded", this.data);
-    this.formData();
+  @Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
+ ngOnInit(): void {
+   this.formData();
   }
-
-  formData() {
-    // console.log(" form valuee selectedd:",this.data1 );
+  //***************************Form Field************************************ */
+formData() {
     this.data ? this.editFlag = true : ''
     this.OrganizationRegForm = this.fb.group({
       "createdBy": 0,
@@ -47,6 +41,7 @@ export class AddOrganizationComponent implements OnInit {
     });
     this.imageURL = this.editFlag? this.data1.orgLogo : "/assets/images/user.jpg";
   }
+//***************************Form Field************************************ */
 //********************for Validation Handle*************************/
  get f(){
   return this.OrganizationRegForm.controls;
@@ -58,13 +53,11 @@ export class AddOrganizationComponent implements OnInit {
 
   uploadImg(event: any) {
     let finalValue = event.target.value;
-    // console.log(" file selected:", finalValue);
-    let extension = event.target.value.split('.')[1];
+   let extension = event.target.value.split('.')[1];
     extension = extension.toLowerCase();
     if (extension == 'jpg' || extension == 'png') {
       const file = event.target.files[0];
-      // console.log(event);
-      if (file.size > 1000000) {
+    if (file.size > 1000000) {
         this.snackbar.open('Upload another Image', 'Ok');
         this.img.nativeElement.value = '';
         return
@@ -78,13 +71,11 @@ export class AddOrganizationComponent implements OnInit {
     }
     let formData = new FormData();
     formData.append('FolderName', 'D');
-    formData.append('DocumentType', 'png,jpg');//set default extension if you required
+    formData.append('DocumentType', 'png,jpg,jpeg');//set default extension if you required
     formData.append('UploadDocPath', this.OrganizationRegForm.value.orgLogo);
-    // console.log(this.formData);
     this.service.setHttp('post', 'HRMS/DocumentMaster/UploadFile', false, formData, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        // console.log("*********************", res);
         this.imageURL = res.responseData;
         if (res.statusCode == 200) {
           // this.imageURL = res.responseData;
@@ -98,16 +89,13 @@ export class AddOrganizationComponent implements OnInit {
   onSubmit() {
     let data = this.OrganizationRegForm.value;
       data.orgLogo = this.imageURL;
-    // data.orgLogo = this.imageURL;
-    // console.log(data);
     if (!this.editFlag) {
       this.service.setHttp('post', 'HRMS/Orgnization/SaveOrg', false, data, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == '200') {
             this.snackbar.open(res.statusMessage, 'ok');
-            // this.bindTable();
-          }
+           }
         }
       })
     }
