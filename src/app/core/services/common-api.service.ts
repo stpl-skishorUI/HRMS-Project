@@ -16,8 +16,19 @@ export class CommonApiService {
     return new Observable((obj) => {
       this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=1', false, false, false, 'baseURL');
       this.apiService.getHttp().subscribe({
-        next: (res: any) => { if (res.statusCode == "200") { obj.next(res); } else { obj.error(res); } },
-        error: (e: any) => { obj.error(e) }
+        next: (res: any) => {
+          if (res.statusCode == "200") {
+            obj.next(res);
+          }
+          else{
+            obj.error(res);
+          }
+        },
+        error: (error: any) => {
+          console.log("Error is :",error );
+        }
+        // next: (res: any) => { if (res.statusCode == "200") { obj.next(res); } else { obj.error(res); } },
+        // error: (e: any) => { obj.error(e) }
       });
     });
   }
