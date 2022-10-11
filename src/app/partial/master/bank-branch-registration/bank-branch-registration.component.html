@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <button mat-raised-button (click)="onSearch()">
+                        <button mat-raised-button type="button" (click)="onSearch()">
                             <mat-icon>search</mat-icon>Search
                         </button>
                     </div>
@@ -115,7 +115,7 @@
                                         <!-- <mat-option>Bank Of India</mat-option>
                                     <mat-option>State Of India</mat-option> -->
                                     </mat-select>
-                                    <mat-error *ngIf="fc['bankId'].hasError('required')"> Please Select Bank Name</mat-error>
+                                    <mat-error *ngIf="fc['bankId'].hasError('required')"> Please select bank Name</mat-error> 
                                 </mat-form-field>
                                 <ng-container *ngIf="!editFlag">
                                     <button mat-icon-button type="button" (click)="openDialog()">
