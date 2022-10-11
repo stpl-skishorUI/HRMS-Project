@@ -44,7 +44,7 @@ export class HolidayMasterComponent implements OnInit {
       pagesize: new FormControl(10),
       holidaytype: new FormControl(' '),
       year: new FormControl(2022),
-      comapanyId: new FormControl(1),
+      comapanyId: new FormControl(0),
     });
   }
 
@@ -80,7 +80,7 @@ export class HolidayMasterComponent implements OnInit {
 
   getAllHoliday(){
     let formData = this.searchForm.value;
-    this.apiService.setHttp('get', 'api/HolidayMaster/GetAllHolidayByPagination?pageno='+(this.pageIndex+1)+'&pagesize=10&holidaytype='+formData.holidaytype+'&year='+formData.year+'&comapanyId='+formData.comapanyId, true, false, false, 'baseURL');
+    this.apiService.setHttp('get', 'api/HolidayMaster/GetAllHolidayByPagination?pageno='+(this.pageIndex+1)+'&pagesize=10&holidaytype='+formData.holidaytype+'&year='+formData.year+'&comapanyId='+(formData.comapanyId), true, false, false, 'baseURL');
     // GetAllHolidayByPagination?pageno=1&pagesize=10&holidaytype=Compulsory&year=2022&comapanyId=1
     this.subscription = this.apiService.getHttp().subscribe({
       next: (resp: any) => {
