@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
 import { AddBankBranchRegistrationComponent } from './add-bank-branch-registration/add-bank-branch-registration.component';
 
 @Component({
@@ -24,7 +25,7 @@ export class BankBranchRegistrationComponent implements OnInit {
  
   @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
 
-  constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar) { }
+  constructor(private commonApi : CommonApiService,public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar) { }
   ngOnInit(): void {
     this.bindTable();
     this.bankNameDropDown();
@@ -93,7 +94,9 @@ export class BankBranchRegistrationComponent implements OnInit {
   onSearch() {
     let id = this.filterForm.value.id;
     let text = this.filterForm.value.branch;
-    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAll?searchtxt=' + text + '&BankId=' + id, false, false, false, 'baseURL');
+    // HRMS/BankBranchRegistration/GetAll?searchtxt=&BankId=1
+    // HRMS/BankBranchRegistration/GetAllBankBranchByPagination?searchtxt=Ravet&BankId=2
+    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?searchtxt=' + text + '&BankId=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
         console.log(res);
@@ -111,11 +114,10 @@ export class BankBranchRegistrationComponent implements OnInit {
   }
 
   //----------------------------- Dropdown Starts-------------------------------------//
-  bankNameDropDown() {
-    this.api.setHttp('get', 'api/CommonDropDown/GetBankRegistration', false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
+  bankNameDropDown(){
+    this.commonApi.getBanks().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.bankNames = res.responseData : this.bankNames = [];
+        res.statusCode == 200 && res.responseData.length ? this.bankNames = res.responseData : this.bankNames = [];
       }, error: (error: any) => {
         console.log("Error is : ", error);
       }
@@ -134,7 +136,6 @@ export class BankBranchRegistrationComponent implements OnInit {
   onSubmit(clear:any) { 
   let branchName = this.fc['branchName'].value;
     if (!branchName.replace(/\s/g, '').length) { //string length is 0
-      console.log('string only contains whitespace (ie. spaces, tabs or line breaks)');
       return;
     }
     else{
@@ -147,8 +148,6 @@ export class BankBranchRegistrationComponent implements OnInit {
           console.log("Error is : ", error);
         }
       })
-      
     }
-    
   }
 }
