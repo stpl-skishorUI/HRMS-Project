@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CompanyRegistrationComponent implements OnInit {
   companyFilterForm !: FormGroup;
   displayedColumns: string[] = ['srno', 'companyLogo', 'companyName', 'emailId', 'address', 'action'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new Array;
   totalCount: number = 0;
   currentPage: number = 0;
   pageSize: number = 10;
@@ -61,8 +61,9 @@ export class CompanyRegistrationComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      result == 'Yes' ? this.getTableData() : '';
       // console.log(`Dialog result: ${result}`);
-      this.getTableData();
+    
     });
   }
   // ---------------------------------------- Mat Dialog Box ---------------------------------------- //
@@ -119,14 +120,4 @@ export class CompanyRegistrationComponent implements OnInit {
   }
 
 }
-export interface PeriodicElement {
-  srno: number;
-  company_logo: string;
-  company_name: string;
-  email: string;
-  address: string;
-  action: any;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { srno: 1, company_logo: 'Hydrogen', company_name: 'shaurya', email: 'abs@gmail.com', address: 'Pune', action: '' }
-];
+

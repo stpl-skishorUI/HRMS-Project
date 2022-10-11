@@ -39,7 +39,11 @@
                                 {{org.name}}
                             </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="f['organizationId'].hasError('required') || f['organizationId'].hasError('touched')">
+                            Organization Registration Is Required.
+                        </mat-error>
                     </mat-form-field>
+                   
                 </div>
 
 
@@ -144,7 +148,8 @@
             <button mat-raised-button class="btn-outline-main" mat-dialog-close>
                 Cancel
             </button>
-            <button type="submit" mat-raised-button class="btn-main" [disabled]="companyRegistrationForm.invalid">
+            <button type="submit" mat-raised-button class="btn-main" >
+                <!-- [disabled]="companyRegistrationForm.invalid" -->
                 {{editFlag ? 'Update':'Submit'}}
             </button>
         </div>

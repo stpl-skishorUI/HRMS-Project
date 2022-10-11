@@ -37,53 +37,21 @@ export class AddOrganizationComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": false,
       id: this.editFlag ? this.data1.id : 0,
-      orgName: this.editFlag ? this.data1.orgName : ["",Validators.required],
-      contactNo: this.editFlag ? this.data1.contactNo : ["",[Validators.required,Validators.pattern("^[6-9]{1}[0-9]{9}$")]],
-      address: this.editFlag ? this.data1.address : ["",Validators.required],
-      website: this.editFlag ? this.data1.website : ["",Validators.required],
-      emailId: this.editFlag ? this.data1.emailId : ["",[Validators.required,Validators.pattern("[a-z0-9]+@[a-z]+\.[a-z]{2,3}")]],
-      orgLogo: this.editFlag ? this.data1.orgLogo :  ["",Validators.required],
-      aboutUs: this.editFlag ? this.data1.aboutUs : ["",Validators.required],
+      orgName: [this.editFlag ? this.data1.orgName : '', Validators.required],
+      contactNo:[ this.editFlag ? this.data1.contactNo : '',[Validators.required,Validators.pattern("^[6-9]{1}[0-9]{9}$")]],
+      address:[this.editFlag ? this.data1.address : '',Validators.required],
+      website: [this.editFlag ? this.data1.website : '',Validators.required],
+      emailId: [this.editFlag ? this.data1.emailId : '',[Validators.required,Validators.email]],
+      orgLogo:[ this.editFlag ? this.data1.orgLogo : ''],
+      aboutUs:[ this.editFlag ? this.data1.aboutUs : '',Validators.required],
     });
     this.imageURL = this.editFlag? this.data1.orgLogo : "/assets/images/user.jpg";
   }
 //********************for Validation Handle*************************/
-  public hasError = (controlName: string, errorName: string) => {
-    return this.OrganizationRegForm.controls[controlName].hasError(errorName);
-  }
-  //************************Start Submit Logic Here**********************/
-  onSubmit() {
-    let data = this.OrganizationRegForm.value;
-      data.orgLogo = this.imageURL;
-    // data.orgLogo = this.imageURL;
-    console.log(data);
-    if (!this.editFlag) {
-      this.service.setHttp('post', 'HRMS/Orgnization/SaveOrg', false, data, false, 'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == '200') {
-            this.snackbar.open(res.statusMessage, 'ok');
-            // this.bindTable();
-          }
-        }
-      })
-    }
-    else {
-      this.editFlag = true;
-      this.service.setHttp('put', 'HRMS/Orgnization/UpdateOrg', false, data, false, 'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == '200') {
-            this.snackbar.open(res.statusMessage, 'ok');
-            this.imageURL = res.orgLogo;
-          }
-        }
-      })
-    }
-  }
-  //************************End Submit Logic Here**********************/
-
-  //***************************Start Upload Img*******************************/
+ get f(){
+  return this.OrganizationRegForm.controls;
+ }
+//***************************Start Upload Img*******************************/
   selectImg() {
     this.img.nativeElement.click();
   }
@@ -126,4 +94,35 @@ export class AddOrganizationComponent implements OnInit {
     })
   }
   //*************************End Upload Img*************************************** */
+  //************************Start Submit Logic Here**********************/
+  onSubmit() {
+    let data = this.OrganizationRegForm.value;
+      data.orgLogo = this.imageURL;
+    // data.orgLogo = this.imageURL;
+    console.log(data);
+    if (!this.editFlag) {
+      this.service.setHttp('post', 'HRMS/Orgnization/SaveOrg', false, data, false, 'baseURL');
+      this.service.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == '200') {
+            this.snackbar.open(res.statusMessage, 'ok');
+            // this.bindTable();
+          }
+        }
+      })
+    }
+    else {
+      this.editFlag = true;
+      this.service.setHttp('put', 'HRMS/Orgnization/UpdateOrg', false, data, false, 'baseURL');
+      this.service.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == '200') {
+            this.snackbar.open(res.statusMessage, 'ok');
+            this.imageURL = res.orgLogo;
+          }
+        }
+      })
+    }
+  }
+  //************************End Submit Logic Here**********************/
 }

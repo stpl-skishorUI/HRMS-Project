@@ -41,13 +41,13 @@ export class DepartmentRegistrationComponent implements OnInit {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '50%',
       data: data,
+      hasBackdrop:false
     });
 
     console.log(data);
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
-      this.displayData();
       dialogRef.close();
     });
   }
@@ -77,7 +77,7 @@ export class DepartmentRegistrationComponent implements OnInit {
     });
   }
 
-  //------------------------------------------------------- Company-------------------------------------------------------------------
+  //------------------------------------------------------------------------------ Company-------------------------------------------------------------------//
   getCompanyData() {
     this.service.setHttp('get','api/CommonDropDown/GetCompany',
       false,false,false,'baseURL' );
