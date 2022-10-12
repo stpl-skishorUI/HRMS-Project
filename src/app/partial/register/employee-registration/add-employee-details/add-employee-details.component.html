@@ -5,12 +5,12 @@
 </div>
 <div class="row">
     <div class="form-container">
-        <form [formGroup]="empRegistraion" (ngSubmit)="submit(empRegistraion.value)">
+        <form [formGroup]="empRegistration" (ngSubmit)="submit(empRegistration.value)">
         <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
             {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
         </button> -->
         <mat-stepper [linear]="isLinear" #stepper>
-            <mat-step [stepControl]="empRegistraion">
+            <mat-step [stepControl]="empRegistration">
 
                 <ng-template matStepLabel>Personal Details</ng-template>
                 <!-- <mat-form-field appearance="fill">
@@ -20,7 +20,7 @@
                 </mat-form-field> -->
                 <div class="col-sm-12 mt-3">
                     <div class="upload-image">
-                        <img src="assets/images/user.jpg">
+                        <img src="assets/images/user.jpg" formControlName="profilePhoto">
                         <button class="btn"><i class="fa-solid fa-plus"></i></button>
                         <input type="file" name="myfile" />
                     </div>
@@ -101,8 +101,7 @@
                             <div class="mb-0">
                                 <mat-radio-group aria-label="Select an option" formControlName="gender">
                                     <mat-label>Gender</mat-label>
-                                    <mat-radio-button value="1">Option 1</mat-radio-button>
-                                    <mat-radio-button value="2">Option 2</mat-radio-button>
+                                    <mat-radio-button [value]="gen.id" *ngFor="let gen of genderArr">{{gen.name}}</mat-radio-button>
                                   </mat-radio-group>
                                   
                             </div>
@@ -112,9 +111,7 @@
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Education</mat-label>
                                     <mat-select formControlName="education">
-                                        <mat-option>Undergradute</mat-option>
-                                        <mat-option>Graduate</mat-option>
-                                        <mat-option>Post Graduate</mat-option>
+                                        <mat-option [value]="edu.id" *ngFor="let edu of educations">{{edu.name}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -170,7 +167,7 @@
                     <button mat-raised-button matStepperNext class="btn-main">Next</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="empRegistraion" label="Work Profile Details">
+            <mat-step [stepControl]="empRegistration" label="Work Profile Details">
                 <!-- <mat-form-field appearance="fill">
                     <mat-label>Address</mat-label>
                     <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
@@ -217,7 +214,7 @@
                 </div>
                
             </mat-step>
-            <mat-step [stepControl]="empRegistraion" label="Bank Details">
+            <mat-step [stepControl]="empRegistration" label="Bank Details">
                 <!-- <mat-form-field appearance="fill">
                     <mat-label>Address</mat-label>
                     <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
@@ -313,7 +310,7 @@
                     <button mat-raised-button matStepperNext class="btn-main">Next</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="empRegistraion" label="Documents Details">
+            <mat-step [stepControl]="empRegistration" label="Documents Details">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="mb-0">
