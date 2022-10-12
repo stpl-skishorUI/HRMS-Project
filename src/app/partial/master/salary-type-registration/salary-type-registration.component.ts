@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 @Component({
   selector: 'app-salary-type-registration',
   templateUrl: './salary-type-registration.component.html',
@@ -21,7 +22,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   companyDropDownArray = new Array();
   salaryTypeSearch = ''
   companyTypeSearch = 0;
-  constructor(public dialog: MatDialog, private service: CallApiService, private snack: MatSnackBar, private fb: FormBuilder, private commonApi: CommonApiService, private handalErrorSer: HandelErrorService) { }
+  constructor(public dialog: MatDialog, private service: CallApiService, private snack: MatSnackBar, private fb: FormBuilder, private commonApi: CommonApiService, private handalErrorSer: HandelErrorService,public validationPattern:ValidationPatternService) { }
 
   ngOnInit(): void {
     this.getAllTableData();
@@ -46,8 +47,6 @@ export class SalaryTypeRegistrationComponent implements OnInit {
     });
  dialogRef.afterClosed().subscribe(result => {
       result == 'Yes' ? this.getAllTableData() :'';
-      
-      // console.log(`Dialog result: ${result}`);
     });
   }
   //--------------------------------------------------------------Dialogue Module Form Ends-----------------------------
@@ -127,7 +126,6 @@ export class SalaryTypeRegistrationComponent implements OnInit {
 const ELEMENT_DATA: PeriodicElement[] = [
   { sr_no: 1, Company_Name: '', Salary_Component: '', IsPercentage: '', Value: '', action: '' },
 ];
-
 export interface PeriodicElement {
   sr_no: number;
   Company_Name: any;
@@ -136,4 +134,3 @@ export interface PeriodicElement {
   Value: any;
   action: any;
 }
-// http://hrmssvr.erpguru.in/HRMS/SalaryType/GetAllSalaryTypePagination?pageno=1&pagesize=10&Salary_Component=gross&CompanyId=5
