@@ -58,7 +58,7 @@ export class OrganizationRegistrationComponent implements OnInit {
           this.dataSource = [];
         }
       }, error: (error: any) => {
-        console.log("Error : ", error);
+        // console.log("Error : ", error);
         this.error.handelError(error.statusCode);
       }
     })
@@ -80,7 +80,7 @@ export class OrganizationRegistrationComponent implements OnInit {
         this.getTableData();
       }
     }, error: (error: any) => {
-      console.log("Error : ", error);
+      // console.log("Error : ", error);
       this.error.handelError(error.statusCode);
     }
     })
