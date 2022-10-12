@@ -76,7 +76,6 @@ export class CompanyBankRegistrationComponent implements OnInit {
       }),
       error: (error: any) => {
         this.handalErrorService.handelError(error.status);
-        console.log("Error is", error);
       }
     })
   }
@@ -91,10 +90,10 @@ export class CompanyBankRegistrationComponent implements OnInit {
         if (res.statusCode == '200' && res.responseData.length) {
           this.organizationNameArray = res.responseData;
         }
-      }),
-      error: (error: any) => {
-        console.log("Error is", error);
-      }
+      })
+      // error: (error: any) => {
+      //   this.handalErrorService.handelError(error.status);
+      // }
     })
   }
 
@@ -105,10 +104,10 @@ export class CompanyBankRegistrationComponent implements OnInit {
         if (res.statusCode == '200' && res.responseData.length) {
           this.campanyNameArray = res.responseData;
         }
-      }),
-      error: (error: any) => {
-        console.log("Error is", error);
-      }
+      })
+      // error: (error: any) => {
+      //   console.log("Error is", error);
+      // }
     })
   }
 
@@ -118,10 +117,10 @@ export class CompanyBankRegistrationComponent implements OnInit {
         if (res.statusCode == '200' && res.responseData.length) {
           this.bankNameArray = res.responseData;
         }
-      }),
-      error: (error: any) => {
-        console.log("Error is", error);
-      }
+      })
+      // error: (error: any) => {
+      //   this.handalErrorService.handelError(error.status);
+      // }
     })
   }
 
@@ -132,10 +131,10 @@ export class CompanyBankRegistrationComponent implements OnInit {
         if (res.statusCode == '200' && res.responseData.length) {
           this.branchNameArray = res.responseData;
         }
-      }),
-      error: (error: any) => {
-        console.log("Error is", error);
-      }
+      })
+      // error: (error: any) => {
+      //   this.handalErrorService.handelError(error.status);
+      // }
     })
   }
 

@@ -37,10 +37,10 @@ export class AddOrganizationComponent implements OnInit {
       address: [this.editFlag ? this.data1.address : '', Validators.required],
       website: [this.editFlag ? this.data1.website : '', Validators.required],
       emailId: [this.editFlag ? this.data1.emailId : '', [Validators.required, Validators.email]],
-      orgLogo: [this.editFlag ? this.data1.orgLogo : ''],
+      orgLogo: [this.editFlag ? this.data1.orgLogo : '',Validators.required],
       aboutUs: [this.editFlag ? this.data1.aboutUs : '', Validators.required],
     });
-    this.imageURL = this.editFlag ? this.data1.orgLogo : "/assets/images/user.jpg";
+    this.imageURL = this.editFlag ? this.data1.orgLogo : "/assets/images/user.jpg";//if no img add then default img set 
   }
   //***************************Form Field************************************ */
   //********************for Validation Handle*************************/
@@ -83,7 +83,7 @@ export class AddOrganizationComponent implements OnInit {
           this.snackbar.open(res.statusMessage, 'Ok');
           }
       }, error: (error: any) => {
-        console.log("Error : ", error);
+        // console.log("Error : ", error);
         this.error.handelError(error.statusCode);
       }
     })
@@ -104,7 +104,7 @@ export class AddOrganizationComponent implements OnInit {
           }
         },
          error: (error: any) => {
-          console.log("Error : ", error);
+          // console.log("Error : ", error);
           this.error.handelError(error.statusCode);
         }
       })
@@ -122,7 +122,7 @@ export class AddOrganizationComponent implements OnInit {
           }
         },
         error: (error: any) => {
-          console.log("Error : ", error);
+          // console.log("Error : ", error);
           this.error.handelError(error.statusCode);
         }
       })

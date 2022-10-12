@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
@@ -64,6 +64,7 @@ export class BankBranchRegistrationComponent implements OnInit {
       }
     })
   }
+
   bindTable() {
     this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&BankId=0', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
@@ -85,8 +86,6 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.editObj = data;
     this.bankNameDropDown();
     this.defaultForm();
-    // this.fc['branchName'].setValidators([Validators.required]); // check
-    // this.fc['ifsC_Code'].setValidators([Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]); // check
   }
 
   defaultForm() {
@@ -105,8 +104,7 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddBankBranchRegistrationComponent, {
-      width: '70%',
-      height: '90%',
+      width: '50%',
       data: this.dataSource,
       disableClose: true
     });

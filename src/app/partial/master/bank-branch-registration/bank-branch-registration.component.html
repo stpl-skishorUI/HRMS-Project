@@ -8,6 +8,7 @@
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Bank Name</mat-label>
                                 <mat-select formControlName="id">
+                                    <mat-option value="{{0}}">All Banks</mat-option>
                                     <mat-option *ngFor="let name of bankNames" [value]="name.bankId">{{name.bankName}}</mat-option>
                                     <!-- <mat-option>Bank Of India</mat-option>
                                 <mat-option>State Of India</mat-option> -->
@@ -122,16 +123,15 @@
                                         <mat-icon>add</mat-icon>
                                     </button>
                                 </ng-container>
-
                             </div>
-                            <div class="">
+                            <div class="mb-0">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Branch Name</mat-label>
                                     <input matInput placeholder="Branch Name" formControlName="branchName">
                                     <mat-error *ngIf="fc['branchName'].hasError('required')"> Please Enter Branch Name</mat-error> 
                                 </mat-form-field>
                             </div>
-                            <div class="">
+                            <div class="mb-0">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>IFSC Code</mat-label>
                                     <input matInput placeholder="IFSC Code" formControlName="ifsC_Code">
@@ -139,7 +139,7 @@
                                     <mat-error *ngIf="fc['ifsC_Code'].hasError('pattern')"> Please Enter Valid IFSC Code</mat-error>
                                 </mat-form-field>
                             </div>
-                            <div>
+                            <div class="mb-0">
                                 <div class="d-flex justify-content-between">
                                     <button mat-raised-button class="btn-outline-main"
                                         (click)="onCancel(clear)" type="button">Cancel</button>

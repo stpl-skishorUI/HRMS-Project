@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddDocumentTypeRegistrationComponent } from './add-document-type-registration/add-document-type-registration.component';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 
 @Component({
   selector: 'app-document-type-registration',
@@ -15,7 +16,8 @@ export class DocumentTypeRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['sr_no', 'documentTypeName', 'action'];
   dataSource = ELEMENT_DATA;
 
-  constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snack: MatSnackBar) { }
+  constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, 
+    private snack: MatSnackBar, private handalErrorService: HandelErrorService) { }
 
   filterForm!: FormGroup; 
   pageSize = 10;
@@ -44,7 +46,6 @@ export class DocumentTypeRegistrationComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
       this.displayData();
     });
   }
@@ -56,7 +57,6 @@ export class DocumentTypeRegistrationComponent implements OnInit {
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          // console.log(res);
           this.dataSource = res.responseData;
           this.filterForm.reset();
           this.totalCount = res.responseData1.pageCount;
@@ -64,6 +64,8 @@ export class DocumentTypeRegistrationComponent implements OnInit {
         else{
           this.dataSource = [];
         }
+      },error: (error: any) => {
+        this.handalErrorService.handelError(error.status);
       }
     })
   }
@@ -92,6 +94,9 @@ export class DocumentTypeRegistrationComponent implements OnInit {
           });
           this.displayData();
         }
+      },
+      error: (error: any) => {
+        this.handalErrorService.handelError(error.status);
       }
     })
   }
