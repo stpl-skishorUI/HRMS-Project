@@ -21,9 +21,9 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <!-- {{filterleaveTypeForm.value?true:false}} -->
+                        <!-- {{f['leaveType'].value || f['companytype'].value? true:false}} -->
                         <div class="col-sm-auto">
-                            <button mat-raised-button type="submit" [disabled]="!filterleaveTypeForm.touched">Search</button>
+                            <button mat-raised-button type="submit" [disabled]=" !f['leaveType'].value && !f['companytype'].value">Search</button>
                         </div>
                     </div>
                     </form>
@@ -86,7 +86,7 @@
             </div>
 
             <ng-container *ngIf="tableRespnse?.length != ''">
-                <mat-paginator [length]="length" [pageSize]="pageSize" (page)="paginationEvent($event)">
+                <mat-paginator [length]="length" [pageSize]="pageSize" (page)="paginationEvent($event)" showFirstLastButtons>
                 </mat-paginator>
                 </ng-container>
         </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { AddDepartmentComponent } from './add-department/add-department.component';
@@ -91,8 +91,6 @@ export class DepartmentRegistrationComponent implements OnInit {
 
   //--------------------------------------------------------------------------Paginator--------------------------------------------------------------------------//
   pageChanged(event: any) {
-    console.log(event);
-
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
     this.displayData();

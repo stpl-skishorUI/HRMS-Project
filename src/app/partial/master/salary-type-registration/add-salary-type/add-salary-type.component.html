@@ -20,7 +20,7 @@
             <div class="mb-2">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Salary Component</mat-label>
-                    <input matInput placeholder="Enter Salary Type" formControlName="salary_Component" (keypress)="validationPattern.removeSpaceAtBegining($event)">
+                    <input matInput placeholder="Enter Salary Type" formControlName="salary_Component" (key)="validationPattern.removeSpaceAtBegining($event)">
                     <mat-error *ngIf="salaryForm.controls['salary_Component'].hasError('required')">
                         Salary Component Is Required.
                     </mat-error>
@@ -48,7 +48,7 @@
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Component Value</mat-label>
                                 <input type="text" matInput placeholder="Enter Salary Type" formControlName="value"
-                                (keypress)="validationPattern.onlyDigits($event);validationPattern.noSpacesAtStart($event)">
+                                (keypress)="validationPattern.onlyDigits($event)">
                                 <mat-error *ngIf="salaryForm.controls['value'].hasError('required')">
                                     Value Is Required.
                                 </mat-error>

@@ -98,7 +98,7 @@
             </div>
 
             <ng-container *ngIf="bankRegiResponse?.length != ''">
-                <mat-paginator [length]="length" [pageSize]="pageSize" (page)="paginationEvent($event)">
+                <mat-paginator [length]="length" [pageSize]="pageSize" (page)="paginationEvent($event)" showFirstLastButtons>
                 </mat-paginator>
             </ng-container>
         </div>
