@@ -97,10 +97,12 @@ export class AddCompanyComponent implements OnInit {
     }else if(!formValue.aboutUs.replace(/\s/g, '').length){
       return;
     }else{
-    if (!this.editFlag) {  // remove
+
+    // if (!this.editFlag) {  // remove
       // if(formValue.companyLogo == ''){
       //   return;
       // }
+
       formValue.companyLogo = this.imgURL;
       this.service.setHttp(!this.editFlag ? 'post' : 'put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
@@ -116,26 +118,26 @@ export class AddCompanyComponent implements OnInit {
         }
       })
     }
-    else {
-      if (formValue.companyLogo == this.data.companyLogo) {
-        formValue.companyLogo = this.data.companyLogo;
-      } else {
-        formValue.companyLogo = this.imgURL;
-      }
-      this.service.setHttp('put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
-      this.service.getHttp().subscribe({
-        next: (res: any) => {
-          if (res.statusCode == 200) {
-            this.snackbar.open(res.statusMessage, 'Ok');
-            this.dialogRef.close('yes');
-          }
-        }, error: (error: any) => {
-          // console.log("Error : ", error);
-          this.error.handelError(error.statusCode);
-        }
-      })
-    }
-  }
+  //   else {
+  //     if (formValue.companyLogo == this.data.companyLogo) {
+  //       formValue.companyLogo = this.data.companyLogo;
+  //     } else {
+  //       formValue.companyLogo = this.imgURL;
+  //     }
+  //     this.service.setHttp('put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
+  //     this.service.getHttp().subscribe({
+  //       next: (res: any) => {
+  //         if (res.statusCode == 200) {
+  //           this.snackbar.open(res.statusMessage, 'Ok');
+  //           this.dialogRef.close('yes');
+  //         }
+  //       }, error: (error: any) => {
+  //         // console.log("Error : ", error);
+  //         this.error.handelError(error.statusCode);
+  //       }
+  //     })
+  //   }
+  // }
   }
   // ------------------------------------- Submit and Update ------------------------------------- //
 
