@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class AddBankBranchRegistrationComponent implements OnInit {
   currentPage : number = 0;
   totalCount : number = 0;
   pageSize : number = 10;
-  constructor(private fb: FormBuilder, private api: CallApiService, private mat: MatSnackBar,public validationPattern : ValidationPatternService) { }
+  constructor(private fb: FormBuilder, private api: CallApiService, private mat: MatSnackBar,public validationPattern : ValidationPatternService, private handleError : HandelErrorService) { }
   @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
   ngOnInit(): void {
     this.bindTable();
@@ -44,8 +45,11 @@ export class AddBankBranchRegistrationComponent implements OnInit {
     this.api.setHttp( 'get', 'api/BankRegistration/GetAllBankRegiByPagination?pageno='+(this.currentPage + 1)+'&pagesize=10', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.dataSource = res.responseData,this.totalCount = res.responseData1.pageCount) : this.dataSource = [];
-      }
+        res.statusCode == 200 ? (this.dataSource = res.responseData,this.totalCount = res.responseData1.pageCount) : (this.dataSource = [], this.handleError.handelError(res.statusCode));
+      },
+      error : (error:any)=>{
+        this.handleError.handelError(error.status); 
+      } 
     })
   }
 
@@ -80,7 +84,10 @@ export class AddBankBranchRegistrationComponent implements OnInit {
     this.api.setHttp( this.editFlag ? 'put' : 'post', 'api/BankRegistration', false, obj, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok',{duration:1000}), this.bindTable(), this.editFlag = false,this.formGroupDirective.resetForm(), this.defaultForm()) :'';
+        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok',{duration:1000}), this.bindTable(), this.editFlag = false,this.formGroupDirective.resetForm(), this.defaultForm()) : this.handleError.handelError(res.statusCode);
+      },
+      error : (error:any)=>{
+        this.handleError.handelError(error.status); 
       }
     })
   }
