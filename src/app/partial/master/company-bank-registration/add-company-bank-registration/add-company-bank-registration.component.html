@@ -77,7 +77,7 @@
                     <div class="mb-3">
                         <mat-form-field appearance="legacy" class="w-100">
                             <mat-label>Account No</mat-label>
-                            <input type="tel" matInput placeholder="Exp.123456789123" formControlName="accountNo">
+                            <input type="tel" matInput placeholder="Exp.123456789123" formControlName="accountNo" (keypress)="validationPattern.onlyDigits($event)">
                             <mat-error *ngIf="formFiledControl['accountNo'].hasError('required') || 
                             formFiledControl['accountNo'].hasError('touched')">Account No Is Required</mat-error>
                             <mat-error *ngIf="formFiledControl['accountNo'].hasError('pattern')|| 

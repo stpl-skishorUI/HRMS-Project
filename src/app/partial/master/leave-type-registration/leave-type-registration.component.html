@@ -15,14 +15,15 @@
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>All Company</mat-label>
                                 <mat-select formControlName="companytype" >
-                                    <mat-option value="">All Company</mat-option>
+                                    <mat-option value="0">All Company</mat-option>
                                     <mat-option *ngFor="let data of companyTypeResp"[value]="data.companyId" >{{data.name}}</mat-option>
                                     
                                 </mat-select>
                             </mat-form-field>
                         </div>
+                        <!-- {{filterleaveTypeForm.value?true:false}} -->
                         <div class="col-sm-auto">
-                            <button mat-raised-button>Search</button>
+                            <button mat-raised-button type="submit" [disabled]="!filterleaveTypeForm.touched">Search</button>
                         </div>
                     </div>
                     </form>

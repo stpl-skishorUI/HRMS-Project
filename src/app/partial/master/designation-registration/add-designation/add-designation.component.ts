@@ -4,6 +4,8 @@ import { CallApiService } from 'src/app/core/services/call-api.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { CommonApiService } from 'src/app/core/services/common-api.service';
+
 @Component({
   selector: 'app-add-designation',
   templateUrl: './add-designation.component.html',
@@ -15,10 +17,9 @@ export class AddDesignationComponent implements OnInit {
   departmentData: any[] = [];
   editFlag: boolean = false;
 
-
   constructor(private formBuilder: FormBuilder, private service: CallApiService, private snack: MatSnackBar,
     public dialogRef: MatDialogRef<AddDesignationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private commomApi:CommonApiService) { }
 
   ngOnInit(): void {
     this.formData();
@@ -47,38 +48,37 @@ export class AddDesignationComponent implements OnInit {
   }
 
   //-----------------------------------Drop-Down------------------------------------------//
-  getCompanyDropdown() {
-    // let orgId=this.designationForm.value.organizationId;
-    this.service.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=0', false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200 && res.responseData.length) {
+  getCompanyDropdown() {   
+    let orgId=this.designationForm.value.organizationId;
+    this.commomApi.getCompanies(orgId).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.companyData = res.responseData;
           this.editFlag ? this.getDepartmentDropdown() : '';
         }
-      }, error: (error: any) => {
-        console.log("Error : ", error);
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
       }
     })
   }
+  
   getDepartmentDropdown() {
-    let comId = this.designationForm.value.companyId;
-    this.service.setHttp('get', 'api/CommonDropDown/GetDepartment?CompanyId=' + comId, false, false, false,
-      'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200 && res.responseData.length) {
+    let comId = this.designationForm.value.companyId;   
+    this.commomApi.getDeptByCompanyId(comId).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.departmentData = res.responseData;
         }
-      }, error: (error: any) => {
-        console.log("Error : ", error);
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
       }
     })
   }
   //-----------------------------------Drop-Down------------------------------------------//
 
-  //-----------------------------------Patch Value------------------------------------------//
+  //-----------------------------------Patch Value----------------------------------------//
   onEdit(obj: any) {
     this.editFlag = true;
     this.designationForm.patchValue({
@@ -91,7 +91,7 @@ export class AddDesignationComponent implements OnInit {
     })
     this.getCompanyDropdown();
   }
-  //-----------------------------------Patch Value------------------------------------------//
+  //-----------------------------------Patch Value--------------------------------------//
   //-----------------------------------Submit------------------------------------------//
   OnSubmit() {
     if(this.designationForm.valid){
@@ -114,41 +114,24 @@ export class AddDesignationComponent implements OnInit {
           }
         ]
       }
-      if (this.editFlag) {
-        this.service.setHttp('put', 'HRMS/Designation', false, obj, false,
+     
+        this.service.setHttp(this.editFlag?'put':'post', 'HRMS/Designation', false, obj, false,
           'baseURL');
         this.service.getHttp().subscribe({
           next: (res: any) => {
             if (res.statusCode == 200) {
               this.dialogRef.close();
-              this.snack.open(res.statusMessage, "ok");
-              
+              this.snack.open(res.statusMessage, "ok");              
             }
           }, error: (error: any) => {
             console.log("Error : ", error);
           }
-        })
-      }
-      else {
-        this.service.setHttp('post', 'HRMS/Designation', false, obj, false,
-          'baseURL');
-        this.service.getHttp().subscribe({
-          next: (res: any) => {
-            if (res.statusCode == 200) {
-              this.dialogRef.close();
-              this.snack.open(res.statusMessage, "ok");
-             
-            }
-          }, error: (error: any) => {
-            console.log("Error : ", error);
-          }
-        })
-      }
+        })   
     }
    
   }
   //-----------------------------------Submit------------------------------------------//
-  //-----------------------------------Clear-Form------------------------------------------//
+  //-----------------------------------Clear-Form--------------------------------------//
   clearForm(formControlName: any) {
     if (formControlName == 'companyId') {
       this.designationForm.controls['departmentId'].setValue('');

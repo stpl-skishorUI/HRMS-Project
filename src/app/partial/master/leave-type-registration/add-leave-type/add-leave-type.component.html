@@ -11,12 +11,12 @@
                     <mat-form-field appearance="legacy" class="w-100">
                         <mat-label>Leave Type Name</mat-label>
                         <input matInput placeholder="Leave Type Name" formControlName="leaveType">
-                        <mat-hint class="error"
-                            *ngIf="submitted && (addleaveTypeForm.get('leaveType')?.errors?.['required'])">
-                            Please Enter Leave Type Name</mat-hint>
-                        <mat-hint class="error"
-                            *ngIf="submitted && (addleaveTypeForm.get('leaveType')?.errors?.['pattern'])">
-                            Please Enter Valid Leave Type Name</mat-hint>
+                        <mat-error *ngIf="f['leaveType'].hasError('required')">
+                            Leave Type Name is required
+                        </mat-error>
+                        <mat-error *ngIf="f['leaveType'].hasError('pattern')">
+                            Please Enter Valid Leave Type Name
+                        </mat-error>
                     </mat-form-field>
 
                 </div>
@@ -28,9 +28,9 @@
                             <mat-option *ngFor="let data of companyTypeResp" [value]="data.companyId">{{data.name}}
                             </mat-option>
                         </mat-select>
-                        <mat-hint class="error"
-                            *ngIf="submitted && (addleaveTypeForm.get('compnytype')?.errors?.['required'])">
-                            Please Select Company</mat-hint>
+                        <mat-error *ngIf="f['compnytype'].hasError('required')">
+                            Please Select Company
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="mb-3">
@@ -44,7 +44,7 @@
         </div>
         <div class="row">
             <div class="d-flex justify-content-between">
-                <button mat-raised-button class="btn-outline-main">Cancel</button>
+                <button mat-raised-button class="btn-outline-main" type="button" (click)="clearForm()">Cancel</button>
                 <button type="submit" mat-raised-button class="btn-main">{{this.iseditbtn==false? 'Save':'Update'}}</button>
             </div>
         </div>

@@ -72,8 +72,10 @@ export class DepartmentRegistrationComponent implements OnInit {
           // console.log(res);
           this.dataSource = res.responseData;
           this.totalCount = res.responseData1.pageCount;
+        }else{
+          this.dataSource=[];
         }
-      },
+      }
     });
   }
 
@@ -91,7 +93,7 @@ export class DepartmentRegistrationComponent implements OnInit {
     });
   }
 
-  //--------------------------------------------------------------Paginator-----------------------------------------------------------------
+  //--------------------------------------------------------------------------Paginator--------------------------------------------------------------------------//
   pageChanged(event: any) {
     this.currentPage = event.pageIndex;
     this.displayData();

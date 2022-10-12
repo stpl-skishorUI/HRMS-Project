@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 
 @Component({
   selector: 'app-add-company-bank-registration',
@@ -21,7 +23,8 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
 
   constructor(private api: CallApiService, private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddCompanyBankRegistrationComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar, private commonApi: CommonApiService,
+    public validationPattern:ValidationPatternService) { }
 
   ngOnInit(): void {
     this.formData();
@@ -32,12 +35,12 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
 
   formData() {
     this.companyBankRegistrationForm = this.fb.group({
-      "organizationId":[this.data ? this.data.organizationId :'',Validators.required],
-      "companyId":[this.data ? this.data.companyId :'',Validators.required],
-      "bankId": [this.data ? this.data.bankId :'',Validators.required],
-      "branchId": [this.data ? this.data.branchId :'',Validators.required],
-      "accountNo": [this.data ? this.data.accountNo :'',[Validators.required,Validators.pattern("^[0-9]*$")]],
-      "accountType": [this.data ? this.data.accountType :'',Validators.required],
+      "organizationId": [this.data ? this.data.organizationId : '', Validators.required],
+      "companyId": [this.data ? this.data.companyId : '', Validators.required],
+      "bankId": [this.data ? this.data.bankId : '', Validators.required],
+      "branchId": [this.data ? this.data.branchId : '', Validators.required],
+      "accountNo": [this.data ? this.data.accountNo : '', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      "accountType": [this.data ? this.data.accountType : '', Validators.required],
       "id": this.data ? this.data.id : 0,
       "createdBy": 0,
       "modifiedBy": 0,
@@ -49,17 +52,16 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
     })
   }
 
-  get formFiledControl(){return this.companyBankRegistrationForm.controls}
+  get formFiledControl() { return this.companyBankRegistrationForm.controls}
 
   // --------------------------------------Dropdown Methods Start----------------------------------------
 
   getOrganizationNameDropdown() {
-    this.api.setHttp('get', 'api/CommonDropDown/GetOrganization', false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
+    this.commonApi.getOrganization().subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.organizationNameArray = res.responseData;
-          this.data ? this.getCampanyNameDropdown() :''
+          this.data ? this.getCampanyNameDropdown():''
         }
       }),
       error: (error: any) => {
@@ -67,11 +69,10 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
       }
     })
   }
-  
+
   getCampanyNameDropdown() {
     let id = this.companyBankRegistrationForm.value.organizationId;
-    this.api.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=' + id, false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
+    this.commonApi.getCompanies(id).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.campanyNameArray = res.responseData;
@@ -84,12 +85,11 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
   }
 
   getBankNameDropdown() {
-    this.api.setHttp('get', 'api/CommonDropDown/GetBankRegistration', false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
+    this.commonApi.getBanks().subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.bankNameArray = res.responseData;
-           this.data ? this.getBranchNameDropdown() :'';
+          this.data ? this.getBranchNameDropdown():''; 
         }
       }),
       error: (error: any) => {
@@ -100,9 +100,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
 
   getBranchNameDropdown() {
     let id = this.companyBankRegistrationForm.value.bankId;
-    // console.log(id);
-    this.api.setHttp('get', 'api/CommonDropDown/GetBankBranchRegistration?BankId='+id, false, false, false, 'baseURL');
-    this.api.getHttp().subscribe({
+    this.commonApi.getBranchesByBankId(id).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.branchNameArray = res.responseData;
@@ -117,27 +115,27 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
 
   // on Edit Profile Patch Value to the Form
   editProfile() {
-    this.editFlag = true; 
+    this.editFlag = true;
   }
 
-  clearForm(id:string) {
+  clearForm(id: string) {
     if (id == 'organization') {
       this.companyBankRegistrationForm.controls['bankId'].reset();
       this.companyBankRegistrationForm.controls['branchId'].reset();
       this.companyBankRegistrationForm.controls['accountType'].reset();
       this.companyBankRegistrationForm.controls['accountNo'].reset();
-    }else if (id == 'company') {
+    } else if (id == 'company') {
       this.companyBankRegistrationForm.controls['bankId'].reset();
       this.companyBankRegistrationForm.controls['branchId'].reset();
       this.companyBankRegistrationForm.controls['accountType'].reset();
       this.companyBankRegistrationForm.controls['accountNo'].reset();
-    }else if (id == 'bank') {
+    } else if (id == 'bank') {
       this.companyBankRegistrationForm.controls['accountNo'].reset();
       this.companyBankRegistrationForm.controls['accountType'].reset();
-    }else if (id == 'branch') {
+    } else if (id == 'branch') {
       this.companyBankRegistrationForm.controls['accountNo'].reset();
       this.companyBankRegistrationForm.controls['accountType'].reset();
-    }else if (id == 'accountType') {
+    } else if (id == 'accountType') {
       this.companyBankRegistrationForm.controls['accountNo'].reset();
     }
   }
@@ -145,20 +143,21 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
   // On Submit
   onSubmit() {
     let obj = this.companyBankRegistrationForm.value;
-      this.api.setHttp( this.editFlag ? 'put':'post',this.editFlag ?'api/CompanyBankAccount/UpdateCompanyBankAccountDetails':'api/CompanyBankAccount/AddCompanyBankAccountDetails', false, obj, false, 'baseURL');
-      this.api.getHttp().subscribe({
-        next: ((res: any) => {
-          if(res.statusCode == '200'){
-             this.dialogRef.close('yes');          
-            this.snackBar.open(res.statusMessage ,'ok',{
-              horizontalPosition: 'right',
-              verticalPosition: 'top'
-            });
-          }
-        }),
-        error: (error: any) => {
-          console.log("Error is", error);
+    this.api.setHttp(this.editFlag ? 'put' : 'post', this.editFlag ? 'api/CompanyBankAccount/UpdateCompanyBankAccountDetails' : 'api/CompanyBankAccount/AddCompanyBankAccountDetails', false, obj, false, 'baseURL');
+    this.api.getHttp().subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200') {
+          this.dialogRef.close('yes');
+          this.snackBar.open(res.statusMessage, 'ok', {
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            duration : 2000
+          });
         }
-      })
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
+      }
+    })
   }
 }

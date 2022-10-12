@@ -24,13 +24,16 @@ export class BankRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchBankRegiForm = this.fb.group({
-      searchbankName: ['']
+      searchbankName: [''],
+      companyId:['']
     })
     this.BankRegistrationData();
     this.bindCompanytype();
   }
 
   bankRegi(status: any, data?: any) {
+    console.log(data);
+    console.log(status);
     const bankData = {
       data: data,
       status: status
@@ -38,11 +41,14 @@ export class BankRegistrationComponent implements OnInit {
     const dialogRef = this.dialog.open(AddBankRegistrationComponent, {
       width: '30%',
       data: bankData,
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe(result => {
       result == 'u' ? this.BankRegistrationData() : result == 'i';
-      this.BankRegistrationData();
+      
+
+      // this.BankRegistrationData();
       // console.log(`Dialog result: ${result}`);
     });
   }
@@ -51,10 +57,8 @@ export class BankRegistrationComponent implements OnInit {
     this.callAPIService.setHttp('GET', 'api/CommonDropDown/GetCompany', false, false, false, 'baseURL');
     this.callAPIService.getHttp().subscribe({
       next: (resp: any) => {
-        console.log(resp);
         if (resp.statusCode == 200) {
           this.companyTypeResp = resp.responseData;
-          console.log(this.companyTypeResp);
         } else {
           // this.toastr.error(resp.statusMessage);
         }
@@ -68,8 +72,10 @@ export class BankRegistrationComponent implements OnInit {
     let obj = {
       "pageno": this.pageNo,
       "BankName": formData.searchbankName,
+      "CompanyId":formData.companyId|| 0,
     }
-    this.callAPIService.setHttp('GET', 'api/BankRegistration/GetAllBankRegiByPagination?pageno=' + obj.pageno + '&pagesize=10&BankName=' + obj.BankName, false, false, false, 'baseURL');
+    
+    this.callAPIService.setHttp('GET', 'api/BankRegistration/GetAllBankRegiByPagination?pageno='+obj.pageno+'&pagesize=10&BankName='+obj.BankName+'&CompanyId='+obj.CompanyId, false, false, false, 'baseURL');
     this.callAPIService.getHttp().subscribe((res: any) => {
       // console.log(res);
       if (res.statusCode == 200) {
@@ -78,7 +84,7 @@ export class BankRegistrationComponent implements OnInit {
         // console.log(this.bankRegiResponse);
       } else {
         this.bankRegiResponse = [];
-        alert(res.statusMessage);
+        // alert(res.statusMessage);
       }
     })
   }
