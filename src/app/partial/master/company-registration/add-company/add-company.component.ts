@@ -51,8 +51,7 @@ export class AddCompanyComponent implements OnInit {
       "companyName": [this.data ? this.data.companyName : '', Validators.required],
       "contactNo": [this.data ? this.data.contactNo : '', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}"), Validators.maxLength(10), Validators.minLength(10)]],
       "address": [this.data ? this.data.address : '', Validators.required],
-      // "website": [this.data ? this.data.website :  '', [Validators.required, Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
-      "website": [this.data ? this.data.website : '', [Validators.required, Validators.required]],
+      "website": [this.data ? this.data.website : '', [Validators.required, Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
       "emailId": [this.data ? this.data.emailId : '', [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@([a-z0-9.-]+[.])+[a-z]{2,5}$")]],
       "companyLogo": [this.data ? this.data.companyLogo : ''],
       "aboutUs": [this.data ? this.data.aboutUs : '', Validators.required]
@@ -83,27 +82,37 @@ export class AddCompanyComponent implements OnInit {
   // ------------------------------------- Submit and Update ------------------------------------- //
   onSubmit() {
     let formValue = this.companyRegistrationForm.value;
-    formValue.companyName = formValue.companyName.trim();
-    if (!formValue.companyName.replace(/\s/g, '').length){ 
-      return;
-    }else if(!formValue.address.replace(/\s/g, '').length){
-      return;
-    }else if( !formValue.website.replace(/\s/g, '').length){
-      return;
-    }else if(!formValue.emailId.replace(/\s/g, '').length){
-      return;
-    }else if(!formValue.address.replace(/\s/g, '').length){
-      return;
-    }else if(!formValue.aboutUs.replace(/\s/g, '').length){
-      return;
-    }else{
 
-    // if (!this.editFlag) {  // remove
+    formValue.companyName = formValue.companyName.trim();
+
+    if (!formValue.companyName.replace(/\s/g, '').length) {
+      return;
+    } else if (!formValue.address.replace(/\s/g, '').length) {
+      return;
+    } else if (!formValue.website.replace(/\s/g, '').length) {
+      return;
+    } else if (!formValue.emailId.replace(/\s/g, '').length) {
+      return;
+    } else if (!formValue.address.replace(/\s/g, '').length) {
+      return;
+    } else if (!formValue.aboutUs.replace(/\s/g, '').length) {
+      return;
+    } else {
+
+      // if (!this.editFlag) {  // remove
       // if(formValue.companyLogo == ''){
       //   return;
       // }
 
-      formValue.companyLogo = this.imgURL;
+      if (this.editFlag) {
+        if (formValue.companyLogo == this.data.companyLogo) {
+          formValue.companyLogo = this.data.companyLogo;
+        } else {
+          formValue.companyLogo = this.imgURL;
+        }
+      } else {
+        formValue.companyLogo = this.imgURL;
+      }
       this.service.setHttp(!this.editFlag ? 'post' : 'put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
@@ -118,26 +127,6 @@ export class AddCompanyComponent implements OnInit {
         }
       })
     }
-  //   else {
-  //     if (formValue.companyLogo == this.data.companyLogo) {
-  //       formValue.companyLogo = this.data.companyLogo;
-  //     } else {
-  //       formValue.companyLogo = this.imgURL;
-  //     }
-  //     this.service.setHttp('put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
-  //     this.service.getHttp().subscribe({
-  //       next: (res: any) => {
-  //         if (res.statusCode == 200) {
-  //           this.snackbar.open(res.statusMessage, 'Ok');
-  //           this.dialogRef.close('yes');
-  //         }
-  //       }, error: (error: any) => {
-  //         // console.log("Error : ", error);
-  //         this.error.handelError(error.statusCode);
-  //       }
-  //     })
-  //   }
-  // }
   }
   // ------------------------------------- Submit and Update ------------------------------------- //
 
@@ -184,7 +173,7 @@ export class AddCompanyComponent implements OnInit {
   onEdit() {
     this.editFlag = true;
     // this.editObj = this.data;
-    this.formField();
+    // this.formField();
 
     this.profileImg = this.data ? this.data.companyLogo : '';
   }
