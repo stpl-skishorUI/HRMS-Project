@@ -57,7 +57,8 @@ export class AddCompanyComponent implements OnInit {
       "companyName": [this.data ? this.data.companyName : '', Validators.required],
       "contactNo": [this.data ? this.data.contactNo : '', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}"), Validators.maxLength(10), Validators.minLength(10)]],
       "address": [this.data ? this.data.address : '', Validators.required],
-      "website": [this.data ? this.data.website :  '', [Validators.required, Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
+      // "website": [this.data ? this.data.website :  '', [Validators.required, Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
+      "website": [this.data ? this.data.website :  '', [Validators.required, Validators.required]],
       "emailId": [this.data ? this.data.emailId : '', [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@([a-z0-9.-]+[.])+[a-z]{2,5}$")]],
       "companyLogo": [this.data ? this.data.companyLogo:'', Validators.required],
       "aboutUs": [this.data ? this.data.aboutUs :  '', Validators.required]
@@ -97,9 +98,11 @@ export class AddCompanyComponent implements OnInit {
       this.service.setHttp(!this.editFlag ? 'post' : 'put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
+          if (res.statusCode == 200) {
           this.snackbar.open(res.statusMessage, 'Ok');
           // console.log(" all data saved success,", res);
           this.dialogRef.close('yes');
+          }
         }, error: (error: any) => {
           console.log("Error : ", error);
           this.error.handelError(error.statusCode);
@@ -115,8 +118,10 @@ export class AddCompanyComponent implements OnInit {
       this.service.setHttp('put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
+          if (res.statusCode == 200) {
           this.snackbar.open(res.statusMessage, 'Ok');
           this.dialogRef.close('yes');
+        }
         }, error: (error: any) => {
           console.log("Error : ", error);
           this.error.handelError(error.statusCode);
