@@ -5,6 +5,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { AddHolidayComponent } from './add-holiday/add-holiday.component';
 
 @Component({
@@ -28,7 +29,8 @@ export class HolidayMasterComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog,
-              private apiService: CallApiService) {}
+              private apiService: CallApiService,
+              private errorService: HandelErrorService) {}
 
   ngOnInit(): void {
     this.defaultSearchForm();
@@ -62,14 +64,15 @@ export class HolidayMasterComponent implements OnInit {
     this.apiService.setHttp('get', 'api/CommonDropDown/GetCompany?OrgId=0', true, false, false, 'baseURL');
     this.subscription = this.apiService.getHttp().subscribe({
       next: (resp: any) => {
-        console.log("getAll getCompanyDrop:", resp);
+        // console.log("getAll getCompanyDrop:", resp);
         if (resp.statusCode === "200" && resp.responseData !=null) {
           this.Companies = (resp.responseData);
-        } else {
-        if (resp.statusCode != "404") {
-          console.log("error is :", resp.statusCode);
-          }
-        }
+        } 
+        // else {
+        // if (resp.statusCode != "404") {
+        //   console.log("error is :", resp.statusCode);
+        //   }
+        // }
       },
       error: ((error: any) => { 
         console.log(" Error is :", error.status);
@@ -84,15 +87,16 @@ export class HolidayMasterComponent implements OnInit {
     // GetAllHolidayByPagination?pageno=1&pagesize=10&holidaytype=Compulsory&year=2022&comapanyId=1
     this.subscription = this.apiService.getHttp().subscribe({
       next: (resp: any) => {
-        console.log("getAll Holidays:", resp);
+        // console.log("getAll Holidays:", resp);
         if (resp.statusCode === "200" && resp.responseData !=null) {
           this.Allholidays = (resp.responseData);
           this.totalCount = resp.responseData1.pageCount;
-        } else {
-        if (resp.statusCode != "404") {
-          console.log("error is :", resp.statusCode);
-          }
+        }else{
+          this.errorService.handelError(resp.statusCode);
         }
+        // else if (resp.statusCode != "404") {
+        //   console.log("error is :", resp.statusCode);
+        //   }
         if(resp.responseData == null){
           this.Allholidays = null;
         }
@@ -128,7 +132,7 @@ export class HolidayMasterComponent implements OnInit {
   // }
 
   pageChanged(event: PageEvent){
-    console.log("event pagination",{ event });
+    // console.log("event pagination",{ event });
     this.pageSize = event.pageSize
     // this.searchForm.patchValue({
     //   pageno: event.pageIndex,
@@ -141,7 +145,7 @@ export class HolidayMasterComponent implements OnInit {
     this.apiService.setHttp('get', 'api/CommonDropDown/GetYear', true, false, false, 'baseURL');
     this.subscription = this.apiService.getHttp().subscribe({
       next: (resp: any)=> {
-        console.log("getAll year:", resp );
+        // console.log("getAll year:", resp );
         this.yearsDropdn = resp.responseData;
       },
       error: (error: any)=>{
@@ -154,7 +158,7 @@ export class HolidayMasterComponent implements OnInit {
     this.apiService.setHttp('get', 'api/CommonDropDown/GetHolidatMaster',true, false, false, 'baseURL');
     this.subscription = this.apiService.getHttp().subscribe({
       next: (resp: any) =>{
-        console.log("getHolidayType:", resp );
+        // console.log("getHolidayType:", resp );
         this.holiTypes =  resp.responseData;
       },
       error: (error: any)=>{
@@ -174,12 +178,15 @@ export class HolidayMasterComponent implements OnInit {
 
 
   addholiday() {
-    const dialogRef = this.dialog.open(AddHolidayComponent,{
-      data: {isInsert: true}
+    const dialogRef = this.dialog.open(AddHolidayComponent,
+      {
+      data: {isInsert: true},
+      disableClose: true
+      
     });
     dialogRef.afterClosed().subscribe(result => {
       
-      console.log(`Dialog result: ${result}`);
+      // console.log(`Dialog result: ${result}`);
       if(result == 'yes'){
         this.getAllHoliday();
       }
@@ -187,12 +194,14 @@ export class HolidayMasterComponent implements OnInit {
   }
 
   updateHoliday(i: any){
-  console.log("selected For update:", this.Allholidays[i]);
+  // console.log("selected For update:", this.Allholidays[i]);
     const dialogRef = this.dialog.open(AddHolidayComponent,{
-      data: { isInsert: false, selectedHoliday: this.Allholidays[i] }
+      data: { isInsert: false, selectedHoliday: this.Allholidays[i] },
+      disableClose: true
+
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      // console.log(`Dialog result: ${result}`);
       if(result == 'yes'){
         this.getAllHoliday();
       }

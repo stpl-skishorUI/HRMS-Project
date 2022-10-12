@@ -35,7 +35,7 @@
             <div class="mb-3">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Holiday Name</mat-label>
-                    <input matInput placeholder="Holiday Name" formControlName="holidayName" (keypress)="onlyAlphabets($event)">
+                    <input matInput placeholder="Holiday Name" formControlName="holidayName" (keypress)="validErrService.alphabetsWithSpaces($event)">
                     <mat-error *ngIf="isSubmitted && f['holidayName'].invalid" class="text-danger">
                         <span *ngIf="f['holidayName'].errors">holidayName required</span>
                     </mat-error>

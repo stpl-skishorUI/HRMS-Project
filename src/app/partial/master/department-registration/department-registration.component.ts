@@ -44,10 +44,8 @@ export class DepartmentRegistrationComponent implements OnInit {
       hasBackdrop:false
     });
 
-    console.log(data);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
       dialogRef.close();
     });
   }
@@ -59,17 +57,16 @@ export class DepartmentRegistrationComponent implements OnInit {
     'action',
   ];
   dataSource: any[] = [];
-  //--------------------------------------------------------------- Table Display ------------------------------------------------------------------------------------
+  //--------------------------------------------------------------- Table Display -----------------------------------------------------------------------------//
   displayData() {
     let formData = this.filterForm.value;
     this.service.setHttp(
       'get',
-      'HRMS/DepartmentType/GetAllDepartmentByPagination?pageno=' +(this.currentPage+1) +'&pagesize=10' +'&id=' +formData.companyId +'&searchText=' +formData.searchtext,false,
+      'HRMS/DepartmentType/GetAllDepartmentByPagination?pageno=' +(this.currentPage+1) +'&pagesize='+this.pageSize +'&id=' +formData.companyId +'&searchText=' +formData.searchtext,false,
       false,false,'baseURL' );
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == '200') {
-          // console.log(res);
           this.dataSource = res.responseData;
           this.totalCount = res.responseData1.pageCount;
         }else{
@@ -85,7 +82,6 @@ export class DepartmentRegistrationComponent implements OnInit {
       false,false,false,'baseURL' );
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        // console.log(res);
         if (res.statusCode == '200') {
           this.displayCompanyDropdown = res.responseData;
         }
@@ -95,7 +91,10 @@ export class DepartmentRegistrationComponent implements OnInit {
 
   //--------------------------------------------------------------------------Paginator--------------------------------------------------------------------------//
   pageChanged(event: any) {
+    console.log(event);
+
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.displayData();
   }
 }
