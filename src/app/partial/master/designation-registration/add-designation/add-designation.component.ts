@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 
 @Component({
   selector: 'app-add-designation',
@@ -19,7 +20,7 @@ export class AddDesignationComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private service: CallApiService, private snack: MatSnackBar,
     public dialogRef: MatDialogRef<AddDesignationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private commomApi:CommonApiService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private commomApi:CommonApiService, public validation : ValidationPatternService) { }
 
   ngOnInit(): void {
     this.formData();
@@ -57,8 +58,7 @@ export class AddDesignationComponent implements OnInit {
           this.editFlag ? this.getDepartmentDropdown() : '';
         }
       }),
-      error: (error: any) => {
-        console.log("Error is", error);
+      error: (error: any) => {              
       }
     })
   }
@@ -71,8 +71,7 @@ export class AddDesignationComponent implements OnInit {
           this.departmentData = res.responseData;
         }
       }),
-      error: (error: any) => {
-        console.log("Error is", error);
+      error: (error: any) => {       
       }
     })
   }
@@ -113,18 +112,16 @@ export class AddDesignationComponent implements OnInit {
             "isHalfDay": true
           }
         ]
-      }
-     
+      }     
         this.service.setHttp(this.editFlag?'put':'post', 'HRMS/Designation', false, obj, false,
           'baseURL');
         this.service.getHttp().subscribe({
           next: (res: any) => {
-            if (res.statusCode == 200) {
-              this.dialogRef.close();
-              this.snack.open(res.statusMessage, "ok");              
+            if (res.statusCode == 200) { 
+              this.dialogRef.close('Yes');
+              this.snack.open(res.statusMessage, "ok",{duration:3000});              
             }
-          }, error: (error: any) => {
-            console.log("Error : ", error);
+          }, error: (error: any) => {           
           }
         })   
     }

@@ -35,7 +35,7 @@
             <mat-form-field appearance="legacy" class="w-100">
                 <mat-label>Designation Name</mat-label>
                 <input matInput placeholder="Designation Name" formControlName="designationName"
-                    (selectionChange)="clearForm('designationName')">
+                    (selectionChange)="clearForm('designationName')" (keypress)="validation.onlyAlphabets($event)">
                 <mat-error
                     *ngIf="f['designationName'].hasError('required') || f['designationName'].hasError('touched')">
                     Designation Name is Required</mat-error>
