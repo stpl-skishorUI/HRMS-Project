@@ -83,7 +83,7 @@ export class AddOrganizationComponent implements OnInit {
           this.snackbar.open(res.statusMessage, 'Ok');
           }
       }, error: (error: any) => {
-        console.log("Error : ", error);
+        // console.log("Error : ", error);
         this.error.handelError(error.statusCode);
       }
     })
@@ -104,7 +104,7 @@ export class AddOrganizationComponent implements OnInit {
           }
         },
          error: (error: any) => {
-          console.log("Error : ", error);
+          // console.log("Error : ", error);
           this.error.handelError(error.statusCode);
         }
       })
@@ -122,7 +122,7 @@ export class AddOrganizationComponent implements OnInit {
           }
         },
         error: (error: any) => {
-          console.log("Error : ", error);
+          // console.log("Error : ", error);
           this.error.handelError(error.statusCode);
         }
       })
