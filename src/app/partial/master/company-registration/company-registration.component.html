@@ -22,7 +22,7 @@
                                     <mat-form-field appearance="legacy" class="w-100">
                                         <mat-label>Search By </mat-label>
                                         <input matInput placeholder="Name, Email, Address"
-                                            formControlName="filterSearchText">
+                                            formControlName="filterSearchText" (keypress)="validationService.alphabetsWithSpaces($event)">
                                     </mat-form-field>
                                 </div>
                             </div>

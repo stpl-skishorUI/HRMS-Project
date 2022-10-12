@@ -11,13 +11,13 @@
                     <mat-form-field appearance="legacy" class="w-100">
                         <mat-label>Bank Name</mat-label>
                         <input matInput placeholder="Bank Name" formControlName="bankName">
+                        <mat-error *ngIf="f['bankName'].hasError('required')">
+                            Bank name is Required
+                        </mat-error>
+                        <mat-error *ngIf="f['bankName'].hasError('pattern')">
+                            Please Enter Valid Bank Name
+                        </mat-error>
                     </mat-form-field>
-                    <mat-hint class="error"
-                        *ngIf="submitted && (addBankRegiForm.get('bankName')?.errors?.['required'])">
-                        Please Enter Bank Name</mat-hint>
-                    <mat-hint class="error" *ngIf="submitted && (addBankRegiForm.get('bankName')?.errors?.['pattern'])">
-                        Please Enter Valid Bank Name</mat-hint>
-
                 </div>
                 <div class="mb-2">
                     <mat-form-field appearance="legacy" class="w-100">
@@ -27,10 +27,10 @@
                             <mat-option *ngFor="let data of companyTypeResp" [value]="data.companyId">{{data.name}}
                             </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="f['companyId'].hasError('required')">
+                            Please Select Company
+                        </mat-error>
                     </mat-form-field>
-                    <mat-hint class="error"
-                        *ngIf="submitted && (addBankRegiForm.get('companyId')?.errors?.['required'])">
-                        Please Select Company</mat-hint>
                 </div>
             </div>
         </div>

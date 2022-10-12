@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 
 @Component({
   selector: 'app-company-registration',
@@ -24,7 +25,7 @@ export class CompanyRegistrationComponent implements OnInit {
 
   organizationArr = new Array;
   constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
-    private handleError : HandelErrorService, private commonApi : CommonApiService) { }
+    private handleError : HandelErrorService, private commonApi : CommonApiService, public validationService : ValidationPatternService) { }
 
   ngOnInit(): void {
     this.filterForm();

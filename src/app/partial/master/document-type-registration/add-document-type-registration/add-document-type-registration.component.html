@@ -9,7 +9,7 @@
                 <div class="mb-2">
                     <mat-form-field appearance="legacy" class="w-100">
                         <mat-label>Enter Document Type</mat-label>
-                        <input matInput placeholder="Enter Document Type" (keypress)="validationPattern.noSpacesAtStart($event)" formControlName="documentTypeName">
+                        <input matInput placeholder="Enter Document Type" formControlName="documentTypeName">
                         <mat-error *ngIf="formFiledControl['documentTypeName'].hasError('required') || formFiledControl['documentTypeName'].hasError('touched')">
                             *Document Type is Required
                         </mat-error>
