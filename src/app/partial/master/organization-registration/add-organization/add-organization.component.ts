@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 
 @Component({
   selector: 'app-add-organization',
@@ -18,7 +19,7 @@ export class AddOrganizationComponent implements OnInit {
   imageURL: any;
   img: any;
   constructor(private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
-    private error:HandelErrorService,@Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
+    private error:HandelErrorService,@Inject(MAT_DIALOG_DATA) public data: any,public validationservice:ValidationPatternService) { this.data1 = data }
   ngOnInit(): void {
     this.formData();
   }
@@ -93,7 +94,11 @@ export class AddOrganizationComponent implements OnInit {
   onSubmit() {
     let data = this.OrganizationRegForm.value;
     data.orgLogo = this.imageURL;
-    data.orgName=data.orgName.trim();//remove extra whitespace 
+    if(!data.orgName.replace(/\s/g, '').length || !data.address.replace(/\s/g, '').length || !data.aboutUs.replace(/\s/g, '').length){
+     return;
+    }
+    else{
+    data.orgName.trim();//remove extra whitespace 
     if (!this.editFlag) {
       this.service.setHttp('post', 'HRMS/Orgnization/SaveOrg', false, data, false, 'baseURL');
       this.service.getHttp().subscribe({
@@ -128,5 +133,6 @@ export class AddOrganizationComponent implements OnInit {
       })
     }
   }
+}
   //************************End Submit Logic Here**********************/
 }
