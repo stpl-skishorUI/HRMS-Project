@@ -54,7 +54,7 @@ export class AddCompanyComponent implements OnInit {
       // "website": [this.data ? this.data.website :  '', [Validators.required, Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
       "website": [this.data ? this.data.website : '', [Validators.required, Validators.required]],
       "emailId": [this.data ? this.data.emailId : '', [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@([a-z0-9.-]+[.])+[a-z]{2,5}$")]],
-      "companyLogo": [this.data ? this.data.companyLogo : '', Validators.required],
+      "companyLogo": [this.data ? this.data.companyLogo : ''],
       "aboutUs": [this.data ? this.data.aboutUs : '', Validators.required]
     })
   }
@@ -76,10 +76,7 @@ export class AddCompanyComponent implements OnInit {
           this.error.handelError(response.statusCode);
         }
       }
-    }), (error: any) => {
-      // console.log(error)
-      this.error.handelError(error.statusCode);
-    }
+    })
   }
   // ---------------------------------- Organization dropdown ---------------------------------- //
 
@@ -87,6 +84,19 @@ export class AddCompanyComponent implements OnInit {
   onSubmit() {
     let formValue = this.companyRegistrationForm.value;
     formValue.companyName = formValue.companyName.trim();
+    if (!formValue.companyName.replace(/\s/g, '').length){ 
+      return;
+    }else if(!formValue.address.replace(/\s/g, '').length){
+      return;
+    }else if( !formValue.website.replace(/\s/g, '').length){
+      return;
+    }else if(!formValue.emailId.replace(/\s/g, '').length){
+      return;
+    }else if(!formValue.address.replace(/\s/g, '').length){
+      return;
+    }else if(!formValue.aboutUs.replace(/\s/g, '').length){
+      return;
+    }else{
     if (!this.editFlag) {  // remove
       // if(formValue.companyLogo == ''){
       //   return;
@@ -125,6 +135,7 @@ export class AddCompanyComponent implements OnInit {
         }
       })
     }
+  }
   }
   // ------------------------------------- Submit and Update ------------------------------------- //
 
