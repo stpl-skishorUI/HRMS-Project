@@ -98,6 +98,7 @@ export class EmployeeRegistrationComponent implements OnInit {
         }
         else {
           this.dataSource = [];
+          // this.handalErrorService.handelError(res.statusCode);
         }
       },
       error: (error: any) => {
