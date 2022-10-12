@@ -2,6 +2,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
@@ -29,7 +30,8 @@ export class AddHolidayComponent implements OnInit {
               private commonAPIService: CommonApiService,
               private fb: FormBuilder,
               private errorService: HandelErrorService,
-              public validErrService: ValidationPatternService
+              public validErrService: ValidationPatternService,
+              private mat: MatSnackBar
 
     ) { }
 
@@ -58,29 +60,36 @@ export class AddHolidayComponent implements OnInit {
     })
   }
 
-  // patchHoildayData(){
-  //   this.addHolidayForm.patchValue({
-  //       "createdBy": 1,
-  //       "modifiedBy": 1,
-  //       "createdDate": new Date(),
-  //       "modifiedDate": this.data.selectedHoliday.modifiedDate,
-  //       "isDeleted": true,
-  //       "id": this.data.selectedHoliday.id,
-  //       "holidayName": this.data.selectedHoliday.holidayName,
-  //       "holidayType": this.data.selectedHoliday.holidayType,
-  //       "holidayDate": this.data.selectedHoliday.holidayDate
-  //   });
-  // }
-
-
   saveHolidayData(){
     this.isSubmitted = true;
-    // console.log(" All formData:", this.addHolidayForm.value );
     let formdata = this.addHolidayForm.value;
-    if(this.addHolidayForm.invalid){
-      return;
-    }
     let holiday = formdata.holidayName;
+    if(this.addHolidayForm.invalid || !holiday.replace(/\s/g, '').length ){
+      return;
+    }else{
+      holiday.trim();
+      this.apiService.setHttp(this.data.isInsert?'post':'put', this.data.isInsert? 'api/HolidayMaster/AddHoliday':'api/HolidayMaster/UpdateHoliday', true, formdata ,false, 'baseURL');
+      this.subscription =  this.apiService.getHttp().subscribe({
+        next: (resp: any)=> {
+          // console.log("Save/update  holiday :", resp );
+          if (resp.statusCode == "200") {
+            this.dialogRef.close('yes');
+          }
+          else{
+            if(resp.statusCode != "404"){
+                this.mat.open("data Already exist");
+            }else{
+              this.errorService.handelError(resp.statusCode);
+            }
+           
+          }
+        },
+        error: (error: any)=> {
+          // console.log(" Error is :", error);
+          this.errorService.handelError(error.statusCode)
+        }
+      });
+    }
     // if (!holiday.replace(/\s/g, '').length) { //string length is 0
     //   console.log('string only contains whitespace (ie. spaces, tabs or line breaks)');
     //   return;
@@ -90,22 +99,7 @@ export class AddHolidayComponent implements OnInit {
     //   //submit fuction call here /
       
     // }
-      this.apiService.setHttp(this.data.isInsert?'post':'put', this.data.isInsert? 'api/HolidayMaster/AddHoliday':'api/HolidayMaster/UpdateHoliday', true, formdata ,false, 'baseURL');
-      this.subscription =  this.apiService.getHttp().subscribe({
-        next: (resp: any)=> {
-          // console.log("Save/update  holiday :", resp );
-          if (resp.statusCode == "200") {
-            this.dialogRef.close('yes');
-          }
-          else{
-            this.errorService.handelError(resp.statusCode);
-          }
-        },
-        error: (error: any)=> {
-          // console.log(" Error is :", error);
-          this.errorService.handelError(error.statusCode)
-        }
-      })
+      
     // else if(!this.data.isInsert){
     //   this.apiService.setHttp('put', 'api/HolidayMaster/UpdateHoliday', true, formdata ,false, 'baseURL');
     //   this.subscription =  this.apiService.getHttp().subscribe({
@@ -124,20 +118,6 @@ export class AddHolidayComponent implements OnInit {
     // }
     
   }
-
-  // updateHoliday(){
-  //   let formData = this.addHolidayForm.value;
-  //   this.apiService.setHttp('put', 'api/HolidayMaster/UpdateHoliday', true, formData ,false, 'baseURL');
-  //   this.subscription =  this.apiService.getHttp().subscribe({
-  //     next: (resp: any)=> {
-  //       console.log("Updated holiday :", resp );
-  //       this.dialogRef.close();
-  //     },
-  //     error: (error: any)=> {
-  //       console.log(" Error is :", error);
-  //     }
-  //   })
-  // }
 
   getCompanyDrop(){
     this.commonAPIService.getCompanies(0).subscribe({

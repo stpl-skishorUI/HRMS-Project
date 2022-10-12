@@ -99,6 +99,13 @@ export class ValidationPatternService {
     return temp
   }
 
+
+  removeSpaceBeforeAndAfter(data: any){
+    let trimData;
+    trimData = data.trim();
+    return trimData;
+  }
+
   //Latest Added
 
   acceptedOnlyNumbers(event: any) {
