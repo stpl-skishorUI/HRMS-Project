@@ -38,7 +38,7 @@ export class AddOrganizationComponent implements OnInit {
       address: [this.editFlag ? this.data.address : '', Validators.required],
       website: [this.editFlag ? this.data.website : '', Validators.required],
       emailId: [this.editFlag ? this.data.emailId : '', [Validators.required, Validators.email]],
-      orgLogo: [this.editFlag ? this.data.orgLogo : '',Validators.required],
+      orgLogo: [this.editFlag ? this.data.orgLogo : ''],
       aboutUs: [this.editFlag ? this.data.aboutUs : '', Validators.required],
     });
     this.imageURL = this.editFlag ? this.data.orgLogo : "/assets/images/user.jpg";//if no img add then default img set 
