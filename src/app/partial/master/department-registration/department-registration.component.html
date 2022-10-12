@@ -9,22 +9,15 @@
                 <mat-form-field appearance="legacy" class="w-100">
                   <mat-label>All Company</mat-label>
                   <mat-select formControlName="companyId">
-                    <mat-option
-                      *ngFor="let companies of displayCompanyDropdown"
-                      value="{{ companies.companyId }}"
-                      >{{ companies.name }}</mat-option
-                    >
+                    <mat-option *ngFor="let companies of displayCompanyDropdown" value="{{ companies.companyId }}">{{
+                      companies.name }}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
               <div class="col-sm-3">
                 <mat-form-field appearance="legacy" class="w-100">
                   <mat-label>Department Name</mat-label>
-                  <input
-                    matInput
-                    placeholder="Search"
-                    formControlName="searchtext"
-                  />
+                  <input matInput placeholder="Search" formControlName="searchtext" />
                 </mat-form-field>
               </div>
               <div class="col-sm-auto">
@@ -45,7 +38,7 @@
     </div>
   </div>
   <div class="card-body p-2">
-    <div class="table-responsive">
+    <div class="table-responsive table-scollar">
       <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
         <ng-container matColumnDef="srno">
           <th mat-header-cell *matHeaderCellDef>Sr.No.</th>
@@ -87,47 +80,32 @@
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
+
       <div *ngIf="dataSource?.length==0">
         <div class="alert alert-danger text-center py-2">No Data Found..!</div>
+      </div>
     </div>
-  <ng-container *ngIf="dataSource?.length!=0">
-      <mat-paginator
-        [pageSizeOptions]="[10, 50, 100]"
-        [length]="totalCount"
-        [pageIndex]="currentPage"
-        (page)="pageChanged($event)"
-        showFirstLastButtons
-        aria-label="Select page of periodic elements"
-      >
+    <ng-container *ngIf="dataSource?.length!=0">
+      <mat-paginator [pageSizeOptions]="[10, 50, 100]" [length]="totalCount" [pageIndex]="currentPage"
+        (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic elements">
       </mat-paginator>
     </ng-container>
-    </div>
   </div>
 </div>
 
 <!-- Modal for add new organization -->
-<div
-  class="modal fade"
-  id="departmentregistrationmodal"
-  tabindex="-1"
-  aria-labelledby="departmentregistrationmodalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="departmentregistrationmodal" tabindex="-1"
+  aria-labelledby="departmentregistrationmodalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <p class="modal-title mb-0" id="departmentregistrationmodalLabel">
           Add New Department
         </p>
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -159,10 +137,7 @@
                                 <textarea class="form-control" placeholder="About Company" rows="3"></textarea>
                             </div> -->
               <div>
-                <select
-                  class="form-select mb-3"
-                  aria-label="Default select example"
-                >
+                <select class="form-select mb-3" aria-label="Default select example">
                   <option selected>Company</option>
                   <option value="1">One</option>
                   <option value="2">Two</option>
@@ -170,12 +145,7 @@
                 </select>
               </div>
               <div class="mb-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="exampleInputDept1"
-                  placeholder="Department Name"
-                />
+                <input type="text" class="form-control" id="exampleInputDept1" placeholder="Department Name" />
               </div>
             </div>
           </div>
@@ -184,11 +154,7 @@
       <div class="modal-footer">
         <div class="form-container w-100">
           <div class="d-flex justify-content-between">
-            <button
-              type="button"
-              class="btn btn-outline-main"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-outline-main" data-bs-dismiss="modal">
               Cancel
             </button>
             <button type="button" class="btn btn-main">Save</button>

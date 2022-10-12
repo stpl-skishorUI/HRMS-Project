@@ -50,7 +50,7 @@ export class DesignationRegistrationComponent implements OnInit {
     this.filtterOrgId = obj.filtterOrganization;
     this.filtterCompanyId = obj.filtterCompany;
     this.filtterDepartmentId = obj.filtterDepartment;
-    this.filtterDesignationText = obj.filtterDesignation;
+    this.filtterDesignationText = obj.filtterDesignation.trim();
 
     this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&oId=' + this.filtterOrgId + '&cId=' + this.filtterCompanyId + '&dId=' + this.filtterDepartmentId + '&searchText=' + this.filtterDesignationText, false, false, false,
       'baseURL');

@@ -19,7 +19,7 @@
                                     <mat-form-field appearance="legacy" class="w-100">
                                         <mat-label>Salary Component</mat-label>
                                         <input matInput placeholder="Search Salary Component"
-                                            formControlName="salary_Component" (keypress)="validationPattern.removeSpaceAtBegining($event)">
+                                            formControlName="salary_Component"(keypress)="validationPattern.alphabetsWithSpaces($event)">
                                     </mat-form-field>
                                 </div>
                             </div>
