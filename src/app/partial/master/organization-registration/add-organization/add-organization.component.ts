@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 
@@ -17,7 +17,7 @@ export class AddOrganizationComponent implements OnInit {
   imageURL: any;
   img: any;
   constructor(private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
+  @Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
   ngOnInit(): void {
     this.formData();
   }
@@ -80,6 +80,7 @@ export class AddOrganizationComponent implements OnInit {
         if (res.statusCode == 200) {
           // this.imageURL = res.responseData;
           this.snackbar.open(res.statusMessage, 'Ok');
+          
         }
       }
     })
@@ -89,12 +90,14 @@ export class AddOrganizationComponent implements OnInit {
   onSubmit() {
     let data = this.OrganizationRegForm.value;
     data.orgLogo = this.imageURL;
+    data.orgName=data.orgName.trim();//remove extra whitespace 
     if (!this.editFlag) {
       this.service.setHttp('post', 'HRMS/Orgnization/SaveOrg', false, data, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == '200') {
             this.snackbar.open(res.statusMessage, 'ok');
+            location.reload();//without click on refresh button add record
           }
         }
       })
@@ -107,6 +110,8 @@ export class AddOrganizationComponent implements OnInit {
           if (res.statusCode == '200') {
             this.snackbar.open(res.statusMessage, 'ok');
             this.imageURL = res.orgLogo;
+            // this.dialogRef.close('yes');
+            location.reload();
           }
         }
       })
