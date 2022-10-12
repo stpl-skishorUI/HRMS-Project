@@ -75,6 +75,9 @@ export class AddHolidayComponent implements OnInit {
     this.isSubmitted = true;
     console.log(" All formData:", this.addHolidayForm.value );
     let formdata = this.addHolidayForm.value;
+    if(this.addHolidayForm.invalid){
+      return;
+    }
     let holiday = formdata.holidayName;
     // if (!holiday.replace(/\s/g, '').length) { //string length is 0
     //   console.log('string only contains whitespace (ie. spaces, tabs or line breaks)');
@@ -91,7 +94,7 @@ export class AddHolidayComponent implements OnInit {
       this.subscription =  this.apiService.getHttp().subscribe({
         next: (resp: any)=> {
           console.log("Save  holiday :", resp );
-          this.dialogRef.close();
+          this.dialogRef.close('yes');
         },
         error: (error: any)=> {
           console.log(" Error is :", error);
@@ -102,7 +105,7 @@ export class AddHolidayComponent implements OnInit {
       this.subscription =  this.apiService.getHttp().subscribe({
         next: (resp: any)=> {
           console.log("Updated holiday :", resp );
-          this.dialogRef.close();
+          this.dialogRef.close('yes');
         },
         error: (error: any)=> {
           console.log(" Error is :", error);

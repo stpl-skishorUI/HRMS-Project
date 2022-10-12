@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
+import { CommonApiService } from 'src/app/core/services/common-api.service';
 @Component({
   selector: 'app-add-salary-type',
   templateUrl: './add-salary-type.component.html',
@@ -16,7 +19,7 @@ export class AddSalaryTypeComponent implements OnInit {
   editFlag: boolean = false;
 
 
-  constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar) { }
+  constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar, private handleError: HandelErrorService, private CommonMethod: CommonMethodsService, private commonApi: CommonApiService) { }
 
   ngOnInit(): void {
     this.getFormData();
@@ -27,16 +30,18 @@ export class AddSalaryTypeComponent implements OnInit {
   }
   //--------------------------------------------------------------- dropDown Starts---------------------------------------------------
   getCompanyNameDropdown() {
-    this.service.setHttp('get', 'api/CommonDropDown/GetCompany', false, false, false, 'baseURL');
-    this.service.getHttp().subscribe({
-      next: (res: any) => {
-        if (res.statusCode == 200) {
+    this.commonApi.getCompanies(0).subscribe({
+      next: ((res: any) => {
+        if (res.statusCode == '200' && res.responseData.length) {
           this.companyDropDownArray = res.responseData;
-          // console.log("comname", this.companyDropDownArray);
         }
+      }),
+      error: (error: any) => {
+        console.log("Error is", error);
       }
     })
   }
+
   //--------------------------------------------------------------- dropDown Ends---------------------------------------------------
 
   //--------------------------------------------------------------- Form Starts-----------------------------------------------------
@@ -50,24 +55,11 @@ export class AddSalaryTypeComponent implements OnInit {
       "id": this.data ? this.data.id : 0,
       companyId: [, Validators.required],
       salary_Component: ['', Validators.required],
-      isPercentage: ['', Validators.required],
-      value: [, [Validators.required, Validators.pattern("^[0-9]*$")]]
+      isPercentage: ['',Validators.required],
+      value: [,[Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]]
     })
 
   }
-
-  //-----------------------------------------//Accept  Only Numbers 0-9 in Valu Field---------------------------------------------
-  keyPressNumbers(event: any) {
-    var charCode = (event.which) ? event.which : event.keyCode;
-    if ((charCode < 48 || charCode > 57)) {
-      event.preventDefault();
-      return false;
-    } else {
-      return true;
-    }
-  }
-  //-----------------------------------------//Accept  Only Numbers 0-9 in Valu Field---------------------------------------------
-  
   //--------------------------------------------------------------- Form Submit starts------------------------------------------------------
   onSubmit() {
     if (this.salaryForm.valid) {
@@ -124,7 +116,7 @@ export class AddSalaryTypeComponent implements OnInit {
       companyId: +obj.companyId,
       salary_Component: obj.salary_Component,
       isPercentage: editObj.isPercentage ? 0 : 1,
-      value:+obj.value
+      value: +obj.value
     })
     this.getCompanyNameDropdown();
   }

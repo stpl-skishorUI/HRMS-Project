@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 
 @Component({
   selector: 'app-add-document-type-registration',
@@ -12,8 +13,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AddDocumentTypeRegistrationComponent implements OnInit {
   docTypeRegistrationForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private service: CallApiService, public dialog: MatDialog, public dialogRef: MatDialogRef<AddDocumentTypeRegistrationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private service: CallApiService,
+    public dialog: MatDialog, public dialogRef: MatDialogRef<AddDocumentTypeRegistrationComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar,
+    public validationPattern: ValidationPatternService) { }
 
   editFlag: boolean = false;
 
@@ -45,11 +48,9 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
     let docType = this.docTypeRegistrationForm.value.documentTypeName;
 
     if (!docType.replace(/\s/g, '').length) { //string length is 0
-      // console.log('string only contains whitespace (ie. spaces, tabs or line breaks)');
       return;
     }
     else {
-      console.log("String", docType.trim());
       //submit fuction call here /
       if (this.editFlag == false) {
         let obj = this.docTypeRegistrationForm.value;
@@ -70,7 +71,6 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
         })
       } else if (this.editFlag == true) {
         let obj1 = this.docTypeRegistrationForm.value;
-        console.log(obj1);
 
         let updateData = {
           "createdBy": 1,

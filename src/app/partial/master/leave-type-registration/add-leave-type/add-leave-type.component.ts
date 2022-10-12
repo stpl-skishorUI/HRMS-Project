@@ -35,6 +35,8 @@ export class AddLeaveTypeComponent implements OnInit {
     this.editData();
   }
 
+  get f() { return this.addleaveTypeForm.controls };
+
   bindCompanytype() {
     this.callAPIService.setHttp('GET', 'api/CommonDropDown/GetCompany', false, false, false, 'baseURL');
     this.callAPIService.getHttp().subscribe({
