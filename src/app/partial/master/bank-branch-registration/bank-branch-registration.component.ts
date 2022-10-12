@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 import { AddBankBranchRegistrationComponent } from './add-bank-branch-registration/add-bank-branch-registration.component';
 @Component({
@@ -25,7 +26,7 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   constructor(private commonApi: CommonApiService, public dialog: MatDialog, 
     private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar,
-    public validationPattern:ValidationPatternService) { }
+    public validationPattern:ValidationPatternService, private handleError : HandelErrorService) { }
   
   ngOnInit(): void {
     this.defaultForm();
@@ -58,9 +59,9 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?searchtxt=' + formValue?.branch + '&BankId=' + formValue?.id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 && res.responseData.length ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : this.dataSource = [];
+        res.statusCode == 200 && res.responseData.length ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : (this.dataSource = [],this.handleError.handelError(res.statusCode));
       }, error: (error: any) => {
-        console.log("Error is : ", error);
+        this.handleError.handelError(error.status);
       }
     })
   }
@@ -69,9 +70,9 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&BankId=0', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 && res.responseData.length ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : this.dataSource = [];
+        res.statusCode == 200 && res.responseData.length ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : (this.dataSource = [],this.handleError.handelError(res.statusCode));
       }, error: (error: any) => {
-        console.log("Error is : ", error);
+        this.handleError.handelError(error.status)
       }
     })
   }
@@ -135,9 +136,9 @@ export class BankBranchRegistrationComponent implements OnInit {
       this.api.setHttp(this.editFlag ? 'put' : 'post', 'HRMS/BankBranchRegistration', false, obj, false, 'baseURL');
       this.api.getHttp().subscribe({
         next: (res: any) => {
-          res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(), this.editFlag = false, clear.resetForm(), this.defaultForm()) : '';
+          res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok'), this.bindTable(), this.editFlag = false, clear.resetForm(), this.defaultForm()) : this.handleError.handelError(res.statusCode);
         }, error: (error: any) => {
-          console.log("Error is : ", error);
+          this.handleError.handelError(error.status)
         }
       })
     }

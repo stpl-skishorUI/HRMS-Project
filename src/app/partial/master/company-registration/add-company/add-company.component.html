@@ -7,13 +7,13 @@
         <div class="col-sm text-center mt-0">
             <div class="upload-image" *ngIf="!editFlag">
                 <img src="{{profileImg}}" class="img">
-                <button class="btn" ><i class="fa-solid fa-plus"></i></button>
+                <button class="btn"><i class="fa-solid fa-plus"></i></button>
                 <input type="file" name="myfile" formControlName="companyLogo" (change)="uploadImg($event)" #img />
             </div>
 
             <div class="upload-image" *ngIf="editFlag">
                 <img [src]="profileImg" class="img">
-                <button class="btn" >
+                <button class="btn">
                     <i class="fa-solid fa-plus"></i></button>
                 <input type="file" name="myfile" (change)="uploadImg($event)" />
             </div>
@@ -32,10 +32,11 @@
                                 {{org.name}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="f['organizationId'].hasError('required') || f['organizationId'].hasError('touched')">
+                        <mat-error
+                            *ngIf="f['organizationId'].hasError('required') || f['organizationId'].hasError('touched')">
                             Organization is Required.
                         </mat-error>
-                        
+
                     </mat-form-field>
                 </div>
                 <div class="mb-0">
@@ -55,7 +56,7 @@
                     <mat-form-field appearance="legacy" class="w-100">
                         <mat-label>Address</mat-label>
                         <textarea matInput placeholder="Enter Address" formControlName="address" maxlength="30"
-                            minlength="3" ></textarea>
+                            minlength="3"></textarea>
                         <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
                             Address is Required
                         </mat-error>
@@ -84,8 +85,7 @@
                     <mat-label>Company Name</mat-label>
                     <input matInput placeholder="Company Name" formControlName="companyName" maxlength="30"
                         minlength="3" (keypress)="validationService.alphabetsWithSpaces($event)">
-                    <mat-error
-                        *ngIf="f['companyName'].hasError('required') || f['companyName'].hasError('touched')">
+                    <mat-error *ngIf="f['companyName'].hasError('required') || f['companyName'].hasError('touched')">
                         Company Name is Required
                     </mat-error>
                 </mat-form-field>
@@ -119,8 +119,7 @@
             <button mat-raised-button class="btn-outline-main" mat-dialog-close>
                 Cancel
             </button>
-            <button type="submit" mat-raised-button class="btn-main"  [disabled]="companyRegistrationForm.invalid">
-               
+            <button type="submit" mat-raised-button class="btn-main" [disabled]="companyRegistrationForm.invalid">
                 {{editFlag ? 'Update':'Submit'}}
             </button>
         </div>

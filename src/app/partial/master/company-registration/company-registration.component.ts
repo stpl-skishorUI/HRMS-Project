@@ -25,7 +25,7 @@ export class CompanyRegistrationComponent implements OnInit {
 
   organizationArr = new Array;
   constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
-    private handleError : HandelErrorService, private commonApi : CommonApiService, public validationService : ValidationPatternService) { }
+    private handleError: HandelErrorService, private commonApi: CommonApiService, public validationService: ValidationPatternService) { }
 
   ngOnInit(): void {
     this.filterForm();
@@ -46,16 +46,16 @@ export class CompanyRegistrationComponent implements OnInit {
   getOrganizationData() {
     this.commonApi.getOrganization().subscribe({
       next: (response: any) => {
-        if(response.statusCode == 200){
+        if (response.statusCode == 200) {
           this.organizationArr = response.responseData;
-        }else{
+        } else {
           this.handleError.handelError(response.statusCode);
         }
       }
-    }),(error: any) => {
-      console.log(error)
-        this.handleError.handelError(error.statusCode);
-      }
+    }), (error: any) => {
+      // console.log("Error : ", error);
+      this.handleError.handelError(error.statusCode);
+    }
   }
   // ---------------------------------- Organization dropdown ---------------------------------- //
 
@@ -63,15 +63,15 @@ export class CompanyRegistrationComponent implements OnInit {
   dialogBox(obj?: any) {
     const dialogRef = this.dialog.open(AddCompanyComponent, {
       width: '40%',
-      height : '90%',
+      height: '90%',
       data: obj,
-      disableClose : true
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
       result == 'yes' ? this.getTableData() : '';
       // console.log(`Dialog result: ${result}`);
-    
+
     });
   }
   // ---------------------------------------- Mat Dialog Box ---------------------------------------- //
@@ -94,7 +94,7 @@ export class CompanyRegistrationComponent implements OnInit {
         }
       }, error: (error: any) => {
         this.handleError.handelError(error.status);
-        console.log("Error : ", error);
+        // console.log("Error : ", error);
       }
     })
   }
@@ -122,7 +122,7 @@ export class CompanyRegistrationComponent implements OnInit {
         }
       }, error: (error: any) => {
         this.handleError.handelError(error.status);
-        console.log("Error : ", error);
+        // console.log("Error : ", error);
       }
     })
   }

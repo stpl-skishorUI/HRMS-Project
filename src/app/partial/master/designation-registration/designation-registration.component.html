@@ -55,7 +55,8 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Designation Name</mat-label>
-                                    <input matInput placeholder="Designation Name" formControlName="filtterDesignation">
+                                    <input matInput placeholder="Designation Name" formControlName="filtterDesignation"
+                                    (keypress)="validation.alphabetsWithSpaces($event)">
                                 </mat-form-field>
                             </div>
                             <div class="col-sm">

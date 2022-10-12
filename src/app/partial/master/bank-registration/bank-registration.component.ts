@@ -32,8 +32,8 @@ export class BankRegistrationComponent implements OnInit {
   }
 
   bankRegi(status: any, data?: any) {
-    console.log(data);
-    console.log(status);
+    // console.log(data);
+    // console.log(status);
     const bankData = {
       data: data,
       status: status

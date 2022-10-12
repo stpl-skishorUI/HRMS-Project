@@ -104,6 +104,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
   // ----------------------------------------- Filter Record -------------------------------------------
   filterData() {
     this.docType = this.filterForm.value.documentTypeName;
+    this.currentPage = 0;
     this.displayData();
   }
   

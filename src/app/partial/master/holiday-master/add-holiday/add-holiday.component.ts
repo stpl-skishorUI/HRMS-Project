@@ -102,7 +102,7 @@ export class AddHolidayComponent implements OnInit {
           }
         },
         error: (error: any)=> {
-          console.log(" Error is :", error);
+          // console.log(" Error is :", error);
           this.errorService.handelError(error.statusCode)
         }
       })
@@ -145,9 +145,9 @@ export class AddHolidayComponent implements OnInit {
         // console.log("getCompanies data is :", resp)
         this.Companies = resp.responseData;
        },
-       error: (error: any)=>{
-        console.log(" Error is :", error);
-       }
+      //  error: (error: any)=>{
+      //   console.log(" Error is :", error);
+      //  }
     })
     
   }
