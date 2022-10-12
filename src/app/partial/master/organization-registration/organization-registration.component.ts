@@ -40,7 +40,7 @@ export class OrganizationRegistrationComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-      result == 'Yes' ? this.getTableData() : '';//when we click on * button but not add value then call getTableData()
+      result == 'Yes' ? this.getTableData() : '';//when we click on * button but not add value then didn't call getTableData()
     });
   }
   //***********End Dialog Box*******************/
