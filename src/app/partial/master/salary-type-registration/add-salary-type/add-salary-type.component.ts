@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 @Component({
   selector: 'app-add-salary-type',
   templateUrl: './add-salary-type.component.html',
@@ -17,9 +18,8 @@ export class AddSalaryTypeComponent implements OnInit {
   isPercentageArray = [{ id: 0, name: 'Yes' }, { id: 1, name: 'No' }];
   salaryForm!: FormGroup;
   editFlag: boolean = false;
-
-
-  constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar, private handleError: HandelErrorService, private CommonMethod: CommonMethodsService, private commonApi: CommonApiService) { }
+  
+  constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar, private handleError: HandelErrorService, private CommonMethod: CommonMethodsService, private commonApi: CommonApiService,public validationPattern:ValidationPatternService) { }
 
   ngOnInit(): void {
     this.getFormData();
@@ -77,7 +77,7 @@ export class AddSalaryTypeComponent implements OnInit {
         this.service.getHttp().subscribe({
           next: (res: any) => {
             if (res.statusCode == 200) {
-              this.dialogRef.close();
+              this.dialogRef.close('Yes');
               this.snack.open(res.statusMessage, "Ok", { duration: 3000 });
             }
           }, error: (error: any) => {
@@ -90,7 +90,7 @@ export class AddSalaryTypeComponent implements OnInit {
         this.service.getHttp().subscribe({
           next: (res: any) => {
             if (res.statusCode == 200) {
-              this.dialogRef.close();
+              this.dialogRef.close('Yes');
               this.snack.open(res.statusMessage, 'Ok', { duration: 3000 });
             }
           }, error: (error: any) => {

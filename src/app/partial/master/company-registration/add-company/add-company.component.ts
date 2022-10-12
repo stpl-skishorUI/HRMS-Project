@@ -7,34 +7,28 @@ import { CommonApiService } from 'src/app/core/services/common-api.service';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 import { AddSalaryTypeComponent } from '../../salary-type-registration/add-salary-type/add-salary-type.component';
-
 @Component({
   selector: 'app-add-company',
   templateUrl: './add-company.component.html',
   styleUrls: ['./add-company.component.scss']
 })
 export class AddCompanyComponent implements OnInit {
-
   companyRegistrationForm !: FormGroup;
   organizationArr = new Array();
   editFlag: boolean = false;
   imgURL: string = '';
-  img:any;
-  // fileURl: string = '';
-  // dataSource = new Array();
-  // selectedFile: any;
-  // editObj : any;
+  img: any;
 
   // @ViewChild('img') img!: ElementRef;
 
   profileImg: string = "../../../../../assets/images/user.jpg";
 
-  constructor(private fb: FormBuilder, private service: CallApiService, 
+  constructor(private fb: FormBuilder, private service: CallApiService,
     public dialogRef: MatDialogRef<AddSalaryTypeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private snackbar: MatSnackBar,
-    private commonApi:CommonApiService, private error:HandelErrorService,
-    public validationService : ValidationPatternService
-    ) { }
+    private commonApi: CommonApiService, private error: HandelErrorService,
+    public validationService: ValidationPatternService
+  ) { }
 
   ngOnInit(): void {
     this.formField();
@@ -58,10 +52,10 @@ export class AddCompanyComponent implements OnInit {
       "contactNo": [this.data ? this.data.contactNo : '', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}"), Validators.maxLength(10), Validators.minLength(10)]],
       "address": [this.data ? this.data.address : '', Validators.required],
       // "website": [this.data ? this.data.website :  '', [Validators.required, Validators.required, Validators.pattern("(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?")]],
-      "website": [this.data ? this.data.website :  '', [Validators.required, Validators.required]],
+      "website": [this.data ? this.data.website : '', [Validators.required, Validators.required]],
       "emailId": [this.data ? this.data.emailId : '', [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@([a-z0-9.-]+[.])+[a-z]{2,5}$")]],
-      "companyLogo": [this.data ? this.data.companyLogo:'', Validators.required],
-      "aboutUs": [this.data ? this.data.aboutUs :  '', Validators.required]
+      "companyLogo": [this.data ? this.data.companyLogo : '', Validators.required],
+      "aboutUs": [this.data ? this.data.aboutUs : '', Validators.required]
     })
   }
   // ---------------------------------------- Form Field ---------------------------------------- //
@@ -76,16 +70,16 @@ export class AddCompanyComponent implements OnInit {
   getOrganizationData() {
     this.commonApi.getOrganization().subscribe({
       next: (response: any) => {
-        if(response.statusCode == 200){
+        if (response.statusCode == 200) {
           this.organizationArr = response.responseData;
-        }else{
+        } else {
           this.error.handelError(response.statusCode);
         }
       }
-    }),(error: any) => {
-      console.log(error)
-        this.error.handelError(error.statusCode);
-      }
+    }), (error: any) => {
+      // console.log(error)
+      this.error.handelError(error.statusCode);
+    }
   }
   // ---------------------------------- Organization dropdown ---------------------------------- //
 
@@ -94,17 +88,20 @@ export class AddCompanyComponent implements OnInit {
     let formValue = this.companyRegistrationForm.value;
     formValue.companyName = formValue.companyName.trim();
     if (!this.editFlag) {  // remove
+      // if(formValue.companyLogo == ''){
+      //   return;
+      // }
       formValue.companyLogo = this.imgURL;
       this.service.setHttp(!this.editFlag ? 'post' : 'put', 'api/CompanyRegistration', false, formValue, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == 200) {
-          this.snackbar.open(res.statusMessage, 'Ok');
-          // console.log(" all data saved success,", res);
-          this.dialogRef.close('yes');
+            this.snackbar.open(res.statusMessage, 'Ok');
+            // console.log(" all data saved success,", res);
+            this.dialogRef.close('yes');
           }
         }, error: (error: any) => {
-          console.log("Error : ", error);
+          // console.log("Error : ", error);
           this.error.handelError(error.statusCode);
         }
       })
@@ -119,11 +116,11 @@ export class AddCompanyComponent implements OnInit {
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == 200) {
-          this.snackbar.open(res.statusMessage, 'Ok');
-          this.dialogRef.close('yes');
-        }
+            this.snackbar.open(res.statusMessage, 'Ok');
+            this.dialogRef.close('yes');
+          }
         }, error: (error: any) => {
-          console.log("Error : ", error);
+          // console.log("Error : ", error);
           this.error.handelError(error.statusCode);
         }
       })
@@ -163,7 +160,7 @@ export class AddCompanyComponent implements OnInit {
           this.snackbar.open(res.statusMessage, 'Ok');
         }
       }, error: (error: any) => {
-        console.log("Error : ", error);
+        // console.log("Error : ", error);
         this.error.handelError(error.statusCode);
       }
     })
@@ -175,20 +172,20 @@ export class AddCompanyComponent implements OnInit {
     this.editFlag = true;
     // this.editObj = this.data;
     this.formField();
-   
-    this.profileImg = this.data? this.data.companyLogo:'';
+
+    this.profileImg = this.data ? this.data.companyLogo : '';
   }
   // ------------------------------------- Edit Form ------------------------------------- //
 
   // ------------------------------- Clear form feild if Organization changed ------------------------------- //
   clearForm() {
-      this.companyRegistrationForm.controls['companyName'].setValue('');
-      this.companyRegistrationForm.controls['contactNo'].setValue('');
-      this.companyRegistrationForm.controls['address'].setValue('');
-      this.companyRegistrationForm.controls['website'].setValue('');
-      this.companyRegistrationForm.controls['emailId'].setValue('');
-      this.companyRegistrationForm.controls['companyLogo'].setValue('');
-      this.companyRegistrationForm.controls['aboutUs'].setValue('');
+    this.companyRegistrationForm.controls['companyName'].setValue('');
+    this.companyRegistrationForm.controls['contactNo'].setValue('');
+    this.companyRegistrationForm.controls['address'].setValue('');
+    this.companyRegistrationForm.controls['website'].setValue('');
+    this.companyRegistrationForm.controls['emailId'].setValue('');
+    this.companyRegistrationForm.controls['companyLogo'].setValue('');
+    this.companyRegistrationForm.controls['aboutUs'].setValue('');
   }
   // ------------------------------- Clear form feild if Organization changed ------------------------------- //
 }

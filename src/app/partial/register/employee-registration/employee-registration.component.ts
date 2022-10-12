@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { AddEmployeeDetailsComponent } from './add-employee-details/add-employee-details.component';
 
 
@@ -26,15 +27,12 @@ export class EmployeeRegistrationComponent implements OnInit {
   name: string = '';
 
   constructor(private fb: FormBuilder, public dialog: MatDialog, private service: CallApiService,
-    private commonApi: CommonApiService) { }
+    private commonApi: CommonApiService, private handalErrorService: HandelErrorService) { }
 
   ngOnInit(): void {
     this.displayData();
     this.companyDropdown();
-    // this.departmentDropdown();
-    // this.designationDropdown();
     this.filterMethod();
-    // this.filterData();
   }
 
   filterMethod() {
@@ -51,13 +49,12 @@ export class EmployeeRegistrationComponent implements OnInit {
     this.commonApi.getCompanies(0).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          // console.log(res);
           this.companyDropdownArray = res.responseData;
         }
       }),
-      error: (error: any) => {
-        //       console.log("Error is", error);
-      }
+      // error: (error: any) => {
+      //   this.handalErrorService.handelError(error.status);
+      // }
     })
   }
   // ---------------------------------------- Department Dropdown ----------------------------------
@@ -66,13 +63,12 @@ export class EmployeeRegistrationComponent implements OnInit {
     this.commonApi.getDeptByCompanyId(companyId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          // console.log(res);
           this.departmentDropdownArray = res.responseData;
         }
       }),
-      error: (error: any) => {
-        //       console.log("Error is", error);
-      }
+      // error: (error: any) => {
+      //   this.handalErrorService.handelError(error.status);
+      // }
     })
   }
   // ---------------------------------------- Designation Dropdown ----------------------------------
@@ -82,13 +78,12 @@ export class EmployeeRegistrationComponent implements OnInit {
     this.commonApi.getDesigByDeptId(companyId, departmentId).subscribe({
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          // console.log(res);
           this.designationDropdownArray = res.responseData;
         }
       }),
-      error: (error: any) => {
-        //       console.log("Error is", error);
-      }
+      // error: (error: any) => {
+      //   this.handalErrorService.handelError(error.status);
+      // }
     })
   }
   // ---------------------------------------- Display Data / Pagination / FilterData -----------------
@@ -98,14 +93,16 @@ export class EmployeeRegistrationComponent implements OnInit {
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
-          // console.log(res);
           this.dataSource = res.responseData;
           this.totalCount = res.responseData1.pageCount;
         }
         else {
           this.dataSource = [];
         }
-      }
+      },
+      error: (error: any) => {
+          this.handalErrorService.handelError(error.status);
+        }
     })
   }
 
@@ -121,7 +118,6 @@ export class EmployeeRegistrationComponent implements OnInit {
 
   // ------------------------------------------ Pagination --------------------------------------------
   onClickPaginatior(data: any) {
-    // this.pageSize = data.pageSize;
     this.currentPage = data.pageIndex;
     this.displayData();
   }
@@ -142,7 +138,6 @@ export class EmployeeRegistrationComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
       this.displayData();
     });
   }
