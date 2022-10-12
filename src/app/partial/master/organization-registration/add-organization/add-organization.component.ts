@@ -97,7 +97,8 @@ export class AddOrganizationComponent implements OnInit {
     let data = this.OrganizationRegForm.value;
     data.orgLogo = this.imageURL;
     if(!data.orgName.replace(/\s/g, '').length || !data.address.replace(/\s/g, '').length || !data.aboutUs.replace(/\s/g, '').length){
-     return;
+     //if I pass empty fields the form will not be added
+      return;
     }
     else{
     data.orgName.trim();//remove extra whitespace 

@@ -7,13 +7,16 @@ import {FormArray, FormBuilder, Validators} from '@angular/forms';
   styleUrls: ['./add-employee-details.component.scss']
 })
 export class AddEmployeeDetailsComponent implements OnInit {
-  empRegistraion: any;
+  empRegistration: any;
   isLinear: boolean= false;
    genderArr=[{id:1,name:'Male'},{id:2,name:'Female'}];
+   educations=[{id:1,name:'Undergradute'},{id:2,name:'Graduate'}, {id:3,name:'Post Graduate'}];
+
+
   //  EducationArr=['Undergradute','Graduate','Post Graduate'];
   constructor(private _fb: FormBuilder) { }
   ngOnInit(): void {
-    this.empRegistraion = this._fb.group({
+    this.empRegistration = this._fb.group({
       "modifiedBy": ['0'],
       "modifiedDate": ["2022-10-07T09:27:47.095Z"],
       "empId": [0],
@@ -23,10 +26,10 @@ export class AddEmployeeDetailsComponent implements OnInit {
       "mobileNo1": [""],
       "mobileNo2": [""],
       "emailId": [""],
-      "gender": [0],
+      "gender": [null],
       "localAddress": [""],
       "permanentAddress": [""],
-      "education": [0],
+      "education": [""],
       "course": [""],
       "additionalCertification": [""],
       "totalExperience": [0],
@@ -67,8 +70,8 @@ export class AddEmployeeDetailsComponent implements OnInit {
   }
 
   patch(){
-    const control = <FormArray>this.empRegistraion.get('empDocuments');
-    this.empRegistraion.empDocuments.forEach((x: any) => {
+    const control = <FormArray>this.empRegistration.get('empDocuments');
+    this.empRegistration.empDocuments.forEach((x: any) => {
       control.push(this.patchValues(x.label, x.value))
     })
   }
