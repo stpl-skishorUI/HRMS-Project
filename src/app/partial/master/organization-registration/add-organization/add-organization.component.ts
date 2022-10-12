@@ -1,10 +1,11 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
+import { OrganizationRegistrationComponent } from '../organization-registration.component';
 
 @Component({
   selector: 'app-add-organization',
@@ -19,6 +20,7 @@ export class AddOrganizationComponent implements OnInit {
   imageURL: any;
   img: any;
   constructor(private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
+    private dialogRef:MatDialogRef<AddOrganizationComponent>,
     private error:HandelErrorService,@Inject(MAT_DIALOG_DATA) public data: any,public validationservice:ValidationPatternService) { this.data1 = data }
   ngOnInit(): void {
     this.formData();
@@ -105,7 +107,8 @@ export class AddOrganizationComponent implements OnInit {
         next: (res: any) => {
           if (res.statusCode == '200') {
             this.snackbar.open(res.statusMessage, 'ok');
-            location.reload();//without click on refresh button add record
+            this.dialogRef.close('Yes');
+            //location.reload();//without click on refresh button add record
           }
         },
          error: (error: any) => {
@@ -122,8 +125,8 @@ export class AddOrganizationComponent implements OnInit {
           if (res.statusCode == '200') {
             this.snackbar.open(res.statusMessage, 'ok');
             this.imageURL = res.orgLogo;
-            // this.dialogRef.close('yes');
-            location.reload();
+            this.dialogRef.close('Yes');
+          //  location.reload();
           }
         },
         error: (error: any) => {
