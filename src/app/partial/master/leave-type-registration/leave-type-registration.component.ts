@@ -21,6 +21,7 @@ export class LeaveTypeRegistrationComponent implements OnInit {
   pageSize = 10;
   length: any;
 
+  get f() { return this.filterleaveTypeForm.controls };
   constructor(public dialog: MatDialog,
     private callAPIService: CallApiService,
     private fb: FormBuilder,
@@ -46,9 +47,7 @@ export class LeaveTypeRegistrationComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      this.leaveRegistrationData();
-      // this.dialogRef.close();
+      // this.leaveRegistrationData();
     });
   }
 
@@ -67,31 +66,32 @@ export class LeaveTypeRegistrationComponent implements OnInit {
   }
 
   leaveRegistrationData() {
-    this. submitted = true;
+    // console.log(this.filterleaveTypeForm.value);
+    this.submitted = true;
     let formData = this.filterleaveTypeForm.value;
-      const obj = {
-        "pageno": this.pageNo,
-        "CompanyId": formData.companytype,
-        "searchText": formData.leaveType,
-      }
-      this.callAPIService.setHttp('get', 'api/LeaveType/GetAllLeaveByPagination?pageno=' + obj.pageno + '&pagesize=10&CompanyId=' + obj.CompanyId + '&searchText=' + obj.searchText, false, false, false, 'baseURL');
-      this.callAPIService.getHttp().subscribe({
-        next: (resp: any) => {
-          // this.spinner.hide();
-          if (resp.statusCode == 200) {
-            this.tableRespnse = resp.responseData;
-            this.length = resp.responseData1.pageCount;
-            // this.toastr.success(resp.statusMessage);
-            // this.formGroupDirective.resetForm();
-          } else {
-            this.tableRespnse = [];
-            // this.toastr.error(resp.statusMessage);
-          }
-        },
-        // error: ((error: any) => { this.error.handelError(error.statusCode) })
-      })
+    const obj = {
+      "pageno": this.pageNo,
+      "CompanyId": formData.companytype,
+      "searchText": formData.leaveType,
     }
-  
+    this.callAPIService.setHttp('get', 'api/LeaveType/GetAllLeaveByPagination?pageno=' + obj.pageno + '&pagesize=10&CompanyId=' + obj.CompanyId + '&searchText=' + obj.searchText, false, false, false, 'baseURL');
+    this.callAPIService.getHttp().subscribe({
+      next: (resp: any) => {
+        // this.spinner.hide();
+        if (resp.statusCode == 200) {
+          this.tableRespnse = resp.responseData;
+          this.length = resp.responseData1.pageCount;
+          // this.toastr.success(resp.statusMessage);
+          // this.formGroupDirective.resetForm();
+        } else {
+          this.tableRespnse = [];
+          // this.toastr.error(resp.statusMessage);
+        }
+      },
+      // error: ((error: any) => { this.error.handelError(error.statusCode) })
+    })
+  }
+
   paginationEvent(event: any) {
     this.pageNo = event.pageIndex + 1;
     this.leaveRegistrationData()

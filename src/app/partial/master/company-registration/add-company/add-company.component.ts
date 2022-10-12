@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 import { AddSalaryTypeComponent } from '../../salary-type-registration/add-salary-type/add-salary-type.component';
 
 @Component({
@@ -31,7 +32,9 @@ export class AddCompanyComponent implements OnInit {
   constructor(private fb: FormBuilder, private service: CallApiService, 
     public dialogRef: MatDialogRef<AddSalaryTypeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private snackbar: MatSnackBar,
-    private commonApi:CommonApiService, private error:HandelErrorService) { }
+    private commonApi:CommonApiService, private error:HandelErrorService,
+    public validationService : ValidationPatternService
+    ) { }
 
   ngOnInit(): void {
     this.formField();

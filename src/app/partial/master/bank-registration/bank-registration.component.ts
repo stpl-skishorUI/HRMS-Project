@@ -32,6 +32,8 @@ export class BankRegistrationComponent implements OnInit {
   }
 
   bankRegi(status: any, data?: any) {
+    console.log(data);
+    console.log(status);
     const bankData = {
       data: data,
       status: status
@@ -44,7 +46,9 @@ export class BankRegistrationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       result == 'u' ? this.BankRegistrationData() : result == 'i';
-      this.BankRegistrationData();
+      
+
+      // this.BankRegistrationData();
       // console.log(`Dialog result: ${result}`);
     });
   }
@@ -80,7 +84,7 @@ export class BankRegistrationComponent implements OnInit {
         // console.log(this.bankRegiResponse);
       } else {
         this.bankRegiResponse = [];
-        alert(res.statusMessage);
+        // alert(res.statusMessage);
       }
     })
   }
