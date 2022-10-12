@@ -94,12 +94,8 @@
         <div class="alert alert-danger text-center py-2">No Data Found..!</div>
     </div>
   <ng-container *ngIf="dataSource?.length!=0">
-      <mat-paginator
-        [pageSizeOptions]="[10, 50, 100]"
-        [length]="totalCount"
-        [pageIndex]="currentPage"
-        (page)="pageChanged($event)"
-        showFirstLastButtons
+      <mat-paginator *ngIf=""
+      [pageSizeOptions]="[10, 25, 50, 100]" [length]="totalCount" [pageIndex]="currentPage" (page)="pageChanged($event)"showFirstLastButtons
         aria-label="Select page of periodic elements"
       >
       </mat-paginator>
