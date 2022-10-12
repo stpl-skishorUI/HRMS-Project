@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 
 @Component({
@@ -24,7 +25,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
   constructor(private api: CallApiService, private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddCompanyBankRegistrationComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private snackBar: MatSnackBar, private commonApi: CommonApiService,
-    public validationPattern:ValidationPatternService) { }
+    public validationPattern:ValidationPatternService,private handalErrorService: HandelErrorService) { }
 
   ngOnInit(): void {
     this.formData();
@@ -63,10 +64,10 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
           this.organizationNameArray = res.responseData;
           this.data ? this.getCampanyNameDropdown():''
         }
-      }),
-      error: (error: any) => {
-        console.log("Error is", error);
-      }
+      })
+      // error: (error: any) => {
+      //   console.log("Error is", error);
+      // }
     })
   }
 
@@ -77,10 +78,10 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
         if (res.statusCode == '200' && res.responseData.length) {
           this.campanyNameArray = res.responseData;
         }
-      }),
-      error: (error: any) => {
-        console.log("Error is", error);
-      }
+       })
+      // error: (error: any) => {
+      //   console.log("Error is", error);
+      // }
     })
   }
 
@@ -91,10 +92,10 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
           this.bankNameArray = res.responseData;
           this.data ? this.getBranchNameDropdown():''; 
         }
-      }),
-      error: (error: any) => {
-        console.log("Error is", error);
-      }
+      })
+      // error: (error: any) => {
+      //   console.log("Error is", error);
+      // }
     })
   }
 
@@ -105,10 +106,10 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
         if (res.statusCode == '200' && res.responseData.length) {
           this.branchNameArray = res.responseData;
         }
-      }),
-      error: (error: any) => {
-        console.log("Error is", error);
-      }
+      })
+      // error: (error: any) => {
+      //   console.log("Error is", error);
+      // }
     })
   }
   // --------------------------------------Dropdown Methods End----------------------------------------
@@ -156,7 +157,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
         }
       }),
       error: (error: any) => {
-        console.log("Error is", error);
+        this.handalErrorService.handelError(error.status);
       }
     })
   }
