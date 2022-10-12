@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 
 @Component({
   selector: 'app-add-organization',
@@ -17,7 +18,7 @@ export class AddOrganizationComponent implements OnInit {
   imageURL: any;
   img: any;
   constructor(private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
-  @Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
+    private error:HandelErrorService,@Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
   ngOnInit(): void {
     this.formData();
   }
@@ -80,8 +81,10 @@ export class AddOrganizationComponent implements OnInit {
         if (res.statusCode == 200) {
           // this.imageURL = res.responseData;
           this.snackbar.open(res.statusMessage, 'Ok');
-          
-        }
+          }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
+        this.error.handelError(error.statusCode);
       }
     })
   }
@@ -99,6 +102,10 @@ export class AddOrganizationComponent implements OnInit {
             this.snackbar.open(res.statusMessage, 'ok');
             location.reload();//without click on refresh button add record
           }
+        },
+         error: (error: any) => {
+          console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }
@@ -113,6 +120,10 @@ export class AddOrganizationComponent implements OnInit {
             // this.dialogRef.close('yes');
             location.reload();
           }
+        },
+        error: (error: any) => {
+          console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }
