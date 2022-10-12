@@ -52,10 +52,7 @@ export class CompanyRegistrationComponent implements OnInit {
           this.handleError.handelError(response.statusCode);
         }
       }
-    }), (error: any) => {
-      // console.log("Error : ", error);
-      this.handleError.handelError(error.statusCode);
-    }
+    })
   }
   // ---------------------------------- Organization dropdown ---------------------------------- //
 
