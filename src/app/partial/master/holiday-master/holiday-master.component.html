@@ -105,7 +105,7 @@
             </table>
             <div *ngIf="Allholidays == null">
                 <ng-container>
-                    <h2>Data Not Found </h2>
+                    <h4 class="text-danger">Data Not Found </h4>
                 </ng-container>
                 
             </div>
@@ -117,7 +117,7 @@
             
             
 
-            <mat-paginator *ngIf="totalCount>10 && Allholidays" [length]="totalCount" [pageIndex]="pageIndex" (page)="pageChanged($event)" [pageSize]="pageSize" aria-label="Select page"></mat-paginator>
+            <mat-paginator *ngIf="totalCount>10 && Allholidays" [length]="totalCount" showFirstLastButtons  [pageIndex]="pageIndex" (page)="pageChanged($event)" [pageSize]="pageSize" aria-label="Select page"></mat-paginator>
 
         </div>
     </div>
