@@ -19,7 +19,7 @@ export class AddSalaryTypeComponent implements OnInit {
   salaryForm!: FormGroup;
   editFlag: boolean = false;
   
-  constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar, private handleError: HandelErrorService, private CommonMethod: CommonMethodsService, private commonApi: CommonApiService,public validationPattern:ValidationPatternService) { }
+  constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar, private handalErrorSer: HandelErrorService, private CommonMethod: CommonMethodsService, private commonApi: CommonApiService,public validationPattern:ValidationPatternService) { }
 
   ngOnInit(): void {
     this.getFormData();
@@ -37,7 +37,7 @@ export class AddSalaryTypeComponent implements OnInit {
         }
       }),
       error: (error: any) => {
-        console.log("Error is", error);
+        this.handalErrorSer.handelError(error.status);
       }
     })
   }
@@ -72,7 +72,6 @@ export class AddSalaryTypeComponent implements OnInit {
       }
       let postObj = this.salaryForm.value;
       if (this.editFlag == false) {
-        // console.log("postObj", postObj);
         this.service.setHttp('post', 'HRMS/SalaryType/SaveSalaryType', false, postObj, false, 'baseURL');
         this.service.getHttp().subscribe({
           next: (res: any) => {
@@ -81,7 +80,7 @@ export class AddSalaryTypeComponent implements OnInit {
               this.snack.open(res.statusMessage, "Ok", { duration: 3000 });
             }
           }, error: (error: any) => {
-            console.log("Error : ", error);
+            this.handalErrorSer.handelError(error.status);
           }
         })
       } else {
@@ -94,7 +93,7 @@ export class AddSalaryTypeComponent implements OnInit {
               this.snack.open(res.statusMessage, 'Ok', { duration: 3000 });
             }
           }, error: (error: any) => {
-            console.log("Error : ", error);
+            this.handalErrorSer.handelError(error.status);
           }
         })
       }

@@ -25,7 +25,7 @@
             <div class="mb-0">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Organization Name</mat-label>
-                    <input matInput placeholder="Organization Name" formControlName="orgName">
+                    <input matInput placeholder="Organization Name" formControlName="orgName" (keypress)="validationservice.alphaNumericWithSpaces($event)">
                     <mat-error *ngIf="f['orgName'].hasError('required') || f['orgName'].hasError('touched')">
                         Organization name is Required
                     </mat-error>
@@ -48,7 +48,7 @@
             <div class="mb-0">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Organization Contact Number</mat-label>
-                    <input matInput placeholder="Contact Number" formControlName="contactNo" maxlength="10">
+                    <input matInput placeholder="Contact Number" formControlName="contactNo" maxlength="10" (keypress)="validationservice.onlyDigits($event)">
                     <mat-error *ngIf="f['contactNo'].hasError('required') || f['contactNo'].hasError('touched')">
                         contactNo is Required
                     </mat-error>
