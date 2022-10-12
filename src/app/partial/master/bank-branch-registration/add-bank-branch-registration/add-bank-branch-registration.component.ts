@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 
 @Component({
   selector: 'app-add-bank-branch-registration',
@@ -15,7 +16,10 @@ export class AddBankBranchRegistrationComponent implements OnInit {
   bankForm!: FormGroup;
   editFlag:boolean = false;
   editObj :any;
-  constructor(private fb: FormBuilder, private api: CallApiService, private mat: MatSnackBar) { }
+  currentPage : number = 0;
+  totalCount : number = 0;
+  pageSize : number = 10;
+  constructor(private fb: FormBuilder, private api: CallApiService, private mat: MatSnackBar,public validationPattern : ValidationPatternService) { }
   @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
   ngOnInit(): void {
     this.bindTable();
@@ -30,18 +34,26 @@ export class AddBankBranchRegistrationComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": false,
       "id":this.editFlag ? this.editObj.id :   0,
-      "bankName": this.editFlag ? this.editObj.bankName : ["",Validators.required]
+      "bankName":[ this.editFlag ? this.editObj.bankName : "",Validators.required]
     })
   }
+
   get fc(){return this.bankForm.controls}
+
   bindTable() {
-    this.api.setHttp( 'get', 'api/BankRegistration/GetAllBankRegiByPagination?pageno=1&pagesize=10', false, false, false, 'baseURL');
+    this.api.setHttp( 'get', 'api/BankRegistration/GetAllBankRegiByPagination?pageno='+(this.currentPage + 1)+'&pagesize=10', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? this.dataSource = res.responseData : this.dataSource = [];
+        res.statusCode == 200 ? (this.dataSource = res.responseData,this.totalCount = res.responseData1.pageCount) : this.dataSource = [];
       }
     })
   }
+
+  handlePageEvent(event: any) {
+    this.currentPage = event.pageIndex;
+    this.bindTable();
+  }
+
   onDelete(id:number){
     this.api.setHttp('delete','api/BankRegistration?id='+id,false, false,false,'baseURL');
     this.api.getHttp().subscribe({

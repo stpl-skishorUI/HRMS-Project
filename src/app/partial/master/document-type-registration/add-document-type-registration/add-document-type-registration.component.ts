@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 
 @Component({
   selector: 'app-add-document-type-registration',
@@ -16,7 +17,7 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
   constructor(private fb: FormBuilder, private service: CallApiService,
     public dialog: MatDialog, public dialogRef: MatDialogRef<AddDocumentTypeRegistrationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar,
-    public validationPattern: ValidationPatternService) { }
+    public validationPattern: ValidationPatternService, private handalErrorService: HandelErrorService) { }
 
   editFlag: boolean = false;
 
@@ -67,6 +68,9 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
                 duration: 2000,
               });
             }
+          },
+          error: (error: any) => {
+            this.handalErrorService.handelError(error.status);
           }
         })
       } else if (this.editFlag == true) {
@@ -90,14 +94,16 @@ export class AddDocumentTypeRegistrationComponent implements OnInit {
                 horizontalPosition: 'right',
                 verticalPosition: 'top',
                 duration: 2000
-              });
+              })
             }
+          },
+          error: (error: any) => {
+            this.handalErrorService.handelError(error.status);
           }
         })
       }
     }
   }
-
   get formFiledControl() {
     return this.docTypeRegistrationForm.controls;
   }

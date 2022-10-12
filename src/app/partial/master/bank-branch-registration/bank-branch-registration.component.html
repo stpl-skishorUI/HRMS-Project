@@ -8,6 +8,7 @@
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Bank Name</mat-label>
                                 <mat-select formControlName="id">
+                                    <mat-option value="{{0}}">All Banks</mat-option>
                                     <mat-option *ngFor="let name of bankNames" [value]="name.bankId">{{name.bankName}}</mat-option>
                                     <!-- <mat-option>Bank Of India</mat-option>
                                 <mat-option>State Of India</mat-option> -->
