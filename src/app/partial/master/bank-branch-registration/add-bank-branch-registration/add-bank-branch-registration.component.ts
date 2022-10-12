@@ -49,7 +49,7 @@ export class AddBankBranchRegistrationComponent implements OnInit {
       },
       error : (error:any)=>{
         this.handleError.handelError(error.status); 
-      } 
+      }
     })
   }
 
