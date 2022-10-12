@@ -4,7 +4,7 @@ import { AddOrganizationComponent } from './add-organization/add-organization.co
 import { CallApiService } from 'src/app/core/services/call-api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 @Component({
   selector: 'app-organization-registration',
   templateUrl: './organization-registration.component.html',
@@ -19,7 +19,8 @@ export class OrganizationRegistrationComponent implements OnInit {
   pageSize = 10;
   currentPage = 0;
   orgType: string = '';
-  constructor(public dialog: MatDialog, private service: CallApiService, public fb: FormBuilder, private snackbar: MatSnackBar) { }
+  constructor(public dialog: MatDialog, private service: CallApiService, public fb: FormBuilder, 
+    private snackbar: MatSnackBar,private error:HandelErrorService) { }
   ngOnInit(): void {
     this.filterMethod();
     this.getTableData();
@@ -58,6 +59,7 @@ export class OrganizationRegistrationComponent implements OnInit {
         }
       }, error: (error: any) => {
         console.log("Error : ", error);
+        this.error.handelError(error.statusCode);
       }
     })
   }
@@ -73,9 +75,14 @@ export class OrganizationRegistrationComponent implements OnInit {
     this.service.setHttp('delete', 'HRMS/Orgnization/DeleteOrg?id=' + id, false, false, false, 'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
+        if (res.statusCode == 200) {
         this.snackbar.open(res.statusMessage, 'ok');
         this.getTableData();
       }
+    }, error: (error: any) => {
+      console.log("Error : ", error);
+      this.error.handelError(error.statusCode);
+    }
     })
   }
   //****************End Delete Logic**********************/

@@ -1,8 +1,9 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
+import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 
 @Component({
   selector: 'app-add-organization',
@@ -17,7 +18,7 @@ export class AddOrganizationComponent implements OnInit {
   imageURL: any;
   img: any;
   constructor(private service: CallApiService, private fb: FormBuilder, private snackbar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
+    private error:HandelErrorService,@Inject(MAT_DIALOG_DATA) public data: any) { this.data1 = data }
   ngOnInit(): void {
     this.formData();
   }
@@ -36,7 +37,7 @@ export class AddOrganizationComponent implements OnInit {
       address: [this.editFlag ? this.data1.address : '', Validators.required],
       website: [this.editFlag ? this.data1.website : '', Validators.required],
       emailId: [this.editFlag ? this.data1.emailId : '', [Validators.required, Validators.email]],
-      orgLogo: [this.editFlag ? this.data1.orgLogo : ''],
+      orgLogo: [this.editFlag ? this.data1.orgLogo : '',Validators.required],
       aboutUs: [this.editFlag ? this.data1.aboutUs : '', Validators.required],
     });
     this.imageURL = this.editFlag ? this.data1.orgLogo : "/assets/images/user.jpg";
@@ -80,7 +81,10 @@ export class AddOrganizationComponent implements OnInit {
         if (res.statusCode == 200) {
           // this.imageURL = res.responseData;
           this.snackbar.open(res.statusMessage, 'Ok');
-        }
+          }
+      }, error: (error: any) => {
+        console.log("Error : ", error);
+        this.error.handelError(error.statusCode);
       }
     })
   }
@@ -89,13 +93,19 @@ export class AddOrganizationComponent implements OnInit {
   onSubmit() {
     let data = this.OrganizationRegForm.value;
     data.orgLogo = this.imageURL;
+    data.orgName=data.orgName.trim();//remove extra whitespace 
     if (!this.editFlag) {
       this.service.setHttp('post', 'HRMS/Orgnization/SaveOrg', false, data, false, 'baseURL');
       this.service.getHttp().subscribe({
         next: (res: any) => {
           if (res.statusCode == '200') {
             this.snackbar.open(res.statusMessage, 'ok');
+            location.reload();//without click on refresh button add record
           }
+        },
+         error: (error: any) => {
+          console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }
@@ -107,7 +117,13 @@ export class AddOrganizationComponent implements OnInit {
           if (res.statusCode == '200') {
             this.snackbar.open(res.statusMessage, 'ok');
             this.imageURL = res.orgLogo;
+            // this.dialogRef.close('yes');
+            location.reload();
           }
+        },
+        error: (error: any) => {
+          console.log("Error : ", error);
+          this.error.handelError(error.statusCode);
         }
       })
     }

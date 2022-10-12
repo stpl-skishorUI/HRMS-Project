@@ -105,8 +105,8 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddBankBranchRegistrationComponent, {
-      width: '70%',
-      height: '90%',
+      width: '50%',
+      // height: '70%',
       data: this.dataSource,
       disableClose: true
     });

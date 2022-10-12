@@ -25,7 +25,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
   totalCount: number = 0;
   currentPage: number = 0;
 
-  sendObj = { organizationId: 0, CompanyId: 0, BankId: 0, BranchId: 0, AccountType: '' }
+  sendObj = { organizationId: 0, companyId: 0, bankId: 0, branchId: 0, accountType: '' }
 
   constructor(public dialog: MatDialog, private api: CallApiService, private fb: FormBuilder
     , private handalErrorService: HandelErrorService, private commonApi: CommonApiService) { }
@@ -39,7 +39,8 @@ export class CompanyBankRegistrationComponent implements OnInit {
   openDialog(editObj?: any) {
     const dialogRef = this.dialog.open(AddCompanyBankRegistrationComponent, {
       width: '40%',
-      data: editObj, disableClose: true
+      data: editObj, 
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       result == 'yes' ? this.bindTableData() : '';
@@ -56,11 +57,11 @@ export class CompanyBankRegistrationComponent implements OnInit {
     });
   }
 
-  // --------------------------------------------Blind Table Data-------------------------------------------
+  // --------------------------------------------Bind Table Data-------------------------------------------
 
   bindTableData() {
-    this.api.setHttp('get', 'api/CompanyBankAccount/GetAllAccountByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&OrganizationId=' + this.sendObj.organizationId + '&CompanyId=' + this.sendObj.CompanyId + '&BankId=' +
-      this.sendObj.BankId + '&BranchId=' + this.sendObj.BranchId + '&AccountType=' + this.sendObj.AccountType,
+    this.api.setHttp('get', 'api/CompanyBankAccount/GetAllAccountByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&OrganizationId=' + this.sendObj.organizationId + '&CompanyId=' + this.sendObj.companyId + '&BankId=' +
+      this.sendObj.bankId + '&BranchId=' + this.sendObj.branchId + '&AccountType=' + this.sendObj.accountType,
       false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: ((res: any) => {
@@ -80,7 +81,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
     })
   }
 
-  // --------------------------------------------Blind Table Data-------------------------------------------
+  // --------------------------------------------Bind Table Data-------------------------------------------
 
   // --------------------------------------------Dropdown Start-------------------------------------------
 
@@ -163,12 +164,12 @@ export class CompanyBankRegistrationComponent implements OnInit {
 
   FilterFormSubmit() {
     let obj = this.filterForm.value;
-    this.sendObj.organizationId = obj.organizationId;
-    this.sendObj.CompanyId = obj.companyId;
-    this.sendObj.BankId = obj.bankId;
-    this.sendObj.BranchId = obj.branchId;
-    this.sendObj.AccountType = obj.accountType;
-    this.currentPage = 0
+    this.sendObj.organizationId = obj.organizationId ?obj.organizationId :0;
+    this.sendObj.companyId = obj.companyId ?obj.companyId :0;
+    this.sendObj.bankId = obj.bankId ?obj.bankId :0;
+    this.sendObj.branchId = obj.branchId ?obj.branchId :0;
+    this.sendObj.accountType = obj.accountType ?obj.accountType :'';
+    this.currentPage = 0;
     this.bindTableData();
   }
 }
