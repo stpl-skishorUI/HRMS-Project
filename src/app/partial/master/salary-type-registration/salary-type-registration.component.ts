@@ -22,7 +22,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   companyDropDownArray = new Array();
   salaryTypeSearch = ''
   companyTypeSearch = 0;
-  constructor(public dialog: MatDialog, private service: CallApiService, private snack: MatSnackBar, private fb: FormBuilder, private commonApi: CommonApiService, private handalErrorSer: HandelErrorService,public validationPattern:ValidationPatternService) { }
+  constructor(public dialog: MatDialog, private service: CallApiService, private snack: MatSnackBar, private fb: FormBuilder, private commonApi: CommonApiService, private handalErrorSer: HandelErrorService, public validationPattern: ValidationPatternService) { }
 
   ngOnInit(): void {
     this.getAllTableData();
@@ -45,8 +45,8 @@ export class SalaryTypeRegistrationComponent implements OnInit {
       data: ele,
       disableClose: true
     });
- dialogRef.afterClosed().subscribe(result => {
-      result == 'Yes' ? this.getAllTableData() :'';
+    dialogRef.afterClosed().subscribe(result => {
+      result == 'Yes' ? this.getAllTableData() : '';
     });
   }
   //--------------------------------------------------------------Dialogue Module Form Ends-----------------------------
@@ -70,7 +70,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
 
   //--------------------------------------------------------------Gets Table Data Starts----------------------------------
   getAllTableData() {
-    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno='+this.currentPage+1, false, false, false,
+    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno=' + this.currentPage + 1, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: ((res: any) => {
@@ -105,7 +105,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
           this.dataSource = [];
           this.handalErrorSer.handelError(res.status);
         }
-      },error: (error: any) => {
+      }, error: (error: any) => {
         this.handalErrorSer.handelError(error.status);
       }
     })

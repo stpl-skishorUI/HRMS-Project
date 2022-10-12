@@ -18,8 +18,8 @@ export class AddSalaryTypeComponent implements OnInit {
   isPercentageArray = [{ id: 0, name: 'Yes' }, { id: 1, name: 'No' }];
   salaryForm!: FormGroup;
   editFlag: boolean = false;
-  
-  constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar, private handalErrorSer: HandelErrorService, private CommonMethod: CommonMethodsService, private commonApi: CommonApiService,public validationPattern:ValidationPatternService) { }
+
+  constructor(private service: CallApiService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddSalaryTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private snack: MatSnackBar, private handalErrorSer: HandelErrorService, private CommonMethod: CommonMethodsService, private commonApi: CommonApiService, public validationPattern: ValidationPatternService) { }
 
   ngOnInit(): void {
     this.getFormData();
@@ -55,8 +55,8 @@ export class AddSalaryTypeComponent implements OnInit {
       "id": this.data ? this.data.id : 0,
       companyId: [, Validators.required],
       salary_Component: ['', Validators.required],
-      isPercentage: ['',Validators.required],
-      value: [,[Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]]
+      isPercentage: ['', Validators.required],
+      value: [, [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]]
     })
 
   }
