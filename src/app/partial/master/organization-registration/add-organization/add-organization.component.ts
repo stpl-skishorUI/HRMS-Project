@@ -40,7 +40,7 @@ export class AddOrganizationComponent implements OnInit {
       orgLogo: [this.editFlag ? this.data1.orgLogo : '',Validators.required],
       aboutUs: [this.editFlag ? this.data1.aboutUs : '', Validators.required],
     });
-    this.imageURL = this.editFlag ? this.data1.orgLogo : "/assets/images/user.jpg";
+    this.imageURL = this.editFlag ? this.data1.orgLogo : "/assets/images/user.jpg";//if no img add then default img set 
   }
   //***************************Form Field************************************ */
   //********************for Validation Handle*************************/
