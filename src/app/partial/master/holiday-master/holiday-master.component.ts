@@ -74,9 +74,9 @@ export class HolidayMasterComponent implements OnInit {
         //   }
         // }
       },
-      error: ((error: any) => { 
-        console.log(" Error is :", error.status);
-      })
+      // error: ((error: any) => { 
+      //   console.log(" Error is :", error.status);
+      // })
     });
   }
 
@@ -103,7 +103,8 @@ export class HolidayMasterComponent implements OnInit {
 
       },
       error: ((error: any) => { 
-        console.log(" Error is :", error.status);
+        // console.log(" Error is :", error.status);
+        this.errorService.handelError(error.status);
       })
     });
   }
@@ -148,9 +149,9 @@ export class HolidayMasterComponent implements OnInit {
         // console.log("getAll year:", resp );
         this.yearsDropdn = resp.responseData;
       },
-      error: (error: any)=>{
-        console.log("error is :", error );
-      }
+      // error: (error: any)=>{
+      //   console.log("error is :", error );
+      // }
     })
   }
 
@@ -161,14 +162,11 @@ export class HolidayMasterComponent implements OnInit {
         // console.log("getHolidayType:", resp );
         this.holiTypes =  resp.responseData;
       },
-      error: (error: any)=>{
-        console.log("Error is: ", error );
-      }
+      // error: (error: any)=>{
+      //   console.log("Error is: ", error );
+      // }
     })
-    // this.holiTypes = [
-    //   {id:"1", type: 'Compulsory'},
-    //   {id:"2", type: 'Optional'}
-    // ]
+   
 }
 
 
