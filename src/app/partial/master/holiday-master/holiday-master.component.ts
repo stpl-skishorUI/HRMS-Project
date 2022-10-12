@@ -178,8 +178,11 @@ export class HolidayMasterComponent implements OnInit {
       data: {isInsert: true}
     });
     dialogRef.afterClosed().subscribe(result => {
+      
       console.log(`Dialog result: ${result}`);
-      this.getAllHoliday();
+      if(result == 'yes'){
+        this.getAllHoliday();
+      }
     });
   }
 
@@ -190,7 +193,9 @@ export class HolidayMasterComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      this.getAllHoliday();
+      if(result == 'yes'){
+        this.getAllHoliday();
+      }
     });
   }
 
