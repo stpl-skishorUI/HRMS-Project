@@ -7,6 +7,7 @@ import { CallApiService } from 'src/app/core/services/call-api.service';
 import { CommonApiService } from 'src/app/core/services/common-api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service'
 
 @Component({
   selector: 'app-add-holiday',
@@ -27,12 +28,13 @@ export class AddHolidayComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private commonAPIService: CommonApiService,
               private fb: FormBuilder,
-              private errorService: HandelErrorService
+              private errorService: HandelErrorService,
+              public validErrService: ValidationPatternService
 
     ) { }
 
   ngOnInit(): void {
-    console.log("insInsert Form :", this.data.isInsert, this.data.selectedHoliday);
+    // console.log("insInsert Form :", this.data.isInsert, this.data.selectedHoliday);
     this.defaultHolidayForm();
     this.getCompanyDrop();
     // this.data.selectedHoliday ? this.patchHoildayData(): '';
@@ -73,7 +75,7 @@ export class AddHolidayComponent implements OnInit {
 
   saveHolidayData(){
     this.isSubmitted = true;
-    console.log(" All formData:", this.addHolidayForm.value );
+    // console.log(" All formData:", this.addHolidayForm.value );
     let formdata = this.addHolidayForm.value;
     if(this.addHolidayForm.invalid){
       return;
@@ -88,31 +90,38 @@ export class AddHolidayComponent implements OnInit {
     //   //submit fuction call here /
       
     // }
-
-    if(this.data.isInsert){
-      this.apiService.setHttp('post', 'api/HolidayMaster/AddHoliday', true, formdata ,false, 'baseURL');
+      this.apiService.setHttp(this.data.isInsert?'post':'put', this.data.isInsert? 'api/HolidayMaster/AddHoliday':'api/HolidayMaster/UpdateHoliday', true, formdata ,false, 'baseURL');
       this.subscription =  this.apiService.getHttp().subscribe({
         next: (resp: any)=> {
-          console.log("Save  holiday :", resp );
-          this.dialogRef.close('yes');
+          // console.log("Save/update  holiday :", resp );
+          if (resp.statusCode == "200") {
+            this.dialogRef.close('yes');
+          }
+          else{
+            this.errorService.handelError(resp.statusCode);
+          }
         },
         error: (error: any)=> {
           console.log(" Error is :", error);
+          this.errorService.handelError(error.statusCode)
         }
       })
-    }else if(!this.data.isInsert){
-      this.apiService.setHttp('put', 'api/HolidayMaster/UpdateHoliday', true, formdata ,false, 'baseURL');
-      this.subscription =  this.apiService.getHttp().subscribe({
-        next: (resp: any)=> {
-          console.log("Updated holiday :", resp );
-          this.dialogRef.close('yes');
-        },
-        error: (error: any)=> {
-          console.log(" Error is :", error);
-          this.errorService.handelError(error.status);
-        }
-      })
-    }
+    // else if(!this.data.isInsert){
+    //   this.apiService.setHttp('put', 'api/HolidayMaster/UpdateHoliday', true, formdata ,false, 'baseURL');
+    //   this.subscription =  this.apiService.getHttp().subscribe({
+    //     next: (resp: any)=> {
+    //       console.log("Updated holiday :", resp );
+    //       if (resp.statusCode === "200") {
+    //         this.errorService.handelError(resp.statusCode)
+    //         this.dialogRef.close('yes');
+    //       }        
+    //     },
+    //     error: (error: any)=> {
+    //       console.log(" Error is :", error);
+    //       this.errorService.handelError(error.status);
+    //     }
+    //   })
+    // }
     
   }
 
@@ -133,7 +142,7 @@ export class AddHolidayComponent implements OnInit {
   getCompanyDrop(){
     this.commonAPIService.getCompanies(0).subscribe({
       next: (resp: any) => {
-        console.log("getCompanies data is :", resp)
+        // console.log("getCompanies data is :", resp)
         this.Companies = resp.responseData;
        },
        error: (error: any)=>{
