@@ -32,16 +32,16 @@ export class AddOrganizationComponent implements OnInit {
       "createdDate": new Date(),
       "modifiedDate": new Date(),
       "isDeleted": false,
-      id: this.editFlag ? this.data1.id : 0,
-      orgName: [this.editFlag ? this.data1.orgName : '', Validators.required],
-      contactNo: [this.editFlag ? this.data1.contactNo : '', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}$")]],
-      address: [this.editFlag ? this.data1.address : '', Validators.required],
-      website: [this.editFlag ? this.data1.website : '', Validators.required],
-      emailId: [this.editFlag ? this.data1.emailId : '', [Validators.required, Validators.email]],
-      orgLogo: [this.editFlag ? this.data1.orgLogo : '',Validators.required],
-      aboutUs: [this.editFlag ? this.data1.aboutUs : '', Validators.required],
+      id: this.editFlag ? this.data.id : 0,
+      orgName: [this.editFlag ? this.data.orgName : '', Validators.required],
+      contactNo: [this.editFlag ? this.data.contactNo : '', [Validators.required, Validators.pattern("^[6-9]{1}[0-9]{9}$")]],
+      address: [this.editFlag ? this.data.address : '', Validators.required],
+      website: [this.editFlag ? this.data.website : '', Validators.required],
+      emailId: [this.editFlag ? this.data.emailId : '', [Validators.required, Validators.email]],
+      orgLogo: [this.editFlag ? this.data.orgLogo : '',Validators.required],
+      aboutUs: [this.editFlag ? this.data.aboutUs : '', Validators.required],
     });
-    this.imageURL = this.editFlag ? this.data1.orgLogo : "/assets/images/user.jpg";//if no img add then default img set 
+    this.imageURL = this.editFlag ? this.data.orgLogo : "/assets/images/user.jpg";//if no img add then default img set 
   }
   //***************************Form Field************************************ */
   //********************for Validation Handle*************************/
@@ -57,7 +57,7 @@ export class AddOrganizationComponent implements OnInit {
     let finalValue = event.target.value;
     let extension = event.target.value.split('.')[1];
     extension = extension.toLowerCase();
-    if (extension == 'jpg' || extension == 'png') {
+    if (extension == 'jpg' || extension == 'png'  || extension == 'jpeg') {
       const file = event.target.files[0];
       if (file.size > 1000000) {
         this.snackbar.open('Upload another Image', 'Ok');
