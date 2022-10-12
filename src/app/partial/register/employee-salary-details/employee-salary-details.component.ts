@@ -49,7 +49,6 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
     });
   }
   displayedColumns: string[] = [
@@ -103,7 +102,6 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
       next: (res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.company = res.responseData;
-          console.log(this.company);
         }
       },
     });
@@ -123,7 +121,6 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
       next: (res: any) => {
         if (res.statusCode == '200') {
           this.employee = res.responseData;
-          console.log(this.employee);
         }
       },
     });
