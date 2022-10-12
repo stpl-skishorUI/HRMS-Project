@@ -49,7 +49,6 @@ export class AddDepartmentComponent implements OnInit {
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
-        // console.log(res);
         if (res.statusCode == '200') {
           this.displayCompanyDropdown = res.responseData;
         }
@@ -107,7 +106,6 @@ onCancel(){
 //---------------------------------------------------------------------------Patch Value----------------------------------------------------------------------------------//
 
  onEdit(obj: any) {
-  console.log("objId", obj.id);
   this.editFlag = true;
   this.deptRegistrationForm.patchValue({
     companyId: obj.companyId,
