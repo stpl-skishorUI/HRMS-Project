@@ -72,7 +72,7 @@
                 <mat-label>Organization Address</mat-label>
                 <textarea matInput placeholder="Enter Address" formControlName="address"></textarea>
                 <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
-                    Address is Required
+                Address is Required
                 </mat-error>
             </mat-form-field>
         </div>
@@ -91,7 +91,7 @@
         <div class="d-flex justify-content-between">
             <button mat-raised-button class="btn-outline-main" mat-dialog-close type="reset">Cancel</button>
             <button mat-raised-button class="btn-main" type="submit" [disabled]="OrganizationRegForm.invalid"
-                mat-dialog-close>{{editFlag ? 'Update':'Save'}}</button>
+                >{{editFlag ? 'Update':'Save'}}</button>
         </div>
     </div>
 </form>
