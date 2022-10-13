@@ -18,6 +18,7 @@ export class DepartmentRegistrationComponent implements OnInit {
   searchtext!: string;
   companyId!: number;
 
+
   constructor(
     public dialog: MatDialog,
       private service: CallApiService,
@@ -41,8 +42,8 @@ export class DepartmentRegistrationComponent implements OnInit {
     const dialogRef = this.dialog.open(AddDepartmentComponent, {
       width: '50%',
       data: data,
-      hasBackdrop:false
-    });
+      disableClose: true
+        });
 
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -95,6 +96,20 @@ export class DepartmentRegistrationComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.displayData();
   }
+
+  //----------------------------------------------------------------------------------------------------------------------------------------------------------//
+  space(e:any){
+    console.log(e);
+    if(e.charCode === 32){
+      e.preventDefault();
+    }
+  }
+  //  letterOnly(event:any) : Boolean{
+  //     const charCode = (event.which) ? event.which : event.keyCode;
+  //     if ((charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)) {
+  //       return false;
+  //     }
+  //   }
 }
 export interface PeriodicElement {
   srno: number;
