@@ -22,7 +22,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   companyDropDownArray = new Array();
   salaryTypeSearch = ''
   companyTypeSearch = 0;
-  constructor(public dialog: MatDialog, private service: CallApiService, private snack: MatSnackBar, private fb: FormBuilder, private commonApi: CommonApiService, private handalErrorSer: HandelErrorService,public validationPattern:ValidationPatternService) { }
+  constructor(public dialog: MatDialog, private service: CallApiService, private snack: MatSnackBar, private fb: FormBuilder, private commonApi: CommonApiService, private handalErrorSer: HandelErrorService, public validationPattern: ValidationPatternService) { }
 
   ngOnInit(): void {
     this.getAllTableData();
@@ -45,8 +45,8 @@ export class SalaryTypeRegistrationComponent implements OnInit {
       data: ele,
       disableClose: true
     });
- dialogRef.afterClosed().subscribe(result => {
-      result == 'Yes' ? this.getAllTableData() :'';
+    dialogRef.afterClosed().subscribe(result => {
+      result == 'Yes' ? this.getAllTableData() : '';
     });
   }
   //--------------------------------------------------------------Dialogue Module Form Ends-----------------------------
@@ -60,7 +60,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
           this.companyDropDownArray = res.responseData;
         }
       }), error: (error: any) => {
-        console.log("Error is", error);
+        this.handalErrorSer.handelError(error.status);
       }
     })
   }
@@ -70,7 +70,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
 
   //--------------------------------------------------------------Gets Table Data Starts----------------------------------
   getAllTableData() {
-    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno='+this.currentPage+1, false, false, false,
+    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno=' + this.currentPage + 1, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: ((res: any) => {
@@ -80,36 +80,33 @@ export class SalaryTypeRegistrationComponent implements OnInit {
         }
         else {
           this.dataSource = [];
-          this.handalErrorSer.handelError(res.statusCode);
+          this.handalErrorSer.handelError(res.status);
         }
       }),
       error: (error: any) => {
         this.handalErrorSer.handelError(error.status);
-        console.log("Error is", error);
       }
     })
   }
-
-  // HRMS/SalaryType/GetAllSalaryTypePagination?pageno=1&pagesize=10&Salary_Component=gross&CompanyId=5
   //--------------------------------------------------------------Gets Table Data Ends------------------------------------------
 
   //--------------------------------------------------------------Gets Filter Data Starts---------------------------------------
   SearchfilterData() {
-    this.salaryTypeSearch = this.filterForm.value.salary_Component;
-    this.companyTypeSearch = this.filterForm.value.companyName;
-    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno=1&pagesize=10&Salary_Component=' + this.salaryTypeSearch + '&CompanyId=' + this.companyTypeSearch, false, false, false,
+    let salaryTypeSearch = this.filterForm.value.salary_Component.trim();
+    let companyTypeSearch = this.filterForm.value.companyName;
+    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno=1&pagesize=10&Salary_Component=' + salaryTypeSearch + '&CompanyId=' + companyTypeSearch, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.dataSource = res.responseData;
-          this.filterForm.reset();
+          this.handalErrorSer.handelError(res.status);
         } else {
           this.dataSource = [];
+          this.handalErrorSer.handelError(res.status);
         }
-      },error: (error: any) => {
+      }, error: (error: any) => {
         this.handalErrorSer.handelError(error.status);
-        console.log("Error is", error);
       }
     })
   }
@@ -134,3 +131,4 @@ export interface PeriodicElement {
   Value: any;
   action: any;
 }
+     

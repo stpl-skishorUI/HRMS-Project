@@ -1,5 +1,5 @@
-import { Component, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallApiService } from 'src/app/core/services/call-api.service';
@@ -20,14 +20,14 @@ export class BankBranchRegistrationComponent implements OnInit {
   filterForm!: FormGroup
   editObj: any;
   editFlag: boolean = false;
-  totalCount:number = 0;
+  totalCount: number = 0;
   pageSize = 10;
   currentPage = 0;
 
-  constructor(private commonApi: CommonApiService, public dialog: MatDialog, 
+  constructor(private commonApi: CommonApiService, public dialog: MatDialog,
     private api: CallApiService, private fb: FormBuilder, private mat: MatSnackBar,
-    public validationPattern:ValidationPatternService, private handleError : HandelErrorService) { }
-  
+    public validationPattern: ValidationPatternService, private handleError: HandelErrorService) { }
+
   ngOnInit(): void {
     this.defaultForm();
     this.bindTable();
@@ -35,8 +35,8 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.filterData();
   }
 
-   //----------------------------- Dropdown Starts-------------------------------------//
-   bankNameDropDown() {
+  //----------------------------- Dropdown Starts-------------------------------------//
+  bankNameDropDown() {
     this.commonApi.getBanks().subscribe({
       next: (res: any) => {
         res.statusCode == 200 && res.responseData.length ? this.bankNames = res.responseData : this.bankNames = [];
@@ -59,7 +59,7 @@ export class BankBranchRegistrationComponent implements OnInit {
     this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?searchtxt=' + formValue?.branch + '&BankId=' + formValue?.id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 && res.responseData.length ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : (this.dataSource = [],this.handleError.handelError(res.statusCode));
+        res.statusCode == 200 && res.responseData.length ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : (this.dataSource = [], this.handleError.handelError(res.statusCode));
       }, error: (error: any) => {
         this.handleError.handelError(error.status);
       }
@@ -67,18 +67,19 @@ export class BankBranchRegistrationComponent implements OnInit {
   }
 
   bindTable() {
-    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&BankId=0', false, false, false, 'baseURL');
+    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?pageno=' + (this.currentPage + 1) + '&pagesize='+this.pageSize+'&BankId=0', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 && res.responseData.length ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : (this.dataSource = [],this.handleError.handelError(res.statusCode));
+        res.statusCode == 200 && res.responseData.length ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : (this.dataSource = [], this.handleError.handelError(res.statusCode));
       }, error: (error: any) => {
         this.handleError.handelError(error.status)
       }
     })
   }
-  
+
   handlePageEvent(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.bindTable();
   }
 
@@ -97,7 +98,7 @@ export class BankBranchRegistrationComponent implements OnInit {
       "modifiedDate": new Date(),
       "isDeleted": false,
       "id": this.editFlag ? this.editObj.id : 0,
-      "bankId":  [this.editFlag ? this.editObj.bankId : 0, Validators.required],
+      "bankId": [this.editFlag ? this.editObj.bankId : 0, Validators.required],
       "branchName": [this.editFlag ? this.editObj.branchName : "", Validators.required],
       "ifsC_Code": [this.editFlag ? this.editObj.ifsC_Code : "", [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]]
     })
@@ -110,10 +111,10 @@ export class BankBranchRegistrationComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-     result == 'Yes' ? this.bankNameDropDown() : '';
+      this.bankNameDropDown();
     });
   }
- 
+
   get fc() { return this.regForm.controls };
   //------For clear the fields when we change the Bank Name-----//
   onChanges(event: any) {
@@ -128,7 +129,7 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   onSubmit(clear: any) {
     let branchName = this.fc['branchName'].value;
-    if (!branchName.replace(/\s/g, '').length) { //string length is 0
+    if (!branchName.replace(/\s/g, '').length && this.regForm.invalid) { //string length is 0
       return;
     }
     else {

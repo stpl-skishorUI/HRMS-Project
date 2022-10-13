@@ -5,6 +5,7 @@ import { CallApiService } from 'src/app/core/services/call-api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
+import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service';
 @Component({
   selector: 'app-organization-registration',
   templateUrl: './organization-registration.component.html',
@@ -20,7 +21,7 @@ export class OrganizationRegistrationComponent implements OnInit {
   currentPage = 0;
   orgType: string = '';
   constructor(public dialog: MatDialog, private service: CallApiService, public fb: FormBuilder, 
-    private snackbar: MatSnackBar,private error:HandelErrorService) { }
+    private snackbar: MatSnackBar,private error:HandelErrorService,public validationservice:ValidationPatternService) { }
   ngOnInit(): void {
     this.filterMethod();
     this.getTableData();
@@ -34,18 +35,18 @@ export class OrganizationRegistrationComponent implements OnInit {
   addOrganization(obj?: any) {
     const dialogRef = this.dialog.open(AddOrganizationComponent, {
       width: '40%',
-      height: '80%',
+      // height: '80%',
       data: obj,
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-      result == 'Yes' ? this.getTableData() : '';//when we click on * button but not add value then call getTableData()
+      result == 'Yes' ? this.getTableData() : '';//when we click on * button but not add value then didn't call getTableData()
     });
   }
   //***********End Dialog Box*******************/
   //***************Start Bind Table Here*******************/
   getTableData() {
-    this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&name=' + this.orgType, false, false, false, "baseURL");
+    this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize='+ this.pageSize+'&name=' + this.orgType, false, false, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -89,6 +90,7 @@ export class OrganizationRegistrationComponent implements OnInit {
   //************Start Handle page for Pagination***************/
   handlePageEvent(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.getTableData();
   }
   //************End Handle page for Pagination***************/

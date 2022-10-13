@@ -5,12 +5,12 @@
 </div>
 <div class="row">
     <div class="form-container">
-        <form [formGroup]="empRegistraion" (ngSubmit)="submit(empRegistraion.value)">
+        <form [formGroup]="empRegistration" (ngSubmit)="submit(empRegistration.value)">
         <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
             {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
         </button> -->
         <mat-stepper [linear]="isLinear" #stepper>
-            <mat-step [stepControl]="empRegistraion">
+            <mat-step [stepControl]="empRegistration">
 
                 <ng-template matStepLabel>Personal Details</ng-template>
                 <!-- <mat-form-field appearance="fill">
@@ -20,18 +20,16 @@
                 </mat-form-field> -->
                 <div class="col-sm-12 mt-3">
                     <div class="upload-image">
-                        <img src="assets/images/user.jpg">
+                        <img src="assets/images/user.jpg" formControlName="profilePhoto">
                         <button class="btn"><i class="fa-solid fa-plus"></i></button>
                         <input type="file" name="myfile" />
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label>Name</mat-label>
-                                    <input matInput placeholder="Name" formControlName="name">
-                                </mat-form-field>
-                            </div>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Name</mat-label>
+                                <input matInput placeholder="Name" formControlName="name">
+                            </mat-form-field>
                         </div>
                         <div class="col-sm-6">
                             <mat-form-field appearance="legacy" class="w-100">
@@ -42,222 +40,201 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field  appearance="legacy" class="w-100">
-                                    <mat-label>Date Of Birth</mat-label>
-                                    <input matInput [matDatepicker]="picker" formControlName="dob">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                  </mat-form-field>                              
-                            </div>
+                            <mat-form-field  appearance="legacy" class="w-100">
+                                <mat-label>Date Of Birth</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="dob">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label>Email ID</mat-label>
-                                    <input matInput placeholder="Enter Email id" formControlName="emailId">
-                                </mat-form-field>
-                            </div>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Email ID</mat-label>
+                                <input matInput placeholder="Enter Email id" formControlName="emailId">
+                            </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                   <mat-label>Contact No 1</mat-label>
-                                   <input matInput placeholder="Contact Number 1" formControlName="mobileNo1">
-                               </mat-form-field>
-                           </div>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Contact No 1</mat-label>
+                                <input matInput placeholder="Contact Number 1" formControlName="mobileNo1">
+                            </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                   <mat-label>Contact No 2</mat-label>
-                                   <input matInput placeholder="Contact No 2"  formControlName="mobileNo2">
-                               </mat-form-field>
-                           </div>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Contact No 2</mat-label>
+                                <input matInput placeholder="Contact No 2"  formControlName="mobileNo2">
+                            </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field  appearance="legacy" class="w-100">
-                                    <mat-label>Address</mat-label>
-                                    <textarea matInput placeholder="Enter Local Address" formControlName="localAddress"></textarea>
-                                  </mat-form-field>
-                            </div>
+                            <mat-form-field  appearance="legacy" class="w-100">
+                                <mat-label>Address</mat-label>
+                                <textarea matInput placeholder="Enter Local Address" formControlName="localAddress"></textarea>
+                              </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field  appearance="legacy" class="w-100">
-                                    <mat-label>Address</mat-label>
-                                    <textarea matInput placeholder="Enter Permanent Address" formControlName="permanentAddress"></textarea>
-                                  </mat-form-field>
-                            </div>
+                            <mat-form-field  appearance="legacy" class="w-100">
+                                <mat-label>Address</mat-label>
+                                <textarea matInput placeholder="Enter Permanent Address" formControlName="permanentAddress"></textarea>
+                              </mat-form-field>
                         </div>
                     </div>
                     <div class="row align-items-center">
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-radio-group aria-label="Select an option" formControlName="gender">
-                                    <mat-label>Gender</mat-label>
-                                    <mat-radio-button value="1">Option 1</mat-radio-button>
-                                    <mat-radio-button value="2">Option 2</mat-radio-button>
-                                  </mat-radio-group>
-                                  
-                            </div>
+                            <mat-radio-group aria-label="Select an option" formControlName="gender">
+                                <mat-label>Gender</mat-label>
+                                <mat-radio-button [value]="gen.id" *ngFor="let gen of genderArr">{{gen.name}}</mat-radio-button>
+                              </mat-radio-group>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label>Education</mat-label>
-                                    <mat-select formControlName="education">
-                                        <mat-option>Undergradute</mat-option>
-                                        <mat-option>Graduate</mat-option>
-                                        <mat-option>Post Graduate</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Education</mat-label>
+                                <mat-select formControlName="education">
+                                    <mat-option [value]="edu.id" *ngFor="let edu of educations">{{edu.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field  appearance="legacy" class="w-100">
-                                    <mat-label>Course</mat-label>
-                                    <textarea matInput placeholder="Enter Course" formControlName="course"></textarea>
-                                  </mat-form-field>
-                            </div>
+                            <mat-form-field  appearance="legacy" class="w-100">
+                                <mat-label>Course</mat-label>
+                                <textarea matInput placeholder="Enter Course" formControlName="course"></textarea>
+                              </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field  appearance="legacy" class="w-100">
-                                    <mat-label>Certification</mat-label>
-                                    <textarea matInput placeholder="Enter Certification" formControlName="additionalCertification"></textarea>
-                                  </mat-form-field>
-                            </div>
+                            <mat-form-field  appearance="legacy" class="w-100">
+                                <mat-label>Certification</mat-label>
+                                <textarea matInput placeholder="Enter Certification" formControlName="additionalCertification"></textarea>
+                              </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field  appearance="legacy" class="w-100">
-                                    <mat-label>Total Experience</mat-label>
-                                    <textarea matInput placeholder="Enter total years of experience" formControlName="totalExperience"></textarea>
-                                  </mat-form-field>
-                            </div>
+                            <mat-form-field  appearance="legacy" class="w-100">
+                                <mat-label>Total Experience</mat-label>
+                                <textarea matInput placeholder="Enter total years of experience" formControlName="totalExperience"></textarea>
+                              </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field  appearance="legacy" class="w-100">
-                                    <mat-label>Domain</mat-label>
-                                    <textarea matInput placeholder="Enter your work domain" formControlName="workDomain"></textarea>
-                                  </mat-form-field>
-                            </div>
+                            <mat-form-field  appearance="legacy" class="w-100">
+                                <mat-label>Domain</mat-label>
+                                <textarea matInput placeholder="Enter your work domain" formControlName="workDomain"></textarea>
+                              </mat-form-field>
                         </div>
                     </div>
                     <div class="">
-                        <div class="mb-0">
-                            <mat-form-field  appearance="legacy" class="w-100">
-                                <mat-label>SkillSet</mat-label>
-                                <textarea matInput placeholder="Describe your skillset" formControlName="skillset"></textarea>
-                              </mat-form-field>
-                        </div>
-                       
+                        <mat-form-field  appearance="legacy" class="w-100">
+                            <mat-label>SkillSet</mat-label>
+                            <textarea matInput placeholder="Describe your skillset" formControlName="skillset"></textarea>
+                          </mat-form-field>                       
                     </div>
                 </div>
                 <div class="mt-3 text-end">
                     <button mat-raised-button matStepperNext class="btn-main">Next</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="empRegistraion" label="Work Profile Details">
-                <!-- <mat-form-field appearance="fill">
-                    <mat-label>Address</mat-label>
-                    <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                        required>
-                </mat-form-field> -->
+            <mat-step [stepControl]="empRegistration" label="Work Profile Details">
+
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="mb-0">
+                        <mat-form-field appearance="legacy" class="w-100">
+                            <mat-label> Enter Compnay </mat-label>
+                            <input matInput placeholder="Enter Company">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <mat-form-field appearance="legacy" class="w-100">
+                            <mat-label> Enter Department </mat-label>
+                            <input matInput placeholder="Enter department">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <mat-form-field appearance="legacy" class="w-100">
+                            <mat-label> Enter Designation </mat-label>
+                            <input matInput placeholder="Enter designation">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <mat-form-field appearance="legacy" class="w-100">
+                            <mat-label> User Type</mat-label>
+                            <input matInput placeholder="Enter user type">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <mat-form-field appearance="legacy" class="w-100">
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="picker1">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                          </mat-form-field> 
+                    </div>
+                    <div class="col-sm-6">
+                        <mat-form-field appearance="legacy" class="w-100">
+                            <mat-label>Reference</mat-label>
+                            <textarea matInput placeholder="Enter Refernce"></textarea>
+                          </mat-form-field>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="text-end">
+                        <button mat-stroked-button matStepperPrevious class="me-3 btn-outline-main">Back</button>
+                        <button mat-raised-button matStepperNext class="btn-main">Next</button>
+                    </div>
+                </div>
+               
+            </mat-step>
+            <mat-step [stepControl]="empRegistration" label="Bank Details">
+               
+                <div class="">
+                   
+                    <div class="row">
+                        <div class="col-sm-6">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Enter Bank Name</mat-label>
                                 <input matInput placeholder="Enter Bank Name" formControlName="bankId">
                             </mat-form-field>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-0">
+                        <div class="col-sm-6">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label> Branch Name</mat-label>
                                 <input matInput placeholder="Enter Branch Name" formControlName="branchId">
                             </mat-form-field>
                         </div>
                     </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
-                        <div class="mb-0">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label> Bank Account Number</mat-label>
                                 <input matInput placeholder="Enter Accnt Number" formControlName="accountNo">
                             </mat-form-field>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="text-end">
-                            <button mat-raised-button matStepperPrevious class="me-3 btn-outline-main">Back</button>
-                            <button mat-raised-button matStepperNext class="btn-main">Next</button>
+                        <div class="col-sm-6">
+                            <div class="text-end">
+                                <button mat-raised-button matStepperPrevious class="me-3 btn-outline-main">Back</button>
+                                <button mat-raised-button matStepperNext class="btn-main">Next</button>
+                            </div>
                         </div>
                     </div>
+                    <div class="">                       
+                    </div>
                 </div>
-                <div class="">
-                   
-                   
-                   
-                </div>
-               
+              
             </mat-step>
-            <mat-step [stepControl]="empRegistraion" label="Bank Details">
-                <!-- <mat-form-field appearance="fill">
-                    <mat-label>Address</mat-label>
-                    <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                        required>
-                </mat-form-field> -->
-                <div class="">
-                    <!-- <div class="mb-0">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label> PAN Number</mat-label>
-                            <input matInput placeholder="Enter pan number" formControlName="paN_No">
-                        </mat-form-field>
-                    </div>
-                    <div class="mb-0">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label> Addhaar Number</mat-label>
-                            <input matInput placeholder="Enter Addhaar number" formControlName="adhar_No">
-                        </mat-form-field>
-                    </div>
-                    <div class="mb-0">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label> PF Number</mat-label>
-                            <input matInput placeholder="Enter PF number" formControlName="pF_No">
-                        </mat-form-field>
-                    </div>
-                    <div class="mb-0">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label> UAN Number</mat-label>
-                            <input matInput placeholder="Enter UAN number" formControlName="uaN_No">
-                        </mat-form-field>
-                    </div>
-                    <div class="mb-0">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label> ESIC Number</mat-label>
-                            <input matInput placeholder="Enter esic number" formControlName="esiC_No">
-                        </mat-form-field>
-                    </div> -->
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field appearance="legacy" class="w-100">
+            <mat-step [stepControl]="empRegistration" label="Documents Details">
+
+                <div class="row" formArrayName="empDocuments">
+                    <div *ngFor="let child of empRegistration.get('empDocuments').controls; let i = index">
+                        <div [formGroupName]="i">
+                            <div class="col-sm-6">
+                                <mat-form-field appearance="legacy" class="w-100" formControlName="label">
                                     <mat-label>Document Type</mat-label>
                                     <mat-select>
                                         <mat-option>PAN Number</mat-option>
@@ -268,33 +245,46 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-0">
+                            <div class="col-sm-6">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label> Document Number</mat-label>
-                                    <input matInput placeholder="Enter document number" formControlName="esiC_No">
+                                    <input matInput placeholder="Enter document number" formControlName="value">
                                 </mat-form-field>
                             </div>
                         </div>
                     </div>
+                        <!-- <div class="col-sm-6">
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label>Document Type</mat-label>
+                                <mat-select>
+                                    <mat-option>PAN Number</mat-option>
+                                    <mat-option>Adhaar Number</mat-option>
+                                    <mat-option>PF Number</mat-option>
+                                    <mat-option>UAN Number</mat-option>
+                                    <mat-option>ESIC Number</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label> Document Number</mat-label>
+                                <input matInput placeholder="Enter document number" formControlName="esiC_No">
+                            </mat-form-field>
+                        </div> -->
+                    </div>
 
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label> Username </mat-label>
-                                    <input matInput placeholder="Enter username number" formControlName="userName">
-                                </mat-form-field>
-                            </div>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label> Username </mat-label>
+                                <input matInput placeholder="Enter username number" formControlName="userName">
+                            </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-0">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label> Password</mat-label>
-                                    <input matInput placeholder="Enter password" formControlName="password">
-                                </mat-form-field>
-                            </div>
+                            <mat-form-field appearance="legacy" class="w-100">
+                                <mat-label> Password</mat-label>
+                                <input matInput placeholder="Enter password" formControlName="password">
+                            </mat-form-field>
                         </div>
                     </div>
                     <div class="mb-0">
@@ -306,76 +296,10 @@
                             <input type="file">
                         </div>
                     </div>
-
-                </div>
-                <div class="text-end">
-                    <button mat-stroked-button matStepperPrevious class="me-3 btn-outline-main">Back</button>
-                    <button mat-raised-button matStepperNext class="btn-main">Next</button>
-                </div>
-            </mat-step>
-            <mat-step [stepControl]="empRegistraion" label="Documents Details">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="mb-0">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label> Enter Compnay </mat-label>
-                                <input matInput placeholder="Enter Company">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-0">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label> Enter Department </mat-label>
-                                <input matInput placeholder="Enter department">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="mb-0">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label> Enter Designation </mat-label>
-                                <input matInput placeholder="Enter designation">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-0">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label> User Type</mat-label>
-                                <input matInput placeholder="Enter user type">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
-                        <div class="mb-0">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>Choose a date</mat-label>
-                                <input matInput [matDatepicker]="picker1">
-                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                <mat-datepicker #picker1></mat-datepicker>
-                              </mat-form-field>                          
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-0">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>Reference</mat-label>
-                                <textarea matInput placeholder="Enter Refernce"></textarea>
-                              </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                <div class="">
                     <div class="text-end">
                         <button mat-stroked-button matStepperPrevious class="me-3 btn-outline-main">Back</button>
                         <button mat-raised-button matStepperNext class="btn-main">Next</button>
                     </div>
-                </div>
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Done</ng-template>

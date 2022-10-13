@@ -52,10 +52,7 @@ export class CompanyRegistrationComponent implements OnInit {
           this.handleError.handelError(response.statusCode);
         }
       }
-    }), (error: any) => {
-      // console.log("Error : ", error);
-      this.handleError.handelError(error.statusCode);
-    }
+    })
   }
   // ---------------------------------- Organization dropdown ---------------------------------- //
 
@@ -63,7 +60,6 @@ export class CompanyRegistrationComponent implements OnInit {
   dialogBox(obj?: any) {
     const dialogRef = this.dialog.open(AddCompanyComponent, {
       width: '40%',
-      height: '90%',
       data: obj,
       disableClose: true
     });
@@ -78,7 +74,7 @@ export class CompanyRegistrationComponent implements OnInit {
 
   // ----------------------------------------- Bind Table -------------------------------------------- // 
   getTableData() {
-    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=' + (this.currentPage + 1) + '&pagesize=10&searchText=' + this.record + '&orgId=' + this.orgId, false, false, false, "baseURL");
+    this.service.setHttp('get', 'api/CompanyRegistration/GetAllCompanies?pageno=' + (this.currentPage + 1) + '&pagesize='+ this.pageSize +'&searchText=' + this.record + '&orgId=' + this.orgId, false, false, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -109,6 +105,7 @@ export class CompanyRegistrationComponent implements OnInit {
 
   onPageChanged(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.getTableData();
   }
   // ----------------------------------------- Filter Logic -------------------------------------------- // 
