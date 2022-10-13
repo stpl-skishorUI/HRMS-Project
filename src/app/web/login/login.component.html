@@ -19,7 +19,7 @@
                                 <mat-label>Password</mat-label>
                                 <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password">
                                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                                    [attr.aria-pressed]="hide">
+                                    [attr.aria-pressed]="hide" type="button">
                                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 </button>
                             </mat-form-field>
@@ -27,10 +27,12 @@
                         <div class="mb-2 text-end">
                                 <a routerLink="../forgot-password" class="text-main">Forget Password</a>
                         </div>
+
+                        <div class="mb-0 text-end">
+                            <button mat-raised-button class="btn-main w-100 py-1" type="submit">LOGIN</button>
+                        </div>
                     </form>
-                    <div class="mb-0 text-end">
-                        <button mat-raised-button class="btn-main w-100 py-1" type="submit">LOGIN</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
