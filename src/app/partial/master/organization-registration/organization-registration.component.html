@@ -101,8 +101,8 @@
 
 
             <ng-container *ngIf="totalCount>10">
-                <mat-paginator (page)="handlePageEvent($event)" [length]="totalCount" [pageSize]="pageSize"
-                    [pageIndex]="currentPage" showFirstLastButtons>
+                <mat-paginator [pageSizeOptions]="[10, 50, 100]" (page)="handlePageEvent($event)" [length]="totalCount" [pageSize]="pageSize"
+                    [pageIndex]="currentPage" showFirstLastButtons aria-label="Select page of periodic elements">
                 </mat-paginator>
             </ng-container>
 
