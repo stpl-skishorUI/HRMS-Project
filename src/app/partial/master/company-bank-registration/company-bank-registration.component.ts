@@ -24,6 +24,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
 
   totalCount: number = 0;
   currentPage: number = 0;
+  pageSize = 10;
 
   sendObj = { organizationId: 0, companyId: 0, bankId: 0, branchId: 0, accountType: '' }
 
@@ -60,7 +61,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
   // --------------------------------------------Bind Table Data-------------------------------------------
 
   bindTableData() {
-    this.api.setHttp('get', 'api/CompanyBankAccount/GetAllAccountByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&OrganizationId=' + this.sendObj.organizationId + '&CompanyId=' + this.sendObj.companyId + '&BankId=' +
+    this.api.setHttp('get', 'api/CompanyBankAccount/GetAllAccountByPagination?pageno=' + (this.currentPage + 1) + '&pagesize='+this.pageSize+'&OrganizationId=' + this.sendObj.organizationId + '&CompanyId=' + this.sendObj.companyId + '&BankId=' +
       this.sendObj.bankId + '&BranchId=' + this.sendObj.branchId + '&AccountType=' + this.sendObj.accountType,
       false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
@@ -139,6 +140,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
   }
 
   pageChanged(event: any) {
+    this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.bindTableData()
   }
@@ -147,6 +149,7 @@ export class CompanyBankRegistrationComponent implements OnInit {
 
   clearForm(id: string) {
     if (id == 'organization') {
+      this.filterForm.controls['companyId'].reset();
       this.filterForm.controls['bankId'].reset();
       this.filterForm.controls['branchId'].reset();
       this.filterForm.controls['accountType'].reset();
