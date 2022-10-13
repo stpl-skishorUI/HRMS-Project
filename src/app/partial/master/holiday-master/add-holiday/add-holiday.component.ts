@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -9,6 +9,7 @@ import { CommonApiService } from 'src/app/core/services/common-api.service';
 import { CommonMethodsService } from 'src/app/core/services/common-methods.service';
 import { HandelErrorService } from 'src/app/core/services/handel-error.service';
 import { ValidationPatternService } from 'src/app/core/services/validation-pattern.service'
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-holiday',
@@ -31,8 +32,7 @@ export class AddHolidayComponent implements OnInit {
               private fb: FormBuilder,
               private errorService: HandelErrorService,
               public validErrService: ValidationPatternService,
-              private mat: MatSnackBar
-
+              private snackBar: MatSnackBar
     ) { }
 
   ngOnInit(): void {
@@ -71,17 +71,17 @@ export class AddHolidayComponent implements OnInit {
       this.apiService.setHttp(this.data.isInsert?'post':'put', this.data.isInsert? 'api/HolidayMaster/AddHoliday':'api/HolidayMaster/UpdateHoliday', true, formdata ,false, 'baseURL');
       this.subscription =  this.apiService.getHttp().subscribe({
         next: (resp: any)=> {
-          // console.log("Save/update  holiday :", resp );
+          console.log("Save/update  holiday :", resp );
           if (resp.statusCode == "200") {
+            this.snackBar.open(resp.statusMessage,'Cancel');
             this.dialogRef.close('yes');
           }
           else{
-            if(resp.statusCode != "404"){
-                this.mat.open("data Already exist");
+            if(resp.statusCode == "404"){
+                this.snackBar.open(resp.statusMessage,'Cancel');
             }else{
               this.errorService.handelError(resp.statusCode);
             }
-           
           }
         },
         error: (error: any)=> {
