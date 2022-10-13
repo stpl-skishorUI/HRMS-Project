@@ -35,7 +35,7 @@ export class OrganizationRegistrationComponent implements OnInit {
   addOrganization(obj?: any) {
     const dialogRef = this.dialog.open(AddOrganizationComponent, {
       width: '40%',
-      height: '80%',
+      // height: '80%',
       data: obj,
       disableClose: true
     });
