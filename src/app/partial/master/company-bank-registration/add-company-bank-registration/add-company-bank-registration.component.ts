@@ -25,7 +25,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
   constructor(private api: CallApiService, private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddCompanyBankRegistrationComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private snackBar: MatSnackBar, private commonApi: CommonApiService,
-    public validationPattern:ValidationPatternService,private handalErrorService: HandelErrorService) { }
+    public validationPattern: ValidationPatternService, private handalErrorService: HandelErrorService) { }
 
   ngOnInit(): void {
     this.formData();
@@ -53,7 +53,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
     })
   }
 
-  get formFiledControl() { return this.companyBankRegistrationForm.controls}
+  get formFiledControl() { return this.companyBankRegistrationForm.controls }
 
   // --------------------------------------Dropdown Methods Start----------------------------------------
 
@@ -62,7 +62,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.organizationNameArray = res.responseData;
-          this.data ? this.getCampanyNameDropdown():''
+          this.data ? this.getCampanyNameDropdown() : ''
         }
       })
       // error: (error: any) => {
@@ -78,7 +78,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
         if (res.statusCode == '200' && res.responseData.length) {
           this.campanyNameArray = res.responseData;
         }
-       })
+      })
       // error: (error: any) => {
       //   console.log("Error is", error);
       // }
@@ -90,7 +90,7 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
       next: ((res: any) => {
         if (res.statusCode == '200' && res.responseData.length) {
           this.bankNameArray = res.responseData;
-          this.data ? this.getBranchNameDropdown():''; 
+          this.data ? this.getBranchNameDropdown() : '';
         }
       })
       // error: (error: any) => {
@@ -143,22 +143,32 @@ export class AddCompanyBankRegistrationComponent implements OnInit {
 
   // On Submit
   onSubmit() {
-    let obj = this.companyBankRegistrationForm.value;
-    this.api.setHttp(this.editFlag ? 'put' : 'post', this.editFlag ? 'api/CompanyBankAccount/UpdateCompanyBankAccountDetails' : 'api/CompanyBankAccount/AddCompanyBankAccountDetails', false, obj, false, 'baseURL');
-    this.api.getHttp().subscribe({
-      next: ((res: any) => {
-        if (res.statusCode == '200') {
-          this.dialogRef.close('yes');
-          this.snackBar.open(res.statusMessage, 'ok', {
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-            duration : 2000
-          });
+    if (this.companyBankRegistrationForm.invalid) {
+      return;
+    } else {
+      let obj = this.companyBankRegistrationForm.value;
+      this.api.setHttp(this.editFlag ? 'put' : 'post', this.editFlag ? 'api/CompanyBankAccount/UpdateCompanyBankAccountDetails' : 'api/CompanyBankAccount/AddCompanyBankAccountDetails', false, obj, false, 'baseURL');
+      this.api.getHttp().subscribe({
+        next: ((res: any) => {
+          if (res.statusCode == '200') {
+            this.dialogRef.close('yes');
+            this.snackBar.open(res.statusMessage, 'ok', {
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+              duration: 2000
+            });
+          } else {
+            this.snackBar.open(res.statusMessage, 'ok', {
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+              duration: 2000
+            })
+          }
+        }),
+        error: (error: any) => {
+          this.handalErrorService.handelError(error.status);
         }
-      }),
-      error: (error: any) => {
-        this.handalErrorService.handelError(error.status);
-      }
-    })
+      })
+    }
   }
 }
