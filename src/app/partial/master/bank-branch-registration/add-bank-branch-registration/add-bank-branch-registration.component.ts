@@ -15,12 +15,12 @@ export class AddBankBranchRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['sr_no', 'Bank_Name', 'action'];
   dataSource = new Array();
   bankForm!: FormGroup;
-  editFlag:boolean = false;
-  editObj :any;
-  currentPage : number = 0;
-  totalCount : number = 0;
-  pageSize : number = 10;
-  constructor(private fb: FormBuilder, private api: CallApiService, private mat: MatSnackBar,public validationPattern : ValidationPatternService, private handleError : HandelErrorService) { }
+  editFlag: boolean = false;
+  editObj: any;
+  currentPage: number = 0;
+  totalCount: number = 0;
+  pageSize: number = 10;
+  constructor(private fb: FormBuilder, private api: CallApiService, private mat: MatSnackBar, public validationPattern: ValidationPatternService, private handleError: HandelErrorService) { }
   @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
   ngOnInit(): void {
     this.bindTable();
@@ -34,21 +34,21 @@ export class AddBankBranchRegistrationComponent implements OnInit {
       "createdDate": new Date(),
       "modifiedDate": new Date(),
       "isDeleted": false,
-      "id":this.editFlag ? this.editObj.id :   0,
-      "bankName":[ this.editFlag ? this.editObj.bankName : "",Validators.required]
+      "id": this.editFlag ? this.editObj.id : 0,
+      "bankName": [this.editFlag ? this.editObj.bankName : "", Validators.required]
     })
   }
 
-  get fc(){return this.bankForm.controls}
+  get fc() { return this.bankForm.controls }
 
   bindTable() {
-    this.api.setHttp( 'get', 'api/BankRegistration/GetAllBankRegiByPagination?pageno='+(this.currentPage + 1)+'&pagesize=10', false, false, false, 'baseURL');
+    this.api.setHttp('get', 'api/BankRegistration/GetAllBankRegiByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
-        res.statusCode == 200 ? (this.dataSource = res.responseData,this.totalCount = res.responseData1.pageCount) : (this.dataSource = [], this.handleError.handelError(res.statusCode));
+        res.statusCode == 200 ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : (this.dataSource = [], this.handleError.handelError(res.statusCode));
       },
-      error : (error:any)=>{
-        this.handleError.handelError(error.status); 
+      error: (error: any) => {
+        this.handleError.handelError(error.status);
       }
     })
   }
@@ -58,37 +58,43 @@ export class AddBankBranchRegistrationComponent implements OnInit {
     this.bindTable();
   }
 
-  onDelete(id:number){
-    this.api.setHttp('delete','api/BankRegistration?id='+id,false, false,false,'baseURL');
+  onDelete(id: number) {
+    this.api.setHttp('delete', 'api/BankRegistration?id=' + id, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
-      next : (res:any)=>{
-        this.mat.open(res.statusMessage,'ok',{duration:1000});
+      next: (res: any) => {
+        this.mat.open(res.statusMessage, 'ok', { duration: 1000 });
         this.bindTable();
       }
     })
   }
 
-  onEdit(data:any){
+  onEdit(data: any) {
     this.editObj = data;
     this.editFlag = true;
     this.defaultForm();
     this.fc['bankName'].setValidators([Validators.required]);
   }
 
-  onCancel(){
+  onCancel() {
     this.editFlag = false;
+    this.defaultForm();
   }
 
   onSubmit() {
-    let obj = this.bankForm.value;
-    this.api.setHttp( this.editFlag ? 'put' : 'post', 'api/BankRegistration', false, obj, false, 'baseURL');
-    this.api.getHttp().subscribe({
-      next: (res: any) => {
-        res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok',{duration:1000}), this.bindTable(), this.editFlag = false,this.formGroupDirective.resetForm(), this.defaultForm()) : this.handleError.handelError(res.statusCode);
-      },
-      error : (error:any)=>{
-        this.handleError.handelError(error.status); 
-      }
-    })
+    if (this.bankForm.invalid) {
+      return;
+    }
+    else {
+      let obj = this.bankForm.value;
+      this.api.setHttp(this.editFlag ? 'put' : 'post', 'api/BankRegistration', false, obj, false, 'baseURL');
+      this.api.getHttp().subscribe({
+        next: (res: any) => {
+          res.statusCode == 200 ? (this.mat.open(res.statusMessage, 'ok', { duration: 1000 }), this.bindTable(), this.editFlag = false, this.formGroupDirective.resetForm(), this.defaultForm()) : this.handleError.handelError(res.statusCode);
+        },
+        error: (error: any) => {
+          this.handleError.handelError(error.status);
+        }
+      })
+    }
   }
 }

@@ -110,7 +110,7 @@ export class BankBranchRegistrationComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-      result == 'Yes' ? this.bankNameDropDown() : '';
+      this.bankNameDropDown();
     });
   }
 
@@ -128,7 +128,7 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   onSubmit(clear: any) {
     let branchName = this.fc['branchName'].value;
-    if (!branchName.replace(/\s/g, '').length) { //string length is 0
+    if (!branchName.replace(/\s/g, '').length && this.regForm.invalid) { //string length is 0
       return;
     }
     else {
