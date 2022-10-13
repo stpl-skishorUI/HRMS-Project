@@ -21,6 +21,7 @@ export class ForgotPasswordComponent implements OnInit {
   formField(){
     this.forgotForm = this.fb.group({
       mobileNumber : [''],
+      otp : [''],
       password : [''],
       confirmPassword : ['']
     })
