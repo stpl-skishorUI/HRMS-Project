@@ -45,8 +45,8 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   addnewsalary() {
     const dialogRef = this.dialog.open(AddNewSalaryComponent, {
       width: '50%',
-      hasBackdrop:false
-    });
+      disableClose: true
+     });
 
     dialogRef.afterClosed().subscribe((result) => {
     });
@@ -145,13 +145,13 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
     });
   }
 
-  //-----------------------------------------------------Pagination----------------------------------------------------------------
+  //-----------------------------------------------------Pagination-----------------------------------------------------------------------------------------//
   pageChanged(event: any) {
     this.currentPage = event.pageIndex;
     this.displayData();
   }
 
-  //------------------------------------------------------------------Change Company---------------------------------------------------------------
+  //------------------------------------------------------------------Change Company------------------------------------------------------------------------//
   onChangeCompany() {
     this.filterForm.patchValue({
       allemployee: 0,
@@ -159,8 +159,12 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
     });
     this.displayData();
   }
-  //------------------------------------------------------------------Change Employee  ---------------------------------------------------------------
+  //------------------------------------------------------------------Change Employee  ---------------------------------------------------------------------//
   onChangeEmployee() {
+    this.displayData();
+  }
+  //-----------------------------------------------------------------------Change Year-----------------------------------------------------------------------------------//
+  onChangeYear() {
     this.displayData();
   }
 }

@@ -19,7 +19,7 @@
             <div class="mb-0">
                 <mat-form-field appearance="legacy" class="w-100">
                     <mat-label>Department Name</mat-label>
-                    <input matInput placeholder="Department Name" formControlName="departmentName">
+                    <input matInput placeholder="Department Name" (keypress)="space($event)" formControlName="departmentName" style="text-transform:capitalize;">
                     <mat-error *ngIf="f['departmentName'].hasError('required') || f['departmentName'].hasError('touched')">Department
                       Name is Required</mat-error>
                     </mat-form-field>
