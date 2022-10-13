@@ -16,14 +16,14 @@ export class DocumentTypeRegistrationComponent implements OnInit {
   displayedColumns: string[] = ['sr_no', 'documentTypeName', 'action'];
   dataSource = ELEMENT_DATA;
 
-  constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder, 
+  constructor(public dialog: MatDialog, private service: CallApiService, private fb: FormBuilder,
     private snack: MatSnackBar, private handalErrorService: HandelErrorService) { }
 
-  filterForm!: FormGroup; 
+  filterForm!: FormGroup;
   pageSize = 10;
   totalCount!: number;
   currentPage: number = 0;
-  docType:string = '';
+  docType: string = '';
 
   ngOnInit(): void {
     this.displayData();
@@ -52,7 +52,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   // ---------------------------------------- Display Data --------------------------------------------
   displayData() {
-    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?pageno='+ (this.currentPage + 1) +'&pagesize=5&documentType1=' + this.docType, false, false, false,
+    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=5&documentType1=' + this.docType, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -61,10 +61,10 @@ export class DocumentTypeRegistrationComponent implements OnInit {
           this.filterForm.reset();
           this.totalCount = res.responseData1.pageCount;
         }
-        else{
+        else {
           this.dataSource = [];
         }
-      },error: (error: any) => {
+      }, error: (error: any) => {
         this.handalErrorService.handelError(error.status);
       }
     })
@@ -103,11 +103,11 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   // ----------------------------------------- Filter Record -------------------------------------------
   filterData() {
-    this.docType = this.filterForm.value.documentTypeName;
+    this.docType = this.filterForm.value.documentTypeName ? this.filterForm.value.documentTypeName : '';
     this.currentPage = 0;
     this.displayData();
   }
-  
+
 }
 const ELEMENT_DATA: PeriodicElement[] = [
   { sr_no: 1, Document_Type_Name: '', action: '', },

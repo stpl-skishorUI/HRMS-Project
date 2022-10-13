@@ -88,8 +88,8 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
                         <ng-container *ngIf="totalCount >10">
-                            <mat-paginator (page)="handlePageEvent($event)" [length]="totalCount" [pageSize]="pageSize"
-                                [pageIndex]="currentPage" showFirstLastButtons>
+                            <mat-paginator (page)="handlePageEvent($event)" [length]="totalCount" [pageSizeOptions]="[10, 50, 100]" 
+                                [pageIndex]="currentPage" showFirstLastButtons aria-label="Select page of periodic elements">
                             </mat-paginator>
                         </ng-container>
                     </div>
@@ -143,7 +143,7 @@
                                 <div class="d-flex justify-content-between">
                                     <button mat-raised-button class="btn-outline-main"
                                         (click)="onCancel(clear)" type="button">Cancel</button>
-                                    <button mat-raised-button class="btn-main" type="submit" [disabled]="!regForm.valid">{{!editFlag ? 'Submit' :'Update'}}</button>
+                                    <button mat-raised-button class="btn-main" type="submit">{{!editFlag ? 'Submit' :'Update'}}</button>
                                 </div>
                             </div>
                         </form>
