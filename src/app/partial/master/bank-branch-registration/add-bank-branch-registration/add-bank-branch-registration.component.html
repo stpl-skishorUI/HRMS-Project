@@ -70,7 +70,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
             <ng-container *ngIf="totalCount >10">
-                <mat-paginator (page)="handlePageEvent($event)" [length]="totalCount" [pageSize]="pageSize"
+                <mat-paginator (page)="handlePageEvent($event)" [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[10, 50, 100]"
                     [pageIndex]="currentPage" showFirstLastButtons>
                 </mat-paginator>
             </ng-container>
