@@ -230,8 +230,30 @@
             </mat-step>
             <mat-step [stepControl]="empRegistration" label="Documents Details">
 
-                <div class="row">
-                        <div class="col-sm-6">
+                <div class="row" formArrayName="empDocuments">
+                    <div *ngFor="let child of empRegistration.get('empDocuments').controls; let i = index">
+                        <div [formGroupName]="i">
+                            <div class="col-sm-6">
+                                <mat-form-field appearance="legacy" class="w-100" formControlName="label">
+                                    <mat-label>Document Type</mat-label>
+                                    <mat-select>
+                                        <mat-option>PAN Number</mat-option>
+                                        <mat-option>Adhaar Number</mat-option>
+                                        <mat-option>PF Number</mat-option>
+                                        <mat-option>UAN Number</mat-option>
+                                        <mat-option>ESIC Number</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-6">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label> Document Number</mat-label>
+                                    <input matInput placeholder="Enter document number" formControlName="value">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- <div class="col-sm-6">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Document Type</mat-label>
                                 <mat-select>
@@ -248,7 +270,7 @@
                                 <mat-label> Document Number</mat-label>
                                 <input matInput placeholder="Enter document number" formControlName="esiC_No">
                             </mat-form-field>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="row">

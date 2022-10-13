@@ -8,7 +8,7 @@
                         <div class="col-sm-3">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>All Company</mat-label>
-                                <mat-select formControlName="comapanyId" >
+                                <mat-select formControlName="companyId" >
                                     <mat-option value="0">All</mat-option>
                                     <mat-option [value]="Comp.companyId" *ngFor="let Comp of Companies">{{Comp.name}}</mat-option>
                                 </mat-select>
