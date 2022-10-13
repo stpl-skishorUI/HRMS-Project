@@ -55,6 +55,7 @@ export class AddBankBranchRegistrationComponent implements OnInit {
 
   handlePageEvent(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.bindTable();
   }
 
