@@ -12,7 +12,7 @@
                                 <mat-error> </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Password</mat-label>
                                 <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'">
@@ -22,12 +22,12 @@
                                 </button>
                             </mat-form-field>
                         </div>
-                        <div class="mb-2">
-                                <a routerLink="forgot-password">Forget Password</a>
+                        <div class="mb-2 text-end">
+                                <a routerLink="../forgot-password" class="text-main">Forget Password</a>
                         </div>
                     </form>
                     <div class="mb-0 text-end">
-                        <button mat-raised-button class="btn-main" type="button">Login</button>
+                        <button mat-raised-button class="btn-main w-100 py-1" type="button">LOGIN</button>
                     </div>
                 </div>
             </div>
