@@ -73,8 +73,9 @@ export class LeaveTypeRegistrationComponent implements OnInit {
       "pageno": this.pageNo,
       "CompanyId": formData.companytype,
       "searchText": formData.leaveType,
+      "pagesize":this.pageSize
     }
-    this.callAPIService.setHttp('get', 'api/LeaveType/GetAllLeaveByPagination?pageno=' + obj.pageno + '&pagesize=10&CompanyId=' + obj.CompanyId + '&searchText=' + obj.searchText, false, false, false, 'baseURL');
+    this.callAPIService.setHttp('get', 'api/LeaveType/GetAllLeaveByPagination?pageno=' + obj.pageno + '&pagesize='+obj.pagesize+'&CompanyId=' + obj.CompanyId + '&searchText=' + obj.searchText, false, false, false, 'baseURL');
     this.callAPIService.getHttp().subscribe({
       next: (resp: any) => {
         // this.spinner.hide();
@@ -94,6 +95,7 @@ export class LeaveTypeRegistrationComponent implements OnInit {
 
   paginationEvent(event: any) {
     this.pageNo = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
     this.leaveRegistrationData()
   }
 
