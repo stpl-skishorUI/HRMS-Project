@@ -122,7 +122,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
                 <ng-container *ngIf="totalCount > 10">
-                    <mat-paginator [length]="totalCount" [pageSize]="10" [pageIndex]="currentPage"
+                    <mat-paginator [length]="totalCount" [pageSizeOptions]="[10, 50, 100]" [pageIndex]="currentPage"
                         (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of GitHub search results"></mat-paginator>
                 </ng-container>
             </div>

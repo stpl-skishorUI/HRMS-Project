@@ -22,6 +22,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   companyDropDownArray = new Array();
   salaryTypeSearch = ''
   companyTypeSearch = 0;
+  pageSize : number = 10;
   constructor(public dialog: MatDialog, private service: CallApiService, private snack: MatSnackBar, private fb: FormBuilder, private commonApi: CommonApiService, private handalErrorSer: HandelErrorService, public validationPattern: ValidationPatternService) { }
 
   ngOnInit(): void {
@@ -70,7 +71,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
 
   //--------------------------------------------------------------Gets Table Data Starts----------------------------------
   getAllTableData() {
-    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno=' + this.currentPage + 1, false, false, false,
+    this.service.setHttp('get', 'HRMS/SalaryType/GetAllSalaryTypePagination?pageno=' + this.currentPage + 1+'&pagesize='+this.pageSize, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: ((res: any) => {
@@ -115,6 +116,7 @@ export class SalaryTypeRegistrationComponent implements OnInit {
   //--------------------------------------------------------------Pagenation Starts-------------------------------------------------
   pageChanged(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.getAllTableData();
   }
   //--------------------------------------------------------------Pagenation Ends---------------------------------------------

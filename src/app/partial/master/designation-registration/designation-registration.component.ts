@@ -25,6 +25,7 @@ export class DesignationRegistrationComponent implements OnInit {
   filtterDesignationText: string = '';
   totalCount: any;
   currentPage: number = 0;
+  pageSize: number = 10;
 
   constructor(public dialog: MatDialog, private service: CallApiService, private formBuilder: FormBuilder,
     private snack: MatSnackBar, private commomApi: CommonApiService, private handalErrorService: HandelErrorService,
@@ -70,6 +71,8 @@ export class DesignationRegistrationComponent implements OnInit {
   }
   pageChanged(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    
     this.getTableData();
   }
   //-----------------------------------Filter Data------------------------------------------//
@@ -91,7 +94,7 @@ export class DesignationRegistrationComponent implements OnInit {
 
   //-----------------------------------Table Binding------------------------------------------//
   getTableData() {
-    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10', false, false, false,
+    this.service.setHttp('get', 'HRMS/Designation/GetAllDesignationByPagination?pageno=' + (this.currentPage + 1) + '&pagesize='+this.pageSize, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {

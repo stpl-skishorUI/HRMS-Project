@@ -35,7 +35,7 @@ export class OrganizationRegistrationComponent implements OnInit {
   addOrganization(obj?: any) {
     const dialogRef = this.dialog.open(AddOrganizationComponent, {
       width: '40%',
-      height: '80%',
+      // height: '80%',
       data: obj,
       disableClose: true
     });
@@ -46,7 +46,7 @@ export class OrganizationRegistrationComponent implements OnInit {
   //***********End Dialog Box*******************/
   //***************Start Bind Table Here*******************/
   getTableData() {
-    this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&name=' + this.orgType, false, false, false, "baseURL");
+    this.service.setHttp('get', 'HRMS/Orgnization/GetAllOrgByPagination?pageno=' + (this.currentPage + 1) + '&pagesize='+ this.pageSize+'&name=' + this.orgType, false, false, false, "baseURL");
     this.service.getHttp().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
@@ -90,6 +90,7 @@ export class OrganizationRegistrationComponent implements OnInit {
   //************Start Handle page for Pagination***************/
   handlePageEvent(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.getTableData();
   }
   //************End Handle page for Pagination***************/

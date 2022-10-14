@@ -42,7 +42,7 @@ export class AddBankBranchRegistrationComponent implements OnInit {
   get fc() { return this.bankForm.controls }
 
   bindTable() {
-    this.api.setHttp('get', 'api/BankRegistration/GetAllBankRegiByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10', false, false, false, 'baseURL');
+    this.api.setHttp('get', 'api/BankRegistration/GetAllBankRegiByPagination?pageno=' + (this.currentPage + 1) + '&pagesize='+this.pageSize, false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
         res.statusCode == 200 ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : (this.dataSource = [], this.handleError.handelError(res.statusCode));
@@ -55,6 +55,7 @@ export class AddBankBranchRegistrationComponent implements OnInit {
 
   handlePageEvent(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.bindTable();
   }
 

@@ -67,7 +67,7 @@ export class BankBranchRegistrationComponent implements OnInit {
   }
 
   bindTable() {
-    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&BankId=0', false, false, false, 'baseURL');
+    this.api.setHttp('get', 'HRMS/BankBranchRegistration/GetAllBankBranchByPagination?pageno=' + (this.currentPage + 1) + '&pagesize='+this.pageSize+'&BankId=0', false, false, false, 'baseURL');
     this.api.getHttp().subscribe({
       next: (res: any) => {
         res.statusCode == 200 && res.responseData.length ? (this.dataSource = res.responseData, this.totalCount = res.responseData1.pageCount) : (this.dataSource = [], this.handleError.handelError(res.statusCode));
@@ -79,6 +79,7 @@ export class BankBranchRegistrationComponent implements OnInit {
 
   handlePageEvent(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.bindTable();
   }
 
