@@ -52,7 +52,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   // ---------------------------------------- Display Data --------------------------------------------
   displayData() {
-    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=5&documentType1=' + this.docType, false, false, false,
+    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&documentType1=' + this.docType, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
