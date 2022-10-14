@@ -65,18 +65,8 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   displayData() {
     this.service.setHttp(
       'get',
-      'HRMS/EmployeeSalaryDetails/GetEmpSalary?companyId=' +this.filterForm.controls['companyId'].value +
-        '&EmpCode=' +
-        this.filterForm.controls['allemployee'].value +
-        '&YearId=' +
-        this.filterForm.controls['year'].value +
-        '&pageno=' +
-        (this.currentPage + 1) +
-        '&pagesize=10',
-      false,
-      false,
-      false,
-      'baseURL'
+      'HRMS/EmployeeSalaryDetails/GetEmpSalary?companyId=' +this.filterForm.controls['companyId'].value +'&EmpCode=' +this.filterForm.controls['allemployee'].value +'&YearId=' +this.filterForm.controls['year'].value +
+        '&pageno=' +(this.currentPage + 1) +'&pagesize='+this.pageSize,false,false,false,'baseURL'
     );
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -151,6 +141,7 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   //-----------------------------------------------------Pagination-----------------------------------------------------------------------------------------//
   pageChanged(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.displayData();
   }
 
