@@ -24,7 +24,7 @@ export class HolidayMasterComponent implements OnInit {
   searchForm!: FormGroup;
   totalCount=0;
   pageIndex = 0;
-  pageSize=10;
+  pageSize = 10;
 
 
 
@@ -43,7 +43,6 @@ export class HolidayMasterComponent implements OnInit {
   defaultSearchForm(){
     this.searchForm= new FormGroup({
       // pageno: new FormControl(1),
-      pagesize: new FormControl(10),
       holidaytype: new FormControl(' '),
       year: new FormControl(2022),
       companyId: new FormControl(0),
@@ -83,7 +82,7 @@ export class HolidayMasterComponent implements OnInit {
 
   getAllHoliday(){
     let formData = this.searchForm.value;
-    this.apiService.setHttp('get', 'api/HolidayMaster/GetAllHolidayByPagination?pageno='+(this.pageIndex+1)+'&pagesize=10&holidaytype='+formData.holidaytype+'&year='+formData.year+'&companyId='+formData.companyId, true, false, false, 'baseURL');
+    this.apiService.setHttp('get', 'api/HolidayMaster/GetAllHolidayByPagination?pageno='+(this.pageIndex+1)+'&pagesize='+this.pageSize+'&holidaytype='+formData.holidaytype+'&year='+formData.year+'&companyId='+formData.companyId, true, false, false, 'baseURL');
     // GetAllHolidayByPagination?pageno=1&pagesize=10&holidaytype=Compulsory&year=2022&comapanyId=1
     this.subscription = this.apiService.getHttp().subscribe({
       next: (resp: any) => {
@@ -134,7 +133,7 @@ export class HolidayMasterComponent implements OnInit {
 
   pageChanged(event: PageEvent){
     // console.log("event pagination",{ event });
-    this.pageSize = event.pageSize
+    this.pageSize = event.pageSize;
     // this.searchForm.patchValue({
     //   pageno: event.pageIndex,
     // });
