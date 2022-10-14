@@ -80,7 +80,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
                 <ng-container *ngIf="totalCount > 10">
-                    <mat-paginator [length]="totalCount" [pageSize]="10" [pageIndex]="currentPage"
+                    <mat-paginator [pageSizeOptions]="[10, 50, 100]" [length]="totalCount" [pageSize]="10" [pageIndex]="currentPage"
                         (page)="onClickPaginatior($event)" showFirstLastButtons aria-label="Select page">
                     </mat-paginator>
                 </ng-container>

@@ -52,7 +52,7 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   // ---------------------------------------- Display Data --------------------------------------------
   displayData() {
-    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?pageno=' + (this.currentPage + 1) + '&pagesize=10&documentType1=' + this.docType, false, false, false,
+    this.service.setHttp('get', 'HRMS/DocumentType/GetAllDocumentTypeByPagination?pageno=' + (this.currentPage + 1) + '&pagesize='+ this.pageSize +'&documentType1=' + this.docType, false, false, false,
       'baseURL');
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -72,9 +72,8 @@ export class DocumentTypeRegistrationComponent implements OnInit {
 
   // ------------------------------------------ Pagination --------------------------------------------
   onClickPaginatior(data: any) {
-    // this.pageSize = data.pageSize;
     this.currentPage = data.pageIndex;
-
+    this.pageSize = data.pageSize;
     this.displayData();
   }
 
