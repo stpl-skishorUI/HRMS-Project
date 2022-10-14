@@ -46,6 +46,7 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddNewSalaryComponent, {
       width: '50%',
       disableClose: true
+
      });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -83,6 +84,8 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
           this.dataSource = res.responseData;
           // this.dataSource = res.responseData1;
           this.totalCount = res.responseData1.pageCount;
+        }else{
+          this.dataSource=[];
         }
       },
     });
@@ -154,14 +157,17 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   //------------------------------------------------------------------Change Company------------------------------------------------------------------------//
   onChangeCompany() {
     this.filterForm.patchValue({
-      allemployee: 0,
-      year: 0,
+      // allemployee: 0,
+      // year: 0,
     });
+  this.currentPage=0;
     this.displayData();
+    this.onChangeEmployee();
   }
   //------------------------------------------------------------------Change Employee  ---------------------------------------------------------------------//
   onChangeEmployee() {
     this.displayData();
+    this.onChangeYear();
   }
   //-----------------------------------------------------------------------Change Year-----------------------------------------------------------------------------------//
   onChangeYear() {
