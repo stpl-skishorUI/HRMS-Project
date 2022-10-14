@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive table-scollar">
             <div *ngIf="dataSource.length; else condition">
                 <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
 
@@ -76,17 +76,16 @@
                         </td>
                     </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-                <ng-container *ngIf="totalCount > 10">
-                    <mat-paginator [pageSizeOptions]="[10, 50, 100]" [length]="totalCount" [pageSize]="10" [pageIndex]="currentPage"
-                        (page)="onClickPaginatior($event)" showFirstLastButtons aria-label="Select page">
-                    </mat-paginator>
-                </ng-container>
             </div>
-
         </div>
+        <ng-container *ngIf="totalCount > 10">
+            <mat-paginator [pageSizeOptions]="[10, 50, 100]" [length]="totalCount" [pageSize]="10" [pageIndex]="currentPage"
+                (page)="onClickPaginatior($event)" showFirstLastButtons aria-label="Select page">
+            </mat-paginator>
+        </ng-container>
         <ng-template #condition>
             <h4 class="text-danger text-center">No Data Found !</h4>
         </ng-template>
