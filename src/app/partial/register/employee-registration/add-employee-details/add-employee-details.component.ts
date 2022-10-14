@@ -19,16 +19,28 @@ export class AddEmployeeDetailsComponent implements OnInit {
 
 
     this.fields = {
+      type: {
         options: [
           {
             label: 'Option 1',
-            value: '1'
+            value: '1',
+            "modifiedBy": 0,
+            "modifiedDate": "2022-10-13T11:32:08.324Z",
+            "id": 0,
+            "empCode": 0,
+            "documentTypeId": 0,
+            "documentNo": "string",
+            "uploadPath": "string",
+            "createdBy": 0,
+            "createdDate": "2022-10-13T11:32:08.324Z",
+            "isDeleted": true
           },
-          {
-            label: 'Option 2',
-            value: '2'
-          }
+          // {
+          //   label: 'Option 2',
+          //   value: '2'
+          // }
         ]
+      }
     };
 
     this.empRegistration = this._fb.group({
@@ -37,7 +49,7 @@ export class AddEmployeeDetailsComponent implements OnInit {
       "empId": [0],
       "name": [""],
       "empCode": [],
-      "dob": ["2022-10-07T09:27:47.095Z"],
+      "dob": [new Date()],
       "mobileNo1": [""],
       "mobileNo2": [""],
       "emailId": [""],
@@ -50,12 +62,12 @@ export class AddEmployeeDetailsComponent implements OnInit {
       "totalExperience": [0],
       "skillset": [""],
       "workDomain": [""],
-      "profilePhoto": [""],
+      "profilePhoto": [],
       "companyId": [0],
       "userTypeId": [0],
       "departmentId": [0],
       "designationId": [0],
-      "joiningDate": ["2022-10-07T09:27:47.095Z"],
+      "joiningDate": [""],
       "joiningReference": [""],
       "bankId": [0],
       "branchId": [0],
@@ -70,8 +82,11 @@ export class AddEmployeeDetailsComponent implements OnInit {
       "createdBy": [0],
       "createdDate": ["2022-10-07T09:27:47.095Z"],
       "isDeleted": [true],
-      "empDocuments": this._fb.array([
-      ])
+      // "empDocuments": this._fb.array([
+      // ]),
+      type: this._fb.group({
+        options: this._fb.array([]) // create empty form array   
+      })
       
       });
       this.patch();
@@ -85,8 +100,8 @@ export class AddEmployeeDetailsComponent implements OnInit {
   }
 
   patch(){
-    const control = <FormArray>this.empRegistration.get('empDocuments');
-    this.fields.empDocuments.forEach((x: any) => {
+    const control = <FormArray>this.empRegistration.get('type.options');
+    this.fields.type.options.forEach((x:any) => {
       control.push(this.patchValues(x.label, x.value))
     })
   }
