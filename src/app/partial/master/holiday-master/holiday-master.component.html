@@ -117,7 +117,7 @@
             
             
 
-            <mat-paginator *ngIf="totalCount>10 && Allholidays" [length]="totalCount" showFirstLastButtons  [pageIndex]="pageIndex" (page)="pageChanged($event)" [pageSize]="pageSize" aria-label="Select page"></mat-paginator>
+            <mat-paginator *ngIf="totalCount>10 && Allholidays" [pageSizeOptions]="[10, 50, 100]" [length]="totalCount" showFirstLastButtons  [pageIndex]="pageIndex" (page)="pageChanged($event)"  aria-label="Select page"></mat-paginator>
 
         </div>
     </div>
