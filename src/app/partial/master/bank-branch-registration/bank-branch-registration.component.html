@@ -32,15 +32,14 @@
 
                 </div>
             </form>
-
         </div>
     </div>
-    <div class="card-body p-0">
+    <div class="card-body py-0">
         <div class="row">
             <div class="col-sm-8">
                 <div class="table-responsive table-scollar">
                     <div *ngIf="dataSource.length; else cond">
-                        <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table border">
+                        <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
 
                             <ng-container matColumnDef="sr_no">
                                 <th mat-header-cell *matHeaderCellDef>Sr.No.</th>
@@ -100,7 +99,7 @@
                 </ng-container>
                
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 mt-3">
                 <div class="card">
                     <div class="card-header">
                         <h6 class="modal-title mb-0">Add New Bank Branch Registration</h6>
