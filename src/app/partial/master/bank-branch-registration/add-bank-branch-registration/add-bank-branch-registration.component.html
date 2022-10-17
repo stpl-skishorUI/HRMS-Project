@@ -68,12 +68,14 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+            </table>    
+        </div>
+        <div> 
             <ng-container *ngIf="totalCount >10">
                 <mat-paginator (page)="handlePageEvent($event)" [length]="totalCount" [pageSizeOptions]="[10, 50, 100]"
                     [pageIndex]="currentPage" showFirstLastButtons>
                 </mat-paginator>
             </ng-container>
-        </div>
+        </div>         
     </div>
 </div>
