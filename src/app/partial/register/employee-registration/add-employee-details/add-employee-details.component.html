@@ -13,111 +13,6 @@
 
                     <ng-template matStepLabel>Personal Details</ng-template>
 
-<<<<<<< HEAD
-                <div class="row">
-                    <div class="col-sm-6">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label> Enter Compnay </mat-label>
-                            <input matInput placeholder="Enter Company">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-6">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label> Enter Department </mat-label>
-                            <input matInput placeholder="Enter department" formControlName="departmentId">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label> Enter Designation </mat-label>
-                            <input matInput placeholder="Enter designation" formControlName="designationId">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-6">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label> User Type</mat-label>
-                            <input matInput placeholder="Enter user type" formControlName="userTypeId">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label>Choose a date(Join)</mat-label>
-                            <input matInput [matDatepicker]="picker1" formControlName="joiningDate">
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                          </mat-form-field> 
-                    </div>
-                    <div class="col-sm-6">
-                        <mat-form-field appearance="legacy" class="w-100">
-                            <mat-label>Reference</mat-label>
-                            <textarea matInput placeholder="Enter Refernce" formControlName="joiningReference"></textarea>
-                          </mat-form-field>
-                    </div>
-                </div>
-                <div class="">
-                    <div class="text-end">
-                        <button mat-stroked-button matStepperPrevious class="me-3 btn-outline-main" type="button" >Back</button>
-                        <button mat-raised-button matStepperNext class="btn-main" type="button">Next</button>
-                    </div>
-                </div>
-               
-            </mat-step>
-            <mat-step [stepControl]="empRegistration" label="Bank Details">
-               
-                <div class="">
-                   
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>Enter Bank Name</mat-label>
-                                <input matInput placeholder="Enter Bank Name" formControlName="bankId">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label> Branch Name</mat-label>
-                                <input matInput placeholder="Enter Branch Name" formControlName="branchId">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label> Bank Account Number</mat-label>
-                                <input matInput placeholder="Enter Accnt Number" formControlName="accountNo">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="text-end">
-                                <button mat-raised-button matStepperPrevious class="me-3 btn-outline-main">Back</button>
-                                <button mat-raised-button matStepperNext class="btn-main" type="button">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="">                       
-                    </div>
-                </div>
-              
-            </mat-step>
-            <mat-step [stepControl]="empRegistration" label="Documents Details">
-                <div class="row" formArrayName="empDocuments">
-                    <ng-container *ngFor="let doc of documentControls.controls; let i= index">
-                        <ng-container [formGroupName]="i">
-                            <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100" formControlName="documentTypeId">
-                                    <mat-label>Document Type</mat-label>
-                                    <mat-select>
-                                        <mat-option [value]="1">PAN Number</mat-option>
-                                        <mat-option [value]="2">Adhaar Number</mat-option>
-                                        <mat-option [value]="3">PF Number</mat-option>
-                                        <mat-option [value]="4">UAN Number</mat-option>
-                                        <mat-option [value]="5">ESIC Number</mat-option>
-                                    </mat-select>
-=======
                     <div class="col-sm-12 mt-3">
                         <div class="upload-image">
                             <img src="assets/images/user.jpg">
@@ -129,20 +24,10 @@
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Name</mat-label>
                                     <input matInput placeholder="Name" formControlName="name">
->>>>>>> 97800b8d9d93c16ce903f2ac8c9cfe57a4a67965
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
                                 <mat-form-field appearance="legacy" class="w-100">
-<<<<<<< HEAD
-                                    <mat-label> Document Number</mat-label>
-                                    <input matInput placeholder="Enter document number" formControlName="documentNo">
-                                </mat-form-field>
-                            </div>
-                        </ng-container>
-                    </ng-container>
-                    </div>
-=======
                                     <mat-label>Email ID</mat-label>
                                     <input matInput placeholder="Enter Email id" formControlName="emailId">
                                 </mat-form-field>
@@ -284,7 +169,6 @@
                             </mat-form-field>
                         </div>
                     </div>
->>>>>>> 97800b8d9d93c16ce903f2ac8c9cfe57a4a67965
 
                     <div class="">
                         <div class="text-end">
@@ -396,13 +280,14 @@
 
                 </mat-step>
                 <mat-step [stepControl]="empRegistration" label="Documents Details">
-                    <div formGroupName="type">
-                        <div class="row" formArrayName="options">
-                            <div *ngFor="let child of empRegistration.get('type.options').controls; let i = index">
-                                <div [formGroupName]="i">
+                    <!-- <div formGroupName="type">
+                        <div class="row" formArrayName="options"> -->
+                            <div class="row">
+                            <!-- <div *ngFor="let child of empRegistration.get('type.options').controls; let i = index"> -->
+                                <!-- <div [formGroupName]="i"> -->
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <mat-form-field appearance="legacy" class="w-100" formControlName="label">
+                                            <mat-form-field appearance="legacy" class="w-100">
                                                 <mat-label>Document Type</mat-label>
                                                 <mat-select>
                                                     <mat-option>PAN Number</mat-option>
@@ -417,7 +302,7 @@
                                             <mat-form-field appearance="legacy" class="w-100">
                                                 <mat-label> Document Number</mat-label>
                                                 <input matInput placeholder="Enter document number"
-                                                    formControlName="value">
+                                                >
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -465,29 +350,15 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                </div>
+                                <!-- </div> -->
                             </div>
-                        </div>
-                    </div>
+                        <!-- </div>
+                    </div> -->
                     <div class="text-end">
                         <button mat-stroked-button matStepperPrevious class="me-3 btn-outline-main"
                             type="button">Back</button>
                         <button mat-raised-button matStepperNext class="btn-main" type="button">Next</button>
                     </div>
-<<<<<<< HEAD
-            </mat-step>
-            <mat-step>
-                <ng-template matStepLabel>Done</ng-template>
-                <p>You are now done.</p>
-                <div class="text-end">
-                    <button mat-button matStepperPrevious class="me-3 btn-outline-main" type="button">Back</button>
-                    <button mat-raised-button (click)="stepper.reset()" class="btn-main" type="button">Reset</button>
-                    <button mat-raised-button  class="btn-main" type="submit">Submit</button>
-                </div>
-            </mat-step>
-        </mat-stepper>
-    </form>
-=======
                 </mat-step>
                 <mat-step>
                     <ng-template matStepLabel>Done</ng-template>
@@ -515,7 +386,6 @@
                 </mat-step>
             </mat-stepper>
         </form>
->>>>>>> 97800b8d9d93c16ce903f2ac8c9cfe57a4a67965
 
     </div>
 
