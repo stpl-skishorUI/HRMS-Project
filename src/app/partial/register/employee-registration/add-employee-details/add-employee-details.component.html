@@ -12,11 +12,7 @@
                 <mat-step [stepControl]="empRegistration">
 
                     <ng-template matStepLabel>Personal Details</ng-template>
-                    <!-- <mat-form-field appearance="fill">
-                    <mat-label>Name</mat-label>
-                    <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
-                        required>
-                </mat-form-field> -->
+
                     <div class="col-sm-12 mt-3">
                         <div class="upload-image">
                             <img src="assets/images/user.jpg">
@@ -32,22 +28,6 @@
                             </div>
                             <div class="col-sm-6">
                                 <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label>Employee Code</mat-label>
-                                    <input matInput placeholder="Employee Code" formControlName="empCode">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label>Date Of Birth</mat-label>
-                                    <input matInput [matDatepicker]="picker" formControlName="dob">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Email ID</mat-label>
                                     <input matInput placeholder="Enter Email id" formControlName="emailId">
                                 </mat-form-field>
@@ -55,29 +35,52 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label>Contact No 1</mat-label>
-                                    <input matInput placeholder="Contact Number 1" formControlName="mobileNo1">
-                                </mat-form-field>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <mat-form-field appearance="legacy" class="w-100">
+                                            <mat-label>Employee Code</mat-label>
+                                            <input matInput placeholder="Employee Code" formControlName="empCode">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <mat-form-field appearance="legacy" class="w-100">
+                                            <mat-label>Date Of Birth</mat-label>
+                                            <input matInput [matDatepicker]="picker" formControlName="dob">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label>Contact No 2</mat-label>
-                                    <input matInput placeholder="Contact No 2" formControlName="mobileNo2">
-                                </mat-form-field>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <mat-form-field appearance="legacy" class="w-100">
+                                            <mat-label>Contact No 1</mat-label>
+                                            <input matInput placeholder="Contact Number 1" formControlName="mobileNo1">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <mat-form-field appearance="legacy" class="w-100">
+                                            <mat-label>Contact No 2</mat-label>
+                                            <input matInput placeholder="Contact No 2" formControlName="mobileNo2">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label>Address</mat-label>
+                                    <mat-label>Permanent Address</mat-label>
                                     <textarea matInput placeholder="Enter Local Address"
                                         formControlName="localAddress"></textarea>
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
                                 <mat-form-field appearance="legacy" class="w-100">
-                                    <mat-label>Address</mat-label>
+                                    <mat-label> Local Address</mat-label>
                                     <textarea matInput placeholder="Enter Permanent Address"
                                         formControlName="permanentAddress"></textarea>
                                 </mat-form-field>
@@ -87,7 +90,8 @@
                             <div class="col-sm-6">
                                 <mat-radio-group aria-label="Select an option" formControlName="gender">
                                     <mat-label class="pe-2">Gender :</mat-label>
-                                    <mat-radio-button [value]="gen.id" *ngFor="let gen of genderArr"> <span class="pe-2">{{gen.name}}</span> 
+                                    <mat-radio-button [value]="gen.id" *ngFor="let gen of genderArr"> <span
+                                            class="pe-2">{{gen.name}}</span>
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
