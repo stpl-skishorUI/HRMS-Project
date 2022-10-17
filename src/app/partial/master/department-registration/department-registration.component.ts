@@ -95,6 +95,7 @@ export class DepartmentRegistrationComponent implements OnInit {
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
     this.displayData();
+      this.currentPage=0;
   }
 
   //----------------------------------------------------------------------------------------------------------------------------------------------------------//

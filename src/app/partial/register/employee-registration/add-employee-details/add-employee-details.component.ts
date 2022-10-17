@@ -112,4 +112,19 @@ export class AddEmployeeDetailsComponent implements OnInit {
     });
   }
 
+  displayedColumns: string[] = ['srno', 'document_name', 'document_number', 'action'];
+  dataSource = ELEMENT_DATA;
+
 }
+
+export interface PeriodicElement {
+  srno: number;
+  document_name: string;
+  document_number: number;
+  action: any;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {srno: 1, document_name: 'Addhar Card', document_number: 1234567891025698, action: ''},
+  
+];

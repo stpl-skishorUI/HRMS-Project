@@ -99,7 +99,7 @@ export class AddNewSalaryComponent implements OnInit {
   onCancel() {
     this.editFlag = false;
   }
-  //----------------------------------------------------------SubmitForm------------------------------------------------------
+  //----------------------------------------------------------SubmitForm---------------------------------------------------------------------------------------//
   SubmitForm() {
    let obj = {
     ...this.emloyeeSalaryForm.value,

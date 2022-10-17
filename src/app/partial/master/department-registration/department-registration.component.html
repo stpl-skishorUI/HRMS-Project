@@ -9,6 +9,7 @@
                 <mat-form-field appearance="legacy" class="w-100">
                   <mat-label>All Company</mat-label>
                   <mat-select formControlName="companyId">
+                    <mat-option>All Company</mat-option>
                     <mat-option *ngFor="let companies of displayCompanyDropdown" value="{{ companies.companyId }}">{{
                       companies.name }}</mat-option>
                   </mat-select>
@@ -37,13 +38,14 @@
       </form>
     </div>
   </div>
-  <div class="card-body p-2">
+  <div class="card-body p-0">
     <div class="table-responsive table-scollar">
       <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
         <ng-container matColumnDef="srno">
           <th mat-header-cell *matHeaderCellDef>Sr.No.</th>
           <td mat-cell *matCellDef="let element; let i = index">
-            {{(currentPage*10)+i+1}}
+            <!-- {{(currentPage*10)+i+1}} -->
+            {{element.srNo}}
           </td>
         </ng-container>
 

@@ -46,6 +46,7 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddNewSalaryComponent, {
       width: '50%',
       disableClose: true
+
      });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -64,18 +65,8 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   displayData() {
     this.service.setHttp(
       'get',
-      'HRMS/EmployeeSalaryDetails/GetEmpSalary?companyId=' +this.filterForm.controls['companyId'].value +
-        '&EmpCode=' +
-        this.filterForm.controls['allemployee'].value +
-        '&YearId=' +
-        this.filterForm.controls['year'].value +
-        '&pageno=' +
-        (this.currentPage + 1) +
-        '&pagesize=10',
-      false,
-      false,
-      false,
-      'baseURL'
+      'HRMS/EmployeeSalaryDetails/GetEmpSalary?companyId=' +this.filterForm.controls['companyId'].value +'&EmpCode=' +this.filterForm.controls['allemployee'].value +'&YearId=' +this.filterForm.controls['year'].value +
+        '&pageno=' +(this.currentPage + 1) +'&pagesize='+this.pageSize,false,false,false,'baseURL'
     );
     this.service.getHttp().subscribe({
       next: (res: any) => {
@@ -83,6 +74,8 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
           this.dataSource = res.responseData;
           // this.dataSource = res.responseData1;
           this.totalCount = res.responseData1.pageCount;
+        }else{
+          this.dataSource=[];
         }
       },
     });
@@ -148,20 +141,24 @@ export class EmployeeSalaryDetailsComponent implements OnInit {
   //-----------------------------------------------------Pagination-----------------------------------------------------------------------------------------//
   pageChanged(event: any) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.displayData();
   }
 
   //------------------------------------------------------------------Change Company------------------------------------------------------------------------//
   onChangeCompany() {
     this.filterForm.patchValue({
-      allemployee: 0,
-      year: 0,
+      // allemployee: 0,
+      // year: 0,
     });
+  this.currentPage=0;
     this.displayData();
+    this.onChangeEmployee();
   }
   //------------------------------------------------------------------Change Employee  ---------------------------------------------------------------------//
   onChangeEmployee() {
     this.displayData();
+    this.onChangeYear();
   }
   //-----------------------------------------------------------------------Change Year-----------------------------------------------------------------------------------//
   onChangeYear() {

@@ -73,9 +73,10 @@ export class BankRegistrationComponent implements OnInit {
       "pageno": this.pageNo,
       "BankName": formData.searchbankName,
       "CompanyId":formData.companyId|| 0,
+      "pagesize":this.pageSize
     }
     
-    this.callAPIService.setHttp('GET', 'api/BankRegistration/GetAllBankRegiByPagination?pageno='+obj.pageno+'&pagesize=10&BankName='+obj.BankName+'&CompanyId='+obj.CompanyId, false, false, false, 'baseURL');
+    this.callAPIService.setHttp('GET', 'api/BankRegistration/GetAllBankRegiByPagination?pageno='+obj.pageno+'&pagesize='+obj.pagesize+'&BankName='+obj.BankName+'&CompanyId='+obj.CompanyId, false, false, false, 'baseURL');
     this.callAPIService.getHttp().subscribe((res: any) => {
       // console.log(res);
       if (res.statusCode == 200) {
@@ -86,6 +87,9 @@ export class BankRegistrationComponent implements OnInit {
         this.bankRegiResponse = [];
         // alert(res.statusMessage);
       }
+      if(res.responseData == null){
+        this.bankRegiResponse = null;
+      }
     })
   }
 
@@ -93,6 +97,7 @@ export class BankRegistrationComponent implements OnInit {
   paginationEvent(event: any) {
     // console.log(event);
     this.pageNo = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
     this.BankRegistrationData();
   }
 
