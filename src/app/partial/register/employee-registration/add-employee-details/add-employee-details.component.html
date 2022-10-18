@@ -146,8 +146,7 @@
                         <div class="col-sm-6">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>Domain</mat-label>
-                                <input matInput placeholder="Enter your work domain"
-                                    formControlName="workDomain">
+                                <input matInput placeholder="Enter your work domain" formControlName="workDomain">
                             </mat-form-field>
                         </div>
                     </div>
@@ -164,8 +163,7 @@
                         <div class="col-sm-6">
                             <mat-form-field appearance="legacy" class="w-100">
                                 <mat-label>SkillSet</mat-label>
-                                <input matInput placeholder="Describe your skillset"
-                                    formControlName="skillset">
+                                <input matInput placeholder="Describe your skillset" formControlName="skillset">
                             </mat-form-field>
                         </div>
                     </div>
@@ -204,7 +202,7 @@
                                     <input matInput placeholder="Enter Accnt Number" formControlName="accountNo">
                                 </mat-form-field>
                             </div>
-                            
+
                             <div class="col-sm">
                                 <div class="text-end mb-3">
                                     <button mat-raised-button matStepperPrevious
@@ -214,94 +212,93 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
 
                 </mat-step>
                 <mat-step [stepControl]="empRegistration" label="Documents Details">
                     <!-- <div formGroupName="type">
                         <div class="row" formArrayName="options"> -->
-                            <div class="row">
-                            <!-- <div *ngFor="let child of empRegistration.get('type.options').controls; let i = index"> -->
-                                <!-- <div [formGroupName]="i"> -->
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <mat-form-field appearance="legacy" class="w-100">
-                                                <mat-label>Document Type</mat-label>
-                                                <mat-select>
-                                                    <mat-option>PAN Number</mat-option>
-                                                    <mat-option>Adhaar Number</mat-option>
-                                                    <mat-option>PF Number</mat-option>
-                                                    <mat-option>UAN Number</mat-option>
-                                                    <mat-option>ESIC Number</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <mat-form-field appearance="legacy" class="w-100">
-                                                <mat-label> Document Number</mat-label>
-                                                <input matInput placeholder="Enter document number"
-                                                >
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <mat-form-field appearance="legacy" class="w-100">
-                                                <mat-label> Enter Compnay </mat-label>
-                                                <mat-select>
-                                                    <mat-option>Company 1</mat-option>
-                                                    <mat-option>Company 2</mat-option>
-                                                    <mat-option>Company 3</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <mat-form-field appearance="legacy" class="w-100">
-                                                <mat-label> Enter Department </mat-label>
-                                                <mat-select>
-                                                    <mat-option>Department 1</mat-option>
-                                                    <mat-option>Department 2</mat-option>
-                                                    <mat-option>Department 3</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <mat-form-field appearance="legacy" class="w-100">
-                                                <mat-label> Enter Designation </mat-label>
-                                                <mat-select>
-                                                    <mat-option>Designation 1</mat-option>
-                                                    <mat-option>Designation 2</mat-option>
-                                                    <mat-option>Designation 3</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <mat-form-field appearance="legacy" class="w-100">
-                                                <mat-label> User Type</mat-label>
-                                                <mat-select>
-                                                    <mat-option>user-type 1</mat-option>
-                                                    <mat-option>user-type 2</mat-option>
-                                                    <mat-option>user-type 3</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="upload-btn-wrapper">
-                                                <button mat-raised-button class="btn-main">
-                                                    <i class="fa-solid fa-upload me-2"></i>
-                                                    Upload Document
-                                                </button>
-                                                <input type="file">
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="row">
+                        <!-- <div *ngFor="let child of empRegistration.get('type.options').controls; let i = index"> -->
+                        <!-- <div [formGroupName]="i"> -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label>Document Type</mat-label>
+                                    <mat-select>
+                                        <mat-option>PAN Number</mat-option>
+                                        <mat-option>Adhaar Number</mat-option>
+                                        <mat-option>PF Number</mat-option>
+                                        <mat-option>UAN Number</mat-option>
+                                        <mat-option>ESIC Number</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-6">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label> Document Number</mat-label>
+                                    <input matInput placeholder="Enter document number">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label> Enter Compnay </mat-label>
+                                    <mat-select>
+                                        <mat-option>Company 1</mat-option>
+                                        <mat-option>Company 2</mat-option>
+                                        <mat-option>Company 3</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-6">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label> Enter Department </mat-label>
+                                    <mat-select>
+                                        <mat-option>Department 1</mat-option>
+                                        <mat-option>Department 2</mat-option>
+                                        <mat-option>Department 3</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label> Enter Designation </mat-label>
+                                    <mat-select>
+                                        <mat-option>Designation 1</mat-option>
+                                        <mat-option>Designation 2</mat-option>
+                                        <mat-option>Designation 3</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-6">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label> User Type</mat-label>
+                                    <mat-select>
+                                        <mat-option>user-type 1</mat-option>
+                                        <mat-option>user-type 2</mat-option>
+                                        <mat-option>user-type 3</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="upload-btn-wrapper">
+                                    <button mat-raised-button class="btn-main">
+                                        <i class="fa-solid fa-upload me-2"></i>
+                                        Upload Document
+                                    </button>
+                                    <input type="file">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- </div> -->
+                    <!-- </div> -->
+                    <!-- </div> -->
                     <div class="text-end mb-3">
                         <button mat-stroked-button matStepperPrevious class="me-3 btn-outline-main"
                             type="button">Back</button>
