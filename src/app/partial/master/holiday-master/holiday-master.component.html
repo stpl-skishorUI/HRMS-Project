@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="card-body p-0">
-        <div class="table-responsive">
+        <div class="table-responsive table-scollar">
             <table mat-table [dataSource]="Allholidays" class="w-100 dashboard-table">
                 <ng-container matColumnDef="srno">
                     <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
@@ -100,7 +100,7 @@
                     </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
             <div *ngIf="Allholidays == null">
@@ -114,12 +114,8 @@
                   No records found.
                 </mat-footer-cell>
               </ng-container> -->
-            
-            
-
-            <mat-paginator *ngIf="totalCount>10 && Allholidays" [pageSizeOptions]="[10, 50, 100]" [length]="totalCount" showFirstLastButtons  [pageIndex]="pageIndex" (page)="pageChanged($event)"  aria-label="Select page"></mat-paginator>
-
         </div>
+        <mat-paginator *ngIf="totalCount>10 && Allholidays" [pageSizeOptions]="[10, 50, 100]" [length]="totalCount" showFirstLastButtons  [pageIndex]="pageIndex" (page)="pageChanged($event)"  aria-label="Select page"></mat-paginator>
     </div>
 </div>
 
