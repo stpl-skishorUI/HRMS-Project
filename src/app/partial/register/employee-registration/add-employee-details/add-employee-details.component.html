@@ -219,13 +219,14 @@
 
                 </mat-step>
                 <mat-step [stepControl]="empRegistration" label="Documents Details">
-                    <div formGroupName="type">
-                        <div class="row" formArrayName="options">
-                            <div *ngFor="let child of empRegistration.get('type.options').controls; let i = index">
-                                <div [formGroupName]="i">
+                    <!-- <div formGroupName="type">
+                        <div class="row" formArrayName="options"> -->
+                            <div class="row">
+                            <!-- <div *ngFor="let child of empRegistration.get('type.options').controls; let i = index"> -->
+                                <!-- <div [formGroupName]="i"> -->
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <mat-form-field appearance="legacy" class="w-100" formControlName="label">
+                                            <mat-form-field appearance="legacy" class="w-100">
                                                 <mat-label>Document Type</mat-label>
                                                 <mat-select>
                                                     <mat-option>PAN Number</mat-option>
@@ -240,7 +241,7 @@
                                             <mat-form-field appearance="legacy" class="w-100">
                                                 <mat-label> Document Number</mat-label>
                                                 <input matInput placeholder="Enter document number"
-                                                    formControlName="value">
+                                                >
                                             </mat-form-field>
                                         </div>
                                     </div>
