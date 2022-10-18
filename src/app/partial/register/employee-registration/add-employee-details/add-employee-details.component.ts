@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { CallApiService } from 'src/app/core/services/call-api.service';
 
 @Component({
   selector: 'app-add-employee-details',
@@ -8,52 +10,27 @@ import {FormArray, FormBuilder, Validators} from '@angular/forms';
 })
 export class AddEmployeeDetailsComponent implements OnInit {
   empRegistration: any;
+  subscription!: Subscription;
   isLinear: boolean= false;
    genderArr=[{id:1,name:'Male'},{id:2,name:'Female'}];
    educations=[{id:1,name:'Undergradute'},{id:2,name:'Graduate'}, {id:3,name:'Post Graduate'}];
    fields: any;
 
   //  EducationArr=['Undergradute','Graduate','Post Graduate'];
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder,
+              private apiService: CallApiService) { }
   ngOnInit(): void {
-
-
-    this.fields = {
-      type: {
-        options: [
-          {
-            label: 'Option 1',
-            value: '1',
-            "modifiedBy": 0,
-            "modifiedDate": "2022-10-13T11:32:08.324Z",
-            "id": 0,
-            "empCode": 0,
-            "documentTypeId": 0,
-            "documentNo": "string",
-            "uploadPath": "string",
-            "createdBy": 0,
-            "createdDate": "2022-10-13T11:32:08.324Z",
-            "isDeleted": true
-          },
-          // {
-          //   label: 'Option 2',
-          //   value: '2'
-          // }
-        ]
-      }
-    };
-
     this.empRegistration = this._fb.group({
-      "modifiedBy": ['0'],
+      "modifiedBy": [0],
       "modifiedDate": ["2022-10-07T09:27:47.095Z"],
-      "empId": [0],
+      "empId": [12272],
       "name": [""],
-      "empCode": [],
+      "empCode": [1],
       "dob": [new Date()],
       "mobileNo1": [""],
       "mobileNo2": [""],
       "emailId": [""],
-      "gender": [null],
+      "gender": [1],
       "localAddress": [""],
       "permanentAddress": [""],
       "education": [""],
@@ -62,8 +39,8 @@ export class AddEmployeeDetailsComponent implements OnInit {
       "totalExperience": [0],
       "skillset": [""],
       "workDomain": [""],
-      "profilePhoto": [],
-      "companyId": [0],
+      "profilePhoto": [""],
+      "companyId": [1],
       "userTypeId": [0],
       "departmentId": [0],
       "designationId": [0],
@@ -82,40 +59,57 @@ export class AddEmployeeDetailsComponent implements OnInit {
       "createdBy": [0],
       "createdDate": ["2022-10-07T09:27:47.095Z"],
       "isDeleted": [true],
-      // "empDocuments": this._fb.array([
-      // ]),
-      type: this._fb.group({
-        options: this._fb.array([]) // create empty form array   
-      })
-      
+      "empDocuments": this._fb.array([  // create empty form array   
+          this._fb.group({
+            "modifiedBy": 0,
+            "modifiedDate": "2022-10-14T06:54:59.740Z",
+            "id": 0,
+            "empCode": 0,
+            "documentTypeId": 0,
+            "documentNo": "",
+            "uploadPath": "",
+            "createdBy": 0,
+            "createdDate": "2022-10-14T06:54:59.740Z",
+            "isDeleted": true
+          })
+        ])
       });
-      this.patch();
-
-      
-    
-    
-      // secondFormGroup = this._formBuilder.group({
-      //   secondCtrl: ['', Validators.required],
-      // });
+      // this.patch();
   }
 
-  patch(){
-    const control = <FormArray>this.empRegistration.get('type.options');
-    this.fields.type.options.forEach((x:any) => {
-      control.push(this.patchValues(x.label, x.value))
-    })
+  get documentControls() : FormArray{
+    return this.empRegistration.get('empDocuments') as FormArray;
   }
 
-  patchValues(label: any, value: any){
-    return this._fb.group({
-      label: [label],
-      value: [value]
-    })
-  }
+
+
+
+  // patch(){
+  //   const control = <FormArray>this.empRegistration.get('type.options');
+  //   this.fields.type.options.forEach((x:any) => {
+  //     control.push(this.patchValues(x.label, x.value));
+  //   })
+  // }
+
+  // patchValues(label: any, value: any){
+  //   return this._fb.group({
+  //     label: [label],
+  //     value: [value]
+  //   })
+  // }
 
 
   submit(value: any) {
     console.log(" all submitted form values :",value);
+    this.apiService.setHttp('post', 'HRMS/EmployeeRegister/AddEmployeeDetails', true, value ,false, 'baseURL');
+    this.subscription =  this.apiService.getHttp().subscribe({
+      next: (resp: any)=> {
+        console.log("all data submitted successfully.", resp );
+      },
+      error:(error: any)=>{
+        console.log("Error is:", error);
+      }
+    });
   }
 
   displayedColumns: string[] = ['srno', 'document_name', 'document_number', 'action'];
