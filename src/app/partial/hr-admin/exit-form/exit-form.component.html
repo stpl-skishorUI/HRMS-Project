@@ -129,15 +129,17 @@
                             <div class="col-sm-6 mb-2 mb-lg-0">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Date Of Joining</mat-label>
-                                    <input matInput [matDatepicker]="picker" placeholder="Ex.10-02-1998">
-                                    <mat-datepicker #picker></mat-datepicker>
+                                    <input matInput [matDatepicker]="DateJoining" placeholder="Ex.dd/mm/yy">
+                                    <mat-datepicker-toggle matSuffix [for]="DateJoining"></mat-datepicker-toggle>
+                                    <mat-datepicker #DateJoining></mat-datepicker>
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6 mb-2 mb-lg-0">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>Last Working Day</mat-label>
-                                    <input matInput [matDatepicker]="picker" >
-                                    <mat-datepicker #picker></mat-datepicker>
+                                    <input matInput [matDatepicker]="LastWorkingDay" placeholder="Ex.dd/mm/yy">
+                                    <mat-datepicker-toggle matSuffix [for]="LastWorkingDay"></mat-datepicker-toggle>
+                                    <mat-datepicker #LastWorkingDay></mat-datepicker>
                                 </mat-form-field>
                             </div>
                         </div>

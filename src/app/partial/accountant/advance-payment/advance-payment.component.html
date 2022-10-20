@@ -28,7 +28,7 @@
                             <div class="col-sm mb-0 mb-lg-0">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>From Date</mat-label>
-                                    <input matInput [matDatepicker]="picker">
+                                    <input matInput [matDatepicker]="picker" placeholder="Ex.dd/mm/yy">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
@@ -37,9 +37,9 @@
                             <div class="col-sm">
                                 <mat-form-field appearance="legacy" class="w-100">
                                     <mat-label>To Date</mat-label>
-                                    <input matInput [matDatepicker]="picker">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
+                                    <input matInput [matDatepicker]="picker1" placeholder="Ex.dd/mm/yy">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-auto">
