@@ -41,7 +41,7 @@ export class AddNewSalaryComponent implements OnInit {
 
   get f() { return this.emloyeeSalaryForm.controls }
   defaultForm() {
-
+    // alert('Hello World')
     this.emloyeeSalaryForm = this.fb.group({
       "id": this.data ? this.data.id :0,
         "empCode": ['',[Validators.required]],
@@ -59,13 +59,7 @@ export class AddNewSalaryComponent implements OnInit {
 
   //------------------------------------------------------------------------AllCompany--------------------------------------------------------------------------------
   getAllCompany() {
-    this.service.setHttp(
-      'get',
-      'api/CommonDropDown/GetCompany',
-      false,
-      false,
-      false,
-      'baseURL'
+    this.service.setHttp('get','api/CommonDropDown/GetCompany',false,false,false,'baseURL'
     );
     this.service.getHttp().subscribe({
       next: (res: any) => {

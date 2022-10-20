@@ -63,7 +63,7 @@ export class DepartmentRegistrationComponent implements OnInit {
     let formData = this.filterForm.value;
     this.service.setHttp(
       'get',
-      'HRMS/DepartmentType/GetAllDepartmentByPagination?pageno=' +(this.currentPage+1) +'&pagesize='+this.pageSize +'&id=' +formData.companyId +'&searchText=' +formData.searchtext,false,
+      'HRMS/DepartmentType/GetAllDepartmentByPagination?pageno=' +(this.currentPage+1) +'&pageSize='+this.pageSize +'&id=' +formData.companyId +'&searchText=' +formData.searchtext,false,
       false,false,'baseURL' );
     this.service.getHttp().subscribe({
       next: (res: any) => {
