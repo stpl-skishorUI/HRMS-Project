@@ -32,15 +32,14 @@
 
                 </div>
             </form>
-
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body py-0">
         <div class="row">
             <div class="col-sm-8">
-                <div class="table-responsive" >
+                <div class="table-responsive table-scollar">
                     <div *ngIf="dataSource.length; else cond">
-                        <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table border">
+                        <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
 
                             <ng-container matColumnDef="sr_no">
                                 <th mat-header-cell *matHeaderCellDef>Sr.No.</th>
@@ -84,22 +83,23 @@
                                 </td>
                             </ng-container>
                            
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
-                        <ng-container *ngIf="totalCount >10">
-                            <mat-paginator (page)="handlePageEvent($event)" [length]="totalCount" [pageSizeOptions]="[10, 50, 100]" 
-                                [pageIndex]="currentPage" showFirstLastButtons aria-label="Select page of periodic elements">
-                            </mat-paginator>
-                        </ng-container>
+                        
                     </div>
                     <ng-template #cond>
                         <h4 class="text-dark text-center" style="background-color: rgb(194, 188, 188);">No Data Found</h4>
                     </ng-template>
                 </div>
+                <ng-container *ngIf="totalCount >10">
+                    <mat-paginator (page)="handlePageEvent($event)" [length]="totalCount" [pageSizeOptions]="[10, 50, 100]" 
+                        [pageIndex]="currentPage" showFirstLastButtons aria-label="Select page of periodic elements">
+                    </mat-paginator>
+                </ng-container>
                
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 mt-3">
                 <div class="card">
                     <div class="card-header">
                         <h6 class="modal-title mb-0">Add New Bank Branch Registration</h6>

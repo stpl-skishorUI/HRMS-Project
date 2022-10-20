@@ -68,8 +68,8 @@
             </div>
         </form>
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
+    <div class="card-body p-0">
+        <div class="table-responsive table-scollar">
             <div *ngIf="dataSource.length; else noData">
                 <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
 
@@ -118,17 +118,18 @@
                         </td>
                     </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-                <ng-container *ngIf="totalCount > 10">
-                    <mat-paginator [length]="totalCount" [pageSizeOptions]="[10, 50, 100]" [pageIndex]="currentPage"
-                        (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of GitHub search results"></mat-paginator>
-                </ng-container>
+               
             </div>
             <ng-template #noData>
                 <h5 class="text-danger">No Data Found</h5>
             </ng-template>
         </div>
+        <ng-container *ngIf="totalCount > 10">
+            <mat-paginator [length]="totalCount" [pageSizeOptions]="[10, 50, 100]" [pageIndex]="currentPage"
+                (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of GitHub search results"></mat-paginator>
+        </ng-container>
     </div>
 </div>

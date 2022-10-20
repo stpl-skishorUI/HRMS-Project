@@ -4,28 +4,30 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-sm-9">
                     <form [formGroup]="filterleaveTypeForm" (ngSubmit)="leaveRegistrationData()">
-                    <div class="row align-items-center">
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>Leave Type</mat-label>
-                                <input matInput placeholder="Search Leave Type" formControlName="leaveType">
-                            </mat-form-field>
+                        <div class="row align-items-center">
+                            <div class="col-sm-3">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label>Leave Type</mat-label>
+                                    <input matInput placeholder="Search Leave Type" formControlName="leaveType">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-3">
+                                <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-label>All Company</mat-label>
+                                    <mat-select formControlName="companytype">
+                                        <mat-option value="0">All Company</mat-option>
+                                        <mat-option *ngFor="let data of companyTypeResp" [value]="data.companyId">
+                                            {{data.name}}</mat-option>
+
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- {{f['leaveType'].value || f['companytype'].value? true:false}} -->
+                            <div class="col-sm-auto">
+                                <button mat-raised-button type="submit"
+                                    [disabled]=" !f['leaveType'].value && !f['companytype'].value">Search</button>
+                            </div>
                         </div>
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>All Company</mat-label>
-                                <mat-select formControlName="companytype" >
-                                    <mat-option value="0">All Company</mat-option>
-                                    <mat-option *ngFor="let data of companyTypeResp"[value]="data.companyId" >{{data.name}}</mat-option>
-                                    
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <!-- {{f['leaveType'].value || f['companytype'].value? true:false}} -->
-                        <div class="col-sm-auto">
-                            <button mat-raised-button type="submit" [disabled]=" !f['leaveType'].value && !f['companytype'].value">Search</button>
-                        </div>
-                    </div>
                     </form>
                 </div>
                 <div class="col-sm-3 text-end">
@@ -36,8 +38,8 @@
             </div>
         </div>
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
+    <div class="card-body p-0">
+        <div class="table-responsive table-scollar">
             <table mat-table [dataSource]="tableRespnse" class="w-100 dashboard-table">
 
                 <ng-container matColumnDef="sr_no">
@@ -68,7 +70,8 @@
                         </button>
                         <mat-menu #menu="matMenu" xPosition="before">
                             <button mat-menu-item>
-                                <div class="d-flex justify-content-between align-items-center"  (click)="openDialog('Update',element)">
+                                <div class="d-flex justify-content-between align-items-center"
+                                    (click)="openDialog('Update',element)">
                                     <span>Edit</span>
                                     <mat-icon>edit</mat-icon>
                                 </div>
@@ -77,18 +80,18 @@
                     </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
 
             <div class="mt-2 text-end" *ngIf="tableRespnse?.length == 0">
                 <div class="alert alert-danger text-center py-2">No Data Found..!</div>
             </div>
-
-            <ng-container *ngIf="tableRespnse?.length != ''">
-                <mat-paginator [pageSizeOptions]="[10, 50, 100]" [length]="length" [pageSize]="pageSize" (page)="paginationEvent($event)" showFirstLastButtons>
-                </mat-paginator>
-                </ng-container>
         </div>
+        <ng-container *ngIf="tableRespnse?.length != ''">
+            <mat-paginator [pageSizeOptions]="[10, 50, 100]" [length]="length" [pageSize]="pageSize"
+                (page)="paginationEvent($event)" showFirstLastButtons>
+            </mat-paginator>
+        </ng-container>
     </div>
 </div>
