@@ -7,29 +7,33 @@
     <form [formGroup]="deptRegistrationForm" (ngSubmit)="postData()">
         <div class="row">
             <div>
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Select Company</mat-label>
                     <mat-select formControlName="companyId">
-                        <mat-option *ngFor="let companies of displayCompanyDropdown" [value]="companies.companyId">{{ companies.name }}</mat-option>
+                        <mat-option *ngFor="let companies of displayCompanyDropdown" [value]="companies.companyId">{{
+                            companies.name }}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="f['companyId'].hasError('required') || f['companyId'].hasError('touched')">Company
-                      Name is Required</mat-error>
+                        Name is Required</mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-0">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Department Name</mat-label>
-                    <input matInput placeholder="Department Name" (keypress)="space($event)" formControlName="departmentName" style="text-transform:capitalize;">
-                    <mat-error *ngIf="f['departmentName'].hasError('required') || f['departmentName'].hasError('touched')">Department
-                      Name is Required</mat-error>
-                    </mat-form-field>
+                    <input matInput placeholder="Department Name" (keypress)="space($event)"
+                        formControlName="departmentName" style="text-transform:capitalize;">
+                    <mat-error
+                        *ngIf="f['departmentName'].hasError('required') || f['departmentName'].hasError('touched')">Department
+                        Name is Required</mat-error>
+                </mat-form-field>
             </div>
         </div>
         <div class="row">
             <div class="d-flex justify-content-between">
                 <button mat-button class="btn-outline-main" type="reset" (click)="onCancel()">Clear</button>
-                <button mat-raised-button class="btn-main" type="submit" mat-dialog-close>{{editFlag?'update':'Save'}}</button>
+                <button mat-raised-button class="btn-main" type="submit"
+                    mat-dialog-close>{{editFlag?'update':'Save'}}</button>
             </div>
         </div>
-      </form>
+    </form>
 </div>

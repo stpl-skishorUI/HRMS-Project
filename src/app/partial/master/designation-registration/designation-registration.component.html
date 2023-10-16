@@ -6,7 +6,7 @@
                     <form [formGroup]="filtterForm" (ngSubmit)="fillterOnSubmit()">
                         <div class="row align-items-center ">
                             <div class="col-sm">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Organization</mat-label>
                                     <mat-select formControlName="filtterOrganization"
                                         (selectionChange)=" getCompanyDropdown();clearForm('filtterOrganization')">
@@ -19,7 +19,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Company</mat-label>
                                     <mat-select formControlName="filtterCompany"
                                         (selectionChange)="getDepartmentDropdown();clearForm('filtterCompany')">
@@ -31,10 +31,10 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Department</mat-label>
-                                    <mat-select formControlName="filtterDepartment" 
-                                    (selectionChange)="clearForm('filtterDepartment')">
+                                    <mat-select formControlName="filtterDepartment"
+                                        (selectionChange)="clearForm('filtterDepartment')">
                                         <mat-option *ngFor="let department of departmentDropdown"
                                             [value]="department.departmentId">{{department.name}}</mat-option>
                                         <!-- <mat-option>Option 2</mat-option>
@@ -43,7 +43,7 @@
                                 </mat-form-field>
                             </div>
                             <!-- <div class="col-sm-3">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Designation</mat-label>
                                     <mat-select formControlName="filtterDesignation">
                                         <mat-option *ngFor="let designation of designationDropdown" [value]="designation.name"> {{designation.name}}</mat-option>
@@ -53,10 +53,10 @@
                                 </mat-form-field>
                             </div> -->
                             <div class="col-sm">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Designation Name</mat-label>
                                     <input matInput placeholder="Designation Name" formControlName="filtterDesignation"
-                                    (keypress)="validation.alphabetsWithSpaces($event)">
+                                        (keypress)="validation.alphabetsWithSpaces($event)">
                                 </mat-form-field>
                             </div>
                             <div class="col-sm">
@@ -125,8 +125,9 @@
             </ng-template>
         </div>
         <div *ngIf="totalCount>10">
-            <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage" [pageSizeOptions]="[10, 50, 100]"
-                (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic elements" >
+            <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage"
+                [pageSizeOptions]="[10, 50, 100]" (page)="pageChanged($event)" showFirstLastButtons
+                aria-label="Select page of periodic elements">
             </mat-paginator>
         </div>
     </div>

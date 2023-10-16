@@ -6,13 +6,13 @@
                     <form [formGroup]="filterleaveTypeForm" (ngSubmit)="leaveRegistrationData()">
                         <div class="row align-items-center">
                             <div class="col-sm-3">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Leave Type</mat-label>
                                     <input matInput placeholder="Search Leave Type" formControlName="leaveType">
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-3">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>All Company</mat-label>
                                     <mat-select formControlName="companytype">
                                         <mat-option value="0">All Company</mat-option>

@@ -6,7 +6,7 @@
           <div class="col-sm-9">
             <div class="row">
               <div class="col-sm-3">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                   <mat-label>All Company</mat-label>
                   <mat-select formControlName="companyId">
                     <mat-option>All Company</mat-option>
@@ -16,7 +16,7 @@
                 </mat-form-field>
               </div>
               <div class="col-sm-3">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                   <mat-label>All Employee</mat-label>
                   <mat-select formControlName="allemployee">
                     <mat-option>All Employee</mat-option>
@@ -25,7 +25,7 @@
                 </mat-form-field>
               </div>
               <div class="col-sm-3">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Year</mat-label>
                   <mat-select formControlName="year">
                     <mat-option>Year</mat-option>
@@ -34,8 +34,8 @@
                 </mat-form-field>
               </div>
               <div class="col-sm-auto">
-                            <button mat-raised-button (click)="onChangeCompany()">Search</button>
-                </div>
+                <button mat-raised-button (click)="onChangeCompany()">Search</button>
+              </div>
             </div>
           </div>
 
@@ -104,9 +104,10 @@
         <div class="alert alert-danger text-center py-2">No Data Found..!</div>
       </div>
       <ng-container *ngIf="dataSource?.length!=0">
-      <mat-paginator [pageIndex]="10" [pageSizeOptions]="[10,25,50,100]" [length]="totalCount" [pageIndex]="currentPage"
-        (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
-        </ng-container>
+        <mat-paginator [pageIndex]="10" [pageSizeOptions]="[10,25,50,100]" [length]="totalCount"
+          [pageIndex]="currentPage" (page)="pageChanged($event)" showFirstLastButtons
+          aria-label="Select page of periodic elements"></mat-paginator>
+      </ng-container>
     </div>
   </div>
 </div>

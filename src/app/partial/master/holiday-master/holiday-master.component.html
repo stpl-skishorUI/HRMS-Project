@@ -3,47 +3,50 @@
         <div class="form-container">
             <div class="row align-items-center justify-content-between">
                 <div class="col-sm-9">
-                <form [formGroup]="searchForm">
-                    <div class="row gx-2 align-items-center">
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>All Company</mat-label>
-                                <mat-select formControlName="companyId" >
-                                    <mat-option value="0">All</mat-option>
-                                    <mat-option [value]="Comp.companyId" *ngFor="let Comp of Companies">{{Comp.name}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>Holiday Type</mat-label>
-                                <mat-select formControlName="holidaytype" >
-                                    <mat-option value="0">All</mat-option>
-                                    <mat-option [value]="type.name" *ngFor="let type of holiTypes">{{type.name}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="legacy" class="w-100">
-                                <mat-label>Year</mat-label>
-                                <mat-select formControlName="year">
-                                    <mat-option value="0">All</mat-option>
-                                    <mat-option [value]="yr.year" *ngFor="let yr of yearsDropdn">{{yr.year}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
+                    <form [formGroup]="searchForm">
+                        <div class="row gx-2 align-items-center">
+                            <div class="col-sm-3">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>All Company</mat-label>
+                                    <mat-select formControlName="companyId">
+                                        <mat-option value="0">All</mat-option>
+                                        <mat-option [value]="Comp.companyId"
+                                            *ngFor="let Comp of Companies">{{Comp.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-3">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Holiday Type</mat-label>
+                                    <mat-select formControlName="holidaytype">
+                                        <mat-option value="0">All</mat-option>
+                                        <mat-option [value]="type.name"
+                                            *ngFor="let type of holiTypes">{{type.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-3">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Year</mat-label>
+                                    <mat-select formControlName="year">
+                                        <mat-option value="0">All</mat-option>
+                                        <mat-option [value]="yr.year"
+                                            *ngFor="let yr of yearsDropdn">{{yr.year}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
 
-                        <div class="col-sm-3">
-                            <!-- <button mat-raised-button class="btn" (click)="onsearchData()">
+                            <div class="col-sm-3">
+                                <!-- <button mat-raised-button class="btn" (click)="onsearchData()">
                                 <mat-icon>search</mat-icon>
                                 Search
                             </button> -->
-                            <button mat-raised-button  (click)="onsearchData()">Search</button>
+                                <button mat-raised-button (click)="onsearchData()">Search</button>
+                            </div>
                         </div>
-                    </div>
 
-            </form>
-        </div>
+                    </form>
+                </div>
 
 
                 <div class="col-sm-3 text-end">
@@ -107,7 +110,7 @@
                 <ng-container>
                     <h4 class="text-danger">Data Not Found </h4>
                 </ng-container>
-                
+
             </div>
             <!-- <ng-container *ngIf="Allholidays == null" matColumnDef="noData">
                 <mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length">
@@ -115,7 +118,9 @@
                 </mat-footer-cell>
               </ng-container> -->
         </div>
-        <mat-paginator *ngIf="totalCount>10 && Allholidays" [pageSizeOptions]="[10, 50, 100]" [length]="totalCount" showFirstLastButtons  [pageIndex]="pageIndex" (page)="pageChanged($event)"  aria-label="Select page"></mat-paginator>
+        <mat-paginator *ngIf="totalCount>10 && Allholidays" [pageSizeOptions]="[10, 50, 100]" [length]="totalCount"
+            showFirstLastButtons [pageIndex]="pageIndex" (page)="pageChanged($event)"
+            aria-label="Select page"></mat-paginator>
     </div>
 </div>
 

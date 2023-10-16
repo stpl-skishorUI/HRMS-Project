@@ -21,13 +21,13 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Name</mat-label>
                                     <input matInput placeholder="Name" formControlName="name">
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Email ID</mat-label>
                                     <input matInput placeholder="Enter Email id" formControlName="emailId">
                                 </mat-form-field>
@@ -37,13 +37,13 @@
                             <div class="col-sm-6">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <mat-form-field appearance="legacy" class="w-100">
+                                        <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Employee Code</mat-label>
                                             <input matInput placeholder="Employee Code" formControlName="empCode">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-6">
-                                        <mat-form-field appearance="legacy" class="w-100">
+                                        <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Date Of Birth</mat-label>
                                             <input matInput [matDatepicker]="picker" formControlName="dob">
                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -56,13 +56,13 @@
                             <div class="col-sm-6">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <mat-form-field appearance="legacy" class="w-100">
+                                        <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Contact No 1</mat-label>
                                             <input matInput placeholder="Contact Number 1" formControlName="mobileNo1">
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-6">
-                                        <mat-form-field appearance="legacy" class="w-100">
+                                        <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Contact No 2</mat-label>
                                             <input matInput placeholder="Contact No 2" formControlName="mobileNo2">
                                         </mat-form-field>
@@ -72,14 +72,14 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Permanent Address</mat-label>
                                     <textarea matInput placeholder="Enter Permanent Address"
                                         formControlName="localAddress"></textarea>
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Local Address</mat-label>
                                     <textarea matInput placeholder="Enter Local Address"
                                         formControlName="permanentAddress"></textarea>
@@ -106,7 +106,7 @@
                 <mat-step [stepControl]="empRegistration" label="Work Profile Details">
                     <div class="row align-items-center">
                         <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Choose Start date</mat-label>
                                 <input matInput [matDatepicker]="picker1">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -114,7 +114,7 @@
                             </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Reference</mat-label>
                                 <input matInput placeholder="Enter Refernce">
                             </mat-form-field>
@@ -122,13 +122,13 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Course</mat-label>
                                 <input matInput placeholder="Enter Course" formControlName="course">
                             </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Certification</mat-label>
                                 <input matInput placeholder="Enter Certification"
                                     formControlName="additionalCertification">
@@ -137,14 +137,14 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Total Experience</mat-label>
                                 <input matInput placeholder="Enter total years of experience"
                                     formControlName="totalExperience">
                             </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Domain</mat-label>
                                 <input matInput placeholder="Enter your work domain" formControlName="workDomain">
                             </mat-form-field>
@@ -152,7 +152,7 @@
                     </div>
                     <div class="row align-items-center">
                         <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Education</mat-label>
                                 <mat-select formControlName="education">
                                     <mat-option [value]="edu.id" *ngFor="let edu of educations">{{edu.name}}
@@ -161,7 +161,7 @@
                             </mat-form-field>
                         </div>
                         <div class="col-sm-6">
-                            <mat-form-field appearance="legacy" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>SkillSet</mat-label>
                                 <input matInput placeholder="Describe your skillset" formControlName="skillset">
                             </mat-form-field>
@@ -183,13 +183,13 @@
 
                         <div class="row">
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Enter Bank Name</mat-label>
                                     <input matInput placeholder="Enter Bank Name" formControlName="bankId">
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Branch Name</mat-label>
                                     <input matInput placeholder="Enter Branch Name" formControlName="branchId">
                                 </mat-form-field>
@@ -197,7 +197,7 @@
                         </div>
                         <div class="row align-items-center">
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Bank Account Number</mat-label>
                                     <input matInput placeholder="Enter Accnt Number" formControlName="accountNo">
                                 </mat-form-field>
@@ -224,7 +224,7 @@
                         <!-- <div [formGroupName]="i"> -->
                         <div class="row">
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Document Type</mat-label>
                                     <mat-select>
                                         <mat-option>PAN Number</mat-option>
@@ -236,7 +236,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Document Number</mat-label>
                                     <input matInput placeholder="Enter document number">
                                 </mat-form-field>
@@ -244,7 +244,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Enter Compnay </mat-label>
                                     <mat-select>
                                         <mat-option>Company 1</mat-option>
@@ -254,7 +254,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Enter Department </mat-label>
                                     <mat-select>
                                         <mat-option>Department 1</mat-option>
@@ -266,7 +266,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Enter Designation </mat-label>
                                     <mat-select>
                                         <mat-option>Designation 1</mat-option>
@@ -276,7 +276,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> User Type</mat-label>
                                     <mat-select>
                                         <mat-option>user-type 1</mat-option>
@@ -364,13 +364,13 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Username </mat-label>
                                     <input matInput placeholder="Enter username number" formControlName="userName">
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label> Password</mat-label>
                                     <input matInput placeholder="Enter password" formControlName="password">
                                 </mat-form-field>

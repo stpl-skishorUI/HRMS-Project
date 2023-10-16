@@ -23,16 +23,17 @@
     <div class="row align-items-center">
         <div class="col-sm-6">
             <div class="mb-0">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Organization Name</mat-label>
-                    <input matInput placeholder="Organization Name" formControlName="orgName" (keypress)="validationservice.alphaNumericWithSpaces($event)">
+                    <input matInput placeholder="Organization Name" formControlName="orgName"
+                        (keypress)="validationservice.alphaNumericWithSpaces($event)">
                     <mat-error *ngIf="f['orgName'].hasError('required') || f['orgName'].hasError('touched')">
                         Organization name is Required
                     </mat-error>
                 </mat-form-field>
             </div>
             <div class="mb-0">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Email ID</mat-label>
                     <input matInput placeholder="email@gmail.com" formControlName="emailId">
                     <mat-error *ngIf="f['emailId'].hasError('required') || f['emailId'].hasError('touched')">
@@ -44,20 +45,21 @@
                 </mat-form-field>
             </div>
             <div class="mb-0">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label> Address</mat-label>
                     <textarea matInput placeholder="Enter Address" formControlName="address"></textarea>
                     <mat-error *ngIf="f['address'].hasError('required') || f['address'].hasError('touched')">
-                    Address is Required
+                        Address is Required
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="mb-0">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label> Contact Number</mat-label>
-                    <input matInput placeholder="Contact Number" formControlName="contactNo" maxlength="10" (keypress)="validationservice.onlyDigits($event)">
+                    <input matInput placeholder="Contact Number" formControlName="contactNo" maxlength="10"
+                        (keypress)="validationservice.onlyDigits($event)">
                     <mat-error *ngIf="f['contactNo'].hasError('required') || f['contactNo'].hasError('touched')">
                         contactNo is Required
                     </mat-error>
@@ -67,7 +69,7 @@
                 </mat-form-field>
             </div>
             <div class="mb-0">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Enter Website</mat-label>
                     <input matInput placeholder="Enter URL" formControlName="website">
                     <mat-error *ngIf="f['website'].hasError('required') || f['website'].hasError('touched')">
@@ -76,7 +78,7 @@
                 </mat-form-field>
             </div>
             <div class="mb-2">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>About US</mat-label>
                     <textarea matInput placeholder="Enter About US" formControlName="aboutUs"></textarea>
                     <mat-error *ngIf="f['aboutUs'].hasError('required') || f['aboutUs'].hasError('touched')">
@@ -90,8 +92,8 @@
     <div class="row align-items-center mb-0">
         <div class="d-flex justify-content-between">
             <button mat-raised-button class="btn-outline-main" mat-dialog-close type="reset">Cancel</button>
-            <button mat-raised-button class="btn-main" type="submit" [disabled]="OrganizationRegForm.invalid"
-                >{{editFlag ? 'Update':'Save'}}</button>
+            <button mat-raised-button class="btn-main" type="submit" [disabled]="OrganizationRegForm.invalid">{{editFlag
+                ? 'Update':'Save'}}</button>
         </div>
     </div>
 </form>

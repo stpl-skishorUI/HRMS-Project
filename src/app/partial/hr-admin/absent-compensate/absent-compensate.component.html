@@ -6,7 +6,7 @@
                     <div class="col-sm-10">
                         <div class="row align-items-center">
                             <div class="col-sm-2">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>All Company</mat-label>
                                     <mat-select>
                                         <mat-option>Option 1</mat-option>
@@ -16,7 +16,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>All Employee</mat-label>
                                     <mat-select>
                                         <mat-option>Option 1</mat-option>
@@ -26,7 +26,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Select Month</mat-label>
                                     <mat-select>
                                         <mat-option>Option 1</mat-option>
@@ -36,7 +36,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Select Year</mat-label>
                                     <mat-select>
                                         <mat-option>Option 1</mat-option>
@@ -46,7 +46,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Leave Type</mat-label>
                                     <mat-select>
                                         <mat-option>Option 1</mat-option>
@@ -71,42 +71,41 @@
             <div class="card-body">
                 <div class="">
                     <table mat-table [dataSource]="dataSource" class="w-100 dashboard-table">
-                      
+
                         <!-- Position Column -->
                         <ng-container matColumnDef="position">
-                          <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
-                          <td mat-cell *matCellDef="let element"> 	Ram Chavan </td>
+                            <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                            <td mat-cell *matCellDef="let element"> Ram Chavan </td>
                         </ng-container>
-                      
+
                         <!-- Name Column -->
                         <ng-container matColumnDef="name">
-                          <th mat-header-cell *matHeaderCellDef> Employee Name </th>
-                          <td mat-cell *matCellDef="let element"> Navin boddal</td>
+                            <th mat-header-cell *matHeaderCellDef> Employee Name </th>
+                            <td mat-cell *matCellDef="let element"> Navin boddal</td>
                         </ng-container>
-                      
+
                         <!-- Weight Column -->
                         <ng-container matColumnDef="Leave_Type">
-                          <th mat-header-cell *matHeaderCellDef>Leave Type</th>
-                          <td mat-cell *matCellDef="let element"> Sick Leave </td>
+                            <th mat-header-cell *matHeaderCellDef>Leave Type</th>
+                            <td mat-cell *matCellDef="let element"> Sick Leave </td>
                         </ng-container>
-                      
+
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="From_Date">
-                          <th mat-header-cell *matHeaderCellDef>From Date</th>
-                          <td mat-cell *matCellDef="let element">	21/01/2022 </td>
+                            <th mat-header-cell *matHeaderCellDef>From Date</th>
+                            <td mat-cell *matCellDef="let element"> 21/01/2022 </td>
                         </ng-container>
 
                         <ng-container matColumnDef="To_Date">
                             <th mat-header-cell *matHeaderCellDef>To Date</th>
                             <td mat-cell *matCellDef="let element"> 21/02/2022 </td>
-                          </ng-container>
-                      
+                        </ng-container>
+
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                      </table>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-

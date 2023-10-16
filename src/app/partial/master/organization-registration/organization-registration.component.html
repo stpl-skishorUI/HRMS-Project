@@ -8,14 +8,16 @@
                         <div class="row  align-items-center">
                             <div class="col-sm-3">
                                 <div class="mb-0">
-                                    <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Search By</mat-label>
-                                        <input matInput placeholder="Name, Email, Address" formControlName="orgName" (keypress)="validationservice.alphaNumericWithSpaces($event)">
+                                        <input matInput placeholder="Name, Email, Address" formControlName="orgName"
+                                            (keypress)="validationservice.alphaNumericWithSpaces($event)">
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="col-sm-auto"  >
-                                <button type="submit" mat-raised-button [disabled]="!filterForm.value.orgName">Search</button>
+                            <div class="col-sm-auto">
+                                <button type="submit" mat-raised-button
+                                    [disabled]="!filterForm.value.orgName">Search</button>
                             </div>
                         </div>
                     </div>
@@ -41,24 +43,24 @@
                         <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
                         <td mat-cell *matCellDef="let element;let i=index"> {{(currentPage*10)+i+1}} </td>
                     </ng-container>
-    
+
                     <ng-container matColumnDef="organization_logo">
                         <th mat-header-cell *matHeaderCellDef> Organization Logo </th>
                         <td mat-cell *matCellDef="let element">
                             <img [src]="element.orgLogo" class="img">
                         </td>
                     </ng-container>
-    
+
                     <ng-container matColumnDef="organization_name">
                         <th mat-header-cell *matHeaderCellDef> Organization Name </th>
                         <td mat-cell *matCellDef="let element"> {{element.orgName}} </td>
                     </ng-container>
-    
+
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef> Email ID </th>
                         <td mat-cell *matCellDef="let element"> {{element.emailId}} </td>
                     </ng-container>
-    
+
                     <ng-container matColumnDef="address">
                         <th mat-header-cell *matHeaderCellDef> Address </th>
                         <td mat-cell *matCellDef="let element"> {{element.address}} </td>
@@ -94,108 +96,10 @@
             </ng-template>
         </div>
         <ng-container *ngIf="totalCount>10">
-            <mat-paginator [pageSizeOptions]="[10, 50, 100]" (page)="handlePageEvent($event)" [length]="totalCount" [pageSize]="pageSize"
-                [pageIndex]="currentPage" showFirstLastButtons aria-label="Select page of periodic elements">
+            <mat-paginator [pageSizeOptions]="[10, 50, 100]" (page)="handlePageEvent($event)" [length]="totalCount"
+                [pageSize]="pageSize" [pageIndex]="currentPage" showFirstLastButtons
+                aria-label="Select page of periodic elements">
             </mat-paginator>
         </ng-container>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

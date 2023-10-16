@@ -8,16 +8,18 @@
             <form [formGroup]="bankForm" (ngSubmit)="onSubmit()">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-sm-6">
-                        <mat-form-field appearance="legacy" class="w-100">
+                        <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Bank Name</mat-label>
-                            <input matInput formControlName="bankName" placeholder="Bank Name" (keypress)="validationPattern.alphabetsWithSpaces($event)">
+                            <input matInput formControlName="bankName" placeholder="Bank Name"
+                                (keypress)="validationPattern.alphabetsWithSpaces($event)">
                             <mat-error *ngIf="fc['bankName'].hasError('required')"> Please Enter Bank Name</mat-error>
                         </mat-form-field>
                     </div>
                     <div class=" col-sm d-flex justify-content-end gap-2">
                         <button mat-raised-button class="btn-outline-main" type="button" mat-dialog-close
                             (click)="onCancel()">Cancel</button>
-                        <button mat-raised-button class="btn-main" type="submit">{{!editFlag ? 'Save' : 'Update'}}</button>
+                        <button mat-raised-button class="btn-main" type="submit">{{!editFlag ? 'Save' :
+                            'Update'}}</button>
                     </div>
                 </div>
             </form>
@@ -68,14 +70,14 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>    
+            </table>
         </div>
-        <div> 
+        <div>
             <ng-container *ngIf="totalCount >10">
                 <mat-paginator (page)="handlePageEvent($event)" [length]="totalCount" [pageSizeOptions]="[10, 50, 100]"
                     [pageIndex]="currentPage" showFirstLastButtons>
                 </mat-paginator>
             </ng-container>
-        </div>         
+        </div>
     </div>
 </div>

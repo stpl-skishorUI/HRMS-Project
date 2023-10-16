@@ -6,7 +6,7 @@
                     <form [formGroup]="filterForm">
                         <div class="row align-items-center">
                             <div class="col-sm-3">
-                                <mat-form-field appearance="legacy" class="w-100">
+                                <mat-form-field appearance="outline" class="w-100">
                                     <mat-label>Comapany</mat-label>
                                     <mat-select formControlName="companyName">
                                         <mat-option *ngFor="let comp of companyDropDownArray" [value]="comp.companyId">
@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="">
-                                    <mat-form-field appearance="legacy" class="w-100">
+                                    <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Salary Component</mat-label>
                                         <input matInput placeholder="Search Salary Component"
                                             formControlName="salary_Component"
@@ -91,12 +91,13 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-            </div>  
+            </div>
             <div *ngIf="dataSource.length>=10">
-                <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage" [pageSizeOptions]="[10, 50, 100]"
-                    (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic elements">
+                <mat-paginator [pageSize]="10" [length]="totalCount" [pageIndex]="currentPage"
+                    [pageSizeOptions]="[10, 50, 100]" (page)="pageChanged($event)" showFirstLastButtons
+                    aria-label="Select page of periodic elements">
                 </mat-paginator>
-            </div>  
+            </div>
         </ng-container>
         <ng-template #block>
             <h3>No Data Found</h3>

@@ -3,10 +3,10 @@
     <i mat-dialog-close class="fa fa-times" aria-hidden="true"></i>
 </div>
 <form [formGroup]="salaryForm" (ngSubmit)="onSubmit()">
-    <div class="row">   
+    <div class="row">
         <div class="col-sm-12">
             <div class="mb-2">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Select Company Name</mat-label>
                     <mat-select formControlName="companyId">
                         <mat-option *ngFor="let drop of companyDropDownArray" [value]="drop.companyId">
@@ -18,7 +18,7 @@
                 </mat-form-field>
             </div>
             <div class="mb-2">
-                <mat-form-field appearance="legacy" class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Salary Component</mat-label>
                     <input matInput placeholder="Enter Salary Type" formControlName="salary_Component"
                         (key)="validationPattern.removeSpaceAtBegining($event)">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-sm-7">
                         <div class="mb-2">
-                            <mat-form-field appearance="legacy" class="w-100">
+                            <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Component Value</mat-label>
                                 <input type="text" matInput placeholder="Enter Salary Type" formControlName="value"
                                     (keypress)="validationPattern.onlyDigits($event)">
@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
     <div class="row">
         <div class="d-flex justify-content-between">
             <button mat-raised-button class="btn-outline-main" type="reset">Cancel</button>
